@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.llajtacomida.views.mainViews.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_plates"
+        android:name="com.example.llajtacomida.views.platesViews.PlatesListFragment"
+        android:label="@string/menu_plates"
+        tools:layout="@layout/fragment_plates_list" />
+
+    <fragment
+        android:id="@+id/nav_restaurants"
+        android:name="com.example.llajtacomida.views.restaurantsViews.RestaurantListFragment"
+        android:label="@string/menu_restaurants"
+        tools:layout="@layout/fragment_restaurant_list" />
+
+    <fragment
+        android:id="@+id/nav_favorit_plates"
+        android:name="com.example.llajtacomida.views.favoritPlatesViews.FavoritPlatesListFragment"
+        android:label="@string/menu_plates"
+        tools:layout="@layout/fragment_favorit_plates_list" />
+
+    <fragment
+        android:id="@+id/nav_favorit_restaurants"
+        android:name="com.example.llajtacomida.views.favoritRestaurantsViews.FavoritRestaurantListFragment"
+        android:label="@string/menu_plates"
+        tools:layout="@layout/fragment_favorit_restaurant_list" />
+
+
+
+</navigation>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.platesViews.PlatesListFragment"
+    android:orientation="vertical"
+    android:background="#2196F3">
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_plates_list"
+            android:textSize="25sp"
+            android:textColor="#fff"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp">
+
+            <EditText
+                android:id="@+id/etSerach"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/rectangle"
+                android:padding="5dp"
+                android:drawableEnd="@drawable/ic_baseline_search_24"
+                android:inputType="textWebEditText"
+                android:hint="@string/search_plates"/>
+
+            <ListView
+                android:id="@+id/lvPlates"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:background="#fff"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="50dp"/>
+
+        </LinearLayout>
+
+</LinearLayout>

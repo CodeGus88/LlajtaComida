@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">LlajtaComida</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!--    MENU DRAWER OPTIONS -->
+    <string name="menu_home">Home</string>
+    <string name="menu_plates">Platos</string>
+    <string name="menu_restaurants">Restaurantes</string>
+    <string name="menu_favorit_plates">Platos favoritos</string>
+    <string name="menu_favorit_restaurants">Restaurantes favoritos</string>
+    <string name="menu_about_us">Acerca de nosotros</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_get_location_maps">Map</string>
+
+    <!--    Login   -->
+    <string name="title">Iniciar sesión</string>
+    <string name="btnStart">Acceder</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="content">Bienvenido a Llajta Comida, accede con tu cuenta de Google</string>
+
+<!--    PLATES LIST-->
+    <string name="title_plates_list">Lista de platos</string>
+    <string name="search_plates">Buscar platos...</string>
+
 </resources>
