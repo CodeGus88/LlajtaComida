@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private GoogleApiClient googleApiClient;
     private Hashtable<String, String> user = new Hashtable<String, String>();
     private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
-
         // Login silencioso
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -82,15 +83,23 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
 
         progressDialog = new ProgressDialog(this);
+        
     } // End onCreate
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.main, menu); // main es el menu de menu/main.xml
+
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        Toast.makeText(MainActivity.this, "Icono de menu", Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -104,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getBaseContext(), "Algo salió mal", Toast.LENGTH_SHORT).show();
     }
-
 
     // Para guardar ala sesion
     @Override
@@ -147,7 +155,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             user.put("family_name", account.getFamilyName());
             user.put("email", account.getEmail());
             user.put("id", account.getId());
-            user.put("photo_url", ""+account.getPhotoUrl());
+            user.put("phone", "");
+            user.put("estado", "Conectado");
 
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
@@ -159,12 +168,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             });
 
         }else{
-            getPregressDialog("USER", "Cerrando");
+            getPregressDialog("USUARIO5", "Cerrando...");
             MainPresenter.showLogin(MainActivity.this);
             progressDialog.dismiss();
         }
     }
-
 
     /**
      * Este método sirve para cerrar sesión
@@ -172,14 +180,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void logOut(Hashtable<String, String> user){
 
         AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-        confirmDialog.setTitle("USER");
+        confirmDialog.setTitle("INFORMACIÓN DEL USUARIO");
 //        confirmDialog.setMessage("¿Estás seguro de cerrar sesión?");
         confirmDialog.setMessage(
                 "Nombre: " + user.get("name")
                         + "\nApellidos: " + user.get("family_name")
                         + "\nEmail: " + user.get("email")
                         + "\nID: " + user.get("id")
-                        + "\nFoto: " + user.get("photo_url"));
+                        + "\nEstado: " + user.get("estado"));
         confirmDialog.setCancelable(false);
         confirmDialog.setPositiveButton("Cerrar Sesión", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
@@ -187,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     @Override
                     public void onResult(@NonNull Status status) {
                         if(status.isSuccess()){
-                            getPregressDialog("USER", "Cerrando");
+                            getPregressDialog("USUARIO", "Cerrando...");
                             MainPresenter.showLogin(MainActivity.this);
                             progressDialog.dismiss();
                         }else{

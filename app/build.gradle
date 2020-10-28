@@ -36,7 +36,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.5.0'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    implementation 'androidx.cardview:cardview:1.0.0'// imagen con bordes redondeados
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'// imagen con bordes redondeados
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -47,4 +48,9 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0' // para cargar imagenes a un imageView desde url
     implementation 'com.android.support:design:30.0.0'
 
+
+    //Recorte de imagenes
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.squareup.picasso:picasso:2.5.0'
+    implementation 'id.zelory:compressor:2.1.0' // Para comprimir
 }

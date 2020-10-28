@@ -27,8 +27,27 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="content">Bienvenido a Llajta Comida, accede con tu cuenta de Google</string>
 
-<!--    PLATES LIST-->
+
+
+    <!--    ICONOS DEL MENU ACTIONBAR -->
+    <string name="add_icon">Agregar</string>
+    <string name="edit_icon">Editar</string>
+    <string name="delete_icon">Eliminar</string>
+
+
+    <!--    PLATES-->
     <string name="title_plates_list">Lista de platos</string>
     <string name="search_plates">Buscar platos...</string>
+    <string name="etPlateName">Nombre del plato</string>
+    <string name="etPlateIngredients">Ingredientes</string>
+    <string name="etPlateOrigin">Origen</string>
+    <string name="btnFoto">Selecciona una imagen del plato</string>
+
+
+
+<!--    BUTTONS -->
+    <string name="btnCancel">Cancelar</string>
+    <string name="btnStore">Guardar</string>
+
 
 </resources>
