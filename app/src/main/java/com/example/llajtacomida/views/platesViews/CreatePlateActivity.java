@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,6 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.UUID;
 
 import id.zelory.compressor.Compressor;
 
@@ -33,7 +33,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     private ImageView ivPhoto;
     private Button btnSelectFoto, btnCancel, btnStore;
     private static Uri uri;
-    private ProgressDialog progressDialog;
 
     // Comprimir foto
     private Bitmap thumb_bitmap;
@@ -48,9 +47,8 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setComponents();
+        initComponents();
         thumb_bitmap = null;
-        progressDialog = new ProgressDialog(this);
 
     }
 
@@ -62,7 +60,11 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                 imageSelect();
                 break;
             case R.id.btnStore:
-                storePlate();
+                try {
+                    storePlate();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btnCancel:
                 onBackPressed();
@@ -71,19 +73,15 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    private void storePlate() {
-
-        progressDialog.setTitle("GUARDAR");
-        progressDialog.setMessage("Guardando, espere...");
-        progressDialog.show();
-        String id = UUID.randomUUID().toString();
-        Plate plate = new Plate(id);
+    private void storePlate() throws InterruptedException {
+        Toast.makeText(this, "Subiendo elemento en segundo plano...", Toast.LENGTH_LONG).show();
+        Plate plate = new Plate();
         plate.setName(etName.getText().toString());
         plate.setIngredients(etIngredients.getText().toString());
         plate.setOrigin(etOrigin.getText().toString());
         PlatesDataBase platesDataBase = new PlatesDataBase(this, plate, thumb_byte);
-        platesDataBase.storePlate(progressDialog);
-
+        platesDataBase.storePlate();
+        onBackPressed();
 
     }
 
@@ -135,7 +133,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    private void setComponents(){
+    private void initComponents(){
 
         btnSelectFoto = (Button) findViewById(R.id.btnSelectPhoto);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -148,7 +146,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         btnSelectFoto.setOnClickListener(this);
         btnStore.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-
     }
+
 
 }

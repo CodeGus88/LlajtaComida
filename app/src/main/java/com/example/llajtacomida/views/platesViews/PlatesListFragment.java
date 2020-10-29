@@ -1,5 +1,6 @@
 package com.example.llajtacomida.views.platesViews;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,15 +12,24 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.llajtacomida.MainActivity;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.presenters.mainPresenter.MainPresenter;
+import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +54,16 @@ public class PlatesListFragment extends Fragment {
 
     // Components
     private EditText etSearch;
+    private ListView lvPlates;
+
+    // database
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
+
+    // Para listar platos
+    private ArrayList<Plate> listPlates;
+    private ArrayAdapter<Plate> arrayAdapterPlates;
 
     public PlatesListFragment() {
         // Required empty public constructor
@@ -77,9 +97,49 @@ public class PlatesListFragment extends Fragment {
 
     }
 
-    private void setComponets() {
-        etSearch = (EditText) view.findViewById(R.id.etSerach);
+    private void initComponets() {
 
+        etSearch = (EditText) view.findViewById(R.id.etSearch);
+        lvPlates = (ListView) view.findViewById(R.id.lvPlates);
+
+        listPlates = new ArrayList<Plate>();
+
+        lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getContext(), PlateViewActivity.class);
+                intent.putExtra("id", listPlates.get(position).getId());
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void initDataBase(){
+        FirebaseApp.initializeApp(getContext());
+        firebaseDatabase = firebaseDatabase.getInstance();
+        databaseReference =  firebaseDatabase.getReference().child("App").child("plates");
+    }
+
+    private void loadListPlates(){
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listPlates.clear();
+
+                for (DataSnapshot plate : snapshot.getChildren()){
+                    Plate p = plate.getValue(Plate.class); // Para el  uso de esta estrategia el contructor del objeto plato no debe recibir ningún parámetro
+                    listPlates.add(p);
+                    arrayAdapterPlates = new ArrayAdapter<Plate>(getContext(), android.R.layout.simple_spinner_dropdown_item, listPlates);
+                    lvPlates.setAdapter(arrayAdapterPlates);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "No se pudo cargar la lista", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -91,8 +151,9 @@ public class PlatesListFragment extends Fragment {
         setHasOptionsMenu(true); // para el funcionamiento de los iconos
         view = inflater.inflate(R.layout.fragment_plates_list, container, false);
 
-        setComponets();
-
+        initComponets();
+        initDataBase();
+        loadListPlates();
         return view;
     }
 

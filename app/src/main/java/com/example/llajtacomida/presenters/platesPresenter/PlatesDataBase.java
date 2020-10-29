@@ -19,7 +19,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
-public class PlatesDataBase {
+import static java.lang.Thread.sleep;
+
+public class PlatesDataBase{
 
     private final DatabaseReference databaseReference;
     private final StorageReference storageReference;
@@ -27,16 +29,21 @@ public class PlatesDataBase {
     private final Context context;
 //    private final Uri uri; // es la imagen con la uri local del dispositivo
     private byte  [] thumb_byte;
-    private static boolean success;
     private Uri url; // El url que tendrá la imagen cuando se suba
-    private ProgressDialog progressDialog;
+
+    private static boolean success;
+    private boolean processComplete;
+    private int tiempo;
 
     public PlatesDataBase(Context context, Plate plate, final byte [] thumb_byte) {
 
+        tiempo = 10000;
         this.context = context;
         this.plate = plate;
         this.thumb_byte = thumb_byte; // es l aimagen comprimida
         this.success = false;
+        this.processComplete = false;
+
         url = null;
 
 //        Configiración de la base de datos
@@ -53,10 +60,10 @@ public class PlatesDataBase {
                 .child(plate.getId()+".jpg");
     }
 
-    public void storePlate(final ProgressDialog progressDialog){
-        this.progressDialog = progressDialog;
+    public void storePlate() {
         UploadTask uploadTask = storageReference.putBytes(thumb_byte);
-        Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+        Task<Uri> uriTask =  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
 
@@ -76,19 +83,17 @@ public class PlatesDataBase {
                     url = task.getResult();
                     plate.setUrl(url.toString());
                     databaseReference.setValue(plate);
-
                     Toast.makeText(context, "Se guradó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo subir el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();
                 }
-                progressDialog.dismiss();
             }
         });
+        processComplete = uriTask.isComplete();
     }
 
-    public boolean update(){
-
-        return true;
+    public boolean processComplete() {
+        return processComplete;
     }
 
 }

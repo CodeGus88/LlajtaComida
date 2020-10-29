@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.platesViews.PlateViewActivity"
+    android:background="#fff"
+    android:orientation="vertical">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="20dp"
+                android:scaleY="1"
+                android:scaleX="1"
+                android:layout_gravity="center">
+
+<!--                Imagen con zoom-->
+                <com.zolad.zoominimageview.ZoomInImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/ziivPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/img_photo"/>
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tvNamePlateView"
+                android:textSize="20dp"
+                android:gravity="center"
+                style="@style/CodeFontContentTitle"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/panel_gris"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="¿Qué ingredientes lleva y cómo se prepara?"
+                    style="@style/CodeFontContentTitle"/>
+
+                <TextView
+                    android:id="@+id/tvIngredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loremShort"
+                    android:layout_marginHorizontal="10dp"
+                    style="@style/CodeFontContent"/>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/panel_celeste"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="0dp"
+                android:paddingBottom="10dp">
+
+                <TextView
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tvOriginPlateView"
+                    style="@style/CodeFontContentTitle"/>
+
+                <TextView
+                    android:id="@+id/tvOrigin"
+                    style="@style/CodeFontContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/loremLong" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+            </LinearLayout>
+
+    </ScrollView>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@mipmap/sabores"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp"/>
+</RelativeLayout>

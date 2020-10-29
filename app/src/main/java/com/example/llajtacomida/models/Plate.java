@@ -1,5 +1,7 @@
 package com.example.llajtacomida.models;
 
+import java.util.UUID;
+
 public class Plate {
 
     private String id;
@@ -8,8 +10,12 @@ public class Plate {
     private String origin;
     private String url;
 
+    public Plate() {
+        this.id =  UUID.randomUUID().toString();
+    }
+
     public Plate(String id) {
-        this.id = id;
+        this.id =  id;
     }
 
     public String getId(){
@@ -54,11 +60,7 @@ public class Plate {
 
     @Override
     public String toString() {
-        return "Plate{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", ingredients='" + ingredients + '\'' +
-                ", origin='" + origin + '\'' +
-                '}';
+        return name;
     }
+
 }
