@@ -1,37 +1,15 @@
 package com.example.llajtacomida.models;
 
-import java.util.UUID;
+public class Plate extends ObjectParent {
 
-public class Plate {
-
-    private String id;
-    private String name;
     private String ingredients;
     private String origin;
-    private String url;
 
-    public Plate() {
-        this.id =  UUID.randomUUID().toString();
+    public Plate(String id){
+        super(id);
     }
-
-    public Plate(String id) {
-        this.id =  id;
-    }
-
-    public String getId(){
-        return id;
-    }
-
-    public void setId(String id){
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public Plate(){
+        super();
     }
 
     public String getIngredients() {
@@ -50,17 +28,12 @@ public class Plate {
         this.origin = origin;
     }
 
-    public void setUrl(String url){
-        this.url = url;
-    }
-
-    public String getUrl(){
-        return url;
-    }
-
     @Override
     public String toString() {
         return name;
     }
-
+    @Override
+    public String getResume() {
+        return origin;
+    }
 }

@@ -32,15 +32,19 @@
     <string name="add_icon">Agregar</string>
     <string name="edit_icon">Editar</string>
     <string name="delete_icon">Eliminar</string>
+    <string name="search_icon">Eliminar</string>
 
 
     <!--    PLATES-->
     <string name="title_plates_list">Lista de platos</string>
+    <string name="title_creat_plate">Crear plato</string>
+    <string name="title_edit_plate">Editar plato</string>
     <string name="search_plates">Buscar platos...</string>
     <string name="etPlateName">Nombre del plato</string>
     <string name="etPlateIngredients">Ingredientes</string>
     <string name="etPlateOrigin">Origen</string>
     <string name="btnFoto">Selecciona una imagen del plato</string>
+
 
     <!--  Plate view  -->
     <string name="tvNamePlateView">Nombre del plato</string>

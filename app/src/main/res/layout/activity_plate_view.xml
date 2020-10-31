@@ -8,9 +8,8 @@
     android:background="#fff"
     android:orientation="vertical">
 
-
-
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -90,6 +89,7 @@
                 android:layout_height="10dp"/>
 
             <LinearLayout
+                android:id="@+id/panel2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -123,10 +123,21 @@
 
     </ScrollView>
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         app:srcCompat="@mipmap/sabores"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="0dp"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:srcCompat="@mipmap/sabores"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:rotationY="180"
+        android:rotationX="180"/>
+
+
+
 </RelativeLayout>

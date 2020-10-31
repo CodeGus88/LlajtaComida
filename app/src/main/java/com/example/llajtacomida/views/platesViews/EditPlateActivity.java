@@ -7,17 +7,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.service.autofill.OnClickAction;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesDataBase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -27,46 +29,74 @@ import java.io.File;
 
 import id.zelory.compressor.Compressor;
 
-public class CreatePlateActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditPlateActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // componetes
     private EditText etName, etIngredients, etOrigin;
+    private ImageButton btnResetPhoto;
+    private Button btnCancel, btnUpdate, btnSelectPhoto;
     private ImageView ivPhoto;
-    private Button btnSelectFoto, btnCancel, btnStore;
-    private static Uri uri;
+    private Plate plate;
 
     // Comprimir foto
     private Bitmap thumb_bitmap;
     private byte  [] thumb_byte;
-
+    private Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_creat_plate);
-        // Configuración del boton atrás
-        //        getSupportActionBar().setTitle("text");
+        setContentView(R.layout.activity_edit_plate);
+
+        //Configiración del boton atrás
         getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        initComponents();
         thumb_bitmap = null;
+
+        initComponents();
+        loadPlate();
 
     }
 
-    @Override
-    public void onClick(View view) {
+    private void loadPlate(){
+        plate = (Plate) getIntent().getSerializableExtra("plate");
+        etName.setText(plate.getName());
+        etIngredients.setText(plate.getIngredients());
+        etOrigin.setText(plate.getOrigin());
+        Glide.with(this).load(plate.getUrl()).into(ivPhoto);
+    }
 
-        switch (view.getId()){
+    private void initComponents(){
+        etName = (EditText) findViewById(R.id.etName);
+        etIngredients = (EditText) findViewById(R.id.etIngredients);
+        etOrigin = (EditText) findViewById(R.id.etOrigin);
+        btnSelectPhoto = (Button) findViewById(R.id.btnSelectPhoto);
+        btnResetPhoto = (ImageButton) findViewById(R.id.btnResetPhoto);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
+        btnUpdate = (Button) findViewById(R.id.btnUpdate);
+        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
+        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
+
+        btnSelectPhoto.setOnClickListener(this);
+        btnResetPhoto.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
+     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
             case R.id.btnSelectPhoto:
-//                imageSelect();
-                PlatesPresenter.showCropImage(this);
+                imageSelect();
                 break;
-            case R.id.btnStore:
-                try {
-                    storePlate();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            case R.id.btnResetPhoto:
+                thumb_byte = null;
+                Glide.with(this).load(plate.getUrl()).into(ivPhoto);
+                break;
+            case R.id.btnUpdate:
+                updatePlate();
                 break;
             case R.id.btnCancel:
                 onBackPressed();
@@ -74,19 +104,14 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-
-    private void storePlate() throws InterruptedException {
-        Toast.makeText(this, "Subiendo elemento...", Toast.LENGTH_LONG).show();
-        Plate plate = new Plate();
-        plate.setName(etName.getText().toString());
-        plate.setIngredients(etIngredients.getText().toString());
-        plate.setOrigin(etOrigin.getText().toString());
-        PlatesDataBase platesDataBase = new PlatesDataBase(this, plate, thumb_byte);
-        platesDataBase.storePlate();
-        onBackPressed();
+    private void imageSelect(){
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setRequestedSize(1023, 700)
+//                .setRequestedSize(640, 640)
+                .setAspectRatio(3, 2)
+                .start(this);
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Cargar y comprimir el archivo
@@ -115,7 +140,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                     .compressToBitmap(file);
 
         }catch (Exception e){
-//                                Log.i("EROOR", e.getMessage());
             e.printStackTrace();
         }
         ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
@@ -125,23 +149,15 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-    private void initComponents(){
-
-        btnSelectFoto = (Button) findViewById(R.id.btnSelectPhoto);
-        btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnStore = (Button) findViewById(R.id.btnStore);
-        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
-        etName = (EditText) findViewById(R.id.etName);
-        etIngredients = (EditText) findViewById(R.id.etIngredients);
-        etOrigin = (EditText) findViewById(R.id.etOrigin);
-
-        Display display = getWindowManager().getDefaultDisplay();
-        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
-        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
-
-        btnSelectFoto.setOnClickListener(this);
-        btnStore.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
+    private void updatePlate(){
+        Toast.makeText(this, "Actualizando el elemento...", Toast.LENGTH_LONG).show();
+        Plate plate = this.plate;
+        plate.setName(etName.getText().toString());
+        plate.setIngredients(etIngredients.getText().toString());
+        plate.setOrigin(etOrigin.getText().toString());
+        PlatesDataBase platesDataBase = new PlatesDataBase(this, plate, thumb_byte);
+        platesDataBase.upDate();
+        onBackPressed();
     }
 
     /**
@@ -152,5 +168,4 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
-
 }

@@ -143,12 +143,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             final GoogleSignInAccount account = result.getSignInAccount();
             NavigationView navigationView =  findViewById(R.id.nav_view);
             View header =  navigationView.getHeaderView(0);
-            ImageView imageView = header.findViewById(R.id.iVAvatar);
+            ImageView ivAvatar = header.findViewById(R.id.iVAvatar);
             TextView tvName = header.findViewById(R.id.tvName);
             TextView tvEmail = header.findViewById(R.id.tvEmail);
 
             if(account.getPhotoUrl() != null){
-                Glide.with(this).load(account.getPhotoUrl()).into(imageView);
+                Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             }
 
             user.put("name", account.getGivenName());
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
-            imageView.setOnClickListener(new View.OnClickListener() {
+            ivAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     logOut(user);
@@ -191,18 +191,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         confirmDialog.setCancelable(false);
         confirmDialog.setPositiveButton("Cerrar Sesión", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(@NonNull Status status) {
-                        if(status.isSuccess()){
-                            getPregressDialog("USUARIO", "Cerrando...");
-                            MainPresenter.showLogin(MainActivity.this);
-                            progressDialog.dismiss();
-                        }else{
-                            Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
-                        }
+            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    if(status.isSuccess()){
+                        getPregressDialog("USUARIO", "Cerrando...");
+                        MainPresenter.showLogin(MainActivity.this);
+                        progressDialog.dismiss();
+                    }else{
+                        Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
                     }
-                });
+                }
+            });
             }
         });
         confirmDialog.setNegativeButton("Vale", new DialogInterface.OnClickListener() {
