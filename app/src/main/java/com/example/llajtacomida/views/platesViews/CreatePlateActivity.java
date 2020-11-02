@@ -16,11 +16,10 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDataBase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -81,7 +80,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         plate.setName(etName.getText().toString());
         plate.setIngredients(etIngredients.getText().toString());
         plate.setOrigin(etOrigin.getText().toString());
-        PlatesDataBase platesDataBase = new PlatesDataBase(this, plate, thumb_byte);
+        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
         platesDataBase.storePlate();
         onBackPressed();
     }
@@ -96,32 +95,35 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 uri = result.getUri();
+
+                //Segunda parte
+
+                File file = new File(uri.getPath());
+
+                // cargamos al imagen al ivPhoto con picaso
+//                Picasso.with(this).load(file).into(ivPhoto);
+                ivPhoto.setImageURI(uri);
+                //Comprimir imagen
+                try{
+                    thumb_bitmap = new Compressor(this)
+                            .setMaxWidth(640)
+                            .setMaxHeight(480)
+                            .setQuality(90)
+                            .compressToBitmap(file);
+
+                }catch (Exception e){
+//                                Log.i("EROOR", e.getMessage());
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
+                thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
+                // Fin del compresor
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
 
-        File file = new File(uri.getPath());
-
-        // cargamos al imagen al ivPhoto con picaso
-//                Picasso.with(this).load(file).into(ivPhoto);
-        ivPhoto.setImageURI(uri);
-        //Comprimir imagen
-        try{
-            thumb_bitmap = new Compressor(this)
-                    .setMaxWidth(640)
-                    .setMaxHeight(480)
-                    .setQuality(90)
-                    .compressToBitmap(file);
-
-        }catch (Exception e){
-//                                Log.i("EROOR", e.getMessage());
-            e.printStackTrace();
-        }
-        ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
-        thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
-        thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
-        // Fin del compresor
     }
 
 

@@ -30,6 +30,12 @@
         android:title="@string/search_plates"
         app:showAsAction="always"
         android:visible="false"/>
+    <item
+        android:id="@+id/iconGalery"
+        android:icon="@drawable/ic_menu_gallery_white"
+        android:title="@string/galery_icon"
+        app:showAsAction="always"
+        android:visible="false"/>
 
 </menu>
 

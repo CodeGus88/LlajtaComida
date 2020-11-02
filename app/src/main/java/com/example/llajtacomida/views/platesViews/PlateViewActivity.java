@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDataBase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.google.firebase.FirebaseApp;
@@ -36,7 +36,7 @@ public class PlateViewActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
     private static String id;
-    private MenuItem iconEdit, iconDelete;
+    private MenuItem iconEdit, iconDelete, iconGalery;
 
     private boolean isAnAdministrator;
     private Plate plate;
@@ -88,7 +88,6 @@ public class PlateViewActivity extends AppCompatActivity {
         databaseReference.child("App").child("plates").child(id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 plate = snapshot.getValue(Plate.class);
                 try{
                     tvName.setText(plate.getName());
@@ -99,7 +98,6 @@ public class PlateViewActivity extends AppCompatActivity {
                     Log.e("Error: " , e.getMessage());
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(PlateViewActivity.this, "Ocurrión un error al cargar los datos", Toast.LENGTH_SHORT).show();
@@ -116,7 +114,6 @@ public class PlateViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.iconEdit:
                 PlatesPresenter.showEditPlateView(this, plate);
@@ -124,8 +121,9 @@ public class PlateViewActivity extends AppCompatActivity {
             case R.id.iconDelete:
                 delete();
                 break;
+            case R.id.iconGalery:
+                PlatesPresenter.showGalery(this, plate.getId(),  plate.getName());
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -136,8 +134,8 @@ public class PlateViewActivity extends AppCompatActivity {
         confirm.setCancelable(false);
         confirm.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                onBackPressed();
-                PlatesDataBase platesDataBase = new PlatesDataBase(PlateViewActivity.this, plate);
+//                onBackPressed();
+                PlatesDatabase platesDataBase = new PlatesDatabase(PlateViewActivity.this, plate);
                 platesDataBase.delete();
 //                Toast.makeText(PlateViewActivity.this, "" + plate.getId(), Toast.LENGTH_SHORT).show();
                 if(platesDataBase.isSuccess()){
@@ -155,13 +153,14 @@ public class PlateViewActivity extends AppCompatActivity {
         confirm.show();
     }
 
-
     private void initIconMenu(Menu menu){
         if(isAnAdministrator){
             iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
             iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
+            iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
             iconEdit.setVisible(true);
             iconDelete.setVisible(true);
+            iconGalery.setVisible(true);
         }
     }
 }

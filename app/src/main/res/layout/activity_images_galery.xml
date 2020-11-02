@@ -4,7 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.platesViews.PlatesImagesActivity">
+    tools:context=".views.galeryViews.GaleryActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_marginVertical="10dp"/>
     
     <GridView
         android:id="@+id/gvImages"

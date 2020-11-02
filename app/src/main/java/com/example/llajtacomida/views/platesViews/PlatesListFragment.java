@@ -1,6 +1,5 @@
 package com.example.llajtacomida.views.platesViews;
 
-import android.graphics.Path;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.ObjectParent;
 import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
 import com.example.llajtacomida.views.ArrayAdapterPlate;
@@ -32,7 +30,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -157,7 +154,7 @@ public class PlatesListFragment extends Fragment {
                         Log.e("Error", e.getMessage());
                     }
                 }
-                if(snapshot != null){
+                if(platesList.isEmpty()){
                     try {
                         arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, platesList);
                     }catch (Exception e){

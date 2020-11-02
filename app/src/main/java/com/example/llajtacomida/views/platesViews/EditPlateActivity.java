@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.service.autofill.OnClickAction;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDataBase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -121,31 +120,32 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 uri = result.getUri();
+
+                // Segunda parte
+                File file = new File(uri.getPath());
+
+                // cargamos al imagen al ivPhoto con picaso
+//                Picasso.with(this).load(file).into(ivPhoto);
+                ivPhoto.setImageURI(uri);
+                //Comprimir imagen
+                try{
+                    thumb_bitmap = new Compressor(this)
+                            .setMaxWidth(640)
+                            .setMaxHeight(480)
+                            .setQuality(90)
+                            .compressToBitmap(file);
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
+                thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
+                // Fin del compresor
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
         }
-
-        File file = new File(uri.getPath());
-
-        // cargamos al imagen al ivPhoto con picaso
-//                Picasso.with(this).load(file).into(ivPhoto);
-        ivPhoto.setImageURI(uri);
-        //Comprimir imagen
-        try{
-            thumb_bitmap = new Compressor(this)
-                    .setMaxWidth(640)
-                    .setMaxHeight(480)
-                    .setQuality(90)
-                    .compressToBitmap(file);
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
-        thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
-        thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
-        // Fin del compresor
     }
 
 
@@ -155,7 +155,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         plate.setName(etName.getText().toString());
         plate.setIngredients(etIngredients.getText().toString());
         plate.setOrigin(etOrigin.getText().toString());
-        PlatesDataBase platesDataBase = new PlatesDataBase(this, plate, thumb_byte);
+        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
         platesDataBase.upDate();
         onBackPressed();
     }

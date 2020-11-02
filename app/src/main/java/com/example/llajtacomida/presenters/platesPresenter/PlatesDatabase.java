@@ -20,7 +20,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
-public class PlatesDataBase{
+public class PlatesDatabase {
 
     private final DatabaseReference databaseReference;
     private final StorageReference storageReference;
@@ -29,22 +29,22 @@ public class PlatesDataBase{
     private byte  [] thumb_byte;
     private Uri url;
 
-    private static boolean success;
+    private static boolean isSuccess;
     private boolean processComplete;
 
-    public PlatesDataBase(Context context, Plate plate, final byte [] thumb_byte) {
-
+    public PlatesDatabase(final Context context, final Plate plate, final byte [] thumb_byte) {
         this.context = context;
         this.plate = plate;
         this.thumb_byte = thumb_byte; // es l aimagen comprimida
-        this.success = false;
+        this.isSuccess = false;
         this.processComplete = false;
         url = null;
 //        Configiración de la base de datos
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference().child("App")
-                .child("plates").child(plate.getId());
+                .child("plates")
+                .child(plate.getId());
         storageReference = FirebaseStorage
                 .getInstance()
                 .getReference()
@@ -54,7 +54,7 @@ public class PlatesDataBase{
                 .child(plate.getId()+".jpg");;
     }
 
-    public PlatesDataBase(Context context, Plate plate){
+    public PlatesDatabase(Context context, Plate plate){
         this.context = context;
         this.plate = plate;
         databaseReference = FirebaseDatabase
@@ -67,8 +67,8 @@ public class PlatesDataBase{
     }
 
     public void delete(){
-        success = true;
-        success = success && storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        isSuccess = true;
+        isSuccess = isSuccess && storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 databaseReference.removeValue();
@@ -103,26 +103,22 @@ public class PlatesDataBase{
     }
 
     private void uploadData(){
-
         UploadTask uploadTask = storageReference.putBytes(thumb_byte);
         Task<Uri> uriTask =  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-
                 if(task.isSuccessful()){
-                    PlatesDataBase.success = true;
+                    PlatesDatabase.isSuccess = true;
                     return storageReference.getDownloadUrl();
                 }else{
-                    PlatesDataBase.success = false;
+                    PlatesDatabase.isSuccess = false;
                     throw Objects.requireNonNull(task.getException());
                 }
-
             }
         }).addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if(success){ // Si se subió la imagen, procedemos al registro en la base de datos
+                if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
                     url = task.getResult();
                     plate.setUrl(url.toString());
                     databaseReference.setValue(plate);
@@ -140,7 +136,7 @@ public class PlatesDataBase{
     }
 
     public boolean isSuccess(){
-        return success;
+        return isSuccess;
     }
 
 }
