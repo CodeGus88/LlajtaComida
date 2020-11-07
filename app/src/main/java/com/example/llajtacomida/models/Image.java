@@ -6,13 +6,16 @@ public class Image {
 
     private String id;
     private String url;
+    private String fileName;
 
     public Image(String id){
         this.id = id;
+        fileName = id + ".jpg";
     }
 
     public Image(){
         this.id = UUID.randomUUID().toString();
+        fileName = id + ".jpg";
     }
 
     public String getId() {
@@ -31,11 +34,20 @@ public class Image {
         this.url = url;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     @Override
     public String toString() {
         return "Image{" +
                 "id='" + id + '\'' +
                 ", url='" + url + '\'' +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

@@ -18,6 +18,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class PlatesDatabase {
@@ -51,7 +53,7 @@ public class PlatesDatabase {
                 .child("images")
                 .child("plates")
                 .child(plate.getId())
-                .child(plate.getId()+".jpg");;
+                .child(plate.getId()+".jpg");
     }
 
     public PlatesDatabase(Context context, Plate plate){
@@ -63,7 +65,6 @@ public class PlatesDatabase {
                 .child("plates").child(plate.getId());
         storageReference = FirebaseStorage.getInstance().getReference()
                 .child("images/plates/"+plate.getId()+"/"+plate.getId()+".jpg");
-
     }
 
     public void delete(){
@@ -89,15 +90,14 @@ public class PlatesDatabase {
             Toast.makeText(context, "No se detectó ninguna imagen", Toast.LENGTH_SHORT).show();
         }
         processComplete = true;
-
     }
 
     public void upDate(){
         if(thumb_byte != null){
-            uploadData();
+            update();
         }else{
-            databaseReference.setValue(plate);
-            Toast.makeText(context, "Se completó la edición", Toast.LENGTH_SHORT).show();
+            databaseReference.updateChildren(plate.toMap());
+            Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
         }
         processComplete = true;
     }
@@ -125,6 +125,35 @@ public class PlatesDatabase {
                     Toast.makeText(context, "Se procesó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo subir el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        processComplete = uriTask.isComplete();
+    }
+
+    private void update(){
+        UploadTask uploadTask = storageReference.putBytes(thumb_byte);
+        Task<Uri> uriTask =  uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if(task.isSuccessful()){
+                    PlatesDatabase.isSuccess = true;
+                    return storageReference.getDownloadUrl();
+                }else{
+                    PlatesDatabase.isSuccess = false;
+                    throw Objects.requireNonNull(task.getException());
+                }
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
+                    url = task.getResult();
+                    plate.setUrl(url.toString());
+                    databaseReference.updateChildren(plate.toMap());
+                    Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(context, "No se pudo actualizar el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();
                 }
             }
         });

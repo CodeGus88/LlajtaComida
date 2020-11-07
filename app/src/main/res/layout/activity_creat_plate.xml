@@ -34,6 +34,7 @@
             android:padding="10dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text">
@@ -42,11 +43,13 @@
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/etPlateName"/>
+                    android:hint="@string/etPlateName"
+                    android:inputType="textWebEditText"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilIngredients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text"
@@ -55,13 +58,15 @@
                 <EditText
                     android:id="@+id/etIngredients"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/etPlateIngredients"
-                    android:gravity="left"/>
+                    android:gravity="left"
+                    android:inputType="textMultiLine"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilOrigin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text"
@@ -70,18 +75,14 @@
                 <EditText
                     android:id="@+id/etOrigin"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/etPlateOrigin"
                     android:layout_marginTop="10dp"
-                    android:gravity="left"/>
+                    android:gravity="left"
+                    android:inputType="textMultiLine"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:weightSum="2">-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,7 +96,7 @@
                         android:id="@+id/btnSelectPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btnFoto"
+                        android:text="@string/btnPhotoPlate"
                         android:background="#00FFFFFF"
                         android:gravity="fill"
                         android:textAllCaps="false"
@@ -108,11 +109,11 @@
                         app:cardElevation="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginHorizontal="5dp"
                         android:scaleY="1"
                         android:scaleX="1"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp">
                         <ImageView
                             android:id="@+id/ivPhoto"
                             android:layout_marginHorizontal="5dp"

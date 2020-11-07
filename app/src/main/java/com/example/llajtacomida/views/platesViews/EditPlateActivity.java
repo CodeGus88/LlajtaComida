@@ -20,6 +20,8 @@ import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.example.llajtacomida.presenters.tools.Validation;
+import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -46,14 +48,14 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_edit_plate);
 
         //Configiración del boton atrás
-        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        getSupportActionBar().setTitle(R.string.platesTitle);
+//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         thumb_bitmap = null;
 
         initComponents();
         loadPlate();
-
     }
 
     private void loadPlate(){
@@ -150,14 +152,42 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
 
     private void updatePlate(){
-        Toast.makeText(this, "Actualizando el elemento...", Toast.LENGTH_LONG).show();
-        Plate plate = this.plate;
-        plate.setName(etName.getText().toString());
-        plate.setIngredients(etIngredients.getText().toString());
-        plate.setOrigin(etOrigin.getText().toString());
-        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
-        platesDataBase.upDate();
-        onBackPressed();
+
+        String name = etName.getText().toString();
+        String ingredients = etIngredients.getText().toString();
+        String origin = etOrigin.getText().toString();
+
+        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
+        TextInputLayout textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
+        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOrigin);
+
+        if(Validation.isNotEmpty(name) ){
+            textInputLayoutName.setError(null);
+            if(Validation.isNotEmpty(ingredients)){
+                textInputLayoutIngredients.setError(null);
+                if(Validation.isNotEmpty(origin)){
+                    textInputLayoutOrigin.setError(null);
+                        Toast.makeText(this, "Actualizando el elemento...", Toast.LENGTH_LONG).show();
+//                        Plate plate = this.plate;
+                        plate.setName(name);
+                        plate.setIngredients(ingredients);
+                        plate.setOrigin(origin);
+                        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
+                        platesDataBase.upDate();
+                        onBackPressed();
+                }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();
+            } else  textInputLayoutIngredients.setError("El campo ingredientes es obligatorio"); // etIngredients.setError("El campo ingredientes es obligatorio"); // Toast.makeText(this, "El campo ingredientes es obligatorio", Toast.LENGTH_SHORT).show();
+        }else textInputLayoutName.setError("El campo nombre es obligatorio");
+
+//        Toast.makeText(this, "Actualizando el elemento...", Toast.LENGTH_LONG).show();
+//        Plate plate = this.plate;
+//        plate.setName(etName.getText().toString());
+//        plate.setIngredients(etIngredients.getText().toString());
+//        plate.setOrigin(etOrigin.getText().toString());
+//        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
+//        platesDataBase.upDate();
+//        onBackPressed();
+
     }
 
     /**

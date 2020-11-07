@@ -45,7 +45,8 @@
         android:layout_below="@id/tvTitleItem"
         android:text="Descripcion"
         android:textStyle="italic"
-        android:maxLines="1"
+        android:maxLines="2"
+        android:textSize="10dp"
         android:layout_toRightOf="@+id/cvPhoto"
         android:layout_marginLeft="5dp"/>
 

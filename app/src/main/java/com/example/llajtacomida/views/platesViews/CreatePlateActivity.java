@@ -19,6 +19,8 @@ import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
 import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.example.llajtacomida.presenters.tools.Validation;
+import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -43,8 +45,8 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_plate);
         // Configuración del boton atrás
-        //        getSupportActionBar().setTitle("text");
-        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        getSupportActionBar().setTitle(R.string.platesTitle);
+//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
@@ -75,17 +77,34 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
 
     private void storePlate() throws InterruptedException {
-        Toast.makeText(this, "Subiendo elemento...", Toast.LENGTH_LONG).show();
-        Plate plate = new Plate();
-        plate.setName(etName.getText().toString());
-        plate.setIngredients(etIngredients.getText().toString());
-        plate.setOrigin(etOrigin.getText().toString());
-        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
-        platesDataBase.storePlate();
-        onBackPressed();
+        String name = etName.getText().toString();
+        String ingredients = etIngredients.getText().toString();
+        String origin = etOrigin.getText().toString();
+
+        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
+        TextInputLayout textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
+        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOrigin);
+
+        if(Validation.isNotEmpty(name) ){
+            textInputLayoutName.setError(null);
+            if(Validation.isNotEmpty(ingredients)){
+                textInputLayoutIngredients.setError(null);
+                if(Validation.isNotEmpty(origin)){
+                    textInputLayoutOrigin.setError(null);
+                    if(thumb_byte != null){
+                        Toast.makeText(this, "Subiendo elemento...", Toast.LENGTH_LONG).show();
+                        Plate plate = new Plate();
+                        plate.setName(name);
+                        plate.setIngredients(ingredients);
+                        plate.setOrigin(origin);
+                        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
+                        platesDataBase.storePlate();
+                        onBackPressed();
+                    }else Toast.makeText(this, "La imagen es obligatoria", Toast.LENGTH_SHORT).show();
+                }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();
+            } else  textInputLayoutIngredients.setError("El campo ingredientes es obligatorio"); // etIngredients.setError("El campo ingredientes es obligatorio"); // Toast.makeText(this, "El campo ingredientes es obligatorio", Toast.LENGTH_SHORT).show();
+        }else textInputLayoutName.setError("El campo nombre es obligatorio"); // etName.setError("El campo nombre es obligatorio"); //Toast.makeText(this, "El campo nombre es obligatorio", Toast.LENGTH_SHORT).show();
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Cargar y comprimir el archivo
@@ -123,7 +142,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                 Exception error = result.getError();
             }
         }
-
     }
 
 

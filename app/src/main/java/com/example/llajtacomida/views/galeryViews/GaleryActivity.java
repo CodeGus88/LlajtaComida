@@ -71,14 +71,15 @@ public class GaleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images_galery);
 
-        //Configiración del boton atrás
-        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         // Recojer datos de entrada
         nodeCollectionName = getIntent().getStringExtra("nodeCollectionName");
         parentName = getIntent().getStringExtra("parentName");
         parentId = getIntent().getStringExtra("parentId");
+
+        //Configiración del titlo del toolbar y boton atrás
+        getSupportActionBar().setTitle(nodeCollectionName);
+//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         isAnAdministrator = true;
         imageList = new ArrayList<Image>();
@@ -100,16 +101,17 @@ public class GaleryActivity extends AppCompatActivity {
     private void initComponents(){
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         gvGalery= (GridView) findViewById(R.id.gvImages);
-        tvTitle.setText(parentName);
+        tvTitle.setText("Imágenes de " + parentName);
 
         gvGalery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 image = arrayAdapterImagesGalery.getImage(position);
-                addDeleteImage("Quitar", "¿Quitar esta imagen?", "delete", image);
+                addDeleteImage("Imagen", "Id: "+image.getId()
+                        +"\nUrl: " + image.getUrl()
+                        +"\n¿Quitar esta imagen?", "delete", image, "Quitar");
             }
         });
-
     }
 
     private void initDataBase(){
@@ -198,7 +200,7 @@ public class GaleryActivity extends AppCompatActivity {
 
                 if(thumb_bitmap != null){
                     image = new Image();
-                    addDeleteImage("Agregar", "¿Quiere agregar la imagen recortada?", "add", image);
+                    addDeleteImage("Agregar", "¿Quiere agregar la imagen recortada?", "add", image, "Agregar");
                 }
                 thumb_bitmap = null;
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -207,12 +209,20 @@ public class GaleryActivity extends AppCompatActivity {
         }
     }
 
-    private void addDeleteImage(final String title, final String menssage, final String verbo, final Image image){
+    /**
+     * Agrega e elimina imágenes
+     * @param title
+     * @param menssage
+     * @param verbo
+     * @param image
+     * @param btn
+     */
+    private void addDeleteImage(final String title, final String menssage, final String verbo, final Image image, final String btn){
         AlertDialog.Builder confirm = new AlertDialog.Builder(this);
         confirm.setTitle(title);
         confirm.setMessage(menssage);
         confirm.setCancelable(false);
-        confirm.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+        confirm.setPositiveButton(btn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
 //                public GaleryDatabase(Context context, String objectParentType, String parentId, String resurceDestination , Image image, byte [] thumb_byte){
                 String resurceDestination = "images/plates/"+parentId+"/"+image.getId()+".jpg";
@@ -228,7 +238,7 @@ public class GaleryActivity extends AppCompatActivity {
         });
         confirm.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                Toast.makeText(GaleryActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(GaleryActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
             }
         });
         confirm.show();

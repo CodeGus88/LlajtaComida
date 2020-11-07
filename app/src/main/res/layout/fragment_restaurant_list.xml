@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.restaurantsViews.RestaurantListFragment">
+    tools:context=".views.platesViews.PlatesListFragment"
+    android:orientation="vertical"
+    android:background="#2196F3">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Lista de restaurantes"
-        android:textSize="30sp"/>
+        android:layout_height="wrap_content"
+        android:text="@string/title_restaurants_list"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:fontFamily="serif"/>
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+
+        <EditText
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:drawableEnd="@drawable/icon_search_black"
+            android:inputType="textWebEditText"
+            android:hint="@string/search_restaurants"
+            android:visibility="gone"/>
+
+        <ListView
+            android:id="@+id/lvRestaurants"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@drawable/panel_gris"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="50dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

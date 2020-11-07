@@ -1,5 +1,11 @@
 package com.example.llajtacomida.models;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@IgnoreExtraProperties
 public class Plate extends ObjectParent {
 
     private String ingredients;
@@ -8,6 +14,7 @@ public class Plate extends ObjectParent {
     public Plate(String id){
         super(id);
     }
+
     public Plate(){
         super();
     }
@@ -32,8 +39,24 @@ public class Plate extends ObjectParent {
     public String toString() {
         return name;
     }
+
     @Override
     public String getResume() {
         return origin;
     }
+
+
+    @Exclude
+    public Map<String, Object> toMap(){
+
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name",  name);
+        result.put("url",  url);
+        result.put("ingredients",  ingredients);
+        result.put("origin",  origin);
+
+        return result;
+    }
+
 }

@@ -32,19 +32,53 @@
     <string name="add_icon">Agregar</string>
     <string name="edit_icon">Editar</string>
     <string name="delete_icon">Eliminar</string>
-    <string name="search_icon">Eliminar</string>
+    <string name="search_icon">Buscar</string>
     <string name="galery_icon">Galería</string>
 
 
     <!--    PLATES-->
     <string name="title_plates_list">Lista de platos</string>
+    <string name="search_plates">Buscar platos...</string>
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
-    <string name="search_plates">Buscar platos...</string>
     <string name="etPlateName">Nombre del plato</string>
     <string name="etPlateIngredients">Ingredientes</string>
     <string name="etPlateOrigin">Origen</string>
-    <string name="btnFoto">Selecciona una imagen del plato</string>
+    <string name="btnPhotoPlate">Toma una foto frontal del restaurante</string>
+
+
+    <!--  RESTAURANTS  -->
+    <string name="title_restaurants_list">Lista de restaurantes</string>
+    <string name="search_restaurants">Buscar restaurantes...</string>
+    <string name="title_creat_restaurant">Crear restaurante</string>
+    <string name="etRestaurantName">Nombre del restaurante</string>
+    <string name="etOwnerName">Nombre del propietario</string>
+    <string name="etAddress">Dirección del restaurante</string>
+    <string name="etPhone">Teléfono</string>
+    <string name="etOriginDesc">Origen y descipción del lugar</string>
+<!--    <string name="etLatitude">Latitud</string>-->
+<!--    <string name="etLongitude">Longitud</string>-->
+    <string name="btnPhotoRestaurant">Longitud</string>
+
+
+    <!--    Maps-->
+    <string name="search_Address">Buscar dirección...</string>
+    <string name="tvLatitude">Latitud</string>
+    <string name="tvLongitude">Longitud</string>
+    <string name="tvLatLng">No definido...</string>
+    <string name="markerTitle">Mover</string>
+    <string name="markerSearchDescription">Manten pulsado el marcador</string>
+    <string name="loadPosition">Estableciendo coordenadas...</string>
+    // spinner options
+    <string name="itemNormal">Normal</string>
+    <string name="itemHibrid">Híbrido</string>
+    <string name="itemSatellite">Satélite</string>
+    <string name="itemTerrain">Terreno</string>
+
+
+    <!-- toolBar titles   -->
+    <string name="platesTitle">Platos</string>
+    <string name="restaurantsTitle">Restaurantes</string>
 
 
     <!--  Plate view  -->

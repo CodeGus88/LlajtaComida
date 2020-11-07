@@ -2,13 +2,20 @@ package com.example.llajtacomida.views.restaurantsViews;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,13 @@ public class RestaurantListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private View view;
+
+    // componentes
+    private MenuItem iconSearch, iconAdd;
+    private ListView lvRestaurants;
+    private EditText etSearch;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -60,7 +74,58 @@ public class RestaurantListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true); // para cargar los iconos del toolBar
+        view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_restaurant_list, container, false);
+        lvRestaurants = (ListView) view.findViewById(R.id.lvRestaurants);
+        etSearch  =(EditText) view.findViewById(R.id.searchView);
+        return view;
+    }
+
+
+    // ----------------------------------->s
+
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+        inflater.inflate(R.menu.main, menu);
+        initIconsMenu(menu);
+    }
+
+    private void initIconsMenu(Menu menu) {
+        iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
+        iconSearch.setVisible(true);
+
+        iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
+        iconAdd.setVisible(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.iconSearch:
+//                if(!restaurantList.isEmpty()){
+                    if(etSearch.getVisibility() == View.GONE){
+                        etSearch.setVisibility(View.VISIBLE);
+                        etSearch.setText(null);
+                        etSearch.setFocusable(true);
+                        etSearch.requestFocus();
+                    }else{
+                        etSearch.setVisibility(View.GONE);
+                        // Para que vuelga a cargar la lista (0 es cualquier numero)
+//                        arrayAdapterPlates.filter("", 0);
+                    }
+//                }else{
+//                    Toast.makeText(getContext(), "¡Aún no se cargaron datos!", Toast.LENGTH_SHORT).show();
+//                }
+                break;
+            case R.id.iconAdd:
+                RestaurantPresenter.showCreatedRestaurantView(getContext());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

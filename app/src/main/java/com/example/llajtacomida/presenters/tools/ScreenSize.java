@@ -32,5 +32,4 @@ public class ScreenSize {
         }
         return height;
     }
-
 }

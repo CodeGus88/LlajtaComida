@@ -101,7 +101,7 @@ public class PlatesListFragment extends Fragment {
 
     private void initComponets() {
 
-        etSearch = (EditText) view.findViewById(R.id.etSearch);
+        etSearch = (EditText) view.findViewById(R.id.searchView);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
 
         platesList = new ArrayList<Plate>();
@@ -231,6 +231,4 @@ public class PlatesListFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

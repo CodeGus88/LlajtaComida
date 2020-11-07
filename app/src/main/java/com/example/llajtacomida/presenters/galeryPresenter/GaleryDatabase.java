@@ -4,33 +4,39 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.example.llajtacomida.models.Image;
+import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
+import com.example.llajtacomida.views.galeryViews.GaleryActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.util.Objects;
 
 public class GaleryDatabase {
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    private final Context context;
-    private final Image image;
-    private final byte thumb_byte [];
+    private Context context;
+    private  Image image;
+    private byte thumb_byte [];
     private boolean isComplete;
     private static boolean isSuccess;
     private Uri url;
+    private String objectParentType;
+    private String parentId;
+
+    private String dir;
 
     /**
      *
@@ -43,9 +49,28 @@ public class GaleryDatabase {
         this.context = context;
         this.image = image;
         this.thumb_byte = thumb_byte;
+        this.parentId = parentId;
+        this.objectParentType = objectParentType;
         isComplete = false;
         isSuccess = false;
         initDatabase(objectParentType, parentId, resurceDestination);
+    }
+
+    /**
+     * solo para eliminar todo
+     * @param context
+     * @param objectParentType
+     * @param parentId
+     */
+    public GaleryDatabase(Context context, String objectParentType, String parentId){
+        this.context = context;
+        this.parentId = parentId;
+        this.objectParentType = objectParentType;
+        isComplete = false;
+        isSuccess = false;
+        databaseReference= FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
     }
 
     public void initDatabase(String objectParentType, String parentId, String resurceDestination){
@@ -57,7 +82,6 @@ public class GaleryDatabase {
                     .child(image.getId());
             storageReference = FirebaseStorage.getInstance().getReference().child(resurceDestination);
     }
-
 
     /**
      * Sube la imagen a storange de la basde de datos y se crea un objeto referente el la base de datos de tiempo real
@@ -97,7 +121,7 @@ public class GaleryDatabase {
 
     public void deleteData(){
         isSuccess = true;
-        isSuccess = isSuccess && storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+        isSuccess = storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 databaseReference.removeValue();
@@ -109,6 +133,40 @@ public class GaleryDatabase {
                 Toast.makeText(context, "Oh no, algo salió mal\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }).isSuccessful();
+    }
+
+    public void deleteAllData() {
+
+        databaseReference.child("App").child(objectParentType).child(parentId).child("images").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot i:snapshot.getChildren()) {
+                    try {
+                        image = i.getValue(Image.class);
+                        String toUrl = "images/"+ objectParentType +"/"+ parentId+"/"+image.getFileName();
+                        StorageReference storageReference2 = FirebaseStorage.getInstance().getReference().child(toUrl);
+                        storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("Error:", "Se eliminó la imagen");
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                Log.e("Error:", exception.getMessage());
+//                                Toast.makeText(context, "Oh no, algo salió mal\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }catch (Exception e){
+                        Log.e("Error", e.getMessage());
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Error", "Algo salió mal");
+            }
+        });
     }
 
     public boolean isComplete(){
