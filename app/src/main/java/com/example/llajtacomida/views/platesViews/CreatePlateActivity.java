@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
+import com.example.llajtacomida.presenters.platesPresenter.PlateDatabase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,7 +51,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
         initComponents();
         thumb_bitmap = null;
-
     }
 
     @Override
@@ -60,7 +59,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()){
             case R.id.btnSelectPhoto:
 //                imageSelect();
-                PlatesPresenter.showCropImage(this);
+                PlatePresenter.showCropImage(this);
                 break;
             case R.id.btnStore:
                 try {
@@ -83,7 +82,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
         TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
         TextInputLayout textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
-        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOrigin);
+        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
 
         if(Validation.isNotEmpty(name) ){
             textInputLayoutName.setError(null);
@@ -97,7 +96,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                         plate.setName(name);
                         plate.setIngredients(ingredients);
                         plate.setOrigin(origin);
-                        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
+                        PlateDatabase platesDataBase = new PlateDatabase(this, plate, thumb_byte);
                         platesDataBase.storePlate();
                         onBackPressed();
                     }else Toast.makeText(this, "La imagen es obligatoria", Toast.LENGTH_SHORT).show();

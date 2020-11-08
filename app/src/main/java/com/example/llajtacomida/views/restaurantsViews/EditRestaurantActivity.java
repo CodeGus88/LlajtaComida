@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +15,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -26,42 +31,38 @@ import java.io.File;
 
 import id.zelory.compressor.Compressor;
 
-public class CreateRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
+public class EditRestaurantActivity extends AppCompatActivity implements View.OnClickListener {
 
-    // Components
     private EditText etName, etOwnerName, etAddress, etPhone, etOriginAndDescription;
     private TextView tvLatitude, tvLongitude;
-    private ImageButton btnSetLocate;
-    private Button btnSelectPhoto, btnCancel, btnStore;
+    private ImageButton btnResetPhoto, btnSetLocate;
+    private Button btnCancel, btnUpdate, btnSelectPhoto;
     private ImageView ivPhoto;
-
-    // object
     private Restaurant restaurant;
 
-    // Image select
-    private Uri uri;
+    // Comprimir foto
     private Bitmap thumb_bitmap;
     private byte  [] thumb_byte;
+    private Uri uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_restaurant);
-        // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.restaurantsTitle);
-//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        setContentView(R.layout.activity_edit_restaurant);
+        uri = null;
+        //Configiración del boton atrás
+        getSupportActionBar().setTitle(R.string.platesTitle);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initComponents();
-        readObjectIntent();
-        whriteForm();
-        readObjectIntent();
 
+        initComponents();
+        readObjectData();
+        whriteForm();
     }
 
-
-    private void readObjectIntent(){
+    private void readObjectData(){
         final Intent intent = this.getIntent();
         if(intent.hasExtra("restaurant")){
-            restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
+            restaurant = (Restaurant) getIntent().getSerializableExtra("restaurant");
             if(intent.hasExtra("uri")) { // Si tenia imagen al editar (volviendo desde mapa)
                 // codificar
                 String path = intent.getStringExtra("uri");
@@ -74,8 +75,42 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
                 }
             } else thumb_bitmap = null;
         }else{
-            restaurant = new Restaurant();
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+            onBackPressed();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Cargar y comprimir el archivo
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                uri = result.getUri();
+                // Segunda parte
+                File file = new File(uri.getPath());
+                processImage(file);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
+
+    private void  processImage(File file){
+        ivPhoto.setImageURI(uri);
+        //Comprimir imagen
+        try{
+            thumb_bitmap = new Compressor(this)
+                    .setMaxWidth(640)
+                    .setMaxHeight(480)
+                    .setQuality(90)
+                    .compressToBitmap(file);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
+        thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
+        thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
     }
 
     private void initComponents(){
@@ -88,14 +123,20 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         btnSetLocate = (ImageButton) findViewById(R.id.btnSetLocate);
         btnSelectPhoto = (Button) findViewById(R.id.btnSelectPhoto);
-        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
+        btnResetPhoto = (ImageButton) findViewById(R.id.btnResetPhoto);
         btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnStore = (Button) findViewById(R.id.btnStore);
-        //acction buttons
+        btnUpdate = (Button) findViewById(R.id.btnUpdate);
+        ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
+        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
+
         btnSetLocate.setOnClickListener(this);
         btnSelectPhoto.setOnClickListener(this);
+        btnResetPhoto.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
-        btnStore.setOnClickListener(this);
+        btnUpdate.setOnClickListener(this);
     }
 
     @Override
@@ -103,29 +144,43 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         switch (v.getId()){
             case R.id.btnSetLocate:
                 whriteRestaurant();
-                MapPresenter.showGetLocationMapActivity(this, restaurant, "create", uri.getPath());
+                String path;
+                    if(uri == null){ // Apara salvar la imagen de fondo
+                        path = "";
+                    }else{
+                        path = uri.getPath();
+                    }
+                MapPresenter.showGetLocationMapActivity(this, restaurant, "edit", path);
                 break;
             case R.id.btnSelectPhoto:
                 RestaurantPresenter.showCropImage(this);
                 break;
+            case R.id.btnResetPhoto:
+                thumb_byte = null;
+                Glide.with(this).load(restaurant.getUrl()).into(ivPhoto);
+                break;
+            case R.id.btnUpdate:
+                updatePlate();
+                break;
             case R.id.btnCancel:
                 onBackPressed();
-                break;
-            case R.id.btnStore:
-                storeRestaurant();
-//                Toast.makeText(this, "Store", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                Toast.makeText(this, "Invalid option", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
-    private void storeRestaurant(){
-        Toast.makeText(this, "Subiendo elemento...", Toast.LENGTH_LONG).show();
+
+    private void updatePlate(){
+        // Para realizar las validaciones
+        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
+        TextInputLayout textInputLayoutOwnerName = (TextInputLayout) findViewById(R.id.tilOwnerName);
+        TextInputLayout textInputLayoutAddress = (TextInputLayout) findViewById(R.id.tilAddress);
+        TextInputLayout textInputLayoutPhone = (TextInputLayout) findViewById(R.id.tilPhone);
+        TextInputLayout textInputLayoutOriginAndDescrption = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
+
         whriteRestaurant();
-        RestaurantDatabase platesDataBase = new RestaurantDatabase(this, restaurant, thumb_byte);
-        platesDataBase.storeRestaurant();
+        Toast.makeText(this, "Actualizando elemento...", Toast.LENGTH_SHORT).show();
+        RestaurantDatabase restaurantDataBase = new RestaurantDatabase(this, restaurant, thumb_byte);
+        restaurantDataBase.upDate();
         onBackPressed();
     }
 
@@ -153,48 +208,11 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         etOriginAndDescription.setText(restaurant.getOriginAndDescription());
         tvLatitude.setText(restaurant.getLatitude());
         tvLongitude.setText(restaurant.getLongitude());
-//        ivPhoto // su trado es distinto y se precargar dessde el getIntent en caso de que se vuelva del mapa
-    }
-
-    /**
-     * Código de la vista de 
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK) {
-                uri = result.getUri();
-                //Segunda parte
-                File file = new File(uri.getPath());
-                processImage(file);
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-            }
+        if(thumb_bitmap == null){
+            Glide.with(this).load(restaurant.getUrl()).into(ivPhoto);
+        }else{
+            ivPhoto.setImageBitmap(thumb_bitmap);
         }
-    }
-
-    private void processImage(File file){
-        ivPhoto.setImageURI(uri);
-        //Comprimir imagen
-        try{
-            thumb_bitmap = new Compressor(this)
-                    .setMaxWidth(640)
-                    .setMaxHeight(480)
-                    .setQuality(90)
-                    .compressToBitmap(file);
-        }catch (Exception e){
-//                                Log.i("EROOR", e.getMessage());
-            e.printStackTrace();
-        }
-        ByteArrayOutputStream biByteArrayOutputStream  = new ByteArrayOutputStream();
-        thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 90, biByteArrayOutputStream);
-        thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
-        // Fin del compresor
     }
 
     /**

@@ -21,8 +21,7 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
-import com.example.llajtacomida.views.ArrayAdapterPlate;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,7 +62,7 @@ public class PlatesListFragment extends Fragment {
 
 
     // Para listar platos
-    private ArrayList<Plate> platesList, platesListCopy;
+    private ArrayList<Plate> platesList;
     private ArrayAdapterPlate arrayAdapterPlates;
 
     private boolean isAnAdministrator;
@@ -99,18 +98,18 @@ public class PlatesListFragment extends Fragment {
         }
     }
 
-    private void initComponets() {
+    private void initComponents() {
 
         etSearch = (EditText) view.findViewById(R.id.searchView);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
 
         platesList = new ArrayList<Plate>();
-        platesListCopy = new ArrayList<Plate>();
+//        platesListCopy = new ArrayList<Plate>();
 
         lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PlatesPresenter.showPlateView(getContext(), platesList.get(position));
+                PlatePresenter.showPlateView(getContext(), platesList.get(position));
             }
         });
 
@@ -180,7 +179,7 @@ public class PlatesListFragment extends Fragment {
 
         isAnAdministrator = true;
 
-        initComponets();
+        initComponents();
         initDataBase();
         loadListPlates();
 
@@ -226,7 +225,7 @@ public class PlatesListFragment extends Fragment {
                 }
                 break;
             case R.id.iconAdd:
-                PlatesPresenter.showCreatedPlateView(getContext());
+                PlatePresenter.showCreatedPlateView(getContext());
                 break;
         }
         return super.onOptionsItemSelected(item);

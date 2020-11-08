@@ -5,17 +5,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,9 +47,14 @@ public class RestaurantListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private View view;
+    private ArrayList<Restaurant> restaurantsList;
+    private ArrayAdapterRestaurant arrayAdapterRestaurant;
 
+    // database
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     // componentes
+    private View view;
     private MenuItem iconSearch, iconAdd;
     private ListView lvRestaurants;
     private EditText etSearch;
@@ -74,18 +93,18 @@ public class RestaurantListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         setHasOptionsMenu(true); // para cargar los iconos del toolBar
         view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         // Inflate the layout for this fragment
-        lvRestaurants = (ListView) view.findViewById(R.id.lvRestaurants);
-        etSearch  =(EditText) view.findViewById(R.id.searchView);
+
+        initComponents();
+        initDataBase();
+        loadListRestaurants();
         return view;
     }
 
 
-    // ----------------------------------->s
-
+    // ----------------------------------->
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -103,11 +122,73 @@ public class RestaurantListFragment extends Fragment {
         iconAdd.setVisible(true);
     }
 
+    private void initComponents() {
+        etSearch = (EditText) view.findViewById(R.id.searchView);
+        lvRestaurants = (ListView) view.findViewById(R.id.lvRestaurants);
+        restaurantsList = new ArrayList<Restaurant>();
+        lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RestaurantPresenter.showRestaurantView(getContext(), restaurantsList.get(position));
+            }
+        });
+        etSearch.addTextChangedListener(new TextWatcher() { // para buscar mientras se escribe
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    arrayAdapterRestaurant.filter(s.toString(), start);
+                }catch (Exception e){
+                    Log.e("Error: ", e.getMessage());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+    }
+
+    private void initDataBase(){
+        FirebaseApp.initializeApp(getContext());
+        firebaseDatabase = firebaseDatabase.getInstance();
+        databaseReference =  firebaseDatabase.getReference().child("App").child("restaurants");
+    }
+
+    private void loadListRestaurants(){
+        databaseReference.orderByChild("name").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                restaurantsList.clear();
+                for (DataSnapshot plate : snapshot.getChildren()){
+                    try {
+                        Restaurant r = plate.getValue(Restaurant.class); // Para el  uso de esta estrategia el contructor del objeto plato no debe recibir ningún parámetro
+                        restaurantsList.add(r);
+                        arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantsList);
+                        lvRestaurants.setAdapter(arrayAdapterRestaurant);
+                    }catch (Exception e){
+                        Log.e("Error", e.getMessage());
+                    }
+                }
+                if(restaurantsList.isEmpty()){
+                    try {
+                        arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantsList);
+                    }catch (Exception e){
+                        Log.e("Error", e.getMessage());
+                    }
+                    lvRestaurants.setAdapter(arrayAdapterRestaurant);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "No se pudo cargar la lista", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSearch:
-//                if(!restaurantList.isEmpty()){
                     if(etSearch.getVisibility() == View.GONE){
                         etSearch.setVisibility(View.VISIBLE);
                         etSearch.setText(null);
@@ -115,12 +196,7 @@ public class RestaurantListFragment extends Fragment {
                         etSearch.requestFocus();
                     }else{
                         etSearch.setVisibility(View.GONE);
-                        // Para que vuelga a cargar la lista (0 es cualquier numero)
-//                        arrayAdapterPlates.filter("", 0);
                     }
-//                }else{
-//                    Toast.makeText(getContext(), "¡Aún no se cargaron datos!", Toast.LENGTH_SHORT).show();
-//                }
                 break;
             case R.id.iconAdd:
                 RestaurantPresenter.showCreatedRestaurantView(getContext());

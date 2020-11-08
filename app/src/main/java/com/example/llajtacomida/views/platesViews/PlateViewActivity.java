@@ -24,19 +24,15 @@ import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Image;
 import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
+import com.example.llajtacomida.presenters.platesPresenter.PlateDatabase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
-import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
-import com.example.llajtacomida.views.galeryViews.GaleryActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.util.ArrayList;
@@ -86,7 +82,7 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
         width = ScreenSize.getWidth(display);
 
 
-        inicializarDataBase();
+        initDatabase();
         id = getIntent().getStringExtra("id");
         showPlate(); // Inicializa plate
 
@@ -121,7 +117,7 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
         btnNext.setOnClickListener(this);
     }
 
-    private void inicializarDataBase(){
+    private void initDatabase(){
         FirebaseApp.initializeApp(this);
         firebaseDatabase = firebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -181,7 +177,6 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
                                 new ViewGroup.LayoutParams((int) (width*0.89), (int) (height*0.89))
                         );
                         viewFlipper.addView(cv);
-
                         initAnimation();
                     }catch (Exception e){
                         Log.e("Error", e.getMessage());
@@ -212,13 +207,13 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconEdit:
-                PlatesPresenter.showEditPlateView(this, plate);
+                PlatePresenter.showEditPlateView(this, plate);
                 break;
             case R.id.iconDelete:
                 delete();
                 break;
             case R.id.iconGalery:
-                PlatesPresenter.showGalery(this, plate.getId(),  plate.getName());
+                PlatePresenter.showGalery(this, plate.getId(),  plate.getName());
         }
         return super.onOptionsItemSelected(item);
     }
@@ -230,7 +225,7 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
         confirm.setCancelable(false);
         confirm.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                PlatesDatabase platesDataBase = new PlatesDatabase(PlateViewActivity.this, plate);
+                PlateDatabase platesDataBase = new PlateDatabase(PlateViewActivity.this, plate);
                 // Antes de eliminar el plato, debemos eliminar todos sus archivos
                 GaleryDatabase galeryDatabase = new GaleryDatabase(PlateViewActivity.this, "plates", plate.getId());
                 galeryDatabase.deleteAllData(); // es un metodo estatico
@@ -246,16 +241,16 @@ public class PlateViewActivity extends AppCompatActivity implements View.OnClick
         confirm.show();
     }
 
-    private void initIconMenu(Menu menu){
-        if(isAnAdministrator){
-            iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
-            iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
-            iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
-            iconEdit.setVisible(true);
-            iconDelete.setVisible(true);
-            iconGalery.setVisible(true);
+        private void initIconMenu(Menu menu){
+            if(isAnAdministrator){
+                iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
+                iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
+                iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
+                iconEdit.setVisible(true);
+                iconDelete.setVisible(true);
+                iconGalery.setVisible(true);
+            }
         }
-    }
 
 
     @Override

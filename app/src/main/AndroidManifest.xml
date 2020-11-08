@@ -7,7 +7,7 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.restaurantsViews.CreateRestaurantActivity"></activity>
+        <activity android:name=".views.restaurantsViews.EditRestaurantActivity"></activity>
+        <activity android:name=".views.restaurantsViews.CreateRestaurantActivity" />
         <activity android:name=".views.galeryViews.GaleryActivity" />
         <activity android:name=".views.platesViews.EditPlateActivity">
 

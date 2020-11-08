@@ -4,6 +4,7 @@ package com.example.llajtacomida.presenters.platesPresenter;
         import android.content.Context;
         import android.content.Intent;
 
+        import com.example.llajtacomida.R;
         import com.example.llajtacomida.models.Plate;
         import com.example.llajtacomida.views.galeryViews.GaleryActivity;
         import com.example.llajtacomida.views.platesViews.CreatePlateActivity;
@@ -12,7 +13,7 @@ package com.example.llajtacomida.presenters.platesPresenter;
         import com.theartofdev.edmodo.cropper.CropImage;
         import com.theartofdev.edmodo.cropper.CropImageView;
 
-public class PlatesPresenter {
+public class PlatePresenter {
 
     public static void showCreatedPlateView(Context context) {
         Intent intent = new Intent(context, CreatePlateActivity.class);
@@ -33,9 +34,9 @@ public class PlatesPresenter {
 
     public static void showCropImage(Activity context) {
         CropImage.activity()
+                .setActivityTitle(context.getString(R.string.plateImageCropTitle))
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setRequestedSize(1023, 700)
-//                .setRequestedSize(640, 640)
                 .setAspectRatio(3, 2)
                 .start(context);
     }

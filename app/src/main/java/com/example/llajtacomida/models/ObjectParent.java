@@ -18,12 +18,10 @@ public abstract class ObjectParent implements Serializable {
     public ObjectParent(){
         id = UUID.randomUUID().toString();
         this.url = "";
-//        images = new Hashtable<String, Image>();
     }
     public ObjectParent(String id){
         this.id = id;
         this.url = "";
-//        images = new Hashtable<String, Image>();
     }
 
     public String getId() {
@@ -50,10 +48,10 @@ public abstract class ObjectParent implements Serializable {
         this.url = url;
     }
 
-    public abstract String getResume(); // Para mostrar un pequeño resumen de lo que se quiere obtener (nombre, descripcion, etc)
-
     public  abstract String toString(); // Se usará alimentar al buscador (Algunos paquetes buscan a este método por defecto para obtener info)
 
+
+    //    public abstract String getResume(); // Para mostrar un pequeño resumen de lo que se quiere obtener (nombre, descripcion, etc)
 
     //    Prueba
 //    public void setImages(Hashtable<String, Image> images){
@@ -63,10 +61,10 @@ public abstract class ObjectParent implements Serializable {
 //    public Hashtable<String, Image> getImages(){
 //        return images;
 //    }
-
-    public void getNode(){
-
-    }
+//
+//    public void getNode(){
+//
+//    }
 
 
 

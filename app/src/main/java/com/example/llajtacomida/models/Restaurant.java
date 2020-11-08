@@ -1,6 +1,10 @@
 package com.example.llajtacomida.models;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Restaurant extends ObjectParent implements Serializable {
 
@@ -60,12 +64,22 @@ public class Restaurant extends ObjectParent implements Serializable {
     }
 
     @Override
-    public String getResume() {
-        return null;
+    public String toString() {
+        return name;
     }
 
-    @Override
-    public String toString() {
-        return null;
+    @Exclude
+    public Map<String, Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name",  name);
+        result.put("url",  url);
+        result.put("ownerName",  ownerName);
+        result.put("address",  address);
+        result.put("phone",  phone);
+        result.put("originAndDescription",  originAndDescription);
+        result.put("latitude",  latitude);
+        result.put("longitude",  longitude);
+        return result;
     }
 }

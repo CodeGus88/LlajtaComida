@@ -1,4 +1,4 @@
-package com.example.llajtacomida.views;
+package com.example.llajtacomida.views.restaurantsViews;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,80 +7,70 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.ObjectParent;
-import com.example.llajtacomida.models.Plate;
-
+import com.example.llajtacomida.models.Restaurant;
 import java.util.ArrayList;
 
 
-public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
+public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
 
-    private ArrayList<Plate> plateList;
-    private ArrayList<Plate> plateListCopy;
+    private ArrayList<Restaurant> restaurantList;
+    private ArrayList<Restaurant> restaurantListCopy;
     private Context context;
     private int resource;
 
-    public ArrayAdapterPlate(@NonNull Context context, int resource, @NonNull ArrayList <Plate> objects) {
+    public ArrayAdapterRestaurant(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> objects) {
             super(context, resource, objects);
             this.resource = resource;
             this.context = context;
-            this.plateListCopy = new ArrayList<Plate>();
-            this.plateList = objects;
-            this.plateListCopy.addAll(objects);
+            this.restaurantListCopy = new ArrayList<Restaurant>();
+            this.restaurantList = objects;
+            this.restaurantListCopy.addAll(objects);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-
         if(view == null) {
             view = LayoutInflater.from(context).inflate(resource, null);
         }
-
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
-
-        Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
-        tvTitleItem.setText(plateList.get(position).getName());
-        tvResumeItem.setText(plateList.get(position).getResume());
-
+        Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivPhotoItem);
+        tvTitleItem.setText(restaurantList.get(position).getName());
+        tvResumeItem.setText(restaurantList.get(position).getAddress());
         return view;
     }
 
     /* Filtra los datos del adaptador */
     public void filter(String texto, int previousLentg) {
-
         texto = texto.toLowerCase();
-
         if(!texto.isEmpty()) {
             if(texto.length() == previousLentg){ // Si se presionó borrar
-                plateList.clear();
-                plateList.addAll(plateListCopy);
+                restaurantList.clear();
+                restaurantList.addAll(restaurantListCopy);
             }
             search(texto);
-        }else if(plateList.size() != plateListCopy.size()){
-            if(plateList.size() > 0){
-                plateList.clear();
+        }else if(restaurantList.size() != restaurantListCopy.size()){
+            if(restaurantList.size() > 0){
+                restaurantList.clear();
             }
-            plateList.addAll(plateListCopy);
+            restaurantList.addAll(restaurantListCopy);
         }
         notifyDataSetChanged();
     }
 
     public void search(String texto){
         int i = 0;
-        while (i < plateList.size()) {
-            String string = plateList.get(i).toString().toLowerCase();
+        while (i < restaurantList.size()) {
+            String string = restaurantList.get(i).toString().toLowerCase();
             if (!string.contains(texto)) {
-                plateList.remove(i);
+                restaurantList.remove(i);
             } else {
                 i++;
             }

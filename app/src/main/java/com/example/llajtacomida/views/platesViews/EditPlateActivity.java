@@ -18,12 +18,12 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesDatabase;
+import com.example.llajtacomida.presenters.platesPresenter.PlateDatabase;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -90,7 +90,8 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnSelectPhoto:
-                imageSelect();
+//                imageSelect();
+                PlatePresenter.showCropImage(this);
                 break;
             case R.id.btnResetPhoto:
                 thumb_byte = null;
@@ -103,15 +104,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
                 onBackPressed();
                 break;
         }
-    }
-
-    private void imageSelect(){
-        CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setRequestedSize(1023, 700)
-//                .setRequestedSize(640, 640)
-                .setAspectRatio(3, 2)
-                .start(this);
     }
 
     @Override
@@ -159,7 +151,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
         TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
         TextInputLayout textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
-        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOrigin);
+        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
 
         if(Validation.isNotEmpty(name) ){
             textInputLayoutName.setError(null);
@@ -172,22 +164,12 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
                         plate.setName(name);
                         plate.setIngredients(ingredients);
                         plate.setOrigin(origin);
-                        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
+                        PlateDatabase platesDataBase = new PlateDatabase(this, plate, thumb_byte);
                         platesDataBase.upDate();
                         onBackPressed();
                 }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();
             } else  textInputLayoutIngredients.setError("El campo ingredientes es obligatorio"); // etIngredients.setError("El campo ingredientes es obligatorio"); // Toast.makeText(this, "El campo ingredientes es obligatorio", Toast.LENGTH_SHORT).show();
         }else textInputLayoutName.setError("El campo nombre es obligatorio");
-
-//        Toast.makeText(this, "Actualizando el elemento...", Toast.LENGTH_LONG).show();
-//        Plate plate = this.plate;
-//        plate.setName(etName.getText().toString());
-//        plate.setIngredients(etIngredients.getText().toString());
-//        plate.setOrigin(etOrigin.getText().toString());
-//        PlatesDatabase platesDataBase = new PlatesDatabase(this, plate, thumb_byte);
-//        platesDataBase.upDate();
-//        onBackPressed();
-
     }
 
     /**

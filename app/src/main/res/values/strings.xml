@@ -51,15 +51,19 @@
     <string name="title_restaurants_list">Lista de restaurantes</string>
     <string name="search_restaurants">Buscar restaurantes...</string>
     <string name="title_creat_restaurant">Crear restaurante</string>
+    <string name="title_edit_restaurant">Editar restaurante</string>
     <string name="etRestaurantName">Nombre del restaurante</string>
     <string name="etOwnerName">Nombre del propietario</string>
     <string name="etAddress">Dirección del restaurante</string>
     <string name="etPhone">Teléfono</string>
     <string name="etOriginDesc">Origen y descipción del lugar</string>
-<!--    <string name="etLatitude">Latitud</string>-->
-<!--    <string name="etLongitude">Longitud</string>-->
     <string name="btnPhotoRestaurant">Longitud</string>
-
+    <!-- Restaurant view-->
+    <string name="tvOwner">Propietario</string>
+    <string name="tvPhone">Teléfono(s)</string>
+    <string name="tvAddress">Dirección</string>
+    <string name="tvOriginDesc">Sobre el restaurante</string>
+    <string name="tvMenu">Menú</string>
 
     <!--    Maps-->
     <string name="search_Address">Buscar dirección...</string>
@@ -85,6 +89,11 @@
     <string name="tvNamePlateView">Nombre del plato</string>
     <string name="tvIngredientsPlateView">¿Qué ingredientes lleva y cómo se prepara?</string>
     <string name="tvOriginPlateView">Hablemos un poco de su Origen e Historia</string>
+
+
+    <!--  Crop image  -->
+    <string name="plateImageCropTitle">Selecciona una imagen del plato</string>
+    <string name="restaurantImageCropTitle">Selecciona una imagen del Restaurante</string>
 
 
     <string name="loremShort">Lorem Ipsum es simplemente el texto de relleno de las imprentas
@@ -114,5 +123,7 @@
     <string name="btnCancel">Cancelar</string>
     <string name="btnStore">Guardar</string>
 
+    <!--  No definidos  -->
+    <string name="tvUndefined">No definido</string>
 
 </resources>

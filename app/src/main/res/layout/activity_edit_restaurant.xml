@@ -14,12 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title_creat_restaurant"
+                android:text="@string/title_edit_restaurant"
                 android:textSize="25sp"
                 android:textColor="#fff"
                 android:gravity="center"
@@ -181,7 +180,7 @@
                                 android:textSize="10dp"
                                 android:background="@drawable/edit_text"/>
                         </LinearLayout>
-                </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -208,17 +207,37 @@
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/edit_text"
                     android:layout_gravity="center">
-                    <Button
-                        android:id="@+id/btnSelectPhoto"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btnPhotoPlate"
-                        android:background="#00FFFFFF"
-                        android:gravity="fill"
-                        android:textAllCaps="false"
-                        android:drawablePadding="5dp"
-                        android:textStyle="italic"
-                        android:drawableStart="@drawable/image_icon"/>
+                        android:orientation="horizontal"
+                        android:weightSum="10">
+                        <Button
+                            android:id="@+id/btnSelectPhoto"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btnPhotoPlate"
+                            android:background="#00FFFFFF"
+                            android:gravity="fill"
+                            android:textAllCaps="false"
+                            android:drawablePadding="5dp"
+                            android:textStyle="italic"
+                            android:drawableStart="@drawable/image_icon"
+                            android:layout_weight="9"/>
+                        <ImageButton
+                            android:id="@+id/btnResetPhoto"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:gravity="fill"
+                            android:textAllCaps="false"
+                            android:drawablePadding="5dp"
+                            android:textStyle="italic"
+                            android:src="@drawable/restart_icon"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
                     <androidx.cardview.widget.CardView
                         app:cardCornerRadius="15dp"
                         app:cardElevation="0dp"
@@ -253,7 +272,7 @@
                         android:text="@string/btnCancel"
                         android:layout_weight="1"/>
                     <Button
-                        android:id="@+id/btnStore"
+                        android:id="@+id/btnUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="@string/btnStore"

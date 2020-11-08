@@ -22,7 +22,7 @@ import android.widget.Toast;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Image;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatesPresenter;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -165,7 +165,7 @@ public class GaleryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconAdd:
-                PlatesPresenter.showCropImage(this);
+                PlatePresenter.showCropImage(this);
                 break;
         }
         return super.onOptionsItemSelected(item);

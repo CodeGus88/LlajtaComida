@@ -4,8 +4,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.models.Plate;
 import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,7 +38,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
     private GoogleMap mMap;
     private Restaurant restaurant;
-
+    private String uri;
+    private String verb;
     // Components
     private SearchView searchView;
     private Button btnSet, btnBack;
@@ -62,10 +66,14 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
         // Rescatar los datos del objeto
         final Intent intent = this.getIntent();
-        if(intent.hasExtra("restaurant")){
-            restaurant = (Restaurant) getIntent().getSerializableExtra("restaurant");
+        if(intent.hasExtra("restaurant") && intent.hasExtra("verb")){
+            restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
+            verb = getIntent().getStringExtra("verb");
+            if(intent.hasExtra("uri")){
+                uri = intent.getStringExtra("uri");
+            }
         }else{
-            restaurant = new Restaurant();
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
         //Definir estados
         zoom = 15.5F;
@@ -229,7 +237,11 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
             case R.id.btnSet:
                 restaurant.setLatitude(String.valueOf(marker.getPosition().latitude));
                 restaurant.setLongitude(String.valueOf(marker.getPosition().longitude));
-                RestaurantPresenter.showCreatedRestaurantView(this, restaurant);
+                if(verb.equalsIgnoreCase("create")){
+                    RestaurantPresenter.showCreatedRestaurantView(this, restaurant, uri);
+                }else if(verb.equalsIgnoreCase("edit")){
+                    RestaurantPresenter.showEditRestaurantView(this, restaurant, uri);
+                }
                 Toast.makeText(this, getString(R.string.loadPosition), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnBack:

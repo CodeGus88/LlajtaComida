@@ -95,9 +95,9 @@
                     android:id="@+id/tvName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Nombre del restaurante"
                     android:textSize="20dp"
                     android:gravity="center"
+                    android:hint="@string/tvUndefined"
                     style="@style/CodeFontContentTitle"/>
                 <Space
                     android:layout_width="match_parent"
@@ -117,13 +117,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Propietario"
+                        android:text="@string/tvOwner"
                         style="@style/CodeFontContentTitle"/>
                     <TextView
                         android:id="@+id/tvOwner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Fernando Fernandez Fuentes"
+                        android:hint="@string/tvUndefined"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
 
@@ -137,13 +137,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Teléfono"
+                        android:text="@string/tvPhone"
                         style="@style/CodeFontContentTitle"/>
                     <TextView
-                        android:id="@+id/tvPhones"
+                        android:id="@+id/tvPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="4386994"
+                        android:hint="@string/tvUndefined"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
 
@@ -162,13 +162,13 @@
                         android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Dirección"
+                        android:text="@string/tvAddress"
                         style="@style/CodeFontContentTitle"/>
                     <TextView
                         android:id="@+id/tvAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Avenida Belging esquina Blanco galindo km 3"
+                        android:hint="@string/tvUndefined"
                         android:layout_marginHorizontal="10dp"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
@@ -186,20 +186,19 @@
                         android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Descripción"
+                        android:text="@string/tvOriginDesc"
                         style="@style/CodeFontContentTitle"/>
                     <TextView
-                        android:id="@+id/tvDescription"
+                        android:id="@+id/tvOriginAndDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Avenida Belging esquina Blanco galindo km 3"
+                        android:hint="@string/tvUndefined"
                         android:layout_marginHorizontal="10dp"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
-                        android:text="Menú"
+                        android:text="@string/tvMenu"
                         style="@style/CodeFontContentTitle"/>
 <!--                    android:layout_toLeftOf="@+id/btnMenuEdit"-->
 
@@ -245,7 +244,6 @@
                     android:layout_height="60dp"
                     android:layout_marginHorizontal="10dp"
                     android:text="Visitar"/>
-
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="50dp"/>
@@ -253,20 +251,20 @@
             </LinearLayout>
 
         </ScrollView>
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:srcCompat="@mipmap/sabores"
-            android:layout_marginTop="0dp"
-            android:layout_marginLeft="0dp"/>
+<!--        <ImageView-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            app:srcCompat="@mipmap/sabores"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:layout_marginLeft="0dp"/>-->
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            app:srcCompat="@mipmap/sabores"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:rotationY="180"
-            android:rotationX="180"/>
+<!--        <ImageView-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="20dp"-->
+<!--            app:srcCompat="@mipmap/sabores"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:rotationY="180"-->
+<!--            android:rotationX="180"/>-->
 
     </RelativeLayout>
