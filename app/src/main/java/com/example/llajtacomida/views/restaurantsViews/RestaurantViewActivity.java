@@ -85,9 +85,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         initDatabase();
         id = getIntent().getStringExtra("id");
         showRestaurant();
-
         initComponents();
-
         loadImages();
 
     }

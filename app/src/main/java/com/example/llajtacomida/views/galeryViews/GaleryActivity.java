@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Image;
+import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
 import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
+import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -165,7 +167,8 @@ public class GaleryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconAdd:
-                PlatePresenter.showCropImage(this);
+                if(nodeCollectionName.equalsIgnoreCase("plates")) PlatePresenter.showCropImage(this);
+                else if (nodeCollectionName.equalsIgnoreCase("restaurants")) RestaurantPresenter.showCropImage(this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -224,8 +227,8 @@ public class GaleryActivity extends AppCompatActivity {
         confirm.setCancelable(false);
         confirm.setPositiveButton(btn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                public GaleryDatabase(Context context, String objectParentType, String parentId, String resurceDestination , Image image, byte [] thumb_byte){
-                String resurceDestination = "images/plates/"+parentId+"/"+image.getId()+".jpg";
+//                String resurceDestination = "images/plates/"+parentId+"/"+image.getId()+".jpg";
+                String resurceDestination = "images/"+nodeCollectionName+"/"+parentId+"/"+image.getId()+".jpg";
                 GaleryDatabase galeryDatabase = new GaleryDatabase(GaleryActivity.this, nodeCollectionName, parentId, resurceDestination, image, thumb_byte);
                 if(verbo.equalsIgnoreCase("add")){
                     Toast.makeText(GaleryActivity.this, "Subiendo...", Toast.LENGTH_SHORT).show();
