@@ -27,7 +27,7 @@
     <item
         android:id="@+id/iconSearch"
         android:icon="@drawable/icon_search"
-        android:title="@string/search_plates"
+        android:title="@string/et_search_plates"
         app:showAsAction="always"
         android:visible="false"/>
     <item

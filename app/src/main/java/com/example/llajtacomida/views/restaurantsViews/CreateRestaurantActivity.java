@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -91,11 +93,22 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnStore = (Button) findViewById(R.id.btnStore);
+
+//        Display display = getWindowManager().getDefaultDisplay();
+//        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
+//        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
+        Display display = getWindowManager().getDefaultDisplay();
+        int x= (int) (ScreenSize.getWidth(display)*0.855);
+        int y = (int) (x*0.6666667);
+        ivPhoto.getLayoutParams().width = x;
+        ivPhoto.getLayoutParams().height = y;
+
         //acction buttons
         btnSetLocate.setOnClickListener(this);
         btnSelectPhoto.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         btnStore.setOnClickListener(this);
+
     }
 
     @Override
@@ -103,7 +116,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         switch (v.getId()){
             case R.id.btnSetLocate:
                 whriteRestaurant();
-                MapPresenter.showGetLocationMapActivity(this, restaurant, "create", uri.getPath());
+                String path = "";
+                if(uri != null) path = uri.getPath();
+                MapPresenter.showGetLocationMapActivity(this, restaurant, "create", path);
                 break;
             case R.id.btnSelectPhoto:
                 RestaurantPresenter.showCropImage(this);

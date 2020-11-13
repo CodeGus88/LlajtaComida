@@ -10,6 +10,7 @@ import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.views.galeryViews.GaleryActivity;
 import com.example.llajtacomida.views.restaurantsViews.CreateRestaurantActivity;
 import com.example.llajtacomida.views.restaurantsViews.EditRestaurantActivity;
+import com.example.llajtacomida.views.restaurantsViews.MenuActivity;
 import com.example.llajtacomida.views.restaurantsViews.RestaurantViewActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -79,6 +80,12 @@ public class RestaurantPresenter {
         intent.putExtra("nodeCollectionName", "restaurants"); // Para saber a que entidad pertenece
         intent.putExtra("parentName", parentName); // El nombre de l restaurante
         intent.putExtra("parentId", parentId);
+        context.startActivity(intent);
+    }
+
+    public static void showMenu(Context context, Restaurant restaurant){
+        Intent intent = new Intent(context, MenuActivity.class);
+        intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
     }
 }

@@ -1,6 +1,7 @@
-package com.example.llajtacomida.views;
+package com.example.llajtacomida.views.galeryViews;
 
 import android.content.Context;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,16 +9,21 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.models.Image;
+import com.example.llajtacomida.presenters.tools.ScreenSize;
+
 import java.util.ArrayList;
 
 public class ArrayAdapterImagesGalery extends BaseAdapter {
 
     private Context context;
     private ArrayList<Image> galery;
+    private int x, y;
 
-    public ArrayAdapterImagesGalery(Context context, ArrayList<Image> galery){
+    public ArrayAdapterImagesGalery(Context context, ArrayList<Image> galery, int x, int y){
         this.context = context;
         this.galery = galery;
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -45,7 +51,8 @@ public class ArrayAdapterImagesGalery extends BaseAdapter {
         Glide.with(context).load(galery.get(position).getUrl()).into(img);
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         img.setLayoutParams( // Tamaño de la imagen
-                new ViewGroup.LayoutParams(340, 350)
+                new ViewGroup.LayoutParams(x, y)
+//                new ViewGroup.LayoutParams(340, 350)
         );
         return img;
     }

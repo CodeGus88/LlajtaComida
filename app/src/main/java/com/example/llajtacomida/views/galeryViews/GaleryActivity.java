@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +22,10 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Image;
-import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
 import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
-import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
+import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -127,18 +127,22 @@ public class GaleryActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 imageList.clear();
+                // Tamaño de las imagenes de mosaico
+                Display display = getWindowManager().getDefaultDisplay();
+                int x= ((int) (ScreenSize.getWidth(display)*0.90)) / 3; //int x= ((int) (ScreenSize.getWidth(display)*0.855)) / 3;
+                int y = (int) (x*0.6666667);
                 for (DataSnapshot photo:snapshot.getChildren()) {
                     try {
                         Image p = photo.getValue(Image.class);
                         imageList.add(p);
-                        arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(GaleryActivity.this, imageList);
+                        arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(GaleryActivity.this, imageList, x, y);
                         gvGalery.setAdapter(arrayAdapterImagesGalery);
                     }catch (Exception e){
                         Log.e("Error", e.getMessage());
                     }
                 }
                 if(imageList.isEmpty()){
-                    arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(GaleryActivity.this, imageList);
+                    arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(GaleryActivity.this, imageList, x, y);
                     gvGalery.setAdapter(arrayAdapterImagesGalery);
                 }
             }

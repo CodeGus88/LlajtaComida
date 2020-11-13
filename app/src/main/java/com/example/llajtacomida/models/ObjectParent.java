@@ -9,8 +9,6 @@ public abstract class ObjectParent implements Serializable {
     protected String name;
     protected String url;
 
-//    public Hashtable<String, Image> images;
-
     /**
      * Utilizamos poliformismo
      * Para evitarse de mal entendidos el objeto le dará un id automaticamente si no se lo proporciona

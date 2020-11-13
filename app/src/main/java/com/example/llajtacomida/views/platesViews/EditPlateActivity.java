@@ -76,9 +76,14 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
 
+//        Display display = getWindowManager().getDefaultDisplay();
+//        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
+//        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
         Display display = getWindowManager().getDefaultDisplay();
-        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
-        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
+        int x= (int) (ScreenSize.getWidth(display)*0.855);
+        int y = (int) (x*0.6666667);
+        ivPhoto.getLayoutParams().width = x;
+        ivPhoto.getLayoutParams().height = y;
 
         btnSelectPhoto.setOnClickListener(this);
         btnResetPhoto.setOnClickListener(this);

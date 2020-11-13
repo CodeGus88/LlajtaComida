@@ -162,9 +162,11 @@ public class RestaurantListFragment extends Fragment {
                 for (DataSnapshot plate : snapshot.getChildren()){
                     try {
                         Restaurant r = plate.getValue(Restaurant.class); // Para el  uso de esta estrategia el contructor del objeto plato no debe recibir ningún parámetro
-                        restaurantsList.add(r);
-                        arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantsList);
-                        lvRestaurants.setAdapter(arrayAdapterRestaurant);
+                        if(r.isPublic()){
+                            restaurantsList.add(r);
+                            arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantsList);
+                            lvRestaurants.setAdapter(arrayAdapterRestaurant);
+                        }
                     }catch (Exception e){
                         Log.e("Error", e.getMessage());
                     }

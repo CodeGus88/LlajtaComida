@@ -43,7 +43,7 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
         Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(restaurantList.get(position).getName());
-        tvResumeItem.setText(restaurantList.get(position).getAddress());
+        tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription());
         return view;
     }
 

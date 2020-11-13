@@ -1,7 +1,6 @@
 package com.example.llajtacomida.models;
 
 import com.google.firebase.database.Exclude;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,41 @@ public class Restaurant extends ObjectParent implements Serializable {
     private String originAndDescription;
     private String latitude;
     private String longitude;
+    private boolean isPublic;
 
+    /**
+     * Los siguientes dos contructores son heredatos del padre, se argumenta con la inicialización del isPublic
+     */
+    public Restaurant() {
+        isPublic = true; // Cambiar por false
+    }
+
+    public Restaurant(String id) {
+        super(id);
+        isPublic = false;
+    }
+
+    /***
+     * El contructor no ses heredados del padre
+     * @param id
+     * @param isPublic
+     */
+    public Restaurant(String id, boolean isPublic) {
+        super(id);
+        this.isPublic = isPublic;
+    }
+
+    /***
+     * El contructor no ses heredados del padre
+     * Puede servir para el administrador,
+     * para que cuando el agregue restaurantes penga la posibilidad de publicarlos al mismo tiempo
+     * @param isPublic
+     */
+    public Restaurant(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    // Inicio de métodos  de la clase
     public String getOwnerName() {
         return ownerName;
     }
@@ -61,6 +94,14 @@ public class Restaurant extends ObjectParent implements Serializable {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 
     @Override

@@ -13,7 +13,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,6 +101,14 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/panel_celeste"
+                android:layout_marginHorizontal="10dp"
+                android:padding="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,13 +119,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"
-                    android:padding="10dp">
+                    android:layout_marginRight="2dp">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tvOwner"
                         style="@style/CodeFontContentTitle"/>
+                    <com.firebase.ui.auth.ui.phone.SpacedEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"/>
                     <TextView
                         android:id="@+id/tvOwner"
                         android:layout_width="match_parent"
@@ -131,14 +140,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="1"
-                    android:padding="10dp">
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="1">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tvPhone"
                         style="@style/CodeFontContentTitle"/>
+                    <com.firebase.ui.auth.ui.phone.SpacedEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"/>
                     <TextView
                         android:id="@+id/tvPhone"
                         android:layout_width="match_parent"
@@ -156,34 +167,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingBottom="10dp"
-                    android:layout_marginHorizontal="10dp">
+                    android:layout_marginHorizontal="5dp">
                     <TextView
-                        android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tvAddress"
                         style="@style/CodeFontContentTitle"/>
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"/>
                     <TextView
                         android:id="@+id/tvAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/tvUndefined"
-                        android:layout_marginHorizontal="10dp"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
+
+            </LinearLayout>
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/panel_gris"
+                android:layout_marginHorizontal="10dp"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="10dp"
-                    android:layout_marginHorizontal="10dp">
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_margin="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/tvOriginDesc"
@@ -193,9 +210,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/tvUndefined"
-                        android:layout_marginHorizontal="10dp"
                         style="@style/CodeFontContent"/>
                 </LinearLayout>
+
+            </LinearLayout>
+<!--                El de arriba-->
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
@@ -239,7 +258,7 @@
                     android:layout_height="10dp"/>
 
                 <Button
-                    android:id="@+id/btnVisitar"
+                    android:id="@+id/btnVisit"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginHorizontal="10dp"

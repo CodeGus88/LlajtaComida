@@ -38,13 +38,13 @@
 
     <!--    PLATES-->
     <string name="title_plates_list">Lista de platos</string>
-    <string name="search_plates">Buscar platos...</string>
+    <string name="et_search_plates">Buscar platos...</string>
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
     <string name="etPlateName">Nombre del plato</string>
     <string name="etPlateIngredients">Ingredientes</string>
     <string name="etPlateOrigin">Origen</string>
-    <string name="btnPhotoPlate">Toma una foto frontal del restaurante</string>
+    <string name="btnPhotoPlate">Cargar una imagen del plato</string>
 
 
     <!--  RESTAURANTS  -->
@@ -57,13 +57,15 @@
     <string name="etAddress">Dirección del restaurante</string>
     <string name="etPhone">Teléfono</string>
     <string name="etOriginDesc">Origen y descipción del lugar</string>
-    <string name="btnPhotoRestaurant">Longitud</string>
+    <string name="btnPhotoRestaurant">Toma una foto frontal del restaurante</string>
     <!-- Restaurant view-->
     <string name="tvOwner">Propietario</string>
     <string name="tvPhone">Teléfono(s)</string>
     <string name="tvAddress">Dirección</string>
     <string name="tvOriginDesc">Sobre el restaurante</string>
     <string name="tvMenu">Menú</string>
+    <!--  menu  -->
+    <string name="tvTitleMenu">Menú del restaurante</string>
 
     <!--    Maps-->
     <string name="search_Address">Buscar dirección...</string>
@@ -125,5 +127,6 @@
 
     <!--  No definidos  -->
     <string name="tvUndefined">No definido</string>
+    <string name="title_activity_set_location_map">Map</string>
 
 </resources>

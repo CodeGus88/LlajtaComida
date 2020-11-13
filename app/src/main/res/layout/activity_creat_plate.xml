@@ -103,7 +103,6 @@
                         android:drawablePadding="5dp"
                         android:textStyle="italic"
                         android:drawableStart="@drawable/image_icon"/>
-
                     <androidx.cardview.widget.CardView
                         app:cardCornerRadius="15dp"
                         app:cardElevation="0dp"
@@ -116,16 +115,13 @@
                         android:layout_marginBottom="10dp">
                         <ImageView
                             android:id="@+id/ivPhoto"
-                            android:layout_marginHorizontal="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="#B98EABC3"
+                            android:src="@mipmap/image_icon"
                             android:layout_gravity="center"
-                            android:scaleType="centerCrop"/>
-
+                            android:scaleType="fitXY" />
                     </androidx.cardview.widget.CardView>
-
-
                 </LinearLayout>
 
 

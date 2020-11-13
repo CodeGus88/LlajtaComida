@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Image;
 import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
+import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
@@ -39,7 +41,6 @@ import java.util.ArrayList;
 
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener {
 
-
     //database
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -53,6 +54,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     // components
     private ImageButton btnNext;
     private ImageButton btnPrevious;
+    private ImageButton btnMenuEdit;
+    private Button btnVisit;
     // Visor de imagenes
     private ViewFlipper viewFlipper;
     private int height, width;
@@ -185,9 +188,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         ivPhoto.getLayoutParams().width = width; //(int) (width*0.89);//width;
         btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
+        btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
+        btnVisit = (Button) findViewById(R.id.btnVisit);
         // Cuando es un Fracment no se puede asociar onClick desde el código xml, es necesario este tipo de solución
         btnPrevious.setOnClickListener(this);
         btnNext.setOnClickListener(this);
+        btnMenuEdit.setOnClickListener(this);
+        btnVisit.setOnClickListener(this);
     }
     private void initIconMenu(Menu menu){
         if(isAnAdministrator){
@@ -223,6 +230,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 viewFlipper.setOutAnimation(this, R.anim.slide_out_left);
                 viewFlipper.setFlipInterval(6000); // Para reiniciar tiempo
                 viewFlipper.showPrevious();
+                break;
+            case R.id.btnMenuEdit:
+                RestaurantPresenter.showMenu(this, restaurant);
+                break;
+            case R.id.btnVisit:
+                MapPresenter.showSetLocationMapActivity(this, restaurant);
                 break;
             default:
                 Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();

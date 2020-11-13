@@ -216,7 +216,7 @@
                             android:id="@+id/btnSelectPhoto"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/btnPhotoPlate"
+                            android:text="@string/btnPhotoRestaurant"
                             android:background="#00FFFFFF"
                             android:gravity="fill"
                             android:textAllCaps="false"
@@ -250,7 +250,6 @@
                         android:layout_marginBottom="10dp">
                         <ImageView
                             android:id="@+id/ivPhoto"
-                            android:layout_marginHorizontal="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="#B98EABC3"

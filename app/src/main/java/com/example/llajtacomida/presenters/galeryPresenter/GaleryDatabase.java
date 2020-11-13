@@ -6,8 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.example.llajtacomida.models.Image;
-import com.example.llajtacomida.views.ArrayAdapterImagesGalery;
-import com.example.llajtacomida.views.galeryViews.GaleryActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
