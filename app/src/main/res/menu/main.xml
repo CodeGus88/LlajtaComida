@@ -37,5 +37,19 @@
         app:showAsAction="always"
         android:visible="false"/>
 
+    <item
+        android:id="@+id/iconSave"
+        android:icon="@drawable/icon_save"
+        android:title="@string/save_icon"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/iconMenuRestaurant"
+        android:icon="@drawable/icon_menu_restaurant"
+        android:title="@string/menu_restaurant_icon"
+        app:showAsAction="always"
+        android:visible="false"/>
+
 </menu>
 

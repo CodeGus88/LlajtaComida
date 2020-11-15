@@ -11,12 +11,12 @@ public class Menu {
 
     public Menu(String id) {
         this.id = id;
-        menuList = new ArrayList<>();
+        menuList = new ArrayList<String>();
     }
 
     public Menu(){
         id = UUID.randomUUID().toString();
-        menuList = new ArrayList<>();
+        menuList = new ArrayList<String>();
     }
 
     public String getId() {
@@ -40,6 +40,7 @@ public class Menu {
     }
 
     public void setMenuList(ArrayList<String> menuList) {
-        this.menuList = menuList;
+        this.menuList.clear();
+        this.menuList.addAll(menuList);
     }
 }

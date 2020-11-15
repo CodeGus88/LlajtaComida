@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -26,9 +28,12 @@ import com.example.llajtacomida.models.Image;
 import com.example.llajtacomida.models.Restaurant;
 import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
 import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
+import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
+import com.example.llajtacomida.presenters.restaurantsPresenter.LoadMenuList;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.example.llajtacomida.presenters.platesPresenter.ArrayAdapterPlate;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -46,9 +51,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private FirebaseDatabase firebaseDatabase;
     public static String id;
     //iconos
-    private MenuItem iconEdit, iconDelete, iconGalery;
+    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant;
 
-    private boolean isAnAdministrator;
+    private boolean isAnAdministrator, isAuthor;
     private Restaurant restaurant;
 
     // components
@@ -56,6 +61,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ImageButton btnPrevious;
     private ImageButton btnMenuEdit;
     private Button btnVisit;
+    private static ListView menuList;
     // Visor de imagenes
     private ViewFlipper viewFlipper;
     private int height, width;
@@ -63,7 +69,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
 
 
-    ArrayList<Image> imagesList;
+    private ArrayList<Image> imagesList;
+
+    private LoadMenuList loadMenuList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +83,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         // getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         imagesList = new ArrayList<Image>();
         isAnAdministrator = true;
+        isAuthor = true;
 
         // Para el tamaño de las imagenes
         Display display = getWindowManager().getDefaultDisplay();
@@ -91,12 +99,10 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         initComponents();
         loadImages();
 
+        loadMenuList = new LoadMenuList(this, id);
     }
 
-
-
-    //------------------------------>
-
+    // ------------------------------>
 
     /**
      * Carga la presentacion de las imágenes
@@ -177,6 +183,10 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             }
         });
     }
+
+    /**
+     * Inicializa los componentes de la vista
+     */
     private void initComponents(){
         ivPhoto = (ZoomInImageView) findViewById(R.id.ziivPhoto);
         tvName = (TextView) findViewById(R.id.tvName);
@@ -190,20 +200,37 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
         btnVisit = (Button) findViewById(R.id.btnVisit);
+        menuList = (ListView) findViewById(R.id.menuList);
         // Cuando es un Fracment no se puede asociar onClick desde el código xml, es necesario este tipo de solución
         btnPrevious.setOnClickListener(this);
         btnNext.setOnClickListener(this);
         btnMenuEdit.setOnClickListener(this);
         btnVisit.setOnClickListener(this);
     }
+
+    public static void setMenuList(ArrayAdapterPlate arrayAdapterPlate){
+        menuList.setAdapter(arrayAdapterPlate);
+
+    }
+
+    public static  ListView getListView(){
+        return menuList;
+    }
+
+    /**
+     * Inicializa los íconos
+     * @param menu
+     */
     private void initIconMenu(Menu menu){
-        if(isAnAdministrator){
+        if(isAnAdministrator || isAuthor){
             iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
             iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
             iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
+            iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
             iconEdit.setVisible(true);
             iconDelete.setVisible(true);
             iconGalery.setVisible(true);
+            iconMenuRestaurant.setVisible(true);
         }
     }
 
@@ -212,6 +239,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      */
     @Override
     public boolean onSupportNavigateUp() {
+        loadMenuList.stopOndataChange();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
@@ -259,6 +287,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.iconGalery:
                 RestaurantPresenter.showGalery(this, restaurant.getId(),  restaurant.getName());
+                break;
+            case R.id.iconMenuRestaurant:
+                loadMenuList.stopOndataChange();
+                RestaurantPresenter.showMenu(this, restaurant);
+                break;
+            default:
+                Log.e("null", "Option invalid");
         }
         return super.onOptionsItemSelected(item);
     }

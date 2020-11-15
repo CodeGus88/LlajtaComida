@@ -1,12 +1,16 @@
-package com.example.llajtacomida.views.platesViews;
+package com.example.llajtacomida.presenters.platesPresenter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +20,7 @@ import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.ObjectParent;
 import com.example.llajtacomida.models.Plate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -48,7 +53,12 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
 
-        Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
+//        try {
+            Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
+//        }catch (Exception e){
+//            Log.e("Error: ---------------------------------------------->", e.getMessage());
+//        }
+
         tvTitleItem.setText(plateList.get(position).getName());
         tvResumeItem.setText(plateList.get(position).getOrigin());
 

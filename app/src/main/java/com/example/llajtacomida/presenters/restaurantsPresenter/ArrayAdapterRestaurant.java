@@ -1,4 +1,4 @@
-package com.example.llajtacomida.views.restaurantsViews;
+package com.example.llajtacomida.presenters.restaurantsPresenter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Restaurant;
+import com.example.llajtacomida.presenters.restaurantsPresenter.ArrayAdapterRestaurant;
 import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;

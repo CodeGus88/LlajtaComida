@@ -6,11 +6,12 @@
     android:layout_margin="5dp">
 
 
-    <CheckBox
-        android:id="@+id/cbSelectItem"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+<!--    <CheckBox-->
+<!--        android:id="@+id/cbSelectItem"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="54dp"-->
+<!--        android:gravity="center"/>-->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cvPhoto"
@@ -19,9 +20,8 @@
         android:layout_height="54dp"
         app:cardCornerRadius="15dp"
         android:layout_margin="5dp"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="2dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="false"
         android:visibility="visible">
         <ImageView
             android:id="@+id/ivPhotoItem"
@@ -41,6 +41,7 @@
         android:textSize="15sp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/cvPhoto"
+        android:layout_toLeftOf="@+id/cbSelectItem"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="7dp"/>
 
@@ -54,6 +55,15 @@
         android:maxLines="2"
         android:textSize="10dp"
         android:layout_toRightOf="@+id/cvPhoto"
+        android:layout_toLeftOf="@+id/cbSelectItem"
         android:layout_marginLeft="5dp"/>
+
+    <CheckBox
+        android:id="@+id/cbSelectItem"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true"
+        android:gravity="center"/>
 
 </RelativeLayout>

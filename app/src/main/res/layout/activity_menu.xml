@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.restaurantsViews.MenuActivity"
+    tools:context=".views.restaurantsViews.SetMenuActivity"
     android:orientation="vertical"
     android:background="#03A9F4">
 
@@ -29,7 +29,7 @@
            android:layout_width="match_parent"
            android:layout_height="10dp"/>
        <EditText
-           android:id="@+id/tvSearch"
+           android:id="@+id/etSearch"
            android:layout_width="match_parent"
            android:layout_height="50dp"
            android:background="@drawable/edit_text"

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.Plate;
+import com.example.llajtacomida.presenters.platesPresenter.ArrayAdapterPlate;
 import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;

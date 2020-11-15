@@ -34,6 +34,8 @@
     <string name="delete_icon">Eliminar</string>
     <string name="search_icon">Buscar</string>
     <string name="galery_icon">Galería</string>
+    <string name="save_icon">Guardar</string>
+    <string name="menu_restaurant_icon">Menú</string>
 
 
     <!--    PLATES-->
