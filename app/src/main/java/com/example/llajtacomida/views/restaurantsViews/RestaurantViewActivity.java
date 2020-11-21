@@ -24,54 +24,52 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Image;
-import com.example.llajtacomida.models.Restaurant;
-import com.example.llajtacomida.presenters.galeryPresenter.GaleryDatabase;
-import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
-import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
-import com.example.llajtacomida.presenters.restaurantsPresenter.LoadMenuList;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.interfaces.ImageInterface;
+import com.example.llajtacomida.interfaces.RestaurantInterface;
+import com.example.llajtacomida.models.image.Image;
+import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.presenters.restaurant.RestPlateListPresenter;
+import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.image.GaleryDatabase;
+import com.example.llajtacomida.presenters.image.ImagePresenter;
+import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.presenters.plate.PlateNavegation;
+import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
+import com.example.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
-import com.example.llajtacomida.presenters.platesPresenter.ArrayAdapterPlate;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.llajtacomida.presenters.plate.ArrayAdapterPlate;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.util.ArrayList;
 
-public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener {
-
-    //database
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
-    public static String id;
+public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
+        RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage {
+    public String id;
     //iconos
-    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant;
+    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
     private boolean isAnAdministrator, isAuthor;
     private Restaurant restaurant;
-
     // components
     private ImageButton btnNext;
     private ImageButton btnPrevious;
     private ImageButton btnMenuEdit;
     private Button btnVisit;
-    private static ListView menuList;
+    private ListView menuList;
     // Visor de imagenes
     private ViewFlipper viewFlipper;
     private int height, width;
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
-
-
+    private ArrayAdapterPlate arrayAdapterPlate;
     private ArrayList<Image> imagesList;
+    private ArrayList<Plate> plateList;
 
-    private LoadMenuList loadMenuList;
+    // Presenters
+    private RestPlateListPresenter restPlateListPresenter;
+    private RestaurantPresenter restaurantPresenter;
+    private ImagePresenter imagePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +78,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.restaurantsTitle);
-        // getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         imagesList = new ArrayList<Image>();
@@ -92,97 +89,30 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         height = (int) (ScreenSize.getWidth(display)*0.6666667);
         width = ScreenSize.getWidth(display);
 
-
-        initDatabase();
         id = getIntent().getStringExtra("id");
-        showRestaurant();
         initComponents();
-        loadImages();
-
-        loadMenuList = new LoadMenuList(this, id);
+//        loadImages();
+        plateList = new ArrayList<Plate>();
+       initPresenters();
     }
 
-    // ------------------------------>
-
-    /**
-     * Carga la presentacion de las imágenes
-     */
-    private void loadImages(){
-        databaseReference.child("App").child("restaurants").child(id).child("images").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
-
-                // Limpia toda la lista para que se actualice en tiempo real
-                if(viewFlipper != null){
-                    viewFlipper.clearAnimation();
-                    viewFlipper.clearAnimation();
-                    for(int i = 1; i < viewFlipper.getChildCount(); i ++){
-                        viewFlipper.removeViewAt(i);
-                    }
-                    viewFlipper.stopFlipping();
-                }
-                for (DataSnapshot photo:snapshot.getChildren()) {
-                    try {
-                        Image image = photo.getValue(Image.class);
-                        ImageView ivImg = new ImageView(RestaurantViewActivity.this);
-                        Glide.with(RestaurantViewActivity.this).load(image.getUrl()).into(ivImg);
-                        ivImg.setLayoutParams( // Tamaño de la imagen
-                                new ViewGroup.LayoutParams((int) (width*0.89),(int) (height*0.89))
-                        );
-                        CardView cv = new CardView(RestaurantViewActivity.this);
-                        cv.addView(ivImg);
-                        cv.setRadius(35);
-                        cv.setLayoutParams( // Tamaño de la imagen
-                                new ViewGroup.LayoutParams((int) (width*0.89), (int) (height*0.89))
-                        );
-                        viewFlipper.addView(cv);
-                        initAnimation();
-                    }catch (Exception e){
-                        Log.e("Error", e.getMessage());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Error", "Algo salió mal");
-            }
-        });
+    private void initPresenters() {
+        // iniciar presentadores
+        restPlateListPresenter = new RestPlateListPresenter(this);
+        restPlateListPresenter.filterPlateListInMenu(id);
+        restaurantPresenter = new RestaurantPresenter(this);
+        restaurantPresenter.searchRestaurant(id);
+        imagePresenter = new ImagePresenter(this);
+        final String NODE_COLECTION = "restaurants";
+        imagePresenter.searchImages(NODE_COLECTION, id);
     }
+
     private void initAnimation(){
         viewFlipper.setDisplayedChild(0);
         viewFlipper.setFlipInterval(5000);
         viewFlipper.startFlipping();
     }
 
-    private void initDatabase(){
-        FirebaseApp.initializeApp(this);
-        firebaseDatabase = firebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }
-
-    private void showRestaurant(){
-        databaseReference.child("App").child("restaurants").child(id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                restaurant = snapshot.getValue(Restaurant.class);
-                try{
-                    tvName.setText(restaurant.getName());
-                    tvOwnerName.setText(restaurant.getOwnerName());
-                    tvPhone.setText(restaurant.getPhone());
-                    tvAddress.setText(restaurant.getAddress());
-                    tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
-                    Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
-                }catch(Exception e){
-                    Log.e("Error: " , e.getMessage());
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(RestaurantViewActivity.this, "Ocurrión un error al cargar los datos", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     /**
      * Inicializa los componentes de la vista
@@ -201,21 +131,20 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
         btnVisit = (Button) findViewById(R.id.btnVisit);
         menuList = (ListView) findViewById(R.id.menuList);
+        menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PlateNavegation.showPlateView(RestaurantViewActivity.this, plateList.get(position));
+            }
+        });
         // Cuando es un Fracment no se puede asociar onClick desde el código xml, es necesario este tipo de solución
         btnPrevious.setOnClickListener(this);
         btnNext.setOnClickListener(this);
         btnMenuEdit.setOnClickListener(this);
         btnVisit.setOnClickListener(this);
+        viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
     }
 
-    public static void setMenuList(ArrayAdapterPlate arrayAdapterPlate){
-        menuList.setAdapter(arrayAdapterPlate);
-
-    }
-
-    public static  ListView getListView(){
-        return menuList;
-    }
 
     /**
      * Inicializa los íconos
@@ -231,6 +160,22 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             iconDelete.setVisible(true);
             iconGalery.setVisible(true);
             iconMenuRestaurant.setVisible(true);
+            if(isAnAdministrator){
+                iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
+                changeIcon();
+                iconPublish.setVisible(true);
+            }
+        }
+    }
+
+    /**
+     * Sirve para alternar el ícono de publicar o dejar de publicaar
+     */
+    private void changeIcon() {
+        if(restaurant.isPublic()){
+            iconPublish.setIcon(R.drawable.icon_public);
+        }else{
+            iconPublish.setIcon(R.drawable.icon_public_off);
         }
     }
 
@@ -239,9 +184,15 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      */
     @Override
     public boolean onSupportNavigateUp() {
-        loadMenuList.stopOndataChange();
-        onBackPressed(); // accion del boton atras del sistema operativo
+        stopRealtimeDatabase();
+        this.onBackPressed(); // accion del boton atras del sistema operativo
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        stopRealtimeDatabase();
+        super.onBackPressed();
     }
 
     @Override
@@ -260,7 +211,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 viewFlipper.showPrevious();
                 break;
             case R.id.btnMenuEdit:
-                RestaurantPresenter.showMenu(this, restaurant);
+                RestaurantNavegation.showMenu(this, restaurant);
                 break;
             case R.id.btnVisit:
                 MapPresenter.showSetLocationMapActivity(this, restaurant);
@@ -280,17 +231,19 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconEdit:
-                RestaurantPresenter.showEditRestaurantView(this, restaurant);
+                RestaurantNavegation.showEditRestaurantView(this, restaurant);
                 break;
             case R.id.iconDelete:
                 delete();
                 break;
             case R.id.iconGalery:
-                RestaurantPresenter.showGalery(this, restaurant.getId(),  restaurant.getName());
+                RestaurantNavegation.showGalery(this, restaurant.getId(),  restaurant.getName());
                 break;
             case R.id.iconMenuRestaurant:
-                loadMenuList.stopOndataChange();
-                RestaurantPresenter.showMenu(this, restaurant);
+                RestaurantNavegation.showMenu(this, restaurant);
+                break;
+            case R.id.iconPublish:
+                restaurantPresenter.update(this, restaurant); // publica o despublica
                 break;
             default:
                 Log.e("null", "Option invalid");
@@ -310,7 +263,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
                 galeryDatabase.deleteAllData(); // es un metodo estatico
                 restaurantDataBase.delete();
+                stopRealtimeDatabase();
                 onBackPressed();
+
             }
         });
         confirm.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -319,5 +274,84 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             }
         });
         confirm.show();
+    }
+
+    /**
+     * Carga la lista de platos de si menu
+     * @param list
+     */
+    @Override
+    public void showPlateList(ArrayList<Plate> list) {
+       try {
+           plateList.clear();
+           plateList.addAll(list);
+           arrayAdapterPlate = new ArrayAdapterPlate(this, R.layout.adapter_element_list, list);
+           menuList.setAdapter(arrayAdapterPlate);
+           ScreenSize.setListViewHeightBasedOnChildren(menuList);
+       }catch (Exception e){
+            Log.e("Error", e.getMessage());
+       }
+    }
+
+    @Override
+    public void showRestaurant(Restaurant restaurant) {
+        try{
+            this.restaurant = restaurant;
+            tvName.setText(restaurant.getName());
+            tvOwnerName.setText(restaurant.getOwnerName());
+            tvPhone.setText(restaurant.getPhone());
+            tvAddress.setText(restaurant.getAddress());
+            tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
+            Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
+            changeIcon();
+        }catch(Exception e){
+            Log.e("Error: " , e.getMessage());
+        }
+    }
+
+    @Override
+    public void showRestaurantList(ArrayList<Restaurant> restaurantList) {
+        // no se usa en esta parte
+    }
+
+    @Override
+    public void showImages(ArrayList<Image> imagesList) {
+        try {
+            if(viewFlipper != null){
+                viewFlipper.clearAnimation();
+                viewFlipper.clearAnimation();
+                for(int i = 1; i < viewFlipper.getChildCount(); i ++){
+                    viewFlipper.removeViewAt(i);
+                }
+                viewFlipper.stopFlipping();
+            }
+            for (Image image:imagesList) {
+                try {
+                    ImageView ivImg = new ImageView(RestaurantViewActivity.this);
+                    Glide.with(RestaurantViewActivity.this).load(image.getUrl()).into(ivImg);
+                    ivImg.setLayoutParams( // Tamaño de la imagen
+                            new ViewGroup.LayoutParams((int) (width * 0.89), (int) (height * 0.89))
+                    );
+                    CardView cv = new CardView(RestaurantViewActivity.this);
+                    cv.addView(ivImg);
+                    cv.setRadius(35);
+                    cv.setLayoutParams( // Tamaño de la imagen
+                            new ViewGroup.LayoutParams((int) (width * 0.89), (int) (height * 0.89))
+                    );
+                    viewFlipper.addView(cv);
+                    initAnimation();
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                }
+            }
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
+    }
+
+    private void stopRealtimeDatabase(){
+        restPlateListPresenter.stopRealtimeDatabse();
+        imagePresenter.stopRealtimeDatabse();
+        restaurantPresenter.stopRealtimeDatabse();
     }
 }

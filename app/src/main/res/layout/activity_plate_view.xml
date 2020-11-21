@@ -12,8 +12,6 @@
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tvNamePlateView"
-                android:textSize="20dp"
+                android:textSize="25dp"
                 android:gravity="center"
                 style="@style/CodeFontContentTitle"/>
             <Space
@@ -109,8 +107,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_gris"
-                android:layout_marginHorizontal="10dp"
-                android:paddingBottom="10dp">
+                android:layout_marginHorizontal="10dp">
 
                 <TextView
                     android:layout_margin="10dp"
@@ -130,7 +127,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="20dp"/>
 
             <LinearLayout
                 android:id="@+id/panel2"
@@ -139,8 +136,7 @@
                 android:orientation="vertical"
                 android:background="@drawable/panel_celeste"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="0dp"
-                android:paddingBottom="10dp">
+                android:layout_marginTop="0dp">
 
                 <TextView
                     android:layout_margin="10dp"
@@ -161,9 +157,36 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="20dp"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/panel_gris"
+                android:padding="10dp"
+                android:layout_margin="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CodeFontContentTitle"
+                    android:text="@string/tvRestWithPlateTitle"/>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <ListView
+                    android:id="@+id/lvRestaurantList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
+
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+
+
+        </LinearLayout>
 
     </ScrollView>
     <ImageView
@@ -181,7 +204,5 @@
         android:layout_alignParentBottom="true"
         android:rotationY="180"
         android:rotationX="180"/>
-
-
 
 </RelativeLayout>

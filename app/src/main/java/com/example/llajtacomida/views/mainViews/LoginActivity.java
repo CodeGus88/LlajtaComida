@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.presenters.mainPresenter.MainPresenter;
+import com.example.llajtacomida.presenters.main.MainPresenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;

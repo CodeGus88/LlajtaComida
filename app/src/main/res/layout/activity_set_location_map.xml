@@ -1,9 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+<LinearLayout
+    android:id="@+id/marcoPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.mapsViews.SetLocationMapActivity" />
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".views.mapsViews.GetLocationMapActivity"/>
+
+        <LinearLayout
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="0dp">
+
+            <Spinner
+                android:id="@+id/spTypesOfMaps"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="#B374CFF8"
+                android:textAlignment="textStart"/>
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="#B3FF5722"
+                android:padding="0dp"
+                android:text="Volver"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textAlignment="textStart"
+                android:paddingStart="3dp"
+                android:textSize="14sp"
+                android:autoSizeTextType="none"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+
+    <!--    <fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
+    <!--        xmlns:tools="http://schemas.android.com/tools"-->
+    <!--        android:id="@+id/map"-->
+    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        tools:context=".views.mapsViews.GetLocationMapActivity">-->
+
+    <!--        <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:weightSum="10"-->
+    <!--        android:layout_marginHorizontal="50dp"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:background="@drawable/edit_text_transparent">-->
+    <!--            <SearchView-->
+    <!--                android:id="@+id/searchView"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:queryHint="@string/search_Address"-->
+    <!--                android:iconifiedByDefault="true"-->
+    <!--                android:elevation="5dp"/>-->
+    <!--        </LinearLayout>-->
+    <!--</fragment>-->

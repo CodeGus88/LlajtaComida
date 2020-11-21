@@ -26,7 +26,7 @@
 
     <item
         android:id="@+id/iconSearch"
-        android:icon="@drawable/icon_search"
+        android:icon="@drawable/icon_search_white"
         android:title="@string/et_search_plates"
         app:showAsAction="always"
         android:visible="false"/>
@@ -48,6 +48,19 @@
         android:id="@+id/iconMenuRestaurant"
         android:icon="@drawable/icon_menu_restaurant"
         android:title="@string/menu_restaurant_icon"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/iconListPublicOf"
+        android:icon="@drawable/icon_list_public_of"
+        android:title="@string/rest_public_of_icon"
+        app:showAsAction="always"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/iconPublish"
+        android:title="@string/rest_public_of_icon"
         app:showAsAction="always"
         android:visible="false"/>
 

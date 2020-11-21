@@ -20,33 +20,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.ArrayAdapterPlate;
-import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import com.example.llajtacomida.interfaces.PlateInterface;
+import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.presenters.plate.ArrayAdapterPlate;
+import com.example.llajtacomida.presenters.plate.PlateNavegation;
+import com.example.llajtacomida.presenters.plate.PlatePresenter;
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PlatesListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlatesListFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class PlatesListFragment extends Fragment implements PlateInterface.ViewPlate {
 
     private View view;
 
@@ -57,60 +42,29 @@ public class PlatesListFragment extends Fragment {
     private EditText etSearch;
     private ListView lvPlates;
 
-    // database
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
-
-
     // Para listar platos
-    private ArrayList<Plate> platesList;
+    private ArrayList<Plate> plateList;
     private ArrayAdapterPlate arrayAdapterPlates;
 
     private boolean isAnAdministrator;
 
+    // interface
+    private PlateInterface.PresenterPlate presenterPlate;
+
     public PlatesListFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PlatesListFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static PlatesListFragment newInstance(String param1, String param2) {
-        PlatesListFragment fragment = new PlatesListFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     private void initComponents() {
 
         etSearch = (EditText) view.findViewById(R.id.searchView);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
 
-        platesList = new ArrayList<Plate>();
-//        platesListCopy = new ArrayList<Plate>();
+        plateList = new ArrayList<Plate>();
 
         lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PlatePresenter.showPlateView(getContext(), platesList.get(position));
+                PlateNavegation.showPlateView(getContext(), plateList.get(position));
             }
         });
 
@@ -131,46 +85,6 @@ public class PlatesListFragment extends Fragment {
 
     }
 
-
-    private void initDataBase(){
-        FirebaseApp.initializeApp(getContext());
-        firebaseDatabase = firebaseDatabase.getInstance();
-        databaseReference =  firebaseDatabase.getReference().child("App").child("plates");
-    }
-
-    private void loadListPlates(){
-
-        databaseReference.orderByChild("name").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                platesList.clear();
-                for (DataSnapshot plate : snapshot.getChildren()){
-                    try {
-                        Plate p = plate.getValue(Plate.class); // Para el  uso de esta estrategia el contructor del objeto plato no debe recibir ningún parámetro
-                        platesList.add(p);
-                        arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, platesList);
-                        lvPlates.setAdapter(arrayAdapterPlates);
-                    }catch (Exception e){
-                        Log.e("Error", e.getMessage());
-                    }
-                }
-                if(platesList.isEmpty()){
-                    try {
-                        arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, platesList);
-                    }catch (Exception e){
-                        Log.e("Error", e.getMessage());
-                    }
-                    lvPlates.setAdapter(arrayAdapterPlates);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "No se pudo cargar la lista", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -181,9 +95,8 @@ public class PlatesListFragment extends Fragment {
         isAnAdministrator = true;
 
         initComponents();
-        initDataBase();
-        loadListPlates();
-
+        presenterPlate = new PlatePresenter(this);
+        presenterPlate.loadPlatesList();
         return view;
     }
 
@@ -210,7 +123,7 @@ public class PlatesListFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSearch:
-                if(!platesList.isEmpty()){
+                if(!plateList.isEmpty()){
                     if(etSearch.getVisibility() == View.GONE){
                         etSearch.setVisibility(View.VISIBLE);
                         etSearch.setText(null);
@@ -226,9 +139,26 @@ public class PlatesListFragment extends Fragment {
                 }
                 break;
             case R.id.iconAdd:
-                PlatePresenter.showCreatedPlateView(getContext());
+                PlateNavegation.showCreatedPlateView(getContext());
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showPlate(Plate plate) {
+        //     no se usará
+    }
+
+    @Override
+    public void showPlateList(ArrayList<Plate> plateList) {
+        try {
+            this.plateList.clear();
+            this.plateList.addAll(plateList);
+            arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, plateList);
+            lvPlates.setAdapter(arrayAdapterPlates);
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 }

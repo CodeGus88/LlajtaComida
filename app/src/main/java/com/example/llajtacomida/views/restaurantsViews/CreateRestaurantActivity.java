@@ -16,10 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Restaurant;
-import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -121,7 +121,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
                 MapPresenter.showGetLocationMapActivity(this, restaurant, "create", path);
                 break;
             case R.id.btnSelectPhoto:
-                RestaurantPresenter.showCropImage(this);
+                RestaurantNavegation.showCropImage(this);
                 break;
             case R.id.btnCancel:
                 onBackPressed();

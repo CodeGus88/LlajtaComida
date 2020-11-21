@@ -2,7 +2,6 @@ package com.example.llajtacomida.views.platesViews;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,19 +12,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlateDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
+import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.presenters.plate.PlateGestorDB;
+import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
 import id.zelory.compressor.Compressor;
 
 public class CreatePlateActivity extends AppCompatActivity implements View.OnClickListener {
@@ -59,7 +55,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()){
             case R.id.btnSelectPhoto:
 //                imageSelect();
-                PlatePresenter.showCropImage(this);
+                PlateNavegation.showCropImage(this);
                 break;
             case R.id.btnStore:
                 try {
@@ -96,7 +92,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                         plate.setName(name);
                         plate.setIngredients(ingredients);
                         plate.setOrigin(origin);
-                        PlateDatabase platesDataBase = new PlateDatabase(this, plate, thumb_byte);
+                        PlateGestorDB platesDataBase = new PlateGestorDB(this, plate, thumb_byte);
                         platesDataBase.storePlate();
                         onBackPressed();
                     }else Toast.makeText(this, "La imagen es obligatoria", Toast.LENGTH_SHORT).show();
@@ -145,7 +141,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
 
     private void initComponents(){
-
         btnSelectFoto = (Button) findViewById(R.id.btnSelectPhoto);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         btnStore = (Button) findViewById(R.id.btnStore);

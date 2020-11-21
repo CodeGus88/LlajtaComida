@@ -17,9 +17,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.presenters.platesPresenter.PlateDatabase;
-import com.example.llajtacomida.presenters.platesPresenter.PlatePresenter;
+import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.presenters.plate.PlateGestorDB;
+import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
@@ -96,7 +96,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()){
             case R.id.btnSelectPhoto:
 //                imageSelect();
-                PlatePresenter.showCropImage(this);
+                PlateNavegation.showCropImage(this);
                 break;
             case R.id.btnResetPhoto:
                 thumb_byte = null;
@@ -169,7 +169,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
                         plate.setName(name);
                         plate.setIngredients(ingredients);
                         plate.setOrigin(origin);
-                        PlateDatabase platesDataBase = new PlateDatabase(this, plate, thumb_byte);
+                        PlateGestorDB platesDataBase = new PlateGestorDB(this, plate, thumb_byte);
                         platesDataBase.upDate();
                         onBackPressed();
                 }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();

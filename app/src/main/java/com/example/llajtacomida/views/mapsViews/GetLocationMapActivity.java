@@ -2,12 +2,9 @@ package com.example.llajtacomida.views.mapsViews;
 
 import androidx.fragment.app.FragmentActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Plate;
-import com.example.llajtacomida.models.Restaurant;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +27,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.List;
 
 public class GetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerDragListener {
@@ -107,7 +102,6 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
 
         spTypesOfMaps = (Spinner) findViewById(R.id.spTypesOfMaps);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinnerOptions, R.layout.spinner_item_maps);
         String [] options = {
                 getString(R.string.itemNormal),
                 getString(R.string.itemHibrid),
@@ -167,6 +161,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         }else{
             Toast.makeText(this, "No se encontró la referencia", Toast.LENGTH_SHORT).show();
         }
+        mMap.getUiSettings().setZoomControlsEnabled(true); // opciones de zoom
         updateLatLng();
     }
 
@@ -226,6 +221,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         mMap.setOnMarkerDragListener(this);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         zoom = 15.5F;
 
         updateLatLng();
@@ -238,9 +235,9 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
                 restaurant.setLatitude(String.valueOf(marker.getPosition().latitude));
                 restaurant.setLongitude(String.valueOf(marker.getPosition().longitude));
                 if(verb.equalsIgnoreCase("create")){
-                    RestaurantPresenter.showCreatedRestaurantView(this, restaurant, uri);
+                    RestaurantNavegation.showCreatedRestaurantView(this, restaurant, uri);
                 }else if(verb.equalsIgnoreCase("edit")){
-                    RestaurantPresenter.showEditRestaurantView(this, restaurant, uri);
+                    RestaurantNavegation.showEditRestaurantView(this, restaurant, uri);
                 }
                 Toast.makeText(this, getString(R.string.loadPosition), Toast.LENGTH_SHORT).show();
                 break;

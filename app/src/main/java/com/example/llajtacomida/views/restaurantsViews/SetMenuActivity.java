@@ -1,10 +1,9 @@
 package com.example.llajtacomida.views.restaurantsViews;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,35 +12,38 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.llajtacomida.R;
-import com.example.llajtacomida.presenters.restaurantsPresenter.ArrayAdapterSetMenu;
-import com.example.llajtacomida.presenters.restaurantsPresenter.LoadSetMenuPlates;
-import com.example.llajtacomida.models.Restaurant;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class SetMenuActivity extends AppCompatActivity {
+import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.RestaurantInterface;
+import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.restaurant.ArrayAdapterSetMenu;
+import com.example.llajtacomida.presenters.restaurant.SetMenuListPresenter;
+
+import java.util.ArrayList;
+
+public class SetMenuActivity extends AppCompatActivity implements RestaurantInterface.ViewSetMenuList {
 
     // Componentes
     private TextView tvTitle;
-    private static  ListView lvPlates;
-    private static EditText etSearch;
-//    private ArrayAdapterRestaurantMenu arrayAdapterRestaurantMenu;
-
+    private  ListView lvPlates;
+    private EditText etSearch;
     private MenuItem iconSave;
-
     private Restaurant restaurant;
-
     // Permisis
     private boolean isAdministrator, isAuthor;
+    private ArrayAdapterSetMenu arrayAdapterSetMenu;
 
-    LoadSetMenuPlates loadSetMenuPlates;
+    // presentador
+    private SetMenuListPresenter setMenuListPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.restaurantsTitle);
-        // getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Premisos
@@ -57,25 +59,32 @@ public class SetMenuActivity extends AppCompatActivity {
 
         initComponents();
         tvTitle.setText("Menu de " + restaurant.getName());
-        loadSetMenuPlates = new LoadSetMenuPlates(this, restaurant.getId());
+
+        // Inicializar el presentador
+        setMenuListPresenter = new SetMenuListPresenter(this);
+        setMenuListPresenter.searchSetMenuList(restaurant.getId());
     }
 
     private void initComponents(){
+        etSearch = (EditText) findViewById(R.id.etSearch);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         lvPlates = (ListView) findViewById(R.id.lvPlates);
-        etSearch = (EditText) findViewById(R.id.etSearch);
-    }
+        etSearch.requestFocus();
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence ss, int start, int before, int count) {
+                try {
+                    arrayAdapterSetMenu.filter(ss.toString(), start);
+                }catch (Exception e){
+                    Log.e("Error: ", e.getMessage());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
-    /**
-     * El listView se actualiza desde otra clase mendiante este método
-     * @param arrayAdapterSetMenu
-     */
-    public static void loadPlates(ArrayAdapterSetMenu arrayAdapterSetMenu){
-        lvPlates.setAdapter(arrayAdapterSetMenu);
-    }
-
-    public static EditText getEtSearch(){
-      return etSearch;
     }
 
     @Override
@@ -96,14 +105,21 @@ public class SetMenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSave:
-                loadSetMenuPlates.saveMenu();
-                RestaurantPresenter.showRestaurantViewFromSetMenu(this, restaurant);
+                setMenuListPresenter.saveMenuList(this, restaurant.getId(), arrayAdapterSetMenu.getMenu());
+                setMenuListPresenter.stopRealTimeDatabase();
+                onBackPressed();
                 break;
             default:
                 Log.d("Null", "Ícono desconocido");
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void showSetMenuList(ArrayList<Plate> plateList, com.example.llajtacomida.models.Menu menu) {
+        arrayAdapterSetMenu = new ArrayAdapterSetMenu(this, R.layout.adapter_element_restaurant_menu, plateList, menu);
+        lvPlates.setAdapter(arrayAdapterSetMenu);
     }
 
     /**
@@ -111,9 +127,14 @@ public class SetMenuActivity extends AppCompatActivity {
      */
     @Override
     public boolean onSupportNavigateUp() {
-        this.finishActivity(0);
+        setMenuListPresenter.stopRealTimeDatabase();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
+    @Override
+    public void onBackPressed() {
+        setMenuListPresenter.stopRealTimeDatabase();
+        super.onBackPressed();
+    }
 }

@@ -18,10 +18,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Restaurant;
-import com.example.llajtacomida.presenters.mapsPresenter.MapPresenter;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantDatabase;
-import com.example.llajtacomida.presenters.restaurantsPresenter.RestaurantPresenter;
+import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -154,7 +154,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
                 MapPresenter.showGetLocationMapActivity(this, restaurant, "edit", path);
                 break;
             case R.id.btnSelectPhoto:
-                RestaurantPresenter.showCropImage(this);
+                RestaurantNavegation.showCropImage(this);
                 break;
             case R.id.btnResetPhoto:
                 thumb_byte = null;
