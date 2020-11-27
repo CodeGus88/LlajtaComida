@@ -86,7 +86,7 @@
     <string name="markerTitle">Mover</string>
     <string name="markerSearchDescription">Manten pulsado el marcador</string>
     <string name="loadPosition">Estableciendo coordenadas...</string>
-<!--    // spinner options-->
+    <!--    // spinner options-->
     <string name="itemNormal">Normal</string>
     <string name="itemHibrid">Híbrido</string>
     <string name="itemSatellite">Satélite</string>
@@ -126,5 +126,22 @@
     <string name="tvUndefined">No definido</string>
     <string name="title_activity_set_location_map">Map</string>
 
+    <!--  Login  -->
+    <string name="titleLoadListProgressDialog">BUSCAR</string>
+    <string name="messageLoadListProgressDialog">Cargando lista de usuarios...</string>
+
+    <string name="titleSigInProgressDialog">ACCESO</string>
+    <string name="messageSignInProgressDialog">Conectando...</string>
+    <string name="welcome">Bienvenido</string>
+    <!--    <string name="welcome">ᴮⁱᵉⁿᵛᵉⁿⁱᵈᵒ</string>-->
+
+    <!--  Rating  -->
+    <string name="tvExperienceTitle">Describe tu experiencia</string>
+    <string name="etOptionalExperience">Experiencia (Opcional)</string>
+
+
+    <!--  Messages Toast and alerts  -->
+    <string name="messageInvalidOption">Opción inválida...</string>
+    <string name="messageEstablish">Establedido</string>
 
 </resources>

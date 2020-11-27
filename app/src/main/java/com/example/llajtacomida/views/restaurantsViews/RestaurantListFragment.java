@@ -89,7 +89,7 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     }
 
     private void initComponents() {
-        etSearch = (EditText) view.findViewById(R.id.searchView);
+        etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvRestaurants = (ListView) view.findViewById(R.id.lvRestaurants);
         restaurantList = new ArrayList<Restaurant>();
         lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {

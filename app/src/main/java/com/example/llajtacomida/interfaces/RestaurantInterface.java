@@ -2,7 +2,7 @@ package com.example.llajtacomida.interfaces;
 
 import android.content.Context;
 
-import com.example.llajtacomida.models.Menu;
+import com.example.llajtacomida.models.restaurant.menu.Menu;
 import com.example.llajtacomida.models.plate.Plate;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 

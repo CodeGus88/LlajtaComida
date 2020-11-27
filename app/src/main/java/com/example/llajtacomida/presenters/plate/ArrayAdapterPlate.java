@@ -38,19 +38,15 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
-
         if(view == null) {
             view = LayoutInflater.from(context).inflate(resource, null);
         }
-
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
-
         tvTitleItem.setText(plateList.get(position).getName());
         tvResumeItem.setText(plateList.get(position).getOrigin());
-
         return view;
     }
 

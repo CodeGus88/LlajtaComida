@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.map.MapPresenter;
-import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.google.android.material.textfield.TextInputLayout;
@@ -180,7 +180,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
 
         whriteRestaurant();
         Toast.makeText(this, "Actualizando elemento...", Toast.LENGTH_SHORT).show();
-        RestaurantDatabase restaurantDataBase = new RestaurantDatabase(this, restaurant, thumb_byte);
+        RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(this, restaurant, thumb_byte);
         restaurantDataBase.upDate();
         onBackPressed();
     }

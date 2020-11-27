@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".views.restaurantsViews.RestaurantPublicOfActivity"
     android:orientation="vertical"
-    android:background="#03A9F4">
+    android:background="@drawable/list_panel_white_gradient">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -14,15 +14,26 @@
         android:text="@string/tvPublishOfListTitle"
         android:textAlignment="center"
         android:fontFamily="serif"
-        android:textColor="#fff"
+        android:textColor="#353535"
         android:gravity="center" />
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_below="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
+        android:drawableEnd="@drawable/icon_search_black"
+        android:inputType="textWebEditText"
+        android:hint="@string/search_restaurants"
+        android:visibility="gone"/>
    <ListView
-       android:layout_marginTop="5dp"
        android:id="@+id/lvPublicOfRest"
+       android:layout_marginTop="1dp"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_below="@+id/tvTitle"
-       android:background="@drawable/panel_gris">
-   </ListView>
+       android:layout_below="@+id/etSearch"
+       android:background="@drawable/list_panel_white_gradient"/>
 
 </RelativeLayout>

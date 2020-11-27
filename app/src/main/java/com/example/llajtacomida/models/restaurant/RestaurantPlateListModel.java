@@ -3,8 +3,8 @@ package com.example.llajtacomida.models.restaurant;
 import androidx.annotation.NonNull;
 
 import com.example.llajtacomida.interfaces.RestaurantInterface;
-import com.example.llajtacomida.models.Menu;
 import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.models.restaurant.menu.Menu;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

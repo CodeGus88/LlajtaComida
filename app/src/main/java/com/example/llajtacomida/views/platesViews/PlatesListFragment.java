@@ -56,7 +56,7 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
     }
     private void initComponents() {
 
-        etSearch = (EditText) view.findViewById(R.id.searchView);
+        etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
 
         plateList = new ArrayList<Plate>();
@@ -153,9 +153,8 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
     @Override
     public void showPlateList(ArrayList<Plate> plateList) {
         try {
-            this.plateList.clear();
-            this.plateList.addAll(plateList);
-            arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, plateList);
+            this.plateList = plateList;
+            arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, this.plateList);
             lvPlates.setAdapter(arrayAdapterPlates);
         }catch (Exception e){
             Log.e("Error", e.getMessage());

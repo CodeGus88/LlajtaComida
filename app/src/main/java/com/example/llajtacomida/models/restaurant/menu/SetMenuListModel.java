@@ -1,4 +1,4 @@
-package com.example.llajtacomida.models.restaurant;
+package com.example.llajtacomida.models.restaurant.menu;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,8 +6,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.llajtacomida.interfaces.RestaurantInterface;
-import com.example.llajtacomida.models.Menu;
 import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.models.restaurant.menu.Menu;
+import com.example.llajtacomida.models.restaurant.menu.MenuDB;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,7 +57,6 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
         if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/plates")){
             plateList.clear();
             for (DataSnapshot plate: snapshot.getChildren()) {

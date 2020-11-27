@@ -4,24 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp">
+    android:background="@drawable/panel_gris"
+    android:layout_marginVertical="10dp">
 <!--    android:id="@+id/parent"-->
-
-
     <androidx.cardview.widget.CardView
         android:id="@+id/cvPhoto"
-        android:layout_width="80dp"
-        android:layout_height="54dp"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="4dp"
         android:layout_marginLeft="2dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="false"
         android:visibility="visible">
         <ImageView
             android:id="@+id/ivPhotoItem"
-            android:layout_width="80dp"
-            android:layout_height="54dp"
+            android:layout_width="100dp"
+            android:layout_height="67.5dp"
             android:src="@mipmap/image_icon"
             android:scaleType="centerCrop"/>
     </androidx.cardview.widget.CardView>
@@ -31,24 +30,21 @@
         android:id="@+id/tvTitleItem"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="Título"
+        android:hint="@string/tvUndefined"
         android:textStyle="bold"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/cvPhoto"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="7dp"/>
+        android:layout_toRightOf="@+id/cvPhoto"/>
 
     <TextView
         android:id="@+id/tvResumeItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitleItem"
-        android:text="Descripcion"
+        android:hint="@string/tvUndefined"
         android:textStyle="italic"
-        android:maxLines="2"
+        android:maxLines="4"
         android:textSize="10dp"
-        android:layout_toRightOf="@+id/cvPhoto"
-        android:layout_marginLeft="5dp"/>
+        android:layout_toRightOf="@+id/cvPhoto"/>
 
 </RelativeLayout>

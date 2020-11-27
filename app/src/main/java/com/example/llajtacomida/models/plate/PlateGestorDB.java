@@ -1,4 +1,4 @@
-package com.example.llajtacomida.models.restaurant;
+package com.example.llajtacomida.models.plate;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,11 +19,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
-public class RestaurantDatabase {
+public class PlateGestorDB {
 
     private final DatabaseReference databaseReference;
     private final StorageReference storageReference;
-    private final Restaurant restaurant;
+    private final Plate plate;
     private final Context context;
     private byte  [] thumb_byte;
     private Uri url;
@@ -31,9 +31,9 @@ public class RestaurantDatabase {
     private static boolean isSuccess;
     private boolean processComplete;
 
-    public RestaurantDatabase(final Context context, final Restaurant restaurant, final byte [] thumb_byte) {
+    public PlateGestorDB(final Context context, final Plate plate, final byte [] thumb_byte) {
         this.context = context;
-        this.restaurant = restaurant;
+        this.plate = plate;
         this.thumb_byte = thumb_byte; // es l aimagen comprimida
         this.isSuccess = false;
         this.processComplete = false;
@@ -42,27 +42,26 @@ public class RestaurantDatabase {
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference().child("App")
-                .child("restaurants")
-                .child(restaurant.getId());
+                .child("plates")
+                .child(plate.getId());
         storageReference = FirebaseStorage
                 .getInstance()
                 .getReference()
                 .child("images")
-                .child("restaurants")
-                .child(restaurant.getId())
-                .child(restaurant.getId()+".jpg");
+                .child("plates")
+                .child(plate.getId())
+                .child(plate.getId()+".jpg");
     }
 
-    public RestaurantDatabase(Context context, Restaurant restaurant){
+    public PlateGestorDB(Context context, Plate plate){
         this.context = context;
-        this.restaurant = restaurant;
+        this.plate = plate;
         databaseReference = FirebaseDatabase
                 .getInstance()
-                .getReference()
-                .child("App")
-                .child("restaurants").child(restaurant.getId());
+                .getReference().child("App")
+                .child("plates").child(plate.getId());
         storageReference = FirebaseStorage.getInstance().getReference()
-                .child("images/restaurants/"+restaurant.getId()+"/"+restaurant.getId()+".jpg");
+                .child("images/plates/"+plate.getId()+"/"+plate.getId()+".jpg");
     }
 
     public void delete(){
@@ -81,7 +80,8 @@ public class RestaurantDatabase {
         }).isSuccessful();
     }
 
-    public void storeRestaurant() {
+
+    public void storePlate() {
         if (thumb_byte != null) {
             uploadData();
         }else{
@@ -94,7 +94,7 @@ public class RestaurantDatabase {
         if(thumb_byte != null){
             update();
         }else{
-            databaseReference.updateChildren(restaurant.toMap());
+            databaseReference.updateChildren(plate.toMap());
             Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
         }
         processComplete = true;
@@ -106,10 +106,10 @@ public class RestaurantDatabase {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if(task.isSuccessful()){
-                    RestaurantDatabase.isSuccess = true;
+                    PlateGestorDB.isSuccess = true;
                     return storageReference.getDownloadUrl();
                 }else{
-                    RestaurantDatabase.isSuccess = false;
+                    PlateGestorDB.isSuccess = false;
                     throw Objects.requireNonNull(task.getException());
                 }
             }
@@ -118,8 +118,8 @@ public class RestaurantDatabase {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
                     url = task.getResult();
-                    restaurant.setUrl(url.toString());
-                    databaseReference.setValue(restaurant);
+                    plate.setUrl(url.toString());
+                    databaseReference.setValue(plate);
                     Toast.makeText(context, "Se procesó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo subir el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();
@@ -135,10 +135,10 @@ public class RestaurantDatabase {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if(task.isSuccessful()){
-                    RestaurantDatabase.isSuccess = true;
+                    PlateGestorDB.isSuccess = true;
                     return storageReference.getDownloadUrl();
                 }else{
-                    RestaurantDatabase.isSuccess = false;
+                    PlateGestorDB.isSuccess = false;
                     throw Objects.requireNonNull(task.getException());
                 }
             }
@@ -147,8 +147,8 @@ public class RestaurantDatabase {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
                     url = task.getResult();
-                    restaurant.setUrl(url.toString());
-                    databaseReference.updateChildren(restaurant.toMap());
+                    plate.setUrl(url.toString());
+                    databaseReference.updateChildren(plate.toMap());
                     Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo actualizar el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();

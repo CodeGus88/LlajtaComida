@@ -77,7 +77,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
     }
 
     private void initComponents() {
-        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView = (SearchView) findViewById(R.id.etSearch);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

@@ -41,12 +41,6 @@ public class Plate extends ObjectParent {
         return name;
     }
 
-//    @Override
-//    public String getResume() {
-//        return origin;
-//    }
-
-
     @Exclude
     public Map<String, Object> toMap(){
 

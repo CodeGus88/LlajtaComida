@@ -1,4 +1,4 @@
-package com.example.llajtacomida.views;
+package com.example.llajtacomida.views.mainViews;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.presenters.main.MainPresenter;
+import com.example.llajtacomida.interfaces.UserInterface;
+import com.example.llajtacomida.models.user.User;
+import com.example.llajtacomida.presenters.main.MainNavigation;
+import com.example.llajtacomida.presenters.user.UserPresenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -24,6 +27,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -36,12 +40,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Hashtable;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewInterface {
 
     private AppBarConfiguration mAppBarConfiguration;
     // Loginnsilencioso
     private GoogleApiClient googleApiClient;
-    private Hashtable<String, String> user = new Hashtable<String, String>();
+    private Hashtable<String, String> userDataList = new Hashtable<String, String>();
     private ProgressDialog progressDialog;
 
     @Override
@@ -50,14 +54,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -72,19 +69,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
         // Login silencioso
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
-
         googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
         progressDialog = new ProgressDialog(this);
-        
+
     } // End onCreate
 
 
@@ -92,13 +87,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu); // main es el menu de menu/main.xml
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        Toast.makeText(MainActivity.this, "Icono de menu", Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 
@@ -109,19 +102,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 || super.onSupportNavigateUp();
     }
 
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getBaseContext(), "Algo salió mal", Toast.LENGTH_SHORT).show();
     }
 
-    // Para guardar ala sesion
+    // Para guardar la sesion
     @Override
     protected void onStart() {
         super.onStart();
-
         OptionalPendingResult<GoogleSignInResult> opr =  Auth.GoogleSignInApi.silentSignIn(googleApiClient);
-
         if(opr.isDone()){
             GoogleSignInResult result = opr.get();
             handleSingInResult(result); // Este metodo garga los resultados
@@ -142,9 +132,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void handleSingInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             final GoogleSignInAccount account = result.getSignInAccount();
+            saveUser(account);
             NavigationView navigationView =  findViewById(R.id.nav_view);
             View header =  navigationView.getHeaderView(0);
-            ImageView ivAvatar = header.findViewById(R.id.iVAvatar);
+            ImageView ivAvatar = header.findViewById(R.id.ivAvatar);
             TextView tvName = header.findViewById(R.id.tvName);
             TextView tvEmail = header.findViewById(R.id.tvEmail);
 
@@ -152,43 +143,48 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             }
 
-            user.put("name", account.getGivenName());
-            user.put("family_name", account.getFamilyName());
-            user.put("email", account.getEmail());
-            user.put("id", account.getId());
-            user.put("phone", "");
-            user.put("estado", "Conectado");
+            userDataList.put("name", account.getGivenName());
+            userDataList.put("family_name", account.getFamilyName());
+            userDataList.put("email", account.getEmail());
+            userDataList.put("phone", "");
+            userDataList.put("state", "conectado");
 
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
             ivAvatar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    logOut(user);
+                    logOut(userDataList);
                 }
             });
 
         }else{
             getPregressDialog("USUARIO5", "Cerrando...");
-            MainPresenter.showLogin(MainActivity.this);
+            MainNavigation.showLogin(MainActivity.this);
             progressDialog.dismiss();
         }
+    }
+
+    private void saveUser(GoogleSignInAccount account){
+        User user = new User(
+                FirebaseAuth.getInstance().getUid(),
+                account.getDisplayName(), account.getEmail(),
+                account.getPhotoUrl().toString(), "user");
+       UserPresenter userPresenter = new UserPresenter(this);
+       userPresenter.storeUser(user);
     }
 
     /**
      * Este método sirve para cerrar sesión
      */
     private void logOut(Hashtable<String, String> user){
-
         AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
         confirmDialog.setTitle("INFORMACIÓN DEL USUARIO");
-//        confirmDialog.setMessage("¿Estás seguro de cerrar sesión?");
         confirmDialog.setMessage(
-                "Nombre: " + user.get("name")
+                            "Nombre: " + user.get("name")
                         + "\nApellidos: " + user.get("family_name")
                         + "\nEmail: " + user.get("email")
-                        + "\nID: " + user.get("id")
-                        + "\nEstado: " + user.get("estado"));
+                        + "\nEstado: " + user.get("state"));
         confirmDialog.setCancelable(false);
         confirmDialog.setPositiveButton("Cerrar Sesión", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
@@ -197,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 public void onResult(@NonNull Status status) {
                     if(status.isSuccess()){
                         getPregressDialog("USUARIO", "Cerrando...");
-                        MainPresenter.showLogin(MainActivity.this);
+                        MainNavigation.showLogin(MainActivity.this);
                         progressDialog.dismiss();
                     }else{
                         Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
@@ -218,5 +214,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         progressDialog.setTitle(title);
         progressDialog.setMessage(message);
         progressDialog.show();
+    }
+
+    @Override
+    public void showUser(User user) {
+        // Cargar el usuario
     }
 }

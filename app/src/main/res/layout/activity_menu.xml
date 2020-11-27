@@ -8,26 +8,16 @@
     android:orientation="vertical"
     android:background="#03A9F4">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       android:layout_margin="10dp">
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="10dp"/>
        <TextView
            android:id="@+id/tvTitle"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:text="@string/tvTitleMenu"
            android:gravity="center"
-           android:textSize="25dp"
+           android:textSize="20dp"
+           android:layout_marginVertical="5dp"
            android:textColor="#fff"/>
 
-       <Space
-           android:layout_width="match_parent"
-           android:layout_height="10dp"/>
        <EditText
            android:id="@+id/etSearch"
            android:layout_width="match_parent"
@@ -43,8 +33,6 @@
       <ListView
           android:id="@+id/lvPlates"
           android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@drawable/panel_white"/>
-
-   </LinearLayout>
+          android:layout_height="wrap_content"
+          android:background="@drawable/list_panel_white_gradient"/>
 </LinearLayout>

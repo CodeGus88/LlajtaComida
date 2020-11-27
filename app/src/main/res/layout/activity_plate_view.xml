@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tvNamePlateView"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:gravity="center"
                 style="@style/CodeFontContentTitle"/>
             <Space
@@ -107,10 +107,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_gris"
-                android:layout_marginHorizontal="10dp">
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="¿Qué ingredientes lleva y cómo se prepara?"
@@ -121,7 +120,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/loremShort"
-                    android:layout_marginHorizontal="10dp"
                     style="@style/CodeFontContent"/>
             </LinearLayout>
 
@@ -135,11 +133,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_celeste"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="0dp">
+                android:layout_marginTop="0dp"
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tvOriginPlateView"
@@ -150,7 +147,6 @@
                     style="@style/CodeFontContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:text="@string/loremLong" />
 
             </LinearLayout>
@@ -164,8 +160,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_gris"
-                android:padding="10dp"
-                android:layout_margin="10dp">
+                android:padding="10dp">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -183,11 +178,14 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="10dp"/>
 
+            <FrameLayout
+                android:id="@+id/flRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
-
     </ScrollView>
     <ImageView
         android:layout_width="20dp"

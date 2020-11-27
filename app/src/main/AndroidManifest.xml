@@ -52,7 +52,7 @@
         <activity android:name=".views.restaurantsViews.RestaurantViewActivity" />
         <activity
             android:name=".views.platesViews.PlateViewActivity"
-            android:parentActivityName=".views.MainActivity">
+            android:parentActivityName=".views.mainViews.MainActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -95,7 +95,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".views.MainActivity"
+            android:name=".views.mainViews.MainActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.RestaurantInterface;
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.models.restaurant.RestaurantModel;
 
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class RestaurantPresenter implements RestaurantInterface.PresenterRestaur
         builder.setMessage(message)
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        RestaurantDatabase restaurantDatabase = new RestaurantDatabase(context, restaurant);
+                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant);
                         restaurant.setPublic(!restaurant.isPublic());
                         restaurantDatabase.upDate();
                     }

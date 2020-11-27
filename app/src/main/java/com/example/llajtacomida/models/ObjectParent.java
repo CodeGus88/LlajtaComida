@@ -8,7 +8,7 @@ public abstract class ObjectParent implements Serializable {
     protected String id;
     protected String name;
     protected String url;
-
+    protected float punctuation;
     /**
      * Utilizamos poliformismo
      * Para evitarse de mal entendidos el objeto le dará un id automaticamente si no se lo proporciona
@@ -16,10 +16,12 @@ public abstract class ObjectParent implements Serializable {
     public ObjectParent(){
         id = UUID.randomUUID().toString();
         this.url = "";
+        punctuation = 0;
     }
     public ObjectParent(String id){
         this.id = id;
         this.url = "";
+        punctuation = 0;
     }
 
     public String getId() {
@@ -46,24 +48,13 @@ public abstract class ObjectParent implements Serializable {
         this.url = url;
     }
 
+    public float getPunctuation() {
+        return punctuation;
+    }
+
+    public void setPunctuation(float punctuation) {
+        this.punctuation = punctuation;
+    }
+
     public  abstract String toString(); // Se usará alimentar al buscador (Algunos paquetes buscan a este método por defecto para obtener info)
-
-
-    //    public abstract String getResume(); // Para mostrar un pequeño resumen de lo que se quiere obtener (nombre, descripcion, etc)
-
-    //    Prueba
-//    public void setImages(Hashtable<String, Image> images){
-//        this.images = images;
-//    }
-//
-//    public Hashtable<String, Image> getImages(){
-//        return images;
-//    }
-//
-//    public void getNode(){
-//
-//    }
-
-
-
 }

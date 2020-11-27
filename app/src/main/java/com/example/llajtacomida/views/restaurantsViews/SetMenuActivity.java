@@ -117,7 +117,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
 
 
     @Override
-    public void showSetMenuList(ArrayList<Plate> plateList, com.example.llajtacomida.models.Menu menu) {
+    public void showSetMenuList(ArrayList<Plate> plateList, com.example.llajtacomida.models.restaurant.menu.Menu menu) {
         arrayAdapterSetMenu = new ArrayAdapterSetMenu(this, R.layout.adapter_element_restaurant_menu, plateList, menu);
         lvPlates.setAdapter(arrayAdapterSetMenu);
     }

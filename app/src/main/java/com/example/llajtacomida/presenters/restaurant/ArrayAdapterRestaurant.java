@@ -49,7 +49,6 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
         }catch(Exception e){
             Log.e("Error: ", e.getMessage());
         }
-
         return view;
     }
 

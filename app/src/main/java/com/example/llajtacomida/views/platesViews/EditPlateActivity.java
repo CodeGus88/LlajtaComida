@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.plate.Plate;
-import com.example.llajtacomida.presenters.plate.PlateGestorDB;
+import com.example.llajtacomida.models.plate.PlateGestorDB;
 import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.tools.Validation;

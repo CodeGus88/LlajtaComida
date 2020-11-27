@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.Menu;
+import com.example.llajtacomida.models.restaurant.menu.Menu;
 import com.example.llajtacomida.models.plate.Plate;
 
 import java.util.ArrayList;

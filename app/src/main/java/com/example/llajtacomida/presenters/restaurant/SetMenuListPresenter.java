@@ -3,9 +3,9 @@ package com.example.llajtacomida.presenters.restaurant;
 import android.content.Context;
 
 import com.example.llajtacomida.interfaces.RestaurantInterface;
-import com.example.llajtacomida.models.Menu;
+import com.example.llajtacomida.models.restaurant.menu.Menu;
 import com.example.llajtacomida.models.plate.Plate;
-import com.example.llajtacomida.models.restaurant.SetMenuListModel;
+import com.example.llajtacomida.models.restaurant.menu.SetMenuListModel;
 
 import java.util.ArrayList;
 

@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 
 import java.util.ArrayList;
 
@@ -119,7 +119,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         byte [] img = null;
-                        RestaurantDatabase restaurantDatabase = new RestaurantDatabase(context, restaurant, img);
+                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
                         restaurantDatabase.upDate();
                     }
                 })
@@ -137,7 +137,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         byte [] img = null;
-                        RestaurantDatabase restaurantDatabase = new RestaurantDatabase(context, restaurant, img);
+                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
                         restaurantDatabase.delete();
                     }
                 })

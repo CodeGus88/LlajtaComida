@@ -34,7 +34,7 @@ import com.example.llajtacomida.presenters.image.GaleryDatabase;
 import com.example.llajtacomida.presenters.image.ImagePresenter;
 import com.example.llajtacomida.presenters.map.MapPresenter;
 import com.example.llajtacomida.presenters.plate.PlateNavegation;
-import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
@@ -46,6 +46,7 @@ import java.util.ArrayList;
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
         RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage {
     public String id;
+    private static final int TIME_ANIMATION = 2000;
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
@@ -109,7 +110,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     private void initAnimation(){
         viewFlipper.setDisplayedChild(0);
-        viewFlipper.setFlipInterval(5000);
+        viewFlipper.setFlipInterval(TIME_ANIMATION);
         viewFlipper.startFlipping();
     }
 
@@ -201,13 +202,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.btnNext:
                 viewFlipper.setInAnimation(this, android.R.anim.slide_in_left); // slide_in_left agregado manualmente creando anim/slide_in_left.xml en res
                 viewFlipper.setOutAnimation(this, android.R.anim.slide_out_right); //slide_out_right agregado manualmente creando anim/slide_out_right.xml res
-                viewFlipper.setFlipInterval(6000);//Para reiniciar tiempo
+                viewFlipper.setFlipInterval(TIME_ANIMATION);//Para reiniciar tiempo
                 viewFlipper.showNext();
                 break;
             case R.id.btnPrevious:
                 viewFlipper.setInAnimation(this, R.anim.slide_in_right);
                 viewFlipper.setOutAnimation(this, R.anim.slide_out_left);
-                viewFlipper.setFlipInterval(6000); // Para reiniciar tiempo
+                viewFlipper.setFlipInterval(TIME_ANIMATION); // Para reiniciar tiempo
                 viewFlipper.showPrevious();
                 break;
             case R.id.btnMenuEdit:
@@ -258,7 +259,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         confirm.setCancelable(false);
         confirm.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                RestaurantDatabase restaurantDataBase = new RestaurantDatabase(RestaurantViewActivity.this, restaurant);
+                RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(RestaurantViewActivity.this, restaurant);
                 // Antes de eliminar el plato, debemos eliminar todos sus archivos
                 GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
                 galeryDatabase.deleteAllData(); // es un metodo estatico

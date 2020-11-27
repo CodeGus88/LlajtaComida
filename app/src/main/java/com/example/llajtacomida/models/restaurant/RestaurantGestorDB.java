@@ -1,4 +1,4 @@
-package com.example.llajtacomida.presenters.plate;
+package com.example.llajtacomida.models.restaurant;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,30 +6,26 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.llajtacomida.models.Menu;
-import com.example.llajtacomida.models.plate.Plate;
-import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Objects;
 
-public class PlateGestorDB {
+public class RestaurantGestorDB {
 
     private final DatabaseReference databaseReference;
     private final StorageReference storageReference;
-    private final Plate plate;
+    private final Restaurant restaurant;
     private final Context context;
     private byte  [] thumb_byte;
     private Uri url;
@@ -37,9 +33,9 @@ public class PlateGestorDB {
     private static boolean isSuccess;
     private boolean processComplete;
 
-    public PlateGestorDB(final Context context, final Plate plate, final byte [] thumb_byte) {
+    public RestaurantGestorDB(final Context context, final Restaurant restaurant, final byte [] thumb_byte) {
         this.context = context;
-        this.plate = plate;
+        this.restaurant = restaurant;
         this.thumb_byte = thumb_byte; // es l aimagen comprimida
         this.isSuccess = false;
         this.processComplete = false;
@@ -48,26 +44,27 @@ public class PlateGestorDB {
         databaseReference = FirebaseDatabase
                 .getInstance()
                 .getReference().child("App")
-                .child("plates")
-                .child(plate.getId());
+                .child("restaurants")
+                .child(restaurant.getId());
         storageReference = FirebaseStorage
                 .getInstance()
                 .getReference()
                 .child("images")
-                .child("plates")
-                .child(plate.getId())
-                .child(plate.getId()+".jpg");
+                .child("restaurants")
+                .child(restaurant.getId())
+                .child(restaurant.getId()+".jpg");
     }
 
-    public PlateGestorDB(Context context, Plate plate){
+    public RestaurantGestorDB(Context context, Restaurant restaurant){
         this.context = context;
-        this.plate = plate;
+        this.restaurant = restaurant;
         databaseReference = FirebaseDatabase
                 .getInstance()
-                .getReference().child("App")
-                .child("plates").child(plate.getId());
+                .getReference()
+                .child("App")
+                .child("restaurants").child(restaurant.getId());
         storageReference = FirebaseStorage.getInstance().getReference()
-                .child("images/plates/"+plate.getId()+"/"+plate.getId()+".jpg");
+                .child("images/restaurants/"+restaurant.getId()+"/"+restaurant.getId()+".jpg");
     }
 
     public void delete(){
@@ -86,8 +83,7 @@ public class PlateGestorDB {
         }).isSuccessful();
     }
 
-
-    public void storePlate() {
+    public void storeRestaurant() {
         if (thumb_byte != null) {
             uploadData();
         }else{
@@ -100,7 +96,7 @@ public class PlateGestorDB {
         if(thumb_byte != null){
             update();
         }else{
-            databaseReference.updateChildren(plate.toMap());
+            databaseReference.updateChildren(restaurant.toMap());
             Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
         }
         processComplete = true;
@@ -112,10 +108,10 @@ public class PlateGestorDB {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if(task.isSuccessful()){
-                    PlateGestorDB.isSuccess = true;
+                    RestaurantGestorDB.isSuccess = true;
                     return storageReference.getDownloadUrl();
                 }else{
-                    PlateGestorDB.isSuccess = false;
+                    RestaurantGestorDB.isSuccess = false;
                     throw Objects.requireNonNull(task.getException());
                 }
             }
@@ -124,8 +120,10 @@ public class PlateGestorDB {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
                     url = task.getResult();
-                    plate.setUrl(url.toString());
-                    databaseReference.setValue(plate);
+                    restaurant.setUrl(url.toString());
+                    databaseReference.setValue(restaurant);
+                    //  Para saber quien es el autor de la publicación
+                    databaseReference.child("author").setValue(FirebaseAuth.getInstance().getUid());
                     Toast.makeText(context, "Se procesó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo subir el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();
@@ -141,10 +139,10 @@ public class PlateGestorDB {
             @Override
             public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                 if(task.isSuccessful()){
-                    PlateGestorDB.isSuccess = true;
+                    RestaurantGestorDB.isSuccess = true;
                     return storageReference.getDownloadUrl();
                 }else{
-                    PlateGestorDB.isSuccess = false;
+                    RestaurantGestorDB.isSuccess = false;
                     throw Objects.requireNonNull(task.getException());
                 }
             }
@@ -153,8 +151,8 @@ public class PlateGestorDB {
             public void onComplete(@NonNull Task<Uri> task) {
                 if(isSuccess){ // Si se subió la imagen, procedemos al registro en la base de datos
                     url = task.getResult();
-                    plate.setUrl(url.toString());
-                    databaseReference.updateChildren(plate.toMap());
+                    restaurant.setUrl(url.toString());
+                    databaseReference.updateChildren(restaurant.toMap());
                     Toast.makeText(context, "Se actualizó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo actualizar el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();

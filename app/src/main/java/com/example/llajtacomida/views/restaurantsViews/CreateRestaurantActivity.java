@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.map.MapPresenter;
-import com.example.llajtacomida.models.restaurant.RestaurantDatabase;
+import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -139,7 +139,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     private void storeRestaurant(){
         Toast.makeText(this, "Subiendo elemento...", Toast.LENGTH_LONG).show();
         whriteRestaurant();
-        RestaurantDatabase platesDataBase = new RestaurantDatabase(this, restaurant, thumb_byte);
+        RestaurantGestorDB platesDataBase = new RestaurantGestorDB(this, restaurant, thumb_byte);
         platesDataBase.storeRestaurant();
         onBackPressed();
     }

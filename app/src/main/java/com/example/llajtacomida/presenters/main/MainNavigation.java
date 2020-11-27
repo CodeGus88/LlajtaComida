@@ -3,10 +3,10 @@ package com.example.llajtacomida.presenters.main;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.llajtacomida.views.MainActivity;
+import com.example.llajtacomida.views.mainViews.MainActivity;
 import com.example.llajtacomida.views.mainViews.LoginActivity;
 
-public class MainPresenter {
+public class MainNavigation {
 
     public static void showLogin(Context context){
         Intent intent = new Intent(context, LoginActivity.class);

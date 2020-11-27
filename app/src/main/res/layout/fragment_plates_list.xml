@@ -1,32 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.platesViews.PlatesListFragment"
     android:orientation="vertical"
-    android:background="#2196F3">
+    android:background="@drawable/list_panel_white_gradient">
 
 
         <TextView
-            android:layout_marginTop="10dp"
+            android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_plates_list"
-            android:textSize="25sp"
-            android:textColor="#fff"
+            android:textSize="20sp"
+            android:textColor="#353535"
             android:gravity="center"
             android:fontFamily="serif"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
 
             <EditText
-                android:id="@+id/searchView"
+                android:id="@+id/etSearch"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/edit_text"
@@ -41,10 +35,8 @@
                 android:id="@+id/lvPlates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/panel_gris"
-                android:layout_marginTop="1dp"
-                android:layout_marginBottom="10dp"/>
+                android:background="@drawable/list_panel_white_gradient"
+                android:layout_marginTop="1dp"/>
 
-        </LinearLayout>
 
 </LinearLayout>

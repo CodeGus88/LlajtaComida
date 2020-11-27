@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,16 +29,14 @@ import com.example.llajtacomida.models.plate.Plate;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.image.GaleryDatabase;
 import com.example.llajtacomida.presenters.image.ImagePresenter;
-import com.example.llajtacomida.presenters.plate.PlateGestorDB;
+import com.example.llajtacomida.models.plate.PlateGestorDB;
 import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.presenters.plate.PlatePresenter;
 import com.example.llajtacomida.presenters.plate.PlateRestListPresenter;
 import com.example.llajtacomida.presenters.restaurant.ArrayAdapterRestaurant;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.llajtacomida.views.rating.RatingRecordFragment;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class PlateViewActivity extends AppCompatActivity
     private boolean isAnAdministrator;
     private Plate plate;
 
-    private static final int TIME_ANIMATION = 1000;
+    private static final int TIME_ANIMATION = 2000;
 
     // bootones
     private ImageButton btnNext;
@@ -73,6 +72,9 @@ public class PlateViewActivity extends AppCompatActivity
     private PlateInterface.presenterRestList restListPresenter;
     private PlatePresenter platePresenter;
     private ImagePresenter imagePresenter;
+
+    // Fragmento de rating
+    private RatingRecordFragment ratingRecordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,18 @@ public class PlateViewActivity extends AppCompatActivity
 
         initComponents();
         initPresenters();
+
+        // Agregar fragmento fragment
+        initRatingFragment();
+    }
+
+    private void initRatingFragment() {
+        ratingRecordFragment = new RatingRecordFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("objectId", id);
+        bundle.putString("nodeCollectionName", "plates");
+        ratingRecordFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.flRating, ratingRecordFragment).commit(); // muestra el fragmento rating en la actividad
     }
 
     private void initPresenters(){
@@ -144,9 +158,9 @@ public class PlateViewActivity extends AppCompatActivity
     }
 
     private void initAnimation(){
-            viewFlipper.setDisplayedChild(0);
-            viewFlipper.setFlipInterval(TIME_ANIMATION);
-            viewFlipper.startFlipping();
+        viewFlipper.setDisplayedChild(0);
+        viewFlipper.setFlipInterval(TIME_ANIMATION);
+        viewFlipper.startFlipping();
     }
 
     @Override

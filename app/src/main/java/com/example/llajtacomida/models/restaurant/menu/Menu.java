@@ -1,4 +1,4 @@
-package com.example.llajtacomida.models;
+package com.example.llajtacomida.models.restaurant.menu;
 
 import java.util.ArrayList;
 import java.util.UUID;

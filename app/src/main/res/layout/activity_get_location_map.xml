@@ -20,7 +20,7 @@
                 tools:context=".views.mapsViews.GetLocationMapActivity"/>
 
             <SearchView
-                android:id="@+id/searchView"
+                android:id="@+id/etSearch"
                 android:background="@drawable/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:weightSum="2"
                 android:layout_marginHorizontal="50dp"
                 android:background="@drawable/edit_text_transparent"
-                android:layout_below="@id/searchView">
+                android:layout_below="@id/etSearch">
                 <TextView
                     android:id="@+id/tvLatitude"
                     android:layout_width="match_parent"
