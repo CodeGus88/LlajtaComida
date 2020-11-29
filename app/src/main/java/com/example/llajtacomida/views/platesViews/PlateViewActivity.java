@@ -39,6 +39,7 @@ import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.views.rating.RatingRecordFragment;
 import com.zolad.zoominimageview.ZoomInImageView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PlateViewActivity extends AppCompatActivity
@@ -67,6 +68,7 @@ public class PlateViewActivity extends AppCompatActivity
     private ArrayAdapterRestaurant arrayAdapterRestaurant;
     private ListView lvRestaurants;
     private ArrayList<Restaurant> restaurantList;
+    private TextView tvRating;
 
     //  Presentadores del plato y de la lista de restaurantes
     private PlateInterface.presenterRestList restListPresenter;
@@ -137,9 +139,10 @@ public class PlateViewActivity extends AppCompatActivity
         tvName = (TextView) findViewById(R.id.tvName);
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
         tvOrigin = (TextView) findViewById(R.id.tvOrigin);
+        tvRating = (TextView) findViewById(R.id.tvRating);
 
-        ivPhoto.getLayoutParams().height = (int) (height*0.89); //por el espacio para los botones next previous
-        ivPhoto.getLayoutParams().width = width; //(int) (width*0.89);//width;
+        ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
+        ivPhoto.getLayoutParams().width = (int) (width*0.984);
 
         btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
@@ -270,6 +273,8 @@ public class PlateViewActivity extends AppCompatActivity
             tvName.setText(plate.getName());
             tvIngredients.setText(plate.getIngredients());
             tvOrigin.setText(plate.getOrigin());
+            DecimalFormat decimalFormat = new DecimalFormat("#.0");
+            tvRating.setText(String.valueOf(decimalFormat.format(plate.getPunctuation())));
             Glide.with(PlateViewActivity.this).load(plate.getUrl()).into(ivPhoto);
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());
@@ -301,13 +306,15 @@ public class PlateViewActivity extends AppCompatActivity
                     ImageView ivImg = new ImageView(PlateViewActivity.this);
                     Glide.with(PlateViewActivity.this).load(image.getUrl()).into(ivImg);
                     ivImg.setLayoutParams( // Tamaño de la imagen
-                            new ViewGroup.LayoutParams((int) (width*0.89),(int) (height*0.89))
+//                            new ViewGroup.LayoutParams((int) (width*0.89),(int) (height*0.89))
+                            new ViewGroup.LayoutParams((int) (width*0.984),(int) (height*0.984))
                     );
                     CardView cv = new CardView(PlateViewActivity.this);
                     cv.addView(ivImg);
                     cv.setRadius(35);
                     cv.setLayoutParams( // Tamaño de la imagen
-                            new ViewGroup.LayoutParams((int) (width*0.89), (int) (height*0.89))
+//                            new ViewGroup.LayoutParams((int) (width*0.89), (int) (height*0.89))
+                            new ViewGroup.LayoutParams((int) (width*0.984), (int) (height*0.984))
                     );
                     viewFlipper.addView(cv);
                     initAnimation();
@@ -324,6 +331,7 @@ public class PlateViewActivity extends AppCompatActivity
     private void stopRealtimeDatabse(){
         platePresenter.stopRealtimeDatabase();
         restListPresenter.stopRealtimeDatabase();
-        imagePresenter.stopRealtimeDatabse();
+        imagePresenter.stopRealtimeDatabase();
+        ratingRecordFragment.stopRealtimeDatabase();
     }
 }

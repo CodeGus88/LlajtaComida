@@ -16,7 +16,7 @@ public interface ImageInterface {
     interface PresenterImage{
         public void showImages(ArrayList<Image> imageList);
         public void searchImages(String model, String modelId);
-        public void stopRealtimeDatabse();
+        public void stopRealtimeDatabase();
     }
 
     /**

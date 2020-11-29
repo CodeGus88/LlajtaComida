@@ -31,7 +31,6 @@ public class PlateModel implements ValueEventListener, PlateInterface.ModelPlate
     @Override
     public void loadPlatesList() {
         databaseReference.child("App").child("plates").orderByChild("name").addValueEventListener(this);
-
     }
 
     @Override

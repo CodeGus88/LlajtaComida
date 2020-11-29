@@ -1,29 +1,33 @@
 package com.example.llajtacomida.views.rating;
 
 import android.app.AlertDialog;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.RatingInterface;
+import com.example.llajtacomida.models.user.User;
+import com.example.llajtacomida.presenters.rating.ArrayAdapterRating;
 import com.example.llajtacomida.presenters.rating.RatingPresenter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.llajtacomida.presenters.tools.ScreenSize;
 
-public class RatingRecordFragment extends Fragment implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class RatingRecordFragment extends Fragment implements View.OnClickListener, RatingInterface.ViewRating {
 
     // Components
+    private ListView lvUserExperiences;
     private View view;
     private RatingBar rbStars;
     private EditText etExperience;
@@ -39,6 +43,9 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     // Presentador
     private RatingPresenter ratingPresenter;
 
+    //adaptador
+    private ArrayAdapterRating arrayAdapterRating;
+
     public RatingRecordFragment() {
         // Required empty public constructor
     }
@@ -52,7 +59,8 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         initComponents();
 
         // iniciar presentador
-        ratingPresenter = new RatingPresenter(nodeCollectionName, objectId);
+        ratingPresenter = new RatingPresenter(this,  nodeCollectionName, objectId);
+        ratingPresenter.loadRating();
         return view;
     }
 
@@ -64,10 +72,10 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 saveVote();
             }
         });
-        LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP); // Estrellas
-        stars.getDrawable(1).setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP); // Sombras
-
+//        LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
+//        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP); // Estrellas
+//        stars.getDrawable(1).setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP); // Sombras
+        lvUserExperiences = (ListView) view.findViewById(R.id.lvUserExperiences);
 
         // alert de rating para votar
         View viewAlert = getLayoutInflater().inflate(R.layout.alert_vote, null);
@@ -105,5 +113,21 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
             default:
                 Toast.makeText(getContext(), getString(R.string.messageInvalidOption), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void showRating(ArrayList<Object> voteList, ArrayList<User> userList) {
+        // mostrar con el presentador arrayadaoter
+        try {
+            arrayAdapterRating = new ArrayAdapterRating(getContext(), R.layout.adapter_element_users_rating_list, voteList, userList);
+            lvUserExperiences.setAdapter(arrayAdapterRating);
+            ScreenSize.setListViewHeightBasedOnChildrenX(lvUserExperiences);
+        }catch (Exception e){
+            Log.e("Error", "----------------------------------------------------------> " + e.getMessage());
+        }
+    }
+
+    public void stopRealtimeDatabase(){
+        ratingPresenter.stopRealtimeDatabase();
     }
 }

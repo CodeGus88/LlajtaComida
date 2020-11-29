@@ -39,12 +39,14 @@ import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.plate.ArrayAdapterPlate;
+import com.example.llajtacomida.views.rating.RatingRecordFragment;
 import com.zolad.zoominimageview.ZoomInImageView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
-        RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage {
+        RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage{
     public String id;
     private static final int TIME_ANIMATION = 2000;
     //iconos
@@ -58,6 +60,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ImageButton btnMenuEdit;
     private Button btnVisit;
     private ListView menuList;
+    private TextView tvRating;
+
     // Visor de imagenes
     private ViewFlipper viewFlipper;
     private int height, width;
@@ -71,6 +75,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private RestPlateListPresenter restPlateListPresenter;
     private RestaurantPresenter restaurantPresenter;
     private ImagePresenter imagePresenter;
+
+    // Fragmento de rating
+    private RatingRecordFragment ratingRecordFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +102,16 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 //        loadImages();
         plateList = new ArrayList<Plate>();
        initPresenters();
+       initRatingFragment();
+    }
+
+    private void initRatingFragment() {
+        ratingRecordFragment = new RatingRecordFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("objectId", id);
+        bundle.putString("nodeCollectionName", "restaurants");
+        ratingRecordFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().add(R.id.flRating, ratingRecordFragment).commit(); // muestra el fragmento rating en la actividad
     }
 
     private void initPresenters() {
@@ -125,8 +142,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         tvPhone = (TextView) findViewById(R.id.tvPhone);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
         tvOriginAndDescription = (TextView) findViewById(R.id.tvOriginAndDescription);
-        ivPhoto.getLayoutParams().height = (int) (height*0.89); //por el espacio para los botones next previous
-        ivPhoto.getLayoutParams().width = width; //(int) (width*0.89);//width;
+        ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
+        ivPhoto.getLayoutParams().width = (int) (width * 0.984); //(int) (width*0.89);//width;
         btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
@@ -138,6 +155,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 PlateNavegation.showPlateView(RestaurantViewActivity.this, plateList.get(position));
             }
         });
+        tvRating = (TextView) findViewById(R.id.tvRating);
         // Cuando es un Fracment no se puede asociar onClick desde el código xml, es necesario este tipo de solución
         btnPrevious.setOnClickListener(this);
         btnNext.setOnClickListener(this);
@@ -304,6 +322,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             tvAddress.setText(restaurant.getAddress());
             tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
             Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
+            DecimalFormat decimalFormat = new DecimalFormat("#.0");
+            tvRating.setText(String.valueOf(decimalFormat.format(restaurant.getPunctuation())));
             changeIcon();
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());
@@ -331,13 +351,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                     ImageView ivImg = new ImageView(RestaurantViewActivity.this);
                     Glide.with(RestaurantViewActivity.this).load(image.getUrl()).into(ivImg);
                     ivImg.setLayoutParams( // Tamaño de la imagen
-                            new ViewGroup.LayoutParams((int) (width * 0.89), (int) (height * 0.89))
+                            new ViewGroup.LayoutParams((int) (width * 0.984), (int) (height * 0.984))
                     );
                     CardView cv = new CardView(RestaurantViewActivity.this);
                     cv.addView(ivImg);
                     cv.setRadius(35);
                     cv.setLayoutParams( // Tamaño de la imagen
-                            new ViewGroup.LayoutParams((int) (width * 0.89), (int) (height * 0.89))
+                            new ViewGroup.LayoutParams((int) (width * 0.984), (int) (height * 0.984))
                     );
                     viewFlipper.addView(cv);
                     initAnimation();
@@ -352,7 +372,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     private void stopRealtimeDatabase(){
         restPlateListPresenter.stopRealtimeDatabse();
-        imagePresenter.stopRealtimeDatabse();
+        imagePresenter.stopRealtimeDatabase();
         restaurantPresenter.stopRealtimeDatabse();
+        ratingRecordFragment.stopRealtimeDatabase();
     }
 }

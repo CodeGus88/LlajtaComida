@@ -123,6 +123,7 @@ public class Restaurant extends ObjectParent implements Serializable {
         result.put("latitude",  latitude);
         result.put("longitude",  longitude);
         result.put("public",  isPublic);
+        result.put("punctuation",  punctuation);
         return result;
     }
 }

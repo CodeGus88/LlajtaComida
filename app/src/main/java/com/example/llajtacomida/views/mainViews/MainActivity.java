@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -166,12 +167,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void saveUser(GoogleSignInAccount account){
-        User user = new User(
-                FirebaseAuth.getInstance().getUid(),
-                account.getDisplayName(), account.getEmail(),
-                account.getPhotoUrl().toString(), "user");
-       UserPresenter userPresenter = new UserPresenter(this);
-       userPresenter.storeUser(user);
+        try {
+            User user = new User(
+                    FirebaseAuth.getInstance().getUid(),
+                    account.getDisplayName(), account.getEmail(),
+                    account.getPhotoUrl().toString(), "user");
+            UserPresenter userPresenter = new UserPresenter(this);
+            userPresenter.storeUser(user);
+        }catch(Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
     /**

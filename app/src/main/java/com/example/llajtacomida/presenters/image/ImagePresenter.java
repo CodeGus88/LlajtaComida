@@ -27,7 +27,7 @@ public class ImagePresenter implements ImageInterface.PresenterImage {
     }
 
     @Override
-    public void stopRealtimeDatabse() {
+    public void stopRealtimeDatabase() {
         modelImage.stopRealtimeDatabse();
     }
 }

@@ -1,26 +1,22 @@
 package com.example.llajtacomida.presenters.rating;
 
-import android.content.Context;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import com.example.llajtacomida.interfaces.RatingInterface;
-import com.example.llajtacomida.models.plate.PlateGestorDB;
 import com.example.llajtacomida.models.rating.Rating;
 import com.example.llajtacomida.models.rating.RatingModel;
-import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
+import com.example.llajtacomida.models.user.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 
 public class RatingPresenter implements RatingInterface.PresenterRating {
 
     private RatingInterface.ViewRating viewRating;
     private RatingInterface.ModelRating modelRating;
     private Rating rating;
+    private ArrayList<Object> objectList;
 
     public RatingPresenter(RatingInterface.ViewRating viewRating, String nodeCollectionName, String objectId){
         this.viewRating = viewRating;
@@ -33,27 +29,27 @@ public class RatingPresenter implements RatingInterface.PresenterRating {
     }
 
     @Override
-    public void showRating(Rating rating) {
-        if(rating != null){
-            this.rating = rating;
-            Log.println(1, "tag :)", "---------------------------------------------------------> rating no es nulo");
-        }else{
-            this.rating = new Rating();
-            Log.println(1, "tag :)", "--------------------------------------------------------->  rating es nulo");
-        }
+    public void loadRating() {
+        modelRating.searchRating();
     }
 
     /**
-     * Crea y hace mostarar un array de objetos
+     * inicializar carga
+     * @param rating
      */
     @Override
-    public void showVotesList() {
-        ArrayList<Object> onjectList = new ArrayList<Object>();
+    public void showRating(Rating rating, ArrayList<User> userList) {
+        this.rating = rating;
+        ArrayList<Object> voteList = new ArrayList<Object>();
+        for(String key : rating.getVotesList().keySet()){
+            voteList.add(rating.getVotesList().get(key));
+        }
+        viewRating.showRating(voteList, userList);
     }
+
 
     @Override
     public void saveVote(float userPunctuation, String userExperience) {
-//        modelRating.searchRating();
         // construir el objeto rating y mandarselo al modelo para que lo guarde
         Date date = new Date();
         Date newDate = new Date(date.getTime());
@@ -65,7 +61,8 @@ public class RatingPresenter implements RatingInterface.PresenterRating {
     }
 
     @Override
-    public void updatePunctuationObject(boolean isSuccess, float punctuation) {
-
+    public void stopRealtimeDatabase() {
+        modelRating.stopRealtimeDatabase();
     }
+
 }

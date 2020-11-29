@@ -26,7 +26,6 @@ public class PlateModelRestList implements PlateInterface.ModelRestList,  ValueE
         this.restListPresenter = restListPresenter;
         restaurantList = new ArrayList<Restaurant>();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-//        databaseReference.child("App").child("restaurants").addValueEventListener(this);
         databaseReference.child("App").child("restaurants").orderByChild("public").equalTo(true).addValueEventListener(this);
     }
 

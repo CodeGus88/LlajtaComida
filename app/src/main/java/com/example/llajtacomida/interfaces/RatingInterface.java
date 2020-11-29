@@ -1,21 +1,23 @@
 package com.example.llajtacomida.interfaces;
 
 import com.example.llajtacomida.models.rating.Rating;
+import com.example.llajtacomida.models.user.User;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public interface RatingInterface {
 
     interface ViewRating{
-        void showRating(float rating);
-        void showVotesList(ArrayList<Object> votesList);
+        void showRating(ArrayList<Object> votesList, ArrayList<User> userList);
     }
 
     interface PresenterRating{
-        void showRating(Rating rating);
-        void showVotesList(); // Hace referenccia a la lista de votantes con sus comentarios
+        void loadRating();
+        void showRating(Rating rating, ArrayList<User> users);
         void saveVote(float userPunctuation, String userExperience); // object puede ser plato o restaurantes
-        void updatePunctuationObject(boolean isSuccess, float punctuation); //
+        void stopRealtimeDatabase();
+
     }
 
     interface ModelRating{

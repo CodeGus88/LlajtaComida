@@ -43,14 +43,13 @@ public class Plate extends ObjectParent {
 
     @Exclude
     public Map<String, Object> toMap(){
-
         HashMap<String, Object> result = new HashMap<>();
         result.put("id", id);
         result.put("name",  name);
         result.put("url",  url);
         result.put("ingredients",  ingredients);
         result.put("origin",  origin);
-
+        result.put("punctuation",  punctuation);
         return result;
     }
 
