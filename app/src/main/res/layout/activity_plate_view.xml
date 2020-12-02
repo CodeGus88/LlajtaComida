@@ -40,7 +40,7 @@
                         android:layout_height="wrap_content"
                         android:scaleY="1"
                         android:scaleX="1"
-                        android:background="@drawable/panel_gris">
+                        android:background="@drawable/panel_gray">
 
         <!--                Imagen con zoom-->
                         <com.zolad.zoominimageview.ZoomInImageView
@@ -76,12 +76,13 @@
                     android:layout_alignParentRight="true"/>
 
                 <LinearLayout
+                    android:id="@+id/llRating"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:orientation="horizontal"
                     android:layout_alignBottom="@+id/vfCarrucel"
                     android:layout_alignRight="@+id/vfCarrucel"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/panel_white_transparent"
                     android:paddingHorizontal="5dp"
@@ -104,6 +105,29 @@
                         android:layout_weight="1"
                         android:scaleType="centerCrop"/>
                 </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_above="@+id/llRating"
+                    android:layout_alignRight="@+id/vfCarrucel"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="30dp"
+                    app:cardElevation="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleY="1"
+                    android:scaleX="1"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#66FFFFFF">
+                    <ImageButton
+                        android:id="@+id/btnFavorite"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/favorite_of"
+                        android:scaleType="centerInside"
+                        android:layout_margin="0dp"
+                        android:padding="0dp"
+                        android:background="#00FFFFFF"/>
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
@@ -128,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/panel_gris"
+                android:background="@drawable/panel_gray"
                 android:padding="10dp">
 
                 <TextView
@@ -136,13 +160,18 @@
                     android:layout_height="wrap_content"
                     android:text="¿Qué ingredientes lleva y cómo se prepara?"
                     style="@style/CodeFontContentTitle"/>
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"/>
 
                 <TextView
                     android:id="@+id/tvIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/loremShort"
+                    android:justificationMode="inter_word"
                     style="@style/CodeFontContent"/>
+
             </LinearLayout>
 
             <Space
@@ -154,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/panel_celeste"
+                android:background="@drawable/panel_gray"
                 android:layout_marginTop="0dp"
                 android:padding="10dp">
 
@@ -163,12 +192,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/tvOriginPlateView"
                     style="@style/CodeFontContentTitle"/>
-
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"/>
                 <TextView
                     android:id="@+id/tvOrigin"
                     style="@style/CodeFontContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:justificationMode="inter_word"
                     android:text="@string/loremLong" />
 
             </LinearLayout>
@@ -181,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/panel_gris"
+                android:background="@drawable/panel_gray"
                 android:padding="10dp">
                 <TextView
                     android:layout_width="match_parent"
@@ -196,6 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+
 
 
             <Space

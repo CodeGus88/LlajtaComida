@@ -7,17 +7,19 @@
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
+
     <RatingBar
         android:id="@+id/rbStars"
         android:max="5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"/>
+
     <ListView
         android:id="@+id/lvUserExperiences"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/panel_gris"/>
+        android:background="@drawable/panel_gray"/>
 
     <Space
         android:layout_width="match_parent"

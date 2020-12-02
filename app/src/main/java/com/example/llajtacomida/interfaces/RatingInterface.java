@@ -24,5 +24,6 @@ public interface RatingInterface {
         void searchRating();
         void saveVote(Rating rating); // armar el objeto
         void stopRealtimeDatabase();
+        void deleteVote(String voteId);
     }
 }

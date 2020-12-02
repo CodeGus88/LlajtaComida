@@ -6,18 +6,20 @@ import com.example.llajtacomida.models.user.User;
 
 public interface UserInterface {
 
-    interface ViewInterface{
+    interface ViewUser {
         void showUser(User user);
     }
 
-    interface PresenterInterface{
+    interface PresenterUser {
         void showUser(User user);
         void findUser(String id);
         void storeUser(User user);
+        void stopRealtimeDatabase();
     }
 
-    interface ModelInterface{
+    interface ModelUser {
         void findUser(String id);
         void storeUser(User user);
+        void stopRealtimeDatabase();
     }
 }

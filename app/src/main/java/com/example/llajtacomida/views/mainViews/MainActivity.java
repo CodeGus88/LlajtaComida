@@ -41,13 +41,15 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Hashtable;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewInterface {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewUser {
 
     private AppBarConfiguration mAppBarConfiguration;
     // Loginnsilencioso
     private GoogleApiClient googleApiClient;
     private Hashtable<String, String> userDataList = new Hashtable<String, String>();
     private ProgressDialog progressDialog;
+    private UserPresenter userPresenter;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         progressDialog = new ProgressDialog(this);
+
+        // init presenter
 
     } // End onCreate
 
@@ -168,12 +172,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     private void saveUser(GoogleSignInAccount account){
         try {
-            User user = new User(
+            user = new User(
                     FirebaseAuth.getInstance().getUid(),
                     account.getDisplayName(), account.getEmail(),
                     account.getPhotoUrl().toString(), "user");
-            UserPresenter userPresenter = new UserPresenter(this);
-            userPresenter.storeUser(user);
+            userPresenter = new UserPresenter(this);
+//            userPresenter.findUser(user.getId());
+            userPresenter.findUser(FirebaseAuth.getInstance().getUid());
+//            UserPresenter userPresenter = new UserPresenter(this);
+//            userPresenter.storeUser(user);
+
         }catch(Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -224,5 +232,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void showUser(User user) {
         // Cargar el usuario
+        if(user != null){
+            if(user.getRole() != null && !user.getRole().equals("")){
+                this.user.setRole(user.getRole()); // Mantiene el rol, y no vuelve a darle uno por defecto
+            }
+        }
+        userPresenter.stopRealtimeDatabase(); // Es necesario parar para hacer el uso del storUser (De otro modo falla)
+        userPresenter.storeUser(this.user);
     }
 }

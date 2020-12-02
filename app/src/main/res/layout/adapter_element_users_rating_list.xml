@@ -32,7 +32,6 @@
         android:hint="@string/tvUndefined"
         android:textStyle="bold"/>
 
-
         <RatingBar
             android:id="@+id/rvUserVote"
             android:numStars="5"
@@ -55,12 +54,26 @@
 
     <TextView
         android:id="@+id/tvExperience"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cvAvatar"
-        android:background="@drawable/panel_white"
-        android:padding="5dp"/>
+        android:padding="4dp"
+        android:justificationMode="inter_word"
+        android:textSize="11dp"/>
+
+    <ImageButton
+        android:id="@+id/btnDelete"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:padding="2dp"
+        android:layout_below="@+id/tvDate"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/btn_delete"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:visibility="gone"/>
+
 
 
 </RelativeLayout>

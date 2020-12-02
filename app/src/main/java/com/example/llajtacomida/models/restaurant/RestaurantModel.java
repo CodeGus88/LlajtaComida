@@ -31,7 +31,8 @@ public class RestaurantModel implements RestaurantInterface.ModelRestaurant, Val
 
     @Override
     public void loadRestaurantList() {
-        Query query = databaseReference.child("App").child("restaurants").orderByChild("public").equalTo(true);
+//        Query query = databaseReference.child("App").child("restaurants").orderByChild("public").equalTo(true); // problemas al ordenar los restaaurantes
+        Query query = databaseReference.child("App").child("restaurants");
         query.addValueEventListener(this);
     }
 
@@ -44,13 +45,14 @@ public class RestaurantModel implements RestaurantInterface.ModelRestaurant, Val
      * Los escuchadores de la base de datos
      * @param snapshot
      */
-
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
         if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/restaurants")){
             ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
             for (DataSnapshot restaurant: snapshot.getChildren()) {
-                restaurantList.add(restaurant.getValue(Restaurant.class));
+                if(restaurant.getValue(Restaurant.class).isPublic()){ // se usa este método y no el de la consulta al tener problemas de ordenamiento de la lista
+                    restaurantList.add(restaurant.getValue(Restaurant.class));
+                }
             }
             presenterRestaurant.showRestaurantList(restaurantList);
         }else{

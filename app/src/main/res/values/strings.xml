@@ -77,6 +77,7 @@
     <string name="confirm_message_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
     <string name="btn_continue">Continuar</string>
     <string name="btn_cancel">Cancelar</string>
+    <string name="btnVisit">Visitar</string>
 
     <!--    Maps-->
     <string name="search_Address">Buscar dirección...</string>
@@ -136,8 +137,8 @@
     <!--    <string name="welcome">ᴮⁱᵉⁿᵛᵉⁿⁱᵈᵒ</string>-->
 
     <!--  Rating  -->
-    <string name="tvExperienceTitle">Describe tu experiencia</string>
-    <string name="etOptionalExperience">Experiencia (Opcional)</string>
+<!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
+    <string name="etOptionalExperience">Cuentanos tu experiencia (opcional)...</string>
 
 
     <!--  Messages Toast and alerts  -->

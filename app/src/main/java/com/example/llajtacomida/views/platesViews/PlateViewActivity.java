@@ -64,11 +64,13 @@ public class PlateViewActivity extends AppCompatActivity
     private ViewFlipper viewFlipper;
     private int height, width;
 
-    // Componentes to restaurant list
+    // Components to restaurant list
     private ArrayAdapterRestaurant arrayAdapterRestaurant;
     private ListView lvRestaurants;
     private ArrayList<Restaurant> restaurantList;
     private TextView tvRating;
+    // button of favorite
+    private ImageButton btnFavorite;
 
     //  Presentadores del plato y de la lista de restaurantes
     private PlateInterface.presenterRestList restListPresenter;
@@ -140,6 +142,7 @@ public class PlateViewActivity extends AppCompatActivity
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
         tvOrigin = (TextView) findViewById(R.id.tvOrigin);
         tvRating = (TextView) findViewById(R.id.tvRating);
+        btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
 
         ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
         ivPhoto.getLayoutParams().width = (int) (width*0.984);

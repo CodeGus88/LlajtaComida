@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_margin="10dp"
-                android:background="@drawable/panel_gris"
+                android:background="@drawable/panel_gray"
                 android:padding="10dp">
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +124,7 @@
                             android:scaleType="fitXY"
                             android:src="@mipmap/map_image"
                             android:layout_marginHorizontal="50dp"
-                            android:background="@drawable/panel_gris"
+                            android:background="@drawable/panel_gray"
                             android:padding="1dp"
                             android:foreground="?android:attr/selectableItemBackground"/>
                     </androidx.cardview.widget.CardView>
@@ -251,13 +251,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="@string/btnCancel"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_cancel"
+                        android:textColor="#fff"/>
                     <Button
                         android:id="@+id/btnStore"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:text="@string/btnStore"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_continue"
+                        android:textColor="#fff"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

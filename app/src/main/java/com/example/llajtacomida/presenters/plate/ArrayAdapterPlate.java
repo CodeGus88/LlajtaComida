@@ -13,7 +13,12 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.RatingInterface;
 import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.models.rating.Rating;
+import com.example.llajtacomida.models.rating.RatingModel;
+import com.example.llajtacomida.models.user.User;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 

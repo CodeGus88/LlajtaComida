@@ -1,10 +1,12 @@
 package com.example.llajtacomida.models.user;
 import androidx.annotation.NonNull;
 import com.google.firebase.database.Exclude;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class User{
+public class User {
 
     private String id;
     private String fulName;
@@ -15,10 +17,11 @@ public class User{
     /**
      * Para ser leido desde firebase, siempre es necesario tener un constructor vacio
      */
-    public User(){}
+    public User(){
+    }
 
     public User(@NonNull String id) {
-        this.id = id;
+
     }
 
     public User(@NonNull String id, @NonNull String fulName, @NonNull String email, @NonNull String avatarUrl, @NonNull String role) {
@@ -33,10 +36,6 @@ public class User{
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -49,6 +48,14 @@ public class User{
         return avatarUrl;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public void setFulName(String fulName) {
         this.fulName = fulName;
     }
@@ -59,10 +66,6 @@ public class User{
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
-    }
-
-    public String getRole() {
-        return role;
     }
 
     public void setRole(String role) {
@@ -79,5 +82,7 @@ public class User{
         result.put("role", role);
         return result;
     }
+
+
 
 }

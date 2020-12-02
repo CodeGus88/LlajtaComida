@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.llajtacomida.interfaces.RatingInterface;
 import com.example.llajtacomida.interfaces.UserInterface;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,23 +14,22 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * La clase solo virve para obtener os datos del usuario y mostrarlos en comentarios por ejemplo
  */
-public class UserModel implements UserInterface.ModelInterface, ValueEventListener {
+public class UserModel implements UserInterface.ModelUser, ValueEventListener {
 
-    private UserInterface.PresenterInterface presenterInterface;
+    private UserInterface.PresenterUser presenterUser;
     private String verb;
     private DatabaseReference databaseReference;
     private User user;
 
-    public UserModel(UserInterface.PresenterInterface presenterInterface){
-        this.presenterInterface = presenterInterface;
+    public UserModel(UserInterface.PresenterUser presenterUser){
+        this.presenterUser = presenterUser;
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
     public void findUser(String id) {
         verb = "find";
-        databaseReference.child("App").child("users").child(id);
-        databaseReference.addListenerForSingleValueEvent(this);
+        databaseReference.child("App").child("users").child(id).addListenerForSingleValueEvent(this);
     }
 
     /**
@@ -47,11 +45,21 @@ public class UserModel implements UserInterface.ModelInterface, ValueEventListen
     }
 
     @Override
+    public void stopRealtimeDatabase() {
+        databaseReference.removeEventListener(this);
+    }
+
+    @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
         if(verb.equals("store")){
             databaseReference.child("App").child("users").child(user.getId()).updateChildren(user.toMap());
         }else if(verb.equals("find")){
-            presenterInterface.showUser(snapshot.getValue(User.class));
+            if(snapshot.getValue() != null){
+                user = snapshot.getValue(User.class);
+            }else{
+                user = new User();
+            }
+            presenterUser.showUser(user);
         }
     }
 
@@ -60,7 +68,4 @@ public class UserModel implements UserInterface.ModelInterface, ValueEventListen
         Log.e("Error", "--------------------------------------------------------> "+error.getMessage());
     }
 
-    public void stopRealtimedatabase(){
-        databaseReference.removeEventListener(this);
-    }
 }

@@ -1,20 +1,19 @@
 package com.example.llajtacomida.presenters.user;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.llajtacomida.interfaces.UserInterface;
 import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.models.user.UserModel;
 
-public class UserPresenter implements UserInterface.PresenterInterface {
+public class UserPresenter implements UserInterface.PresenterUser {
 
-    private UserInterface.ViewInterface viewInterface;
-    private UserInterface.ModelInterface modelInterface;
+    private UserInterface.ViewUser viewUser;
+    private UserInterface.ModelUser modelUser;
 
-    public UserPresenter(UserInterface.ViewInterface viewInterface){
-        this.viewInterface =viewInterface;
-        this.modelInterface = new UserModel(this);
+    public UserPresenter(UserInterface.ViewUser viewUser){
+        this.viewUser = viewUser;
+        this.modelUser = new UserModel(this);
     }
 
     /**
@@ -22,14 +21,14 @@ public class UserPresenter implements UserInterface.PresenterInterface {
      * Solo se accederá al método storeUser
      */
     public UserPresenter(){
-        viewInterface = null;
-        this.modelInterface = new UserModel(this);
+        viewUser = null;
+        this.modelUser = new UserModel(this);
     }
 
     @Override
     public void showUser(User user) {
-        if(viewInterface != null){
-            viewInterface.showUser(user);
+        if(viewUser != null){
+            viewUser.showUser(user);
         }else{
             Log.e("Error", "View is null");
         }
@@ -37,11 +36,16 @@ public class UserPresenter implements UserInterface.PresenterInterface {
 
     @Override
     public void findUser(String id) {
-        modelInterface.findUser(id);
+        modelUser.findUser(id);
     }
 
     @Override
     public void storeUser(User user) {
-        modelInterface.storeUser(user);
+        modelUser.storeUser(user);
+    }
+
+    @Override
+    public void stopRealtimeDatabase() {
+        modelUser.stopRealtimeDatabase();
     }
 }

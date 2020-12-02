@@ -14,6 +14,7 @@ public class Restaurant extends ObjectParent implements Serializable {
     private String originAndDescription;
     private String latitude;
     private String longitude;
+    private String author;
     private boolean isPublic;
 
     /**
@@ -105,6 +106,14 @@ public class Restaurant extends ObjectParent implements Serializable {
         isPublic = aPublic;
     }
 
+    public void setAuthor(String author){
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -123,6 +132,7 @@ public class Restaurant extends ObjectParent implements Serializable {
         result.put("latitude",  latitude);
         result.put("longitude",  longitude);
         result.put("public",  isPublic);
+        result.put("author", author);
         result.put("punctuation",  punctuation);
         return result;
     }

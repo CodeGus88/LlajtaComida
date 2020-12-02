@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Set;
@@ -31,6 +32,14 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
 
     public RatingModel(RatingInterface.PresenterRating presenterRating, String nodeCollectionName, String objectId){
         this.presenterRating = presenterRating;
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        this.nodeCollectionName = nodeCollectionName;
+        this.objectId = objectId;
+        userList = new ArrayList<User>();
+
+    }
+
+    public RatingModel(String nodeCollectionName, String objectId){
         databaseReference = FirebaseDatabase.getInstance().getReference();
         this.nodeCollectionName = nodeCollectionName;
         this.objectId = objectId;
@@ -53,7 +62,6 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
                 databaseReference.child("App").child(nodeCollectionName).child(objectId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                         if(nodeCollectionName.equals("plates")){
                             Plate plate = snapshot.getValue(Plate.class);
                             plate.setPunctuation(rating.getPunctuation());
@@ -76,12 +84,19 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
             public void onFailure(@NonNull Exception e) {
             }
         });
-
     }
 
     @Override
     public void stopRealtimeDatabase() {
         databaseReference.removeEventListener(this);
+    }
+
+    @Override
+    public void deleteVote(String voteId) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("App").child(nodeCollectionName).child(objectId)
+                .child("rating").child("votesList").child(voteId).removeValue();
+        updatePunctuation(); // Como seelimina de forma manual, se deben actualizar las variables manualmente
     }
 
     @Override
@@ -138,4 +153,35 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
     public void onCancelled(@NonNull DatabaseError error) {
         Log.e("Error", error.getMessage());
     }
+
+
+    /**
+     * Actualiza la punctuacion del atributo punctuation de los objetos rating y objecto (plate o restaurant)
+     */
+    private void updatePunctuation(){
+        final float punctuation [] = new float[1]; // por necesitar ser constante, evadimos la regla si lo metemos dentro de un arreglo
+        punctuation[0] = 0;
+        databaseReference.child("App").child(nodeCollectionName).child(objectId).child("rating").child("votesList")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int count = 0;
+                        for (DataSnapshot row: snapshot.getChildren()) {
+                            punctuation[0] += Float.parseFloat(row.child("punctuation").getValue().toString());
+                            count ++;
+                        }
+                        if(count > 0){
+                            punctuation[0] /= snapshot.getChildrenCount(); // saca le promedio
+                        }
+                        databaseReference.child("App").child(nodeCollectionName).child(objectId).child("rating").child("punctuation").setValue(punctuation[0]);
+                        databaseReference.child("App").child(nodeCollectionName).child(objectId).child("punctuation").setValue(punctuation[0]);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
 }

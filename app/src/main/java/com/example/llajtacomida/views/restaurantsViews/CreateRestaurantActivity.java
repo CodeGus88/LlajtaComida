@@ -21,6 +21,7 @@ import com.example.llajtacomida.presenters.map.MapPresenter;
 import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -155,6 +156,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         restaurant.setOriginAndDescription(etOriginAndDescription.getText().toString());
         restaurant.setLatitude(tvLatitude.getText().toString());
         restaurant.setLongitude(tvLongitude.getText().toString());
+        restaurant.setAuthor(FirebaseAuth.getInstance().getUid());
     }
 
     /**

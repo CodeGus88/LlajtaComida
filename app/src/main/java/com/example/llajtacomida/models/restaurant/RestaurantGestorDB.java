@@ -123,7 +123,7 @@ public class RestaurantGestorDB {
                     restaurant.setUrl(url.toString());
                     databaseReference.setValue(restaurant);
                     //  Para saber quien es el autor de la publicación
-                    databaseReference.child("author").setValue(FirebaseAuth.getInstance().getUid());
+//                    databaseReference.child("author").setValue(FirebaseAuth.getInstance().getUid());
                     Toast.makeText(context, "Se procesó correctamente", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(context, "No se pudo subir el registro solicitado, intentelo más tarde", Toast.LENGTH_SHORT).show();

@@ -21,8 +21,10 @@ import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.rating.ArrayAdapterRating;
 import com.example.llajtacomida.presenters.rating.RatingPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class RatingRecordFragment extends Fragment implements View.OnClickListener, RatingInterface.ViewRating {
 
@@ -36,7 +38,6 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     private Button btnSave;
 
     // Data
-//    private String userId;
     private String objectId;
     private String nodeCollectionName;
 
@@ -46,6 +47,8 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     //adaptador
     private ArrayAdapterRating arrayAdapterRating;
 
+    private String loggedUser;
+
     public RatingRecordFragment() {
         // Required empty public constructor
     }
@@ -54,6 +57,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         view = inflater.inflate(R.layout.fragment_rating_record, container, false);
 //        userId = FirebaseAuth.getInstance().getUid();
+        loggedUser = FirebaseAuth.getInstance().getUid();
         objectId = this.getArguments().getString("objectId");
         nodeCollectionName = this.getArguments().getString("nodeCollectionName");
         initComponents();
@@ -69,7 +73,9 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         rbStars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                saveVote();
+                if(rating > 0){
+                    saveVote();
+                }
             }
         });
 //        LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
@@ -109,6 +115,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 ratingPresenter.saveVote(rbStars.getRating(), etExperience.getText().toString());
                 Toast.makeText(getContext(), getString(R.string.messageEstablish), Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
+                etExperience.setText(null);
                 break;
             default:
                 Toast.makeText(getContext(), getString(R.string.messageInvalidOption), Toast.LENGTH_SHORT).show();
@@ -119,12 +126,30 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     public void showRating(ArrayList<Object> voteList, ArrayList<User> userList) {
         // mostrar con el presentador arrayadaoter
         try {
-            arrayAdapterRating = new ArrayAdapterRating(getContext(), R.layout.adapter_element_users_rating_list, voteList, userList);
+            arrayAdapterRating = new ArrayAdapterRating(getContext(), R.layout.adapter_element_users_rating_list, voteList, userList, nodeCollectionName, objectId);
             lvUserExperiences.setAdapter(arrayAdapterRating);
             ScreenSize.setListViewHeightBasedOnChildrenX(lvUserExperiences);
+            rbStars.setEnabled(!userVoteAlready(userList));
         }catch (Exception e){
             Log.e("Error", "----------------------------------------------------------> " + e.getMessage());
         }
+    }
+
+    private boolean userVoteAlready(ArrayList<User> userList){
+        boolean userVoteAlready = false;
+        for(User user : userList){
+            if(user.getId().equals(loggedUser)){
+                userVoteAlready = true;
+                break;
+            }
+        }
+        if(userVoteAlready){
+            rbStars.setVisibility(View.GONE);
+        }else{
+            rbStars.setVisibility(View.VISIBLE);
+            rbStars.setRating(0);
+        }
+        return userVoteAlready;
     }
 
     public void stopRealtimeDatabase(){
