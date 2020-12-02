@@ -22,11 +22,13 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.FavoriteInterface;
 import com.example.llajtacomida.interfaces.ImageInterface;
 import com.example.llajtacomida.interfaces.PlateInterface;
 import com.example.llajtacomida.models.image.Image;
 import com.example.llajtacomida.models.plate.Plate;
 import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.presenters.favorite.FavoritePresenter;
 import com.example.llajtacomida.presenters.image.GaleryDatabase;
 import com.example.llajtacomida.presenters.image.ImagePresenter;
 import com.example.llajtacomida.models.plate.PlateGestorDB;
@@ -43,7 +45,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PlateViewActivity extends AppCompatActivity
-    implements View.OnClickListener, PlateInterface.ViewPlate, ImageInterface.ViewImage, PlateInterface.ViewRestlist {
+    implements View.OnClickListener, PlateInterface.ViewPlate, ImageInterface.ViewImage, PlateInterface.ViewRestlist, FavoriteInterface.ViewFavorite {
 
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvIngredients, tvOrigin;
@@ -52,6 +54,7 @@ public class PlateViewActivity extends AppCompatActivity
     private MenuItem iconEdit, iconDelete, iconGalery;
 
     private boolean isAnAdministrator;
+    private boolean isFavorite;
     private Plate plate;
 
     private static final int TIME_ANIMATION = 2000;
@@ -76,6 +79,7 @@ public class PlateViewActivity extends AppCompatActivity
     private PlateInterface.presenterRestList restListPresenter;
     private PlatePresenter platePresenter;
     private ImagePresenter imagePresenter;
+    private FavoritePresenter favoritePresenter;
 
     // Fragmento de rating
     private RatingRecordFragment ratingRecordFragment;
@@ -124,6 +128,8 @@ public class PlateViewActivity extends AppCompatActivity
         imagePresenter = new ImagePresenter(this);
         final String NODE_COLLECTION_NAME = "plates";
         imagePresenter.searchImages(NODE_COLLECTION_NAME, id);
+        favoritePresenter = new FavoritePresenter(this, NODE_COLLECTION_NAME);
+        favoritePresenter.searchFavoriteObject(id);
     }
 
     /**
@@ -161,6 +167,8 @@ public class PlateViewActivity extends AppCompatActivity
                 RestaurantNavegation.showRestaurantView(PlateViewActivity.this, restaurantList.get(position).getId());
             }
         });
+
+        btnFavorite.setOnClickListener(this);
     }
 
     private void initAnimation(){
@@ -241,6 +249,10 @@ public class PlateViewActivity extends AppCompatActivity
                 viewFlipper.setOutAnimation(this, R.anim.slide_out_left);
                 viewFlipper.setFlipInterval(TIME_ANIMATION); // Para reiniciar tiempo
                 viewFlipper.showPrevious();
+                break;
+            case R.id.btnFavorite:
+                if(isFavorite) favoritePresenter.removeObjectFavorite(plate.getId());
+                else favoritePresenter.saveObjectFavorite(plate.getId());
                 break;
             default:
                 Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();
@@ -336,5 +348,32 @@ public class PlateViewActivity extends AppCompatActivity
         restListPresenter.stopRealtimeDatabase();
         imagePresenter.stopRealtimeDatabase();
         ratingRecordFragment.stopRealtimeDatabase();
+        favoritePresenter.stopRealtimeDatabase();
+    }
+
+    @Override
+    public void showFavoriteList(ArrayList<Object> objectsList) {
+        // no se usará para  esta vista
+    }
+
+    @Override
+    public void showFavoriteIcon(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        if(isFavorite){
+            btnFavorite.setImageResource(R.mipmap.favorite_on);
+        }else{
+            btnFavorite.setImageResource(R.mipmap.favorite_of);
+        }
+    }
+
+    @Override
+    public void successFul(boolean isSuccess) {
+        if(isSuccess){
+            if(isFavorite){
+                Toast.makeText(this, getString(R.string.addToPlatesFavoriteList), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, getString(R.string.removeToPlateFavoriteList), Toast.LENGTH_SHORT).show();
+            }
+        }else Toast.makeText(this, getString(R.string.messageIsFailed), Toast.LENGTH_SHORT).show();
     }
 }

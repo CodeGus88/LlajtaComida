@@ -144,5 +144,8 @@
     <!--  Messages Toast and alerts  -->
     <string name="messageInvalidOption">Opción inválida...</string>
     <string name="messageEstablish">Establedido</string>
+    <string name="messageIsFailed">Falló el proceso...</string>
+    <string name="addToPlatesFavoriteList">Se agregó a la lista de platos favoritos</string>
+    <string name="removeToPlateFavoriteList">Se quitó de la lista de platos favoritos</string>
 
 </resources>
