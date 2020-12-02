@@ -147,5 +147,11 @@
     <string name="messageIsFailed">Falló el proceso...</string>
     <string name="addToPlatesFavoriteList">Se agregó a la lista de platos favoritos</string>
     <string name="removeToPlateFavoriteList">Se quitó de la lista de platos favoritos</string>
+    <string name="addToRestaurantFavoriteList">Se agregó a la lista de restaurantes favoritos</string>
+    <string name="removeToRestaurantFavoriteList">Se quitó de la lista de restaurantes favoritos</string>
+
+    <!--  Lista de platos favoritos  -->
+    <string name="tvTitlePlateFavoritList">Lista de platos favoritos</string>
+    <string name="tvTitleRestFavoritList">Lista de restaurantes favoritos</string>
 
 </resources>

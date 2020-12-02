@@ -44,7 +44,7 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
 
     // Para listar platos
     private ArrayList<Plate> plateList;
-    private ArrayAdapterPlate arrayAdapterPlates;
+    private ArrayAdapterPlate arrayAdapterPlate;
 
     private boolean isAnAdministrator;
 
@@ -74,7 +74,7 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    arrayAdapterPlates.filter(s.toString(), start);
+                    arrayAdapterPlate.filter(s.toString(), start);
                 }catch (Exception e){
                     Log.e("Error: ", e.getMessage());
                 }
@@ -132,7 +132,7 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
                     }else{
                         etSearch.setVisibility(View.GONE);
                         // Para que vuelga a cargar la lista (0 es cualquier numero)
-                        arrayAdapterPlates.filter("", 0);
+                        arrayAdapterPlate.filter("", 0);
                     }
                 }else{
                     Toast.makeText(getContext(), "¡Aún no se cargaron datos!", Toast.LENGTH_SHORT).show();
@@ -154,8 +154,8 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
     public void showPlateList(ArrayList<Plate> plateList) {
         try {
             this.plateList = plateList;
-            arrayAdapterPlates = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, this.plateList);
-            lvPlates.setAdapter(arrayAdapterPlates);
+            arrayAdapterPlate = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, this.plateList);
+            lvPlates.setAdapter(arrayAdapterPlate);
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }

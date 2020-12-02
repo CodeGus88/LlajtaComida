@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.favoritPlatesViews.FavoritPlatesListFragment">
+    tools:context=".views.platesViews.PlatesListFragment"
+    android:orientation="vertical"
+    android:background="@drawable/list_panel_white_gradient">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Platos favoritos"
-        android:textSize="40sp"/>
+        android:layout_height="wrap_content"
+        android:text="@string/tvTitlePlateFavoritList"
+        android:textSize="20sp"
+        android:textColor="#353535"
+        android:gravity="center"
+        android:fontFamily="serif"/>
 
-</FrameLayout>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edit_text"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
+        android:drawableEnd="@drawable/icon_search_black"
+        android:inputType="textWebEditText"
+        android:hint="@string/et_search_plates"
+        android:visibility="visible"/>
+
+    <ListView
+        android:id="@+id/lvPlates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_panel_white_gradient"
+        android:layout_marginTop="1dp"/>
+
+
+</LinearLayout>

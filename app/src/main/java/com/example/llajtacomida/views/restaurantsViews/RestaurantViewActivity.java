@@ -24,10 +24,12 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.FavoriteInterface;
 import com.example.llajtacomida.interfaces.ImageInterface;
 import com.example.llajtacomida.interfaces.RestaurantInterface;
 import com.example.llajtacomida.models.image.Image;
 import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.presenters.favorite.FavoritePresenter;
 import com.example.llajtacomida.presenters.restaurant.RestPlateListPresenter;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.image.GaleryDatabase;
@@ -46,13 +48,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
-        RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage{
+        RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage, FavoriteInterface.ViewFavorite {
     public String id;
     private static final int TIME_ANIMATION = 2000;
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
-    private boolean isAnAdministrator, isAuthor;
+    private boolean isAnAdministrator, isAuthor, isFavorite;
     private Restaurant restaurant;
     // components
     private ImageButton btnNext;
@@ -61,6 +63,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private Button btnVisit;
     private ListView menuList;
     private TextView tvRating;
+    // Favoritos
+    private ImageButton btnFavorite;
 
     // Visor de imagenes
     private ViewFlipper viewFlipper;
@@ -75,6 +79,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private RestPlateListPresenter restPlateListPresenter;
     private RestaurantPresenter restaurantPresenter;
     private ImagePresenter imagePresenter;
+    private FavoritePresenter favoritePresenter;
 
     // Fragmento de rating
     private RatingRecordFragment ratingRecordFragment;
@@ -123,6 +128,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         imagePresenter = new ImagePresenter(this);
         final String NODE_COLECTION = "restaurants";
         imagePresenter.searchImages(NODE_COLECTION, id);
+        favoritePresenter = new FavoritePresenter(this, "restaurants");
+        favoritePresenter.searchFavoriteObject(id);
+
     }
 
     private void initAnimation(){
@@ -162,6 +170,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnMenuEdit.setOnClickListener(this);
         btnVisit.setOnClickListener(this);
         viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
+        btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
+        btnFavorite.setOnClickListener(this);
     }
 
 
@@ -234,6 +244,10 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.btnVisit:
                 MapPresenter.showSetLocationMapActivity(this, restaurant);
+                break;
+            case R.id.btnFavorite:
+                if(isFavorite) favoritePresenter.removeObjectFavorite(restaurant.getId());
+                else favoritePresenter.saveObjectFavorite(restaurant.getId());
                 break;
             default:
                 Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();
@@ -375,5 +389,31 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         imagePresenter.stopRealtimeDatabase();
         restaurantPresenter.stopRealtimeDatabse();
         ratingRecordFragment.stopRealtimeDatabase();
+    }
+
+    @Override
+    public void showFavoriteList(ArrayList<Object> objectsList) {
+        // No e usa para este caso
+    }
+
+    @Override
+    public void showFavoriteIcon(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+        if(isFavorite){
+            btnFavorite.setImageResource(R.mipmap.favorite_on);
+        }else{
+            btnFavorite.setImageResource(R.mipmap.favorite_of);
+        }
+    }
+
+    @Override
+    public void successFul(boolean isSuccess) {
+        if(isSuccess){
+            if(isFavorite){
+                Toast.makeText(this, getString(R.string.addToRestaurantFavoriteList), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, getString(R.string.removeToRestaurantFavoriteList), Toast.LENGTH_SHORT).show();
+            }
+        }else Toast.makeText(this, getString(R.string.messageIsFailed), Toast.LENGTH_SHORT).show();
     }
 }
