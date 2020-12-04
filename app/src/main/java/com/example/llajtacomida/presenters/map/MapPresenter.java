@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.views.mapsViews.GetLocationMapActivity;
-import com.example.llajtacomida.views.mapsViews.SetLocationMapActivity;
+import com.example.llajtacomida.views.maps.GetLocationMapActivity;
+import com.example.llajtacomida.views.maps.SetLocationMapActivity;
 
 public class MapPresenter {
 

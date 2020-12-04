@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".views.restaurantsViews.RestaurantPublicOfActivity"></activity>
+
+        <activity android:name=".views.restaurants.RestaurantPublicOfActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,13 +34,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".views.mapsViews.SetLocationMapActivity"
+            android:name=".views.maps.SetLocationMapActivity"
             android:label="@string/title_activity_set_location_map" />
-        <activity android:name=".views.restaurantsViews.SetMenuActivity" />
-        <activity android:name=".views.restaurantsViews.EditRestaurantActivity" />
-        <activity android:name=".views.restaurantsViews.CreateRestaurantActivity" />
-        <activity android:name=".views.imagesViews.ImagesActivity" />
-        <activity android:name=".views.platesViews.EditPlateActivity">
+        <activity android:name=".views.restaurants.SetMenuActivity" />
+        <activity android:name=".views.restaurants.EditRestaurantActivity" />
+        <activity android:name=".views.restaurants.CreateRestaurantActivity" />
+        <activity android:name=".views.images.ImagesActivity" />
+        <activity android:name=".views.plates.EditPlateActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -49,10 +50,10 @@
             <!-- </intent-filter> -->
 
         </activity>
-        <activity android:name=".views.restaurantsViews.RestaurantViewActivity" />
+        <activity android:name=".views.restaurants.RestaurantViewActivity" />
         <activity
-            android:name=".views.platesViews.PlateViewActivity"
-            android:parentActivityName=".views.mainViews.MainActivity">
+            android:name=".views.plates.PlateViewActivity"
+            android:parentActivityName=".views.main.MainActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -63,7 +64,7 @@
 
         </activity>
         <activity
-            android:name=".views.platesViews.CreatePlateActivity"
+            android:name=".views.plates.CreatePlateActivity"
             android:configChanges="screenSize|orientation">
 
             <!-- <intent-filter> -->
@@ -73,7 +74,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity> <!-- "screenSize|orientation"    sirve para que no se pierdan datos al volterar la pantalla -->
-        <activity android:name=".views.mainViews.LoginActivity">
+        <activity android:name=".views.main.LoginActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -84,7 +85,7 @@
 
         </activity>
         <activity
-            android:name=".views.mapsViews.GetLocationMapActivity"
+            android:name=".views.maps.GetLocationMapActivity"
             android:label="@string/title_activity_get_location_maps">
 
             <!-- <intent-filter> -->
@@ -95,7 +96,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".views.mainViews.MainActivity"
+            android:name=".views.main.MainActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

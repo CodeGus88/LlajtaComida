@@ -45,7 +45,6 @@
             android:textColor="#fff"
             android:background="@drawable/btn_continue"
             android:layout_marginLeft="2dp"/>
-
     </LinearLayout>
 
 </LinearLayout>

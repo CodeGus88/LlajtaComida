@@ -18,14 +18,9 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
-import com.example.llajtacomida.models.plate.PlateGestorDB;
 import com.example.llajtacomida.models.rating.RatingModel;
 import com.example.llajtacomida.models.user.User;
-import com.example.llajtacomida.presenters.image.GaleryDatabase;
-import com.example.llajtacomida.presenters.user.UserPresenter;
-import com.example.llajtacomida.views.platesViews.PlateViewActivity;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

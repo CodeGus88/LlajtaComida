@@ -6,6 +6,8 @@ import com.example.llajtacomida.interfaces.UserInterface;
 import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.models.user.UserModel;
 
+import java.util.ArrayList;
+
 public class UserPresenter implements UserInterface.PresenterUser {
 
     private UserInterface.ViewUser viewUser;
@@ -47,5 +49,15 @@ public class UserPresenter implements UserInterface.PresenterUser {
     @Override
     public void stopRealtimeDatabase() {
         modelUser.stopRealtimeDatabase();
+    }
+
+    @Override
+    public void showUserList(ArrayList<User> userList) {
+        viewUser.showUserList(userList);
+    }
+
+    @Override
+    public void loadUserList() {
+        modelUser.loadUserList();
     }
 }

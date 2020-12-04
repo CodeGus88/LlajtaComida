@@ -6,10 +6,10 @@ package com.example.llajtacomida.presenters.plate;
 
         import com.example.llajtacomida.R;
         import com.example.llajtacomida.models.plate.Plate;
-        import com.example.llajtacomida.views.imagesViews.ImagesActivity;
-        import com.example.llajtacomida.views.platesViews.CreatePlateActivity;
-        import com.example.llajtacomida.views.platesViews.EditPlateActivity;
-        import com.example.llajtacomida.views.platesViews.PlateViewActivity;
+        import com.example.llajtacomida.views.images.ImagesActivity;
+        import com.example.llajtacomida.views.plates.CreatePlateActivity;
+        import com.example.llajtacomida.views.plates.EditPlateActivity;
+        import com.example.llajtacomida.views.plates.PlateViewActivity;
         import com.theartofdev.edmodo.cropper.CropImage;
         import com.theartofdev.edmodo.cropper.CropImageView;
 

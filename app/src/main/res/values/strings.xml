@@ -137,7 +137,7 @@
     <!--    <string name="welcome">ᴮⁱᵉⁿᵛᵉⁿⁱᵈᵒ</string>-->
 
     <!--  Rating  -->
-<!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
+    <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
     <string name="etOptionalExperience">Cuentanos tu experiencia (opcional)...</string>
 
 
@@ -145,13 +145,24 @@
     <string name="messageInvalidOption">Opción inválida...</string>
     <string name="messageEstablish">Establedido</string>
     <string name="messageIsFailed">Falló el proceso...</string>
-    <string name="addToPlatesFavoriteList">Se agregó a la lista de platos favoritos</string>
-    <string name="removeToPlateFavoriteList">Se quitó de la lista de platos favoritos</string>
-    <string name="addToRestaurantFavoriteList">Se agregó a la lista de restaurantes favoritos</string>
-    <string name="removeToRestaurantFavoriteList">Se quitó de la lista de restaurantes favoritos</string>
+    <string name="addPlateToFavoriteList">Se agregó a la lista de platos favoritos</string>
+    <string name="removeFromListFavoritePlates">Se quitó de la lista de platos favoritos</string>
+    <string name="addRestaurantToFavoriteList">Se agregó a la lista de restaurantes favoritos</string>
+    <string name="removeFromListFavoriteRestaurants">Se quitó de la lista de restaurantes favoritos</string>
 
-    <!--  Lista de platos favoritos  -->
+    <!--  favorits  -->
     <string name="tvTitlePlateFavoritList">Lista de platos favoritos</string>
     <string name="tvTitleRestFavoritList">Lista de restaurantes favoritos</string>
+
+    <!--  USERS  -->
+    <string name="tv_user_option_list">Usuarios</string>
+    <string name="tvUserName">Usuario: </string>
+    <string name="tvEmail">Email: </string>
+    <string name="tvRole">Rol: </string>
+    <!--    Roles -->
+    <string name="rbIsAdmin">Administrador</string>
+    <string name="rbIsCollaborator">Colaborador</string>
+    <string name="rbIsOnlyReader">Lector</string>
+    <string name="rbIsNone">Ninguno</string>
 
 </resources>

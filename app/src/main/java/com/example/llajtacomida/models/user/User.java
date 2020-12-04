@@ -72,6 +72,11 @@ public class User {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return fulName + " " + email + " " + id + " " + role;
+    }
+
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

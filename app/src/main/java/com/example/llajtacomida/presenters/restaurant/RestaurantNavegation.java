@@ -6,12 +6,12 @@ import android.content.Intent;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.views.imagesViews.ImagesActivity;
-import com.example.llajtacomida.views.restaurantsViews.CreateRestaurantActivity;
-import com.example.llajtacomida.views.restaurantsViews.EditRestaurantActivity;
-import com.example.llajtacomida.views.restaurantsViews.RestaurantPublicOfActivity;
-import com.example.llajtacomida.views.restaurantsViews.SetMenuActivity;
-import com.example.llajtacomida.views.restaurantsViews.RestaurantViewActivity;
+import com.example.llajtacomida.views.images.ImagesActivity;
+import com.example.llajtacomida.views.restaurants.CreateRestaurantActivity;
+import com.example.llajtacomida.views.restaurants.EditRestaurantActivity;
+import com.example.llajtacomida.views.restaurants.RestaurantPublicOfActivity;
+import com.example.llajtacomida.views.restaurants.SetMenuActivity;
+import com.example.llajtacomida.views.restaurants.RestaurantViewActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 

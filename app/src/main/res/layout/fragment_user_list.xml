@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.users.UserListFragment"
+    android:orientation="vertical"
+    android:background="@drawable/list_panel_white_gradient">
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_user_option_list"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/edit_text"
+        android:paddingVertical="5dp"
+        android:paddingHorizontal="10dp"
+        android:drawableEnd="@drawable/icon_search_black"
+        android:inputType="textWebEditText"
+        android:hint="@string/et_search_plates"
+        android:visibility="visible"/>
+
+    <ListView
+        android:id="@+id/lvUserList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

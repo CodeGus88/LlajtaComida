@@ -1,7 +1,5 @@
 package com.example.llajtacomida.presenters.favorite;
 
-import android.util.Log;
-
 import com.example.llajtacomida.interfaces.FavoriteInterface;
 import com.example.llajtacomida.models.favorite.FavoriteModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,8 +8,8 @@ import java.util.ArrayList;
 
 public class FavoritePresenter implements FavoriteInterface.PresenterFavorite {
 
-    private FavoriteInterface.ViewFavorite viewFavorite;
-    private FavoriteInterface.ModelFavorite modelFavorite;
+    private final FavoriteInterface.ViewFavorite viewFavorite;
+    private final FavoriteInterface.ModelFavorite modelFavorite;
 
     public FavoritePresenter(FavoriteInterface.ViewFavorite viewFavorite, String nodeCollectionName){
         this.viewFavorite = viewFavorite;
@@ -45,7 +43,6 @@ public class FavoritePresenter implements FavoriteInterface.PresenterFavorite {
 
     @Override
     public void saveObjectFavorite(String objectId) {
-//        Log.println(150, "presentador proceso: ", "---------------------------------------------------------> estoy aquí: " + objectId);
         modelFavorite.saveObjectFavorite(objectId);
     }
 

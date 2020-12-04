@@ -7,34 +7,48 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.llajtacomida.views.mainViews.HomeFragment"
+        android:name="com.example.llajtacomida.views.main.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_plates"
-        android:name="com.example.llajtacomida.views.platesViews.PlatesListFragment"
+        android:name="com.example.llajtacomida.views.plates.PlatesListFragment"
         android:label="@string/menu_plates"
         tools:layout="@layout/fragment_plates_list" />
 
     <fragment
         android:id="@+id/nav_restaurants"
-        android:name="com.example.llajtacomida.views.restaurantsViews.RestaurantListFragment"
+        android:name="com.example.llajtacomida.views.restaurants.RestaurantListFragment"
         android:label="@string/menu_restaurants"
         tools:layout="@layout/fragment_restaurant_list" />
 
     <fragment
         android:id="@+id/nav_favorit_plates"
-        android:name="com.example.llajtacomida.views.favoritPlatesViews.FavoritPlatesListFragment"
+        android:name="com.example.llajtacomida.views.favorites.favoritPlates.FavoritPlatesListFragment"
         android:label="@string/menu_plates"
         tools:layout="@layout/fragment_favorit_plates_list" />
 
     <fragment
         android:id="@+id/nav_favorit_restaurants"
-        android:name="com.example.llajtacomida.views.favoritRestaurantsViews.FavoritRestaurantListFragment"
+        android:name="com.example.llajtacomida.views.favorites.favoritRestaurants.FavoritRestaurantListFragment"
         android:label="@string/menu_plates"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
 
+
+<!--    falta crear sobre nosotros-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_users"-->
+<!--        android:name="com.example.llajtacomida.views.users.UserListFragment"-->
+<!--        android:label="@string/tvUserOptionList"-->
+<!--        tools:layout="@layout/fragment_favorit_restaurants_list" />-->
+
+<!--    Solo para el adminitardor-->
+    <fragment
+        android:id="@+id/nav_users"
+        android:name="com.example.llajtacomida.views.users.UserListFragment"
+        android:label="@string/tv_user_option_list"
+        tools:layout="@layout/fragment_favorit_restaurants_list" />
 
 
 </navigation>

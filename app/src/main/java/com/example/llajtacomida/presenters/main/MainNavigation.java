@@ -3,8 +3,8 @@ package com.example.llajtacomida.presenters.main;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.llajtacomida.views.mainViews.MainActivity;
-import com.example.llajtacomida.views.mainViews.LoginActivity;
+import com.example.llajtacomida.views.main.MainActivity;
+import com.example.llajtacomida.views.main.LoginActivity;
 
 public class MainNavigation {
 

@@ -8,7 +8,6 @@ import com.example.llajtacomida.interfaces.FavoriteInterface;
 import com.example.llajtacomida.models.plate.Plate;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,11 +19,11 @@ import java.util.ArrayList;
 
 public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEventListener {
 
-    private FavoriteInterface.PresenterFavorite presenterFavorite;
-    private String userId, nodeCollectionName, favoritesNode;
-    private DatabaseReference databaseReference;
-    private ArrayList<String> favoriteList;
-    private ArrayList<Object> favoritObjectList;
+    private final FavoriteInterface.PresenterFavorite presenterFavorite;
+    private final String userId, nodeCollectionName, favoritesNode;
+    private final DatabaseReference databaseReference;
+    private final ArrayList<String> favoriteList;
+    private final ArrayList<Object> favoriteObjectList;
 
     public FavoriteModel(FavoriteInterface.PresenterFavorite presenterFavorite, String userId, String nodeCollectionName){
         this.presenterFavorite = presenterFavorite;
@@ -36,11 +35,12 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
             favoritesNode = "favorite_plates";
         }else if(nodeCollectionName.equals("restaurants")){
             favoritesNode = "favorite_rest";
+        }else{
+            favoritesNode = "undefined";
         }
         favoriteList = new ArrayList<String>();
-        favoritObjectList = new ArrayList<Object>();
+        favoriteObjectList = new ArrayList<Object>();
     }
-
 
     private String objectId;
     @Override
@@ -91,15 +91,15 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
             for(DataSnapshot data : snapshot.getChildren()){
                 if(nodeCollectionName.equals("plates")){
                     if(favoriteList.contains(data.getValue(Plate.class).getId())){
-                        favoritObjectList.add(data.getValue(Plate.class));
+                        favoriteObjectList.add(data.getValue(Plate.class));
                     }
                 }else if(nodeCollectionName.equals("restaurants")){
                     if(favoriteList.contains(data.getValue(Restaurant.class).getId())){
-                        favoritObjectList.add(data.getValue(Restaurant.class));
+                        favoriteObjectList.add(data.getValue(Restaurant.class));
                     }
                 }
             }
-            presenterFavorite.showFavoriteList(favoritObjectList);
+            presenterFavorite.showFavoriteList(favoriteObjectList);
         }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users/"+userId+"/"+ favoritesNode)){
             for(DataSnapshot data : snapshot.getChildren()){
                 favoriteList.add(data.getValue().toString());
@@ -116,6 +116,6 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-        Log.e("Cancel", "---------------------------> operation canceled");
+        Log.e("Cancel", "---------------------------> operation cancelled");
     }
 }
