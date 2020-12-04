@@ -13,24 +13,43 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.llajtacomida.R;
+import com.example.llajtacomida.interfaces.UserInterface;
+import com.example.llajtacomida.models.user.User;
+import com.example.llajtacomida.presenters.tools.Validation;
+import com.example.llajtacomida.presenters.user.UserPresenter;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class HomeFragment extends Fragment {
+import java.util.ArrayList;
 
-    private HomeViewModel homeViewModel;
+public class HomeFragment extends Fragment implements UserInterface.ViewUser {
+
+    private View root;
+    private TextView tvWelcome;
+
+    // Presenter
+    private UserPresenter userPresenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(this).get(HomeViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+        userPresenter = new UserPresenter(this);
+        userPresenter.findUser(FirebaseAuth.getInstance().getUid());
+        initComponets();
         return root;
+    }
+
+    private void initComponets(){
+        tvWelcome = (TextView) root.findViewById(R.id.tvWelcome);
+    }
+
+    @Override
+    public void showUser(User user) {
+        tvWelcome.setText(tvWelcome.getText().toString() + " "+ Validation.getFirstName(user.getFulName()) +
+                getString(R.string.tvWelcomeContinue));
+    }
+
+    @Override
+    public void showUserList(ArrayList<User> userList) {
+
     }
 }

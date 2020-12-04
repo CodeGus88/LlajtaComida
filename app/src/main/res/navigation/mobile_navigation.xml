@@ -26,22 +26,14 @@
     <fragment
         android:id="@+id/nav_favorit_plates"
         android:name="com.example.llajtacomida.views.favorites.favoritPlates.FavoritPlatesListFragment"
-        android:label="@string/menu_plates"
+        android:label="@string/menu_favorit_plates"
         tools:layout="@layout/fragment_favorit_plates_list" />
 
     <fragment
         android:id="@+id/nav_favorit_restaurants"
         android:name="com.example.llajtacomida.views.favorites.favoritRestaurants.FavoritRestaurantListFragment"
-        android:label="@string/menu_plates"
+        android:label="@string/menu_favorit_restaurants"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
-
-
-<!--    falta crear sobre nosotros-->
-<!--    <fragment-->
-<!--        android:id="@+id/nav_users"-->
-<!--        android:name="com.example.llajtacomida.views.users.UserListFragment"-->
-<!--        android:label="@string/tvUserOptionList"-->
-<!--        tools:layout="@layout/fragment_favorit_restaurants_list" />-->
 
 <!--    Solo para el adminitardor-->
     <fragment
@@ -50,5 +42,10 @@
         android:label="@string/tv_user_option_list"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
 
-
+    <!--    falta crear sobre nosotros-->
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_users"-->
+    <!--        android:name="com.example.llajtacomida.views.users.UserListFragment"-->
+    <!--        android:label="@string/tvUserOptionList"-->
+    <!--        tools:layout="@layout/fragment_favorit_restaurants_list" />-->
 </navigation>

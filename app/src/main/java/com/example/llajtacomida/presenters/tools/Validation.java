@@ -44,4 +44,15 @@ public class Validation {
         return true;
     }
 
+    public static String getFirstName(String fulName){
+        String firstName = "";
+        for(int i = 0; i<fulName.length(); i++){
+            if(fulName.charAt(i) == ' '){
+                break;
+            }
+            firstName += fulName.charAt(i);
+        }
+        return firstName;
+    }
+
 }

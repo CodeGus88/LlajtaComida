@@ -183,8 +183,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             userPresenter = new UserPresenter(this);
 //            userPresenter.findUser(user.getId());
             userPresenter.findUser(FirebaseAuth.getInstance().getUid());
-//            UserPresenter userPresenter = new UserPresenter(this);
-//            userPresenter.storeUser(user);
+
 
         }catch(Exception e){
             Log.e("Error", e.getMessage());

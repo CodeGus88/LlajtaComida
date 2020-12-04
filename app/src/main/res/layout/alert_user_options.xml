@@ -119,6 +119,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/rbIsCollaborator"
                 android:textColor="#fff"/>
+
+            <RadioButton
+                android:id="@+id/rbIsVoter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rbIsVoter"
+                android:textColor="#fff"/>
+
             <RadioButton
                 android:id="@+id/rbIsReader"
                 android:layout_width="wrap_content"
@@ -142,7 +150,7 @@
             android:id="@+id/btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_cancel"
+            android:text="@string/btn_close"
             android:layout_weight="1"
             android:textColor="#fff"
             android:background="@drawable/btn_cancel"
@@ -151,7 +159,7 @@
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_continue"
+            android:text="@string/btn_save"
             android:layout_weight="1"
             android:textColor="#fff"
             android:background="@drawable/btn_continue"

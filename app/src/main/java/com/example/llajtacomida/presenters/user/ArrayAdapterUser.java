@@ -57,6 +57,8 @@ public class ArrayAdapterUser extends ArrayAdapter<User> {
                 tvRole.setTextColor(Color.YELLOW);
             }else if(userList.get(position).getRole().equalsIgnoreCase("collaborator")){
                 tvRole.setTextColor(Color.GREEN);
+            }else if(userList.get(position).getRole().equalsIgnoreCase("voter")){
+                tvRole.setTextColor(Color.CYAN);
             }else if(userList.get(position).getRole().equalsIgnoreCase("reader")){
                 tvRole.setTextColor(Color.LTGRAY);
             }else if(userList.get(position).getRole().equalsIgnoreCase("none")){

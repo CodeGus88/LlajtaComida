@@ -162,7 +162,60 @@
     <!--    Roles -->
     <string name="rbIsAdmin">Administrador</string>
     <string name="rbIsCollaborator">Colaborador</string>
+    <string name="rbIsVoter">Votante</string>
     <string name="rbIsOnlyReader">Lector</string>
     <string name="rbIsNone">Ninguno</string>
+    <!--    buttons-->
+    <string name="btn_close">Cerrar</string>
+    <string name="btn_save">Guardar</string>
 
+
+
+
+
+    <!--    home  -->
+    <!--    Titles -->
+    <string name="tvPreColonialTitle">Gastronomía Pre Colonial</string>
+    <string name="tvColonialTitle">Gastronomía Colonial</string>
+    <string name="tvRepublicanaTitle">Gastronomía Republicana</string>
+    <!--  Content  -->
+    <string name="tvPreColonialContent">
+        En los verdes y fértiles valles de la extensa Q’ochapampa, donde se desarrollaron diversas culturas primitivas como los Cotas, Chuis y Soras, en las que a la llegada del Inca Huayna Capac, se estableció un vasto programa de producción maicera. La misma permite comprender algunas de las características y peculiaridades de la identidad Q’ochala y particularizar las características de la gastronomía.
+        \n
+        \nLas más de 2000 Qollqas (silos) para el almacenaje de maíz, construidos en 1450 en Cotapachi, al sur del Municipio de Quillacollo, alrededor de la Laguna Cotapachi, son la pauta para comprender los niveles de la producción agrícola de la llajta. Por ello, el maíz se traduce en uno de los productos básicos y emblemáticos de la gastronomía de los q’ochalas en la época pre colonial.
+        \n
+        \nLas crónicas nos permiten conocer, que los hábitos alimenticios de los habitantes de este tiempo, se reducían a comer dos veces al día, consumir cereales, tubérculos e incluso calabazas en el Ch’aqui Pacha (tiempo seco). En el Paray Pacha (tiempo de lluvias) se come abundantes yuyos o ensaladas, como así también frutas, nombres con los que se designaban las épocas del año agrícola.
+        \n
+        \nEn cuanto a las maneras de preparar los alimentos, se mencionan los hervidos en agua y al vapor, enterrados, el k’alapari y kalapurka, los soasados a la brasa y a la piedra o kankas y k’aspas, el khaw’i o asoleado, los torrados o jank’as, las harinas o j’akus y los deshidratados, como los chuños y tuntas.
+
+    </string>
+
+    <string name="tvColonialContent">
+        En el Abya Yala; ante la llegada de los españoles, se suscitaron cambios sociales, culturales, políticos y económicos, los que afectaron a la cotidianidad de los habitantes de las fértiles tierras de Q’ochapampa.
+        \n
+        \nEn cuanto al tema alimenticio, tambien hubo modificaciones en reacción a los procesos para preparar los alimentos. En este proceso de mestizaje, se introdujo en la alimentación el consumo cotidiano de diferentes carnes, como res, cerdo, pollo y cordero, de igual manera el uso de condimentos al momento de cocinar, tales como la pimenta, nuez moscada, azafrán, canela, clavo de olor, azúcar y otros ingredientes como el trigo, cebollas, ajos, perejil, orégano, cilantro, vinagres y otros.
+        \n
+        \nEn este contexto alimentario, se comenzó a consumir frituras, encurtidos, la combinación de sabor salado y dulce en un solo preparado, como también el consumo de pan de trigo y de una variedad de productos de la repostería española.
+        \n
+        \nLos requerimientos para contar con productos apropiados para preparar las recetas de la gastronomía de los migrantes llegados a estas tierras, modificó la producción agrícola practicada por los nativos, quienes tuvieron que cultivar nuevas especies y variedades de productos alimenticios.
+        
+    </string>
+    
+    <string name="tvRepublicanaContent">
+        Al finalizar la guerra de la independencia; en la que participaron originarios y campesinos andinos, surge la República de Bolivia, pero sin brindar reivindicación socio cultural, política o económica alguna para las poblacionales indígenas.
+        \n
+        \nLa marcada influencia europea en el pensamiento y sentimiento de los nuevos republicanos, los cambios en las estructuras sociales, políticas, económicas y culturales de las ciudades, también se deja sentir en la gastronomía mestiza y criolla surgida durante la colonia.
+        \n
+        \nEl uso de novedosos utensilios de diferentes formas y materiales para preparar los alimentos, como la utilización de otras fuentes de energía para la cocción de los mismos, marcan también diferencia en los sabores y presentación de los alimentos.
+        \n
+        \nEn esta época, ya no es posible degustar los alimentos cocidos a fuego lento, como cuando se usaba el brasero o las q’onchas atizadas con leña, pues ya surge el uso de combustibles derivados del petróleo o la electricidad.
+        \n
+        \nLos aires nacionalistas, los resabios coloniales y las nuevas influencias gastronómicas del viejo mundo, se funcionan y dan lugar; dice Beatriz Rossells reconocida historiadora, “al surgimiento de la comida nacional” en la que es posible degustar, una combinación variada de productos nativos y muchos otros llegados de los distintos países y continentes.
+        \n
+        \nEl Prof. Wilfredo Camacho García (+), reconocido antropólogo, decía “La llajta cochabambina mereció el título de Granero de Bolivia por la exuberante producción de cereales y otros productos en sus diferentes pisos ecológicos”. Este aspecto la hizo merecedora del título de “Capital de la gastronomía boliviana”, por el exquisito sabor e inigualable sazón de las y los cochabambinos en el momento de preparar la variedad de platos en el menú cochabambino.
+    </string>
+
+    <string name="tvWelcome">Bienvenido</string>
+<!--    Le sigue la frase.....  -->
+    <string name="tvWelcomeContinue">, antes de nada te invitamos a conocer más sobre la gastronomía de nuestra Llajta!!!</string>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
@@ -44,6 +45,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
     private TextView tvRole;
     private RadioButton rbIsAdmin;
     private RadioButton rbIsCollaborator;
+    private RadioButton rbIsVoter;
     private RadioButton rbIsReader;
     private RadioButton rbIsNone;
 
@@ -89,6 +91,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         tvRole = (TextView) viewAlert.findViewById(R.id.tvRole);
         rbIsAdmin = (RadioButton) viewAlert.findViewById(R.id.rbIsAdmin);
         rbIsCollaborator = (RadioButton) viewAlert.findViewById(R.id.rbIsCollaborator);
+        rbIsVoter = (RadioButton) viewAlert.findViewById(R.id.rbIsVoter);
         rbIsReader = (RadioButton) viewAlert.findViewById(R.id.rbIsReader);
         rbIsNone = (RadioButton) viewAlert.findViewById(R.id.rbIsNone);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -137,9 +140,13 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
 
     @Override
     public void showUserList(ArrayList<User> userList) {
-        this.userList = userList;
-        arrayAdapterUser = new ArrayAdapterUser(getContext(), R.layout.adapter_user_list, userList);
-        lvUserList.setAdapter(arrayAdapterUser);
+        try {
+            this.userList = userList;
+            arrayAdapterUser = new ArrayAdapterUser(getContext(), R.layout.adapter_user_list, userList);
+            lvUserList.setAdapter(arrayAdapterUser);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -161,11 +168,13 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
             user.setRole("admin");
         }else if(rbIsCollaborator.isChecked()){
             user.setRole("collaborator");
-        }else if(rbIsReader.isChecked()){
+        }else if(rbIsVoter.isChecked()){
+            user.setRole("voter");
+        } else if(rbIsReader.isChecked()){
             user.setRole("reader");
         }else if(rbIsNone.isChecked()){
             user.setRole("none");
-        }else{
+        }else{ // Si  no existe por defecto none
             user.setRole("none");
         }
         return user;
@@ -176,6 +185,8 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
             rbIsAdmin.setChecked(true);
         }else if(user.getRole().equalsIgnoreCase("collaborator") && !rbIsCollaborator.isChecked()){
             rbIsCollaborator.setChecked(true);
+        }else if(user.getRole().equalsIgnoreCase("voter") && !rbIsVoter.isChecked()){
+            rbIsVoter.setChecked(true);
         }else if(user.getRole().equalsIgnoreCase("reader") && !rbIsReader.isChecked()){
             rbIsReader.setChecked(true);
         }else if(user.getRole().equalsIgnoreCase("none") && !rbIsNone.isChecked()){
@@ -183,5 +194,11 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }else if(!rbIsNone.isChecked()){ // Por defecto si existe algún error
             rbIsNone.setChecked(true);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        userPresenter.stopRealtimeDatabase();
     }
 }
