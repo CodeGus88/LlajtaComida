@@ -7,7 +7,7 @@ import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.views.maps.GetLocationMapActivity;
 import com.example.llajtacomida.views.maps.SetLocationMapActivity;
 
-public class MapPresenter {
+public class MapNavegation {
 
     public static void showGetLocationMapActivity(Context context, Restaurant restaurant, String verb, String uri){
         Intent intent = new Intent(context, GetLocationMapActivity.class);

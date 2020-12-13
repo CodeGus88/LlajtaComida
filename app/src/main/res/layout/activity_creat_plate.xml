@@ -43,7 +43,7 @@
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/etPlateName"
+                    android:hint="@string/et_plate_name"
                     android:inputType="textWebEditText"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -59,7 +59,7 @@
                     android:id="@+id/etIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/etPlateIngredients"
+                    android:hint="@string/et_plate_ingredients"
                     android:gravity="left"
                     android:inputType="textMultiLine"/>
 
@@ -76,7 +76,7 @@
                     android:id="@+id/etOrigin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/etPlateOrigin"
+                    android:hint="@string/et_plate_origin"
                     android:layout_marginTop="10dp"
                     android:gravity="left"
                     android:inputType="textMultiLine"/>
@@ -96,7 +96,7 @@
                         android:id="@+id/btnSelectPhoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/btnPhotoPlate"
+                        android:text="@string/btn_photo_plate"
                         android:background="#00FFFFFF"
                         android:gravity="fill"
                         android:textAllCaps="false"
@@ -136,7 +136,7 @@
                     android:id="@+id/btnCancel"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/btnCancel"
+                    android:text="@string/btn_cancel"
                     android:layout_weight="1"
                     android:background="@drawable/btn_cancel"
                     android:textColor="#fff"/>
@@ -145,7 +145,7 @@
                     android:id="@+id/btnStore"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/btnStore"
+                    android:text="@string/btn_store"
                     android:layout_weight="1"
                     android:background="@drawable/btn_continue"
                     android:textColor="#fff"/>

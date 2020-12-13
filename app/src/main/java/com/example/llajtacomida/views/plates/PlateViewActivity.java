@@ -24,9 +24,11 @@ import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.ImageInterface;
 import com.example.llajtacomida.interfaces.PlateInterface;
+import com.example.llajtacomida.interfaces.UserInterface;
 import com.example.llajtacomida.models.image.Image;
 import com.example.llajtacomida.models.plate.Plate;
 import com.example.llajtacomida.models.restaurant.Restaurant;
+import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.image.GaleryDatabase;
 import com.example.llajtacomida.presenters.image.ImagePresenter;
 import com.example.llajtacomida.models.plate.PlateGestorDB;
@@ -36,8 +38,11 @@ import com.example.llajtacomida.presenters.plate.PlateRestListPresenter;
 import com.example.llajtacomida.presenters.restaurant.ArrayAdapterRestaurant;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.example.llajtacomida.presenters.user.AuthUser;
+import com.example.llajtacomida.presenters.user.UserPresenter;
 import com.example.llajtacomida.views.favorites.FavoriteObjectFragment;
 import com.example.llajtacomida.views.rating.RatingRecordFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.text.DecimalFormat;
@@ -52,8 +57,6 @@ public class PlateViewActivity extends AppCompatActivity
     public static String id;
     private MenuItem iconEdit, iconDelete, iconGalery;
 
-    private boolean isAnAdministrator;
-    private boolean isFavorite;
     private Plate plate;
 
     private static final int TIME_ANIMATION = 2000;
@@ -78,7 +81,7 @@ public class PlateViewActivity extends AppCompatActivity
     private PlateInterface.presenterRestList restListPresenter;
     private PlatePresenter platePresenter;
     private ImagePresenter imagePresenter;
-//    private FavoritePresenter favoritePresenter;
+//    private UserInterface.PresenterUser presenterUser;
 
     // Fragments
     private RatingRecordFragment ratingRecordFragment;
@@ -89,12 +92,11 @@ public class PlateViewActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plate_view);
         // edit title toolbar
-        getSupportActionBar().setTitle(R.string.platesTitle);
+        getSupportActionBar().setTitle(R.string.plates_title);
         // getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         //Configiración del boton atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         restaurantList = new ArrayList<Restaurant>();
-        isAnAdministrator = true;
 
         // Para el tamaño de las imagenes
         Display display = getWindowManager().getDefaultDisplay();
@@ -108,6 +110,7 @@ public class PlateViewActivity extends AppCompatActivity
 
         // Agregar fragmento fragment
         initFragments();
+
     }
 
     private void initFragments() {
@@ -126,6 +129,8 @@ public class PlateViewActivity extends AppCompatActivity
 
     private void initPresenters(){
         // iniciando presentadores
+//        presenterUser = new UserPresenter(this);
+//        presenterUser.findUser(FirebaseAuth.getInstance().getUid());
         restListPresenter = new PlateRestListPresenter(this);
         restListPresenter.filterRestaurantListWithPlate(id);
         platePresenter = new PlatePresenter(this);
@@ -182,6 +187,7 @@ public class PlateViewActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         initIconMenu(menu);
+//        presenterUser.findUser(FirebaseAuth.getInstance().getUid());
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -225,13 +231,18 @@ public class PlateViewActivity extends AppCompatActivity
     }
 
     private void initIconMenu(Menu menu){
-        if(isAnAdministrator){
-            iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
-            iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
-            iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
-            iconEdit.setVisible(true);
-            iconDelete.setVisible(true);
+        iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
+        iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
+        iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
+
+        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
             iconGalery.setVisible(true);
+            iconDelete.setVisible(true);
+            iconEdit.setVisible(true);
+        }else{
+            iconGalery.setVisible(false);
+            iconDelete.setVisible(false);
+            iconEdit.setVisible(false);
         }
     }
 
@@ -346,32 +357,32 @@ public class PlateViewActivity extends AppCompatActivity
         imagePresenter.stopRealtimeDatabase();
         ratingRecordFragment.stopRealtimeDatabase();
         favoriteObjectFragment.stopRealtimeDatabase();
-//        favoritePresenter.stopRealtimeDatabase();
     }
 
+//    /**
+//     * se usa para mostrar los íconos segun los permisos
+//     * @param user, usuario logueado
+//     */
 //    @Override
-//    public void showFavoriteList(ArrayList<Object> objectsList) {
-//        // no se usará para  esta vista
-//    }
-//
-//    @Override
-//    public void showFavoriteIcon(boolean isFavorite) {
-//        this.isFavorite = isFavorite;
-//        if(isFavorite){
-//            btnFavorite.setImageResource(R.mipmap.favorite_on);
-//        }else{
-//            btnFavorite.setImageResource(R.mipmap.favorite_of);
-//        }
-//    }
-//
-//    @Override
-//    public void successFul(boolean isSuccess) {
-//        if(isSuccess){
-//            if(isFavorite){
-//                Toast.makeText(this, getString(R.string.addToPlatesFavoriteList), Toast.LENGTH_SHORT).show();
+//    public void showUser(User user) {
+//        try {
+//            if(user.getRole().equalsIgnoreCase("admin")){
+//                iconGalery.setVisible(true);
+//                iconDelete.setVisible(true);
+//                iconEdit.setVisible(true);
 //            }else{
-//                Toast.makeText(this, getString(R.string.removeToPlateFavoriteList), Toast.LENGTH_SHORT).show();
+//                iconGalery.setVisible(false);
+//                iconDelete.setVisible(false);
+//                iconEdit.setVisible(false);
 //            }
-//        }else Toast.makeText(this, getString(R.string.messageIsFailed), Toast.LENGTH_SHORT).show();
+//        }catch (Exception e){
+//            Log.e("Error", "-----------------------------------------------> " + e.getMessage());
+//        }
+//
+//    }
+
+//    @Override
+//    public void showUserList(ArrayList<User> userList) {
+//        // no se usa para esta vista
 //    }
 }

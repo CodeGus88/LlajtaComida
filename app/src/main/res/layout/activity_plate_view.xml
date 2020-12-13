@@ -125,7 +125,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvNamePlateView"
+                android:text="@string/tv_name_plate_view"
                 android:textSize="20dp"
                 android:gravity="center"
                 style="@style/CodeFontContentTitle"/>
@@ -153,7 +153,7 @@
                     android:id="@+id/tvIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/loremShort"
+                    android:text="@string/lorem_short"
                     android:justificationMode="inter_word"
                     style="@style/CodeFontContent"/>
 
@@ -175,7 +175,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvOriginPlateView"
+                    android:text="@string/tv_origin_plate_view"
                     style="@style/CodeFontContentTitle"/>
                 <Space
                     android:layout_width="wrap_content"
@@ -186,7 +186,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:justificationMode="inter_word"
-                    android:text="@string/loremLong" />
+                    android:text="@string/lorem_long" />
 
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CodeFontContentTitle"
-                    android:text="@string/tvRestWithPlateTitle"/>
+                    android:text="@string/tv_rest_with_plate_title"/>
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>

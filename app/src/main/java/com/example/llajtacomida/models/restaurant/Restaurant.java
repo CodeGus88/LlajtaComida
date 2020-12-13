@@ -116,7 +116,9 @@ public class Restaurant extends ObjectParent implements Serializable {
 
     @Override
     public String toString() {
-        return name;
+        return name + " " + id + " " + ownerName + " " +
+                address + " " + phone + " " + originAndDescription + " " +
+                author + " " + punctuation;
     }
 
     @Exclude

@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".views.main.HomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/font_2">
+
+    <LinearLayout
+        android:id="@+id/llfontTitle"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@mipmap/font_title_home"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="150dp">
+        <TextView
+            android:layout_marginTop="28dp"
+            android:layout_marginHorizontal="10dp"
+            android:id="@+id/tvWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_welcome"
+            android:textSize="20dp"
+            android:textColor="#fff"
+            android:justificationMode="inter_word"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -12,17 +35,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="3dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvWelcome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tvWelcome"
-                android:textSize="20dp"
-                android:textColor="#fff"
-                android:justificationMode="inter_word"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,13 +50,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#BF504F4F"
+                    android:background="#AB000000"
                     android:padding="3dp">
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp"/>
                     <TextView
-                        android:text="@string/tvPreColonialTitle"
+                        android:text="@string/tv_pre_colonial_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -47,8 +64,14 @@
                         android:layout_marginBottom="10dp"
                         android:textColor="#fff"
                         android:textSize="20sp"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/qollqas_cotapachi"
+                        android:scaleType="center"/>
                     <TextView
-                        android:text="@string/tvPreColonialContent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/tv_pre_colonial_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:justificationMode="inter_word"
@@ -72,13 +95,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#BF504F4F"
+                    android:background="#AB000000"
                     android:padding="3dp">
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp"/>
                     <TextView
-                        android:text="@string/tvColonialTitle"
+                        android:text="@string/tv_colonial_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -86,8 +109,14 @@
                         android:layout_marginBottom="10dp"
                         android:textColor="#fff"
                         android:textSize="20sp"/>
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/cochabamba_colonial"
+                        android:scaleType="centerCrop"/>
                     <TextView
-                        android:text="@string/tvColonialContent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/tv_colonial_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:justificationMode="inter_word"
@@ -111,13 +140,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#BF504F4F"
+                    android:background="#AB000000"
                     android:padding="3dp">
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="10dp"/>
                     <TextView
-                        android:text="@string/tvRepublicanaTitle"
+                        android:text="@string/tv_republicana_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
@@ -125,8 +154,16 @@
                         android:layout_marginBottom="10dp"
                         android:textColor="#fff"
                         android:textSize="20sp"/>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/cochabamba_republicana"
+                        android:scaleType="centerCrop"/>
+
                     <TextView
-                        android:text="@string/tvRepublicanaContent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/tv_republicana_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:justificationMode="inter_word"
@@ -136,6 +173,9 @@
                         android:layout_height="10dp"/>
                 </LinearLayout>
             </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</RelativeLayout>

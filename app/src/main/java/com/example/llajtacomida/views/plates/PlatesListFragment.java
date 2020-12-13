@@ -21,17 +21,23 @@ import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.PlateInterface;
+import com.example.llajtacomida.interfaces.UserInterface;
 import com.example.llajtacomida.models.plate.Plate;
+import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.plate.ArrayAdapterPlate;
 import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.presenters.plate.PlatePresenter;
+import com.example.llajtacomida.presenters.user.AuthUser;
+import com.example.llajtacomida.presenters.user.UserPresenter;
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class PlatesListFragment extends Fragment implements PlateInterface.ViewPlate {
+public class PlatesListFragment extends Fragment implements PlateInterface.ViewPlate{
 
     private View view;
 
@@ -46,10 +52,9 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
     private ArrayList<Plate> plateList;
     private ArrayAdapterPlate arrayAdapterPlate;
 
-    private boolean isAnAdministrator;
-
-    // interface
+    // presenters
     private PlateInterface.PresenterPlate presenterPlate;
+//    private UserInterface.PresenterUser presenterUser;
 
     public PlatesListFragment() {
         // Required empty public constructor
@@ -91,11 +96,10 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
         setHasOptionsMenu(true); // para el funcionamiento de los iconos
         view = inflater.inflate(R.layout.fragment_plates_list, container, false);
 
-        isAnAdministrator = true;
-
         initComponents();
         presenterPlate = new PlatePresenter(this);
         presenterPlate.loadPlatesList();
+//        presenterUser = new UserPresenter(this);
         return view;
     }
 
@@ -112,10 +116,21 @@ public class PlatesListFragment extends Fragment implements PlateInterface.ViewP
             menu.getItem(i).setVisible(false);
         }
         iconSearch.setVisible(true);
-        if(isAnAdministrator){
-            iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
-            iconAdd.setVisible(true);
+        iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
+
+        try{
+            //        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
+            if(AuthUser.user.getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
+                iconAdd.setVisible(true);
+            }else{
+                iconAdd.setVisible(false);
+            }
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
+            Log.e("Error", "-------------------------------------------------> " + e.getMessage());
         }
+
+
     }
 
     @Override

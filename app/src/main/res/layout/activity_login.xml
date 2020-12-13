@@ -58,7 +58,7 @@
                     android:drawableStart="@mipmap/google_icon"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="10dp"
-                    android:text="@string/btnStart"
+                    android:text="@string/btn_start"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     android:textColor="#7A7A7A"

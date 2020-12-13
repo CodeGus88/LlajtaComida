@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.presenters.map.MapNavegation;
 import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
@@ -51,7 +51,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_edit_restaurant);
         uri = null;
         //Configiración del boton atrás
-        getSupportActionBar().setTitle(R.string.platesTitle);
+        getSupportActionBar().setTitle(R.string.plates_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
@@ -151,7 +151,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
                 whriteRestaurant();
                 String path = "";
                 if(uri != null) path = uri.getPath(); // Apara salvar la imagen de fondo
-                MapPresenter.showGetLocationMapActivity(this, restaurant, "edit", path);
+                MapNavegation.showGetLocationMapActivity(this, restaurant, "edit", path);
                 break;
             case R.id.btnSelectPhoto:
                 RestaurantNavegation.showCropImage(this);

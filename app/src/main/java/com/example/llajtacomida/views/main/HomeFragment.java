@@ -1,16 +1,17 @@
 package com.example.llajtacomida.views.main;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.UserInterface;
@@ -18,6 +19,7 @@ import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.tools.Validation;
 import com.example.llajtacomida.presenters.user.UserPresenter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,9 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
 
     private View root;
     private TextView tvWelcome;
+    private LinearLayout llfontTitle;
+    // animation
+    private ObjectAnimator animatorY;
 
     // Presenter
     private UserPresenter userPresenter;
@@ -33,23 +38,49 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         userPresenter = new UserPresenter(this);
-        userPresenter.findUser(FirebaseAuth.getInstance().getUid());
+        if(FirebaseAuth.getInstance().getUid() != null){
+            userPresenter.findUser(FirebaseAuth.getInstance().getUid());
+        }else{
+            Log.d("Null", "----------------------------> user not fount");
+        }
         initComponets();
+        animation();
         return root;
     }
 
     private void initComponets(){
         tvWelcome = (TextView) root.findViewById(R.id.tvWelcome);
+        llfontTitle = (LinearLayout) root.findViewById(R.id.llfontTitle);
+    }
+
+    private void animation(){
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorY = ObjectAnimator.ofFloat(llfontTitle, "y", -40F);
+        animatorY.setDuration(2000);
+        animatorSet.play(animatorY);
+        animatorSet.start();
     }
 
     @Override
     public void showUser(User user) {
-        tvWelcome.setText(tvWelcome.getText().toString() + " "+ Validation.getFirstName(user.getFulName()) +
-                getString(R.string.tvWelcomeContinue));
+        try{
+            String title;
+            if(user.getFulName() != null){
+                title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(user.getFulName()) +
+                        getString(R.string.tv_welcome_continue);
+
+            }else{
+                title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()) +
+                        getString(R.string.tv_welcome_continue);
+            }
+            tvWelcome.setText(title);
+        }catch (Exception e){
+            Log.e("Error", "----------------------------------------------> " + e.getMessage());
+        }
     }
 
     @Override
     public void showUserList(ArrayList<User> userList) {
-
+        // not used
     }
 }

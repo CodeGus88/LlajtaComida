@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
-import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.presenters.map.MapNavegation;
 import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
@@ -50,7 +50,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_restaurant);
         // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.restaurantsTitle);
+        getSupportActionBar().setTitle(R.string.restaurants_title);
 //        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initComponents();
@@ -119,7 +119,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
                 whriteRestaurant();
                 String path = "";
                 if(uri != null) path = uri.getPath();
-                MapPresenter.showGetLocationMapActivity(this, restaurant, "create", path);
+                MapNavegation.showGetLocationMapActivity(this, restaurant, "create", path);
                 break;
             case R.id.btnSelectPhoto:
                 RestaurantNavegation.showCropImage(this);

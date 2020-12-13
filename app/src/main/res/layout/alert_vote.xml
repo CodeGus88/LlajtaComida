@@ -18,7 +18,7 @@
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:hint="@string/etOptionalExperience"
+        android:hint="@string/et_optional_experience"
         android:background="@drawable/edit_text" />
 
     <LinearLayout

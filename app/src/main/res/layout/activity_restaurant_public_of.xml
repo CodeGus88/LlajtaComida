@@ -11,7 +11,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="@string/tvPublishOfListTitle"
+        android:text="@string/tv_publish_of_list_title"
         android:textAlignment="center"
         android:fontFamily="serif"
         android:textColor="#353535"

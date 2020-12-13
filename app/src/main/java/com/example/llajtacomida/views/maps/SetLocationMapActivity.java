@@ -46,22 +46,22 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
         spTypesOfMaps = (Spinner) findViewById(R.id.spTypesOfMaps);
         btnBack = (Button) findViewById(R.id.btnBack);
         String [] options = {
-                getString(R.string.itemNormal),
-                getString(R.string.itemHibrid),
-                getString(R.string.itemSatellite),
-                getString(R.string.itemTerrain)};
+                getString(R.string.item_normal),
+                getString(R.string.item_hibrid),
+                getString(R.string.item_satellite),
+                getString(R.string.item_terrain)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_maps, options);
         spTypesOfMaps.setAdapter(adapter);
         spTypesOfMaps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i).equals(getString(R.string.itemNormal))) {
+                if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_normal))) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.itemHibrid))) {
+                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_hibrid))) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.itemSatellite))) {
+                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_satellite))) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.itemTerrain))) {
+                } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_terrain))) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 } else {
                     Toast.makeText(SetLocationMapActivity.this, "Ivalid option", Toast.LENGTH_SHORT).show();
@@ -100,7 +100,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
             restaurant = new Restaurant();
         }
         LatLng restaurantLocation = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
-        marker = mMap.addMarker(new MarkerOptions().position(restaurantLocation).title(restaurant.getName()).snippet(getString(R.string.tvPhone) + ": " + restaurant.getPhone()));
+        marker = mMap.addMarker(new MarkerOptions().position(restaurantLocation).title(restaurant.getName()).snippet(getString(R.string.tv_phone) + ": " + restaurant.getPhone()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantLocation));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation, 15.5f));
         mMap.getUiSettings().setZoomControlsEnabled(true); // opciones de zoom del mapa

@@ -41,7 +41,7 @@
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etRestaurantName"
+                        android:hint="@string/et_restaurant_name"
                         android:inputType="textWebEditText"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,7 +55,7 @@
                         android:id="@+id/etOwnerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etOwnerName"
+                        android:hint="@string/et_owner_name"
                         android:gravity="left"
                         android:inputType="textPersonName"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +72,7 @@
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etPhone"
+                        android:hint="@string/et_phone"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="phone"/>
@@ -93,7 +93,7 @@
                         android:id="@+id/etAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etAddress"
+                        android:hint="@string/et_address"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="textWebEditText"/>
@@ -147,14 +147,14 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/tvLatitude"
+                                android:text="@string/tv_latitude"
                                 android:textStyle="bold"
                                 android:textSize="10dp"/>
                             <TextView
                                 android:id="@+id/tvLatitude"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/tvLatLng"
+                                android:hint="@string/tv_lat_lng"
                                 android:textSize="10dp"/>
                         </LinearLayout>
 
@@ -169,14 +169,14 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/tvLongitude"
+                                android:text="@string/tv_longitude"
                                 android:textStyle="bold"
                                 android:textSize="10dp"/>
                             <TextView
                                 android:id="@+id/tvLongitude"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/tvLatLng"
+                                android:hint="@string/tv_lat_lng"
                                 android:textSize="10dp"
                                 android:background="@drawable/edit_text"/>
                         </LinearLayout>
@@ -193,7 +193,7 @@
                         android:id="@+id/etOriginAndDescriptiono"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etOriginDesc"
+                        android:hint="@string/et_origin_desc"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="textMultiLine"
@@ -216,7 +216,7 @@
                             android:id="@+id/btnSelectPhoto"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/btnPhotoRestaurant"
+                            android:text="@string/btn_photo_restaurant"
                             android:background="#00FFFFFF"
                             android:gravity="fill"
                             android:textAllCaps="false"
@@ -268,7 +268,7 @@
                         android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="@string/btnCancel"
+                        android:text="@string/btn_cancel"
                         android:layout_weight="1"
                         android:background="@drawable/btn_cancel"
                         android:textColor="#fff"/>
@@ -276,7 +276,7 @@
                         android:id="@+id/btnUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="@string/btnStore"
+                        android:text="@string/btn_store"
                         android:layout_weight="1"
                         android:background="@drawable/btn_continue"
                         android:textColor="#fff"/>

@@ -63,11 +63,11 @@ public class FavoriteObjectFragment extends Fragment implements FavoriteInterfac
 
     private void loadMessages(){
         if(nodeCollectionName.equals("plates")){
-            messageAdd = getString(R.string.addPlateToFavoriteList);
-            messageRemove = getString(R.string.removeFromListFavoritePlates);
+            messageAdd = getString(R.string.add_plate_to_favorite_list);
+            messageRemove = getString(R.string.remove_from_list_favorite_plates);
         }else if(nodeCollectionName.equals("restaurants")){
-            messageAdd = getString(R.string.addRestaurantToFavoriteList);
-            messageRemove = getString(R.string.removeFromListFavoriteRestaurants);
+            messageAdd = getString(R.string.add_restaurant_to_favorite_list);
+            messageRemove = getString(R.string.remove_from_list_favorite_restaurants);
         }else{
             messageAdd = "... ( + )";
             messageRemove = "... ( - )";
@@ -97,7 +97,7 @@ public class FavoriteObjectFragment extends Fragment implements FavoriteInterfac
             }else{
                 Toast.makeText(getContext(), messageRemove, Toast.LENGTH_SHORT).show();
             }
-        }else Toast.makeText(getContext(), getString(R.string.messageIsFailed), Toast.LENGTH_SHORT).show();
+        }else Toast.makeText(getContext(), getString(R.string.message_is_failed), Toast.LENGTH_SHORT).show();
     }
 
     public void stopRealtimeDatabase(){

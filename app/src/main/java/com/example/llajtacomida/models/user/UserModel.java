@@ -1,10 +1,13 @@
 package com.example.llajtacomida.models.user;
 
+import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.llajtacomida.interfaces.UserInterface;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +22,6 @@ import java.util.ArrayList;
 public class UserModel implements UserInterface.ModelUser, ValueEventListener {
 
     private UserInterface.PresenterUser presenterUser;
-    private String verb;
     private DatabaseReference databaseReference;
     private User user;
     private ArrayList<User> userList;
@@ -32,7 +34,6 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
 
     @Override
     public void findUser(String id) {
-        verb = "find";
         databaseReference.child("App").child("users").child(id).addListenerForSingleValueEvent(this);
     }
 
@@ -42,10 +43,8 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
      */
     @Override
     public void storeUser(User user) {
-        verb = "store";
         this.user = user;
-        databaseReference.child("App").child("users").child(this.user.getId());
-        databaseReference.addListenerForSingleValueEvent(this);
+        databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
     }
 
     @Override
@@ -66,17 +65,13 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
                 userList.add(data.getValue(User.class));
             }
             presenterUser.showUserList(userList);
-        }else{
-            if(verb.equals("store")){
-                databaseReference.child("App").child("users").child(user.getId()).updateChildren(user.toMap());
-            }else if(verb.equals("find")){
-                if(snapshot.getValue() != null){
-                    user = snapshot.getValue(User.class);
-                }else{
-                    user = new User();
-                }
-                presenterUser.showUser(user);
+        }else{ // si es buscar un usaurio
+            if(snapshot.getValue() != null){
+                user = snapshot.getValue(User.class);
+            }else{
+                user = new User();
             }
+            presenterUser.showUser(user);
         }
     }
 

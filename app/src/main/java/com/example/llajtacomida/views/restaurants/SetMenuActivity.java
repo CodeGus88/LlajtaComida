@@ -43,7 +43,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.restaurantsTitle);
+        getSupportActionBar().setTitle(R.string.restaurants_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Premisos

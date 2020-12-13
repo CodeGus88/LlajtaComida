@@ -24,7 +24,7 @@
                 android:background="@drawable/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:queryHint="@string/search_Address"
+                android:queryHint="@string/search_address"
                 android:iconifiedByDefault="true"
                 android:layout_marginTop="10dp"
                 android:elevation="5dp"

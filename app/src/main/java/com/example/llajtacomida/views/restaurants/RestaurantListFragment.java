@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.RestaurantInterface;
@@ -24,6 +25,7 @@ import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.restaurant.ArrayAdapterRestaurant;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.restaurant.RestaurantPresenter;
+import com.example.llajtacomida.presenters.user.AuthUser;
 
 import java.util.ArrayList;
 
@@ -46,7 +48,7 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     private RestaurantPresenter restaurantPresenter;
 
     // Permisos
-    private boolean isAnAdministrator;// , isAuthor;;
+//    private boolean isAnAdministrator;// , isAuthor;;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -64,7 +66,7 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
 
         restaurantPresenter = new RestaurantPresenter(this);
         restaurantPresenter.loadRestaurantList();
-        isAnAdministrator = true;
+//        isAnAdministrator = true;
         return view;
     }
 
@@ -81,10 +83,15 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         iconSearch.setVisible(true);
 
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
-        iconAdd.setVisible(true);
-        if(isAnAdministrator){
-            iconRestPublicOf = (MenuItem) menu.findItem(R.id.iconListPublicOf);
-            iconRestPublicOf.setVisible(true);
+        iconRestPublicOf = (MenuItem) menu.findItem(R.id.iconListPublicOf);
+        try{
+            if(AuthUser.getUser().getRole().equals("admin")) iconRestPublicOf.setVisible(true);
+            else iconRestPublicOf.setVisible(false);
+            if(AuthUser.getUser().getRole().equals("admin") || AuthUser.getUser().getRole().equals("collaborator")) iconAdd.setVisible(true);
+            else iconAdd.setVisible(false);
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
+            Log.e("Error", "-------------------------------------------------> " + e.getMessage());
         }
     }
 
@@ -155,7 +162,9 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         }
     }
 
-    private void stopRealtimeDatabse(){
+    @Override
+    public void onPause() {
+        super.onPause();
         restaurantPresenter.stopRealtimeDatabse();
     }
 }

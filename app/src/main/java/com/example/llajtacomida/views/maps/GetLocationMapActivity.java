@@ -56,8 +56,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        message = getString(R.string.markerSearchDescription);
-        title = getString(R.string.markerTitle);
+        message = getString(R.string.marker_search_description);
+        title = getString(R.string.marker_title);
 
         // Rescatar los datos del objeto
         final Intent intent = this.getIntent();
@@ -103,10 +103,10 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
         spTypesOfMaps = (Spinner) findViewById(R.id.spTypesOfMaps);
         String [] options = {
-                getString(R.string.itemNormal),
-                getString(R.string.itemHibrid),
-                getString(R.string.itemSatellite),
-                getString(R.string.itemTerrain)};
+                getString(R.string.item_normal),
+                getString(R.string.item_hibrid),
+                getString(R.string.item_satellite),
+                getString(R.string.item_terrain)};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item_maps, options);
         spTypesOfMaps.setAdapter(adapter);
 
@@ -239,7 +239,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
                 }else if(verb.equalsIgnoreCase("edit")){
                     RestaurantNavegation.showEditRestaurantView(this, restaurant, uri);
                 }
-                Toast.makeText(this, getString(R.string.loadPosition), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.load_position), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnBack:
                 onBackPressed();

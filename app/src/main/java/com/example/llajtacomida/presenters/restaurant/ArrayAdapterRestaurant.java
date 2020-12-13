@@ -47,7 +47,7 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
             tvTitleItem.setText(restaurantList.get(position).getName());
             tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription());
         }catch(Exception e){
-            Log.e("Error: ", e.getMessage());
+            Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
         }
         return view;
     }

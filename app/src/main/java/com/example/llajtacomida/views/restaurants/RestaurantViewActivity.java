@@ -31,15 +31,17 @@ import com.example.llajtacomida.presenters.restaurant.RestPlateListPresenter;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.presenters.image.GaleryDatabase;
 import com.example.llajtacomida.presenters.image.ImagePresenter;
-import com.example.llajtacomida.presenters.map.MapPresenter;
+import com.example.llajtacomida.presenters.map.MapNavegation;
 import com.example.llajtacomida.presenters.plate.PlateNavegation;
 import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.example.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.example.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
 import com.example.llajtacomida.presenters.plate.ArrayAdapterPlate;
+import com.example.llajtacomida.presenters.user.AuthUser;
 import com.example.llajtacomida.views.favorites.FavoriteObjectFragment;
 import com.example.llajtacomida.views.rating.RatingRecordFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.text.DecimalFormat;
@@ -52,7 +54,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
-    private boolean isAnAdministrator, isAuthor, isFavorite;
+//    private boolean isAnAdministrator, isAuthor;
     private Restaurant restaurant;
     // components
     private ImageButton btnNext;
@@ -69,7 +71,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
     private ArrayAdapterPlate arrayAdapterPlate;
-    private ArrayList<Image> imagesList;
+//    private ArrayList<Image> imagesList;
     private ArrayList<Plate> plateList;
 
     // Presenters
@@ -87,12 +89,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_restaurant_view);
 
         // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.restaurantsTitle);
+        getSupportActionBar().setTitle(R.string.restaurants_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        imagesList = new ArrayList<Image>();
-        isAnAdministrator = true;
-        isAuthor = true;
+//        imagesList = new ArrayList<Image>();
+//        isAnAdministrator = true;
+//        isAuthor = true;
 
         // Para el tamaño de las imagenes
         Display display = getWindowManager().getDefaultDisplay();
@@ -177,21 +179,25 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      * @param menu
      */
     private void initIconMenu(Menu menu){
-        if(isAnAdministrator || isAuthor){
             iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
             iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
             iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
             iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
+            iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
+            changeIcon();
+        if(AuthUser.getUser().getRole().equals("admin") || restaurant.getAuthor().equals(FirebaseAuth.getInstance().getUid())){
             iconEdit.setVisible(true);
             iconDelete.setVisible(true);
             iconGalery.setVisible(true);
             iconMenuRestaurant.setVisible(true);
-            if(isAnAdministrator){
-                iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
-                changeIcon();
-                iconPublish.setVisible(true);
-            }
+        }else{
+            iconEdit.setVisible(false);
+            iconDelete.setVisible(false);
+            iconGalery.setVisible(false);
+            iconMenuRestaurant.setVisible(false);
         }
+        if(AuthUser.getUser().getRole().equals("admin")) iconPublish.setVisible(true);
+        else iconPublish.setVisible(false);
     }
 
     /**
@@ -240,7 +246,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 RestaurantNavegation.showMenu(this, restaurant);
                 break;
             case R.id.btnVisit:
-                MapPresenter.showSetLocationMapActivity(this, restaurant);
+                MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
             default:
                 Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();

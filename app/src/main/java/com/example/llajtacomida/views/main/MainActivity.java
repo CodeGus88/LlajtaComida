@@ -2,7 +2,6 @@ package com.example.llajtacomida.views.main;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +17,9 @@ import com.example.llajtacomida.R;
 import com.example.llajtacomida.interfaces.UserInterface;
 import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.main.MainNavigation;
+import com.example.llajtacomida.presenters.user.AuthUser;
 import com.example.llajtacomida.presenters.user.UserPresenter;
+import com.example.llajtacomida.presenters.user.UserRealTimePresenter;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -43,7 +44,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewUser {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewUser,UserInterface.ViewUserRealTime {
 
     private AppBarConfiguration mAppBarConfiguration;
     // Loginnsilencioso
@@ -51,7 +52,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private Hashtable<String, String> userDataList = new Hashtable<String, String>();
     private ProgressDialog progressDialog;
     private UserPresenter userPresenter;
+    private UserRealTimePresenter userRealTimePresenter;
     private User user;
+    private NavigationView navigationView;
+    private String rol; // Para reinikciar la aplicación  si cambia el rol
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +66,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_plates, R.id.nav_restaurants,
-                R.id.nav_favorit_plates, R.id.nav_favorit_restaurants,
-                R.id.nav_about_us, R.id.nav_users)
-                .setDrawerLayout(drawer)
-                .build();
+            R.id.nav_home, R.id.nav_plates, R.id.nav_restaurants,
+            R.id.nav_favorit_plates, R.id.nav_favorit_restaurants,
+            R.id.nav_about_us, R.id.nav_users)
+            .setDrawerLayout(drawer)
+            .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
@@ -88,7 +92,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .build();
         progressDialog = new ProgressDialog(this);
         // Solo si es administrador mostrará la lista de usuarios
-        navigationView.getMenu().findItem(R.id.nav_users).setVisible(true);
+
+        navigationView.getMenu().findItem(R.id.nav_users).setVisible(false); // de inicio debe estar oculto
     } // End onCreate
 
 
@@ -141,23 +146,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void handleSingInResult(GoogleSignInResult result) {
         if(result.isSuccess()){
             final GoogleSignInAccount account = result.getSignInAccount();
-            saveUser(account);
+            loadDataUser(account);
             NavigationView navigationView =  findViewById(R.id.nav_view);
             View header =  navigationView.getHeaderView(0);
             ImageView ivAvatar = header.findViewById(R.id.ivAvatar);
             TextView tvName = header.findViewById(R.id.tvName);
             TextView tvEmail = header.findViewById(R.id.tvEmail);
-
             if(account.getPhotoUrl() != null){
                 Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             }
-
             userDataList.put("name", account.getGivenName());
             userDataList.put("family_name", account.getFamilyName());
             userDataList.put("email", account.getEmail());
             userDataList.put("phone", "");
             userDataList.put("state", "conectado");
-
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
             ivAvatar.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     logOut(userDataList);
                 }
             });
-
         }else{
             getPregressDialog("USUARIO5", "Cerrando...");
             MainNavigation.showLogin(MainActivity.this);
@@ -174,17 +175,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void saveUser(GoogleSignInAccount account){
+    private void loadDataUser(GoogleSignInAccount account){
         try {
             user = new User(
-                    FirebaseAuth.getInstance().getUid(),
-                    account.getDisplayName(), account.getEmail(),
-                    account.getPhotoUrl().toString(), "user");
+                FirebaseAuth.getInstance().getUid(),
+                account.getDisplayName(),
+                account.getEmail(),
+                account.getPhotoUrl().toString(),
+                "collaborator");
             userPresenter = new UserPresenter(this);
-//            userPresenter.findUser(user.getId());
             userPresenter.findUser(FirebaseAuth.getInstance().getUid());
-
-
+            userRealTimePresenter = new UserRealTimePresenter(this);
+//            userRealTimePresenter.findUser(FirebaseAuth.getInstance().getUid());
         }catch(Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -204,18 +206,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         confirmDialog.setCancelable(false);
         confirmDialog.setPositiveButton("Cerrar Sesión", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-            Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                @Override
-                public void onResult(@NonNull Status status) {
-                    if(status.isSuccess()){
-                        getPregressDialog("USUARIO", "Cerrando...");
-                        MainNavigation.showLogin(MainActivity.this);
-                        progressDialog.dismiss();
-                    }else{
-                        Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+                signOut();
             }
         });
         confirmDialog.setNegativeButton("Vale", new DialogInterface.OnClickListener() {
@@ -224,6 +215,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         });
         confirmDialog.show();
+    }
+
+    private void signOut(){
+        userRealTimePresenter.stopRealtimeDatabase();
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                if(status.isSuccess()){
+                    getPregressDialog("USUARIO", "Cerrando...");
+                    MainNavigation.showLogin(MainActivity.this);
+                    progressDialog.dismiss();
+                }else{
+                    Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void getPregressDialog(String title, String message){
@@ -235,17 +242,75 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void showUser(User user) {
         // Cargar el usuario
-        if(user != null){
-            if(user.getRole() != null && !user.getRole().equals("")){
-                this.user.setRole(user.getRole()); // Mantiene el rol, y no vuelve a darle uno por defecto
+        if (user != null) {
+            try {
+                if (user.getRole() != null) {
+                    if (!user.getRole().equals("")) {
+                        this.user.setRole(user.getRole()); // Mantiene el rol, y no vuelve a darle uno por defecto
+                    }
+                }
+            } catch (Exception e) { // Si no existe el usuario no habrá rol que leer, debe cerrarse la sesión
+                signOut();
+                stopRealtimeDatabase();
             }
         }
-        userPresenter.stopRealtimeDatabase(); // Es necesario parar para hacer el uso del storUser (De otro modo falla)
+        rol = this.user.getRole(); // El rol puede cambiar
+        userPresenter = new UserPresenter(this);
         userPresenter.storeUser(this.user);
+        // inicia el preseentador de usuario en tiempo real
+        userRealTimePresenter.findUser(FirebaseAuth.getInstance().getUid());
+
     }
 
     @Override
     public void showUserList(ArrayList<User> userList) {
-        // No tiene funcionalidad en esta clase
+        // No se usa para este caso
+    }
+
+    @Override
+    public void showUserRT(User user) {
+        AuthUser authUser = new AuthUser(user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
+        if(user.getRole().equalsIgnoreCase("admin")){
+            navigationView.getMenu().findItem(R.id.nav_users).setVisible(true);
+        }else{
+            navigationView.getMenu().findItem(R.id.nav_users).setVisible(false);
+        }
+
+        if(rol.equalsIgnoreCase(user.getRole())){
+            if(!user.getRole().equals("admin") //user.getRole().equals("none") ||
+                    && !user.getRole().equals("collaborator")
+                    && !user.getRole().equals("reader")
+                    && !user.getRole().equals("voter")) {
+                Toast.makeText(this, getString(R.string.accessDeniedMessage), Toast.LENGTH_SHORT).show();
+                try {
+                    signOut();
+                } catch (Exception e) {
+                    MainNavigation.showLogin(this);
+                    Log.e("Error", e.getMessage());
+                }
+                stopRealtimeDatabase();
+                finish();
+            }
+        }else{ // es usuario none
+            stopRealtimeDatabase();
+            rol = user.getRole();
+            Toast.makeText(this, getString(R.string.restartAppMessage), Toast.LENGTH_LONG).show();
+            MainNavigation.accessToApp(this);
+//            finish();
+            this.onDestroy();
+        }
+    }
+
+    @Override
+    public void showReport(String message) {
+        if(message.equalsIgnoreCase("user not found")){
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            signOut();
+        }
+    }
+
+    private void stopRealtimeDatabase(){
+        userPresenter.stopRealtimeDatabase();
+        userRealTimePresenter.stopRealtimeDatabase();
     }
 }

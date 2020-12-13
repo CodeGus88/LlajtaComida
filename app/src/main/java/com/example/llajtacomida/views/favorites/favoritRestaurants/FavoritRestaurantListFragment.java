@@ -75,11 +75,16 @@ public class FavoritRestaurantListFragment extends Fragment implements FavoriteI
 
     @Override
     public void showFavoriteList(ArrayList<Object> objectsList) {
-        for(Object object: objectsList){
-            restaurantList.add((Restaurant) object);
+        try {
+            restaurantList.clear();
+            for(Object object: objectsList){
+                restaurantList.add((Restaurant) object);
+            }
+            arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantList);
+            lvRestaurants.setAdapter(arrayAdapterRestaurant);
+        }catch (Exception e){
+            Log.e("Error", "----------------------------------------------------------------> " + e.getMessage());
         }
-        arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, restaurantList);
-        lvRestaurants.setAdapter(arrayAdapterRestaurant);
     }
 
     @Override
@@ -87,8 +92,15 @@ public class FavoritRestaurantListFragment extends Fragment implements FavoriteI
         // No se usa en esta vista
     }
 
+
     @Override
     public void successFul(boolean isSuccess) {
         // Esto no se usa en esta vista
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        favoritePresenter.searchObjectFavoriteList();
     }
 }

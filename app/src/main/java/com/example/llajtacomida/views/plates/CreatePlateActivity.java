@@ -41,7 +41,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_plate);
         // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.platesTitle);
+        getSupportActionBar().setTitle(R.string.plates_title);
 //        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

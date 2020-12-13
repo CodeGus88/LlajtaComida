@@ -34,7 +34,7 @@ public class PlateNavegation {
 
     public static void showCropImage(Activity context) {
         CropImage.activity()
-                .setActivityTitle(context.getString(R.string.plateImageCropTitle))
+                .setActivityTitle(context.getString(R.string.plate_image_crop_title))
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setRequestedSize(1023, 700)
                 .setAspectRatio(3, 2)

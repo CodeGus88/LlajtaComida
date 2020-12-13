@@ -21,10 +21,10 @@ import com.example.llajtacomida.models.user.User;
 import com.example.llajtacomida.presenters.rating.ArrayAdapterRating;
 import com.example.llajtacomida.presenters.rating.RatingPresenter;
 import com.example.llajtacomida.presenters.tools.ScreenSize;
+import com.example.llajtacomida.presenters.user.AuthUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public class RatingRecordFragment extends Fragment implements View.OnClickListener, RatingInterface.ViewRating {
 
@@ -97,8 +97,8 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
 
         // campo de texto del dialog
         etExperience = (EditText) viewAlert.findViewById(R.id.etExperience);
-    }
 
+    }
 
     private void saveVote(){
         alertDialog.show();
@@ -113,12 +113,12 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.btnSave:
                 ratingPresenter.saveVote(rbStars.getRating(), etExperience.getText().toString());
-                Toast.makeText(getContext(), getString(R.string.messageEstablish), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.message_establish), Toast.LENGTH_SHORT).show();
                 alertDialog.dismiss();
                 etExperience.setText(null);
                 break;
             default:
-                Toast.makeText(getContext(), getString(R.string.messageInvalidOption), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -130,9 +130,22 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
             lvUserExperiences.setAdapter(arrayAdapterRating);
             ScreenSize.setListViewHeightBasedOnChildrenX(lvUserExperiences);
             rbStars.setEnabled(!userVoteAlready(userList));
+            loadVoterPermission(); // Permisos de votar
         }catch (Exception e){
             Log.e("Error", "----------------------------------------------------------> " + e.getMessage());
         }
+    }
+
+    /**
+     * permisos de los iconos
+     */
+    private void loadVoterPermission(){
+        if((AuthUser.getUser().getRole().equals("admin")
+                || AuthUser.getUser().getRole().equals("collaborator")
+                || AuthUser.getUser().getRole().equals("voter"))
+                && rbStars.isEnabled()){
+            rbStars.setVisibility(View.VISIBLE);
+        }else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
     }
 
     private boolean userVoteAlready(ArrayList<User> userList){
@@ -151,6 +164,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         }
         return userVoteAlready;
     }
+
 
     public void stopRealtimeDatabase(){
         ratingPresenter.stopRealtimeDatabase();

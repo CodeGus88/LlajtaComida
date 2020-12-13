@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.rating.RatingModel;
 import com.example.llajtacomida.models.user.User;
+import com.example.llajtacomida.presenters.user.AuthUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
             rbUserVote.setRating(Float.parseFloat(row.get("punctuation")));
             tvDate.setText(row.get("date"));
             tvExperience.setText(row.get("experience"));
-            if(user.getId().equals(FirebaseAuth.getInstance().getUid()) && true){ // Solo si es el autor u el administrador
+            if(user.getId().equals(FirebaseAuth.getInstance().getUid()) || AuthUser.getUser().getRole().equals("admin")){ // Solo si es el autor u el administrador
                 btnDelete.setVisibility(View.VISIBLE);
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,7 +83,6 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
                     }
                 });
             }
-
         }catch (Exception e){
             e.printStackTrace();
         }

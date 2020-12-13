@@ -1,5 +1,4 @@
 package com.example.llajtacomida.presenters.main;
-
 import android.content.Context;
 import android.content.Intent;
 
@@ -20,5 +19,11 @@ public class MainNavigation {
         context.startActivity(intent);
     }
 
+//    public static void restartAplication(Context context){
+//        Intent i = context.getPackageManager()
+//                .getLaunchIntentForPackage( context.getPackageName());
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(i);
+//    }
 
 }

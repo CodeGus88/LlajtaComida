@@ -48,7 +48,6 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
     private RadioButton rbIsVoter;
     private RadioButton rbIsReader;
     private RadioButton rbIsNone;
-
     private Button btnSave;
     private Button btnCancel;
 
@@ -156,14 +155,14 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
                 alertDialog.dismiss();
                 break;
             case R.id.btnSave:
-                changeUser(user);
+                changeUser();
                 userPresenter.storeUser(user);
                 alertDialog.dismiss();
                 break;
         }
     }
 
-    private User changeUser(User user){
+    private void changeUser(){
         if(rbIsAdmin.isChecked()){
             user.setRole("admin");
         }else if(rbIsCollaborator.isChecked()){
@@ -177,7 +176,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }else{ // Si  no existe por defecto none
             user.setRole("none");
         }
-        return user;
+//        return user;
     }
 
     private void loadRoleInRadioButtons(User user){
@@ -190,8 +189,6 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }else if(user.getRole().equalsIgnoreCase("reader") && !rbIsReader.isChecked()){
             rbIsReader.setChecked(true);
         }else if(user.getRole().equalsIgnoreCase("none") && !rbIsNone.isChecked()){
-            rbIsNone.setChecked(true);
-        }else if(!rbIsNone.isChecked()){ // Por defecto si existe algún error
             rbIsNone.setChecked(true);
         }
     }

@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        getPregressDialog(getString(R.string.titleSigInProgressDialog),  getString(R.string.messageSignInProgressDialog));
+        getPregressDialog(getString(R.string.title_sigIn_progress_dialog),  getString(R.string.message_sign_in_progress_dialog));
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void access(View view) {
-        getPregressDialog(getString(R.string.titleLoadListProgressDialog), getString(R.string.messageLoadListProgressDialog));
+        getPregressDialog(getString(R.string.title_load_list_progress_dialog), getString(R.string.message_load_list_progress_dialog));
         signIn();
     }
 

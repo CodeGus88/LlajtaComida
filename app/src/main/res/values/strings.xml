@@ -23,9 +23,11 @@
 
     <!--    Login   -->
     <string name="title">Iniciar sesión</string>
-    <string name="btnStart">Acceder</string>
+    <string name="btn_start">Acceder</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="content">Bienvenido a Llajta Comida, accede con tu cuenta de Google</string>
+    <string name="accessDeniedMessage">Acceso denegado...</string>
+    <string name="restartAppMessage">Reiniciar aplicación...</string>
 
 
     <!--    ICONOS DEL MENU ACTIONBAR -->
@@ -43,143 +45,143 @@
     <string name="et_search_plates">Buscar platos...</string>
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
-    <string name="etPlateName">Nombre del plato</string>
-    <string name="etPlateIngredients">Ingredientes</string>
-    <string name="etPlateOrigin">Origen</string>
-    <string name="btnPhotoPlate">Cargar una imagen del plato</string>
-
+    <string name="et_plate_name">Nombre del plato</string>
+    <string name="et_plate_ingredients">Ingredientes</string>
+    <string name="et_plate_origin">Origen</string>
+    <string name="btn_photo_plate">Cargar una imagen del plato</string>
 
     <!--  RESTAURANTS  -->
     <string name="title_restaurants_list">Lista de restaurantes</string>
     <string name="search_restaurants">Buscar restaurantes...</string>
     <string name="title_creat_restaurant">Crear restaurante</string>
     <string name="title_edit_restaurant">Editar restaurante</string>
-    <string name="etRestaurantName">Nombre del restaurante</string>
-    <string name="etOwnerName">Nombre del propietario</string>
-    <string name="etAddress">Dirección del restaurante</string>
-    <string name="etPhone">Teléfono</string>
-    <string name="etOriginDesc">Origen y descipción del lugar</string>
-    <string name="btnPhotoRestaurant">Toma una foto frontal del restaurante</string>
+    <string name="et_restaurant_name">Nombre del restaurante</string>
+    <string name="et_owner_name">Nombre del propietario</string>
+    <string name="et_address">Dirección del restaurante</string>
+    <string name="et_phone">Teléfono</string>
+    <string name="et_origin_desc">Origen y descipción del lugar</string>
+    <string name="btn_photo_restaurant">Toma una foto frontal del restaurante</string>
     <!-- Restaurant viewRestlist-->
-    <string name="tvOwner">Propietario</string>
-    <string name="tvPhone">Teléfono(s)</string>
-    <string name="tvAddress">Dirección</string>
-    <string name="tvOriginDesc">Sobre el restaurante</string>
-    <string name="tvMenu">Menú</string>
+    <string name="tv_owner">Propietario</string>
+    <string name="tv_phone">Teléfono(s)</string>
+    <string name="tv_address">Dirección</string>
+    <string name="tv_origin_desc">Sobre el restaurante</string>
+    <string name="tv_menu">Menú</string>
     <!--  menu  -->
-    <string name="tvTitleMenu">Menú del restaurante</string>
-    <string name="tvRestWithPlateTitle">Lista de restaurantes con este plato</string>
+    <string name="tv_title_menu">Menú del restaurante</string>
+    <string name="tv_rest_with_plate_title">Lista de restaurantes con este plato</string>
     <!--  public of  -->
-    <string name="tvPublishOfListTitle">Restaurantes no publicados</string>
-    <string name="btnPublish">Publicar</string>
+    <string name="tv_publish_of_list_title">Restaurantes no publicados</string>
+    <string name="btn_publish">Publicar</string>
     <string name="confirm_message_publish">Se publicará este restaurante, ¿Quieres continuar?</string>
     <string name="confirm_message_publish_of">Se dejará de publicar este restaurante, ¿Quieres continuar?</string>
     <string name="confirm_message_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
     <string name="btn_continue">Continuar</string>
-    <string name="btn_cancel">Cancelar</string>
-    <string name="btnVisit">Visitar</string>
+    <string name="btn_visit">Visitar</string>
+    <string name="btnAuthor">Autor</string>
+    <string name="tvAuthorId">Autor: </string>
 
     <!--    Maps-->
-    <string name="search_Address">Buscar dirección...</string>
-    <string name="tvLatitude">Latitud</string>
-    <string name="tvLongitude">Longitud</string>
-    <string name="tvLatLng">No definido...</string>
-    <string name="markerTitle">Mover</string>
-    <string name="markerSearchDescription">Manten pulsado el marcador</string>
-    <string name="loadPosition">Estableciendo coordenadas...</string>
+    <string name="search_address">Buscar dirección...</string>
+    <string name="tv_latitude">Latitud</string>
+    <string name="tv_longitude">Longitud</string>
+    <string name="tv_lat_lng">No definido...</string>
+    <string name="marker_title">Mover</string>
+    <string name="marker_search_description">Manten pulsado el marcador</string>
+    <string name="load_position">Estableciendo coordenadas...</string>
     <!--    // spinner options-->
-    <string name="itemNormal">Normal</string>
-    <string name="itemHibrid">Híbrido</string>
-    <string name="itemSatellite">Satélite</string>
-    <string name="itemTerrain">Terreno</string>
+    <string name="item_normal">Normal</string>
+    <string name="item_hibrid">Híbrido</string>
+    <string name="item_satellite">Satélite</string>
+    <string name="item_terrain">Terreno</string>
 
     <!-- toolBar titles   -->
-    <string name="platesTitle">Platos</string>
-    <string name="restaurantsTitle">Restaurantes</string>
+    <string name="plates_title">Platos</string>
+    <string name="restaurants_title">Restaurantes</string>
 
 
     <!--  Plate viewRestlist  -->
-    <string name="tvNamePlateView">Nombre del plato</string>
-    <string name="tvIngredientsPlateView">¿Qué ingredientes lleva y cómo se prepara?</string>
-    <string name="tvOriginPlateView">Hablemos un poco de su Origen e Historia</string>
+    <string name="tv_name_plate_view">Nombre del plato</string>
+    <string name="tv_ingredients_plate_view">¿Qué ingredientes lleva y cómo se prepara?</string>
+    <string name="tv_origin_plate_view">Hablemos un poco de su Origen e Historia</string>
 
 
     <!--  Crop image  -->
-    <string name="plateImageCropTitle">Selecciona una imagen del plato</string>
-    <string name="restaurantImageCropTitle">Selecciona una imagen del Restaurante</string>
+    <string name="plate_image_crop_title">Selecciona una imagen del plato</string>
+    <string name="restaurant_image_crop_title">Selecciona una imagen del Restaurante</string>
 
 
-    <string name="loremShort">Lorem Ipsum es simplemente el texto de relleno de las imprentas
+    <string name="lorem_short">Lorem Ipsum es simplemente el texto de relleno de las imprentas
         y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el
         año 1500, cuando un impresor
     </string>
-    <string name="loremLong">Al contrario del pensamiento popular, el texto de Lorem Ipsum no es
+    <string name="lorem_long">Al contrario del pensamiento popular, el texto de Lorem Ipsum no es
         simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del
         año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock,
         un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras.
     </string>
 
     <!--    BUTTONS -->
-    <string name="btnCancel">Cancelar</string>
-    <string name="btnStore">Guardar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_store">Guardar</string>
 
     <!--  No definidos  -->
     <string name="tvUndefined">No definido</string>
     <string name="title_activity_set_location_map">Map</string>
 
     <!--  Login  -->
-    <string name="titleLoadListProgressDialog">BUSCAR</string>
-    <string name="messageLoadListProgressDialog">Cargando lista de usuarios...</string>
+    <string name="title_load_list_progress_dialog">BUSCAR</string>
+    <string name="message_load_list_progress_dialog">Cargando lista de usuarios...</string>
 
-    <string name="titleSigInProgressDialog">ACCESO</string>
-    <string name="messageSignInProgressDialog">Conectando...</string>
+    <string name="title_sigIn_progress_dialog">ACCESO</string>
+    <string name="message_sign_in_progress_dialog">Conectando...</string>
     <string name="welcome">Bienvenido</string>
     <!--    <string name="welcome">ᴮⁱᵉⁿᵛᵉⁿⁱᵈᵒ</string>-->
 
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
-    <string name="etOptionalExperience">Cuentanos tu experiencia (opcional)...</string>
+    <string name="et_optional_experience">Cuentanos tu experiencia (opcional)...</string>
 
 
     <!--  Messages Toast and alerts  -->
-    <string name="messageInvalidOption">Opción inválida...</string>
-    <string name="messageEstablish">Establedido</string>
-    <string name="messageIsFailed">Falló el proceso...</string>
-    <string name="addPlateToFavoriteList">Se agregó a la lista de platos favoritos</string>
-    <string name="removeFromListFavoritePlates">Se quitó de la lista de platos favoritos</string>
-    <string name="addRestaurantToFavoriteList">Se agregó a la lista de restaurantes favoritos</string>
-    <string name="removeFromListFavoriteRestaurants">Se quitó de la lista de restaurantes favoritos</string>
+    <string name="message_invalid_option">Opción inválida...</string>
+    <string name="message_establish">Establedido</string>
+    <string name="message_is_failed">Falló el proceso...</string>
+    <string name="add_plate_to_favorite_list">Se agregó a la lista de platos favoritos</string>
+    <string name="remove_from_list_favorite_plates">Se quitó de la lista de platos favoritos</string>
+    <string name="add_restaurant_to_favorite_list">Se agregó a la lista de restaurantes favoritos</string>
+    <string name="remove_from_list_favorite_restaurants">Se quitó de la lista de restaurantes favoritos</string>
 
     <!--  favorits  -->
-    <string name="tvTitlePlateFavoritList">Lista de platos favoritos</string>
-    <string name="tvTitleRestFavoritList">Lista de restaurantes favoritos</string>
+    <string name="tv_title_plate_favorit_list">Lista de platos favoritos</string>
+    <string name="tv_title_rest_favorit_list">Lista de restaurantes favoritos</string>
 
     <!--  USERS  -->
+    <string name="et_search_user">Buscar usuarios</string>
     <string name="tv_user_option_list">Usuarios</string>
-    <string name="tvUserName">Usuario: </string>
-    <string name="tvEmail">Email: </string>
-    <string name="tvRole">Rol: </string>
+    <string name="tv_user_name">Usuario:</string>
+    <string name="tv_email">Email:</string>
+    <string name="tv_role">Rol:</string>
     <!--    Roles -->
-    <string name="rbIsAdmin">Administrador</string>
-    <string name="rbIsCollaborator">Colaborador</string>
-    <string name="rbIsVoter">Votante</string>
-    <string name="rbIsOnlyReader">Lector</string>
-    <string name="rbIsNone">Ninguno</string>
+    <string name="rb_is_admin">Administrador</string>
+    <string name="rb_is_collaborator">Colaborador</string>
+    <string name="rb_is_oter">Votante</string>
+    <string name="rb_is_reader">Lector</string>
+    <string name="rb_is_none">Ninguno</string>
     <!--    buttons-->
     <string name="btn_close">Cerrar</string>
     <string name="btn_save">Guardar</string>
 
-
-
-
-
     <!--    home  -->
+    <string name="tv_welcome">Hola</string>
+    <!--    La frase continua con.....  -->
+    <string name="tv_welcome_continue">, antes de nada te invitamos a conocer más sobre la gastronomía de nuestra Llajta!!!</string>
     <!--    Titles -->
-    <string name="tvPreColonialTitle">Gastronomía Pre Colonial</string>
-    <string name="tvColonialTitle">Gastronomía Colonial</string>
-    <string name="tvRepublicanaTitle">Gastronomía Republicana</string>
+    <string name="tv_pre_colonial_title">Gastronomía Pre Colonial</string>
+    <string name="tv_colonial_title">Gastronomía Colonial</string>
+    <string name="tv_republicana_title">Gastronomía Republicana</string>
     <!--  Content  -->
-    <string name="tvPreColonialContent">
+    <string name="tv_pre_colonial_content">
         En los verdes y fértiles valles de la extensa Q’ochapampa, donde se desarrollaron diversas culturas primitivas como los Cotas, Chuis y Soras, en las que a la llegada del Inca Huayna Capac, se estableció un vasto programa de producción maicera. La misma permite comprender algunas de las características y peculiaridades de la identidad Q’ochala y particularizar las características de la gastronomía.
         \n
         \nLas más de 2000 Qollqas (silos) para el almacenaje de maíz, construidos en 1450 en Cotapachi, al sur del Municipio de Quillacollo, alrededor de la Laguna Cotapachi, son la pauta para comprender los niveles de la producción agrícola de la llajta. Por ello, el maíz se traduce en uno de los productos básicos y emblemáticos de la gastronomía de los q’ochalas en la época pre colonial.
@@ -190,7 +192,7 @@
 
     </string>
 
-    <string name="tvColonialContent">
+    <string name="tv_colonial_content">
         En el Abya Yala; ante la llegada de los españoles, se suscitaron cambios sociales, culturales, políticos y económicos, los que afectaron a la cotidianidad de los habitantes de las fértiles tierras de Q’ochapampa.
         \n
         \nEn cuanto al tema alimenticio, tambien hubo modificaciones en reacción a los procesos para preparar los alimentos. En este proceso de mestizaje, se introdujo en la alimentación el consumo cotidiano de diferentes carnes, como res, cerdo, pollo y cordero, de igual manera el uso de condimentos al momento de cocinar, tales como la pimenta, nuez moscada, azafrán, canela, clavo de olor, azúcar y otros ingredientes como el trigo, cebollas, ajos, perejil, orégano, cilantro, vinagres y otros.
@@ -201,7 +203,7 @@
         
     </string>
     
-    <string name="tvRepublicanaContent">
+    <string name="tv_republicana_content">
         Al finalizar la guerra de la independencia; en la que participaron originarios y campesinos andinos, surge la República de Bolivia, pero sin brindar reivindicación socio cultural, política o económica alguna para las poblacionales indígenas.
         \n
         \nLa marcada influencia europea en el pensamiento y sentimiento de los nuevos republicanos, los cambios en las estructuras sociales, políticas, económicas y culturales de las ciudades, también se deja sentir en la gastronomía mestiza y criolla surgida durante la colonia.
@@ -215,7 +217,6 @@
         \nEl Prof. Wilfredo Camacho García (+), reconocido antropólogo, decía “La llajta cochabambina mereció el título de Granero de Bolivia por la exuberante producción de cereales y otros productos en sus diferentes pisos ecológicos”. Este aspecto la hizo merecedora del título de “Capital de la gastronomía boliviana”, por el exquisito sabor e inigualable sazón de las y los cochabambinos en el momento de preparar la variedad de platos en el menú cochabambino.
     </string>
 
-    <string name="tvWelcome">Bienvenido</string>
-<!--    Le sigue la frase.....  -->
-    <string name="tvWelcomeContinue">, antes de nada te invitamos a conocer más sobre la gastronomía de nuestra Llajta!!!</string>
+    <string name="tvId">Identificador</string>
+
 </resources>

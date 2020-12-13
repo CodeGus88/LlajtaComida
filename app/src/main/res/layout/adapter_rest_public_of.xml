@@ -28,6 +28,25 @@
         android:orientation="vertical"
         android:layout_below="@+id/ivImage"
         android:layout_margin="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvId"
+                android:textStyle="bold"
+                android:maxLines="1"/>
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/tvUndefined"/>
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +62,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvOwner"
+                    android:text="@string/tv_owner"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -52,7 +71,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvUndefined"/>
+                    android:text="@string/tvUndefined" />
             </LinearLayout>
 
             <LinearLayout
@@ -65,7 +84,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvPhone"
+                    android:text="@string/tv_phone"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -91,20 +110,21 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvAddress"
+                android:text="@string/tv_address"
                 android:textStyle="bold"/>
             <TextView
-                android:layout_marginTop="5dp"
                 android:id="@+id/tvAddress"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvUndefined"/>
+                android:text="@string/tvUndefined"
+                android:textColor="#3B4CA3"
+                android:textStyle="italic"/>
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -114,7 +134,7 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvOriginDesc"
+                android:text="@string/tv_origin_desc"
                 android:textStyle="bold"/>
             <TextView
                 android:layout_marginTop="5dp"
@@ -124,28 +144,63 @@
                 android:text="@string/tvUndefined"/>
         </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
 
+        <TextView
+            android:id="@+id/tvAuthorId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tvUndefined"
+            android:textSize="9sp"
+            android:textAlignment="textEnd"
+            android:textIsSelectable="true"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/btnPublish"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnPublish"
-        android:layout_alignTop="@+id/ivImage"
-        android:drawableLeft="@drawable/icon_public"
-        android:textColor="#fff"
-        android:background="#8BC34A"
-        android:padding="2dp"/>
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/delete_icon"
-        android:layout_alignTop="@+id/ivImage"
-        android:layout_alignParentRight="true"
-        android:drawableLeft="@drawable/icon_delete"
-        android:textColor="#fff"
-        android:background="#FF5722"
-        android:padding="2dp"/>
+        android:orientation="horizontal"
+        android:layout_alignBottom="@+id/ivImage"
+        android:layout_alignParentRight="true">
+        <Button
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_publish"
+            android:drawableLeft="@drawable/icon_public"
+            android:textColor="#fff"
+            android:background="#808BC34A"
+            android:padding="2dp"/>
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_icon"
+            android:drawableLeft="@drawable/icon_delete"
+            android:textColor="#fff"
+            android:background="#80FF5722"
+            android:padding="2dp"/>
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_icon"
+            android:drawableLeft="@drawable/icon_edit"
+            android:textColor="#fff"
+            android:background="#80FF9800"
+            android:padding="2dp"/>
+        <Button
+            android:id="@+id/btnAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btnAuthor"
+            android:drawableLeft="@drawable/user_icon"
+            android:textColor="#fff"
+            android:background="#80303030"
+            android:padding="2dp"/>
+    </LinearLayout>
 
 </RelativeLayout>

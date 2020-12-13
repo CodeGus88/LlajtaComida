@@ -48,7 +48,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_edit_plate);
 
         //Configiración del boton atrás
-        getSupportActionBar().setTitle(R.string.platesTitle);
+        getSupportActionBar().setTitle(R.string.plates_title);
 //        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

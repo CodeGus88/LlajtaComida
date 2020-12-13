@@ -41,7 +41,7 @@ public class RestaurantNavegation {
 
     public static void showCropImage(Activity context) {
         CropImage.activity()
-            .setActivityTitle(context.getString(R.string.restaurantImageCropTitle))
+            .setActivityTitle(context.getString(R.string.restaurant_image_crop_title))
             .setGuidelines(CropImageView.Guidelines.ON)
             .setRequestedSize(1023, 700)
             .setAspectRatio(3, 2)

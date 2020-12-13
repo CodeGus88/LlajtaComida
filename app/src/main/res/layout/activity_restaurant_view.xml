@@ -153,7 +153,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/tvOwner"
+                            android:text="@string/tv_owner"
                             style="@style/CodeFontContentTitle"/>
                         <com.firebase.ui.auth.ui.phone.SpacedEditText
                             android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/tvPhone"
+                            android:text="@string/tv_phone"
                             style="@style/CodeFontContentTitle"/>
                         <com.firebase.ui.auth.ui.phone.SpacedEditText
                             android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tvAddress"
+                        android:text="@string/tv_address"
                         style="@style/CodeFontContentTitle"/>
                     <Space
                         android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/tvOriginDesc"
+                        android:text="@string/tv_origin_desc"
                         style="@style/CodeFontContentTitle"/>
                     <Space
                         android:layout_width="match_parent"
@@ -268,7 +268,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp"
-                        android:text="@string/tvMenu"
+                        android:text="@string/tv_menu"
                         style="@style/CodeFontContentTitle"/>
                     <!--                    android:layout_toLeftOf="@+id/btnMenuEdit"-->
 
@@ -298,7 +298,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginHorizontal="10dp"
-                android:text="@string/btnVisit"
+                android:text="@string/btn_visit"
                 android:background="@drawable/btn_continue"
                 android:textColor="#fff"
                 android:paddingLeft="15dp"

@@ -42,8 +42,7 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_favorit_plates_list, container, false);
         plateList = new ArrayList<Plate>();
@@ -81,11 +80,16 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
 
     @Override
     public void showFavoriteList(ArrayList<Object> objectsList) {
-        for(Object object: objectsList){
-            plateList.add((Plate) object);
+        try{
+            plateList.clear();
+            for(Object object: objectsList){
+                plateList.add((Plate) object);
+            }
+            arrayAdapterPlate=  new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, plateList);
+            lvPlates.setAdapter(arrayAdapterPlate);
+        }catch (Exception e){
+            Log.e("Error", "-------------------------------------------> " + e.getMessage());
         }
-        arrayAdapterPlate=  new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, plateList);
-        lvPlates.setAdapter(arrayAdapterPlate);
     }
 
     @Override
@@ -96,5 +100,11 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
     @Override
     public void successFul(boolean isSuccess) {
         // No se usa
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        favoritePresenter.searchObjectFavoriteList();
     }
 }

@@ -44,7 +44,7 @@
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="@string/etPlateName"/>
+                        android:hint="@string/et_plate_name"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:elegantTextHeight="true"
-                        android:hint="@string/etPlateIngredients"
+                        android:hint="@string/et_plate_ingredients"
                         android:gravity="left"/>
 <!--                    android:layout_height="150dp"-->
 
@@ -77,7 +77,7 @@
                         android:id="@+id/etOrigin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/etPlateOrigin"
+                        android:hint="@string/et_plate_origin"
                         android:layout_marginTop="10dp"
                         android:gravity="left"/>
 
@@ -102,7 +102,7 @@
                             android:id="@+id/btnSelectPhoto"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/btnPhotoPlate"
+                            android:text="@string/btn_photo_plate"
                             android:background="#00FFFFFF"
                             android:gravity="fill"
                             android:textAllCaps="false"
@@ -162,7 +162,7 @@
                         android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="@string/btnCancel"
+                        android:text="@string/btn_cancel"
                         android:textColor="#fff"
                         android:background="@drawable/btn_cancel"
                         android:layout_weight="1"/>
@@ -171,7 +171,7 @@
                         android:id="@+id/btnUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:text="@string/btnStore"
+                        android:text="@string/btn_store"
                         android:layout_weight="1"
                         android:textColor="#fff"
                         android:background="@drawable/btn_continue"/>

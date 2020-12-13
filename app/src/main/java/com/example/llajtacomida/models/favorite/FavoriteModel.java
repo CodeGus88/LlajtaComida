@@ -21,7 +21,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
 
     private final FavoriteInterface.PresenterFavorite presenterFavorite;
     private final String userId, nodeCollectionName, favoritesNode;
-    private final DatabaseReference databaseReference;
+    private final DatabaseReference databaseReference; // es necesario varias referencias para actualizar cambios en las dos listas
     private final ArrayList<String> favoriteList;
     private final ArrayList<Object> favoriteObjectList;
 
@@ -30,6 +30,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
         this.userId = userId;
         this.nodeCollectionName = nodeCollectionName;
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
         // será necesario saber el nodo de favoritos para listas los platos
         if(nodeCollectionName.equals("plates")){
             favoritesNode = "favorite_plates";
@@ -48,6 +49,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
         this.objectId = objectId;
         databaseReference.child("App").child("users").child(userId).child(favoritesNode).child(objectId).addValueEventListener(this);
     }
+
     @Override
     public void searchObjectFavoriteList() {
         databaseReference.child("App").child("users").child(userId).child(favoritesNode).addValueEventListener(this);
@@ -72,7 +74,8 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
 
     @Override
     public void removeObjectFavorite(String objectId) {
-        databaseReference.child("App").child("users").child(userId).child(favoritesNode).child(objectId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("App").child("users").child(userId).child(favoritesNode).child(objectId).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 successFul(task.isSuccessful());
@@ -88,6 +91,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
         if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/"+nodeCollectionName)){
+            favoriteObjectList.clear();
             for(DataSnapshot data : snapshot.getChildren()){
                 if(nodeCollectionName.equals("plates")){
                     if(favoriteList.contains(data.getValue(Plate.class).getId())){
@@ -101,6 +105,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
             }
             presenterFavorite.showFavoriteList(favoriteObjectList);
         }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users/"+userId+"/"+ favoritesNode)){
+            favoriteList.clear();
             for(DataSnapshot data : snapshot.getChildren()){
                 favoriteList.add(data.getValue().toString());
             }
@@ -110,7 +115,6 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
             }else{
                 presenterFavorite.showFavoriteObjectState(false);
             }
-
         }
     }
 

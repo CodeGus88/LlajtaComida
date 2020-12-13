@@ -19,6 +19,9 @@ import com.bumptech.glide.Glide;
 import com.example.llajtacomida.R;
 import com.example.llajtacomida.models.restaurant.Restaurant;
 import com.example.llajtacomida.models.restaurant.RestaurantGestorDB;
+import com.example.llajtacomida.models.user.User;
+import com.example.llajtacomida.presenters.map.MapNavegation;
+import com.example.llajtacomida.views.restaurants.RestaurantPublicOfActivity;
 
 import java.util.ArrayList;
 
@@ -27,7 +30,6 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
     private ArrayList<Restaurant> restaurantListCopy;
     private Context context;
     private int resource;
-
     public ArrayAdapterRestPublicOf(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> objects) {
         super(context, resource, objects);
         this.resource = resource;
@@ -51,9 +53,14 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             TextView tvAddress = (TextView) view.findViewById(R.id.tvAddress);
             TextView tvPhone = (TextView) view.findViewById(R.id.tvPhone);
             TextView tvDescription = (TextView) view.findViewById(R.id.tvRestInformation);
+            TextView tvId = (TextView) view.findViewById(R.id.tvId);
+            TextView tvAuthorId = (TextView) view.findViewById(R.id.tvAuthorId);
+
             // Botones
             Button btnPublish = (Button) view.findViewById(R.id.btnPublish);
             Button btnDelete = (Button) view.findViewById(R.id.btnDelete);
+            Button btnEdit = (Button) view.findViewById(R.id.btnEdit);
+            Button btnAuthor = (Button) view.findViewById(R.id.btnAuthor);
             // Cargar...
             tvTitle.setText(restaurantList.get(position).getName());
             Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivImage);
@@ -61,6 +68,8 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             tvAddress.setText(restaurantList.get(position).getAddress());
             tvPhone.setText(restaurantList.get(position).getPhone());
             tvDescription.setText(restaurantList.get(position).getOriginAndDescription());
+            tvId.setText(restaurantList.get(position).getId());
+            tvAuthorId.setText(context.getString(R.string.tvAuthorId) + " " + restaurantList.get(position).getAuthor());
             // Cargar accion de los botones
             btnPublish.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,6 +82,26 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
                 @Override
                 public void onClick(View v) {
                     deleteRestaurante(restaurantList.get(position));
+                }
+            });
+
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RestaurantNavegation.showEditRestaurantView(context, restaurantList.get(position));
+                }
+            });
+            tvAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MapNavegation.showSetLocationMapActivity(context, restaurantList.get(position));
+                }
+            });
+
+            btnAuthor.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RestaurantPublicOfActivity.loadAuthor(restaurantList.get(position).getAuthor());
                 }
             });
 
