@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:137949933440:android:de50b49ac137e5cd351b65",
+        "mobilesdk_app_id": "1:137949933440:android:62c45abfac41fcca351b65",
         "android_client_info": {
-          "package_name": "com.example.llajtacomida"
+          "package_name": "com.appcocha.llajtacomida"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "137949933440-q90ims5pa2hj1mde2d5544uplm0c64t3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.llajtacomida",
-            "certificate_hash": "1a0511aef06b12a9ed55cd4e7aa1c9143aac0897"
-          }
-        },
         {
           "client_id": "137949933440-gsb5jasutlb5u95oo5h9l18i4q1oqdif.apps.googleusercontent.com",
           "client_type": 3

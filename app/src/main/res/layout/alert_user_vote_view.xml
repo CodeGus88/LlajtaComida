@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp"
+    android:background="#514F4F">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvAvatar"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="0dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="2dp"
+        android:scaleY="1"
+        android:scaleX="1"
+        android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/user_icon"
+            android:layout_marginRight="5dp"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/tvFulName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/cvAvatar"
+        android:hint="@string/tv_undefined"
+        android:textStyle="bold"
+        android:textColor="#fff"/>
+
+    <RatingBar
+        android:id="@+id/rvUserVote"
+        android:numStars="5"
+        android:scaleX="0.3"
+        android:scaleY="0.3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:transformPivotX="0dp"
+        android:layout_toRightOf="@+id/cvAvatar"
+        android:layout_below="@id/tvFulName"
+        style="?android:attr/ratingBarStyleIndicator"/>
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/tv_undefined"
+        android:layout_alignParentRight="true"
+        android:textColor="#fff"/>
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:text="@string/btn_close"
+        android:textColor="#fff"
+        android:textSize="12dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/btn_continue"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvDate"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvAvatar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvExperience"
+                android:layout_marginTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:textSize="12dp"
+                android:hint="@string/tv_text_lorem"
+                android:textColor="#fff"
+                android:justificationMode="inter_word"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

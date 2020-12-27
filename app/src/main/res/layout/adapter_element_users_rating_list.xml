@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/cvAvatar"
-        android:hint="@string/tvUndefined"
+        android:hint="@string/tv_undefined"
         android:textStyle="bold"/>
 
         <RatingBar
@@ -49,7 +49,7 @@
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/tvUndefined"
+            android:hint="@string/tv_undefined"
             android:layout_alignParentRight="true"/>
 
     <TextView
@@ -60,7 +60,9 @@
         android:layout_below="@+id/cvAvatar"
         android:padding="4dp"
         android:justificationMode="inter_word"
-        android:textSize="11dp"/>
+        android:textSize="11dp"
+        android:hint="@string/tv_text_lorem"
+        android:maxLines="2"/>
 
     <ImageButton
         android:id="@+id/btnDelete"

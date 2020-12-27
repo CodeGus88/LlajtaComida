@@ -20,11 +20,11 @@
 
         <item
             android:id="@+id/nav_favorit_plates"
-            android:icon="@drawable/ic_baseline_favorite_24"
+            android:icon="@drawable/icon_star"
             android:title="@string/menu_favorit_plates" />
         <item
             android:id="@+id/nav_favorit_restaurants"
-            android:icon="@drawable/ic_baseline_favorite_24"
+            android:icon="@drawable/icon_star"
             android:title="@string/menu_favorit_restaurants" />
 
         <item

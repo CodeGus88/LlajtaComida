@@ -21,7 +21,7 @@
             android:id="@+id/tvId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tvUndefined"
+            android:text="@string/tv_undefined"
             android:layout_toRightOf="@+id/cvAvatar"
             android:textSize="10dp"
             android:layout_marginLeft="5dp"
@@ -47,7 +47,7 @@
                 android:id="@+id/tvFulName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tvUndefined"
+                android:text="@string/tv_undefined"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"
                 android:textColor="#fff"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:transformPivotX="0dp"
                 android:layout_toRightOf="@+id/cvAvatar"
-                android:text="@string/tvUndefined"
+                android:text="@string/tv_undefined"
                 android:layout_marginLeft="5dp"
                 android:textColor="#fff"
                 android:textIsSelectable="true"/>
@@ -96,7 +96,7 @@
                 android:textAlignment="center"
                 android:layout_marginLeft="5dp"
                 android:justificationMode="inter_word"
-                android:text="@string/tvUndefined"
+                android:text="@string/tv_undefined"
                 android:textColor="#fff"
                 android:textIsSelectable="true"/>
         </LinearLayout>

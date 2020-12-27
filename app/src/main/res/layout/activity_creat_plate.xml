@@ -37,14 +37,17 @@
                 android:id="@+id/tilName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text">
+                android:background="@drawable/edit_text"
+                app:counterEnabled="true"
+                app:counterMaxLength="30">
 
                 <EditText
                     android:id="@+id/etName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="@string/et_plate_name"
-                    android:inputType="textWebEditText"/>
+                    android:inputType="textWebEditText"
+                    android:maxLength="30"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="1500">
 
                 <EditText
                     android:id="@+id/etIngredients"
@@ -61,7 +66,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/et_plate_ingredients"
                     android:gravity="left"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine"
+                    android:maxLength="1500"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="1500">
 
                 <EditText
                     android:id="@+id/etOrigin"
@@ -79,7 +87,8 @@
                     android:hint="@string/et_plate_origin"
                     android:layout_marginTop="10dp"
                     android:gravity="left"
-                    android:inputType="textMultiLine"/>
+                    android:inputType="textMultiLine"
+                    android:maxLength="1500"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,25 +112,37 @@
                         android:drawablePadding="5dp"
                         android:textStyle="italic"
                         android:drawableStart="@drawable/image_icon"/>
-                    <androidx.cardview.widget.CardView
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:scaleY="1"
-                        android:scaleX="1"
-                        android:layout_gravity="center"
+                        android:background="@drawable/edit_text"
+                        android:paddingHorizontal="4dp"
+                        app:placeholderText="@string/tv_photo"
+                        app:placeholderTextColor="#03A9F4"
+                        app:hintEnabled="true"
                         android:layout_marginBottom="10dp">
-                        <ImageView
-                            android:id="@+id/ivPhoto"
+                        <androidx.cardview.widget.CardView
+                            app:cardCornerRadius="15dp"
+                            app:cardElevation="0dp"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:background="#B98EABC3"
-                            android:src="@mipmap/image_icon"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:scaleY="1"
+                            android:scaleX="1"
                             android:layout_gravity="center"
-                            android:scaleType="fitXY" />
-                    </androidx.cardview.widget.CardView>
+                            android:layout_marginBottom="10dp">
+                                <ImageView
+                                    android:id="@+id/ivPhoto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:background="#B98EABC3"
+                                    android:src="@mipmap/image_icon"
+                                    android:layout_gravity="center"
+                                    android:scaleType="fitXY" />
+
+                        </androidx.cardview.widget.CardView>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
 
@@ -139,7 +160,8 @@
                     android:text="@string/btn_cancel"
                     android:layout_weight="1"
                     android:background="@drawable/btn_cancel"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:layout_marginRight="2dp"/>
 
                 <Button
                     android:id="@+id/btnStore"
@@ -148,7 +170,8 @@
                     android:text="@string/btn_store"
                     android:layout_weight="1"
                     android:background="@drawable/btn_continue"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:layout_marginLeft="2dp"/>
 
             </LinearLayout>
 

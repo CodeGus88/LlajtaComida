@@ -102,87 +102,95 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilLatLon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/panel_white">
-                    <androidx.cardview.widget.CardView
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        app:cardCornerRadius="100dp"
-                        app:cardElevation="0dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:scaleY="1"
-                        android:scaleX="1"
-                        android:layout_gravity="center">
-                        <ImageButton
-                            android:id="@+id/btnSetLocate"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:scaleType="fitXY"
-                            android:src="@mipmap/map_image"
-                            android:layout_marginHorizontal="50dp"
-                            android:background="@drawable/panel_gray"
-                            android:padding="1dp"
-                            android:foreground="?android:attr/selectableItemBackground"/>
-                    </androidx.cardview.widget.CardView>
-
-                    <!--                Botones de latitud y longitud-->
+                    android:background="@drawable/edit_text"
+                    android:paddingHorizontal="4dp"
+                    app:placeholderText="@string/tv_location"
+                    app:placeholderTextColor="#03A9F4">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_marginBottom="10dp">
-                        <LinearLayout
+                        android:orientation="vertical"
+                        android:background="@drawable/panel_white">
+                        <androidx.cardview.widget.CardView
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            app:cardCornerRadius="100dp"
+                            app:cardElevation="0dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@drawable/edit_text"
-                            android:layout_weight="1"
-                            android:layout_marginRight="2dp"
-                            android:padding="5dp">
-                            <TextView
+                            android:scaleY="1"
+                            android:scaleX="1"
+                            android:layout_gravity="center">
+                            <ImageButton
+                                android:id="@+id/btnSetLocate"
                                 android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:scaleType="fitXY"
+                                android:src="@mipmap/map_image"
+                                android:layout_marginHorizontal="50dp"
+                                android:background="@drawable/panel_gray"
+                                android:padding="1dp"
+                                android:foreground="?android:attr/selectableItemBackground"/>
+                        </androidx.cardview.widget.CardView>
+                        <!--                Botones de latitud y longitud-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginBottom="10dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/tv_latitude"
-                                android:textStyle="bold"
-                                android:textSize="10dp"/>
-                            <TextView
-                                android:id="@+id/tvLatitude"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/tv_lat_lng"
-                                android:textSize="10dp"/>
-                        </LinearLayout>
+                                android:orientation="vertical"
+                                android:background="@drawable/edit_text"
+                                android:layout_weight="1"
+                                android:layout_marginRight="2dp"
+                                android:padding="5dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/tv_latitude"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"/>
+                                <TextView
+                                    android:id="@+id/tvLatitude"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/tv_lat_lng"
+                                    android:textSize="10dp"/>
+                            </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:background="@drawable/edit_text"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="2dp"
-                            android:padding="5dp">
-                            <TextView
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/tv_longitude"
-                                android:textStyle="bold"
-                                android:textSize="10dp"/>
-                            <TextView
-                                android:id="@+id/tvLongitude"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/tv_lat_lng"
-                                android:textSize="10dp"
-                                android:background="@drawable/edit_text"/>
-                        </LinearLayout>
-                </LinearLayout>
-                </LinearLayout>
+                                android:orientation="vertical"
+                                android:background="@drawable/edit_text"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="2dp"
+                                android:padding="5dp">
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/tv_longitude"
+                                    android:textStyle="bold"
+                                    android:textSize="10dp"/>
+                                <TextView
+                                    android:id="@+id/tvLongitude"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/tv_lat_lng"
+                                    android:textSize="10dp"
+                                    android:background="@drawable/edit_text"/>
+                            </LinearLayout>
+                    </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilDescription"
@@ -201,44 +209,61 @@
                         android:maxLines="5"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                    <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginVertical="10dp"
                     android:background="@drawable/edit_text"
                     android:layout_gravity="center">
-                    <Button
-                        android:id="@+id/btnSelectPhoto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/btn_photo_restaurant"
-                        android:background="#00FFFFFF"
-                        android:gravity="fill"
-                        android:textAllCaps="false"
-                        android:drawablePadding="5dp"
-                        android:textStyle="italic"
-                        android:drawableStart="@drawable/image_icon"/>
-                    <androidx.cardview.widget.CardView
-                        app:cardCornerRadius="15dp"
-                        app:cardElevation="0dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:scaleY="1"
-                        android:scaleX="1"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp">
-                        <ImageView
-                            android:id="@+id/ivPhoto"
+                            <Button
+                                android:id="@+id/btnSelectPhoto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/btn_photo_restaurant"
+                                android:background="#00FFFFFF"
+                                android:gravity="fill"
+                                android:textAllCaps="false"
+                                android:drawablePadding="5dp"
+                                android:textStyle="italic"
+                                android:drawableStart="@drawable/image_icon"/>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilImage"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:background="#B98EABC3"
-                            android:src="@mipmap/image_icon"
-                            android:layout_gravity="center"
-                            android:scaleType="fitXY"/>
-                    </androidx.cardview.widget.CardView>
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text"
+                            android:paddingHorizontal="4dp"
+                            app:placeholderText="@string/tv_photo"
+                            app:placeholderTextColor="#03A9F4"
+                            android:layout_marginBottom="10dp">
+                            <androidx.cardview.widget.CardView
+                                app:cardCornerRadius="15dp"
+                                app:cardElevation="0dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:scaleY="1"
+                                android:scaleX="1"
+                                android:layout_gravity="center">
+                                <ImageView
+                                    android:id="@+id/ivPhoto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:background="#B98EABC3"
+                                    android:src="@mipmap/image_icon"
+                                    android:layout_gravity="center"
+                                    android:scaleType="fitXY"/>
+                            </androidx.cardview.widget.CardView>
+                        </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
+                <CheckBox
+                    android:id="@+id/cbPublic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cbPublic"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:checked="false"/>
 
                 <LinearLayout
                     android:layout_marginTop="10dp"
@@ -253,7 +278,8 @@
                         android:text="@string/btn_cancel"
                         android:layout_weight="1"
                         android:background="@drawable/btn_cancel"
-                        android:textColor="#fff"/>
+                        android:textColor="#fff"
+                        android:layout_marginRight="2dp"/>
                     <Button
                         android:id="@+id/btnStore"
                         android:layout_width="match_parent"
@@ -261,10 +287,10 @@
                         android:text="@string/btn_store"
                         android:layout_weight="1"
                         android:background="@drawable/btn_continue"
-                        android:textColor="#fff"/>
+                        android:textColor="#fff"
+                        android:layout_marginLeft="2dp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

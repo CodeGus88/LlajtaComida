@@ -8,7 +8,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tvUndefined"
+        android:text="@string/tv_undefined"
         android:layout_marginTop="10dp"
         android:textSize="20dp"
         android:textAlignment="center"/>
@@ -35,14 +35,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tvId"
+                android:text="@string/tv_id"
                 android:textStyle="bold"
                 android:maxLines="1"/>
             <TextView
                 android:id="@+id/tvId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/tvUndefined"/>
+                android:hint="@string/tv_undefined"/>
         </LinearLayout>
         <Space
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tvUndefined" />
+                    android:text="@string/tv_undefined" />
             </LinearLayout>
 
             <LinearLayout
@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/tvUndefined"/>
+                    android:text="@string/tv_undefined"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -117,7 +117,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvUndefined"
+                android:text="@string/tv_undefined"
                 android:textColor="#3B4CA3"
                 android:textStyle="italic"/>
         </LinearLayout>
@@ -141,7 +141,7 @@
                 android:id="@+id/tvRestInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tvUndefined"/>
+                android:text="@string/tv_undefined"/>
         </LinearLayout>
 
         <Space
@@ -152,7 +152,7 @@
             android:id="@+id/tvAuthorId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/tvUndefined"
+            android:hint="@string/tv_undefined"
             android:textSize="9sp"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"/>

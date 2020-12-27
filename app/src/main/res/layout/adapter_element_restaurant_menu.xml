@@ -28,7 +28,7 @@
         android:id="@+id/tvTitleItem"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:hint="@string/tvUndefined"
+        android:hint="@string/tv_undefined"
         android:textStyle="bold"
         android:textSize="15sp"
         android:layout_alignParentTop="true"
@@ -47,7 +47,7 @@
         android:textSize="10dp"
         android:layout_toRightOf="@+id/cvPhoto"
         android:layout_toLeftOf="@+id/cbSelectItem"
-        android:hint="@string/tvUndefined"/>
+        android:hint="@string/tv_undefined"/>
 
     <CheckBox
         android:id="@+id/cbSelectItem"

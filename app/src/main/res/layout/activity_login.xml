@@ -40,21 +40,21 @@
                     android:scaleType="centerCrop"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title"
-                    android:gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:textSize="20dp"
-                    android:textColor="#7A7A7A"/>
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/title"-->
+<!--                    android:gravity="center"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:textSize="20dp"-->
+<!--                    android:textColor="#7A7A7A"/>-->
 
                 <Button
                     android:onClick="access"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="10dp"
                     android:drawableStart="@mipmap/google_icon"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="10dp"

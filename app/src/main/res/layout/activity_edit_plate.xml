@@ -38,13 +38,17 @@
                     android:id="@+id/tilName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text">
+                    android:background="@drawable/edit_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30">
 
                     <EditText
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:hint="@string/et_plate_name"/>
+                        android:hint="@string/et_plate_name"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="30"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,7 +57,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1500">
 
                     <EditText
                         android:id="@+id/etIngredients"
@@ -61,17 +67,20 @@
                         android:layout_height="wrap_content"
                         android:elegantTextHeight="true"
                         android:hint="@string/et_plate_ingredients"
-                        android:gravity="left"/>
+                        android:gravity="left"
+                        android:maxLength="1500"/>
 <!--                    android:layout_height="150dp"-->
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilOriginAndDescription"
+                    android:id="@+id/tilOrigin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1500">
 
                     <EditText
                         android:id="@+id/etOrigin"
@@ -79,7 +88,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/et_plate_origin"
                         android:layout_marginTop="10dp"
-                        android:gravity="left"/>
+                        android:gravity="left"
+                        android:maxLength="1500"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -165,7 +175,8 @@
                         android:text="@string/btn_cancel"
                         android:textColor="#fff"
                         android:background="@drawable/btn_cancel"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1"
+                        android:layout_marginRight="2dp"/>
 
                     <Button
                         android:id="@+id/btnUpdate"
@@ -174,7 +185,8 @@
                         android:text="@string/btn_store"
                         android:layout_weight="1"
                         android:textColor="#fff"
-                        android:background="@drawable/btn_continue"/>
+                        android:background="@drawable/btn_continue"
+                        android:layout_marginLeft="2dp"/>
 
                 </LinearLayout>
 

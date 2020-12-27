@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/cvAvatar"
-        android:hint="@string/tvUndefined"
+        android:hint="@string/tv_undefined"
         android:textStyle="bold"
         android:layout_marginLeft="5dp"/>
 
@@ -38,7 +38,7 @@
         android:id="@+id/tvId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/tvUndefined"
+        android:hint="@string/tv_undefined"
         android:layout_toRightOf="@+id/cvAvatar"
         android:layout_below="@+id/tvFulName"
         android:textSize="10dp"
@@ -52,7 +52,7 @@
         android:transformPivotX="0dp"
         android:layout_toRightOf="@+id/cvAvatar"
         android:layout_below="@id/tvId"
-        android:hint="@string/tvUndefined"
+        android:hint="@string/tv_undefined"
         android:layout_marginLeft="5dp"/>
 
     <TextView

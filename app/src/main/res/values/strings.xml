@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LlajtaComida</string>
+    <string name="app_name">Llajta Comida</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -26,8 +26,8 @@
     <string name="btn_start">Acceder</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="content">Bienvenido a Llajta Comida, accede con tu cuenta de Google</string>
-    <string name="accessDeniedMessage">Acceso denegado...</string>
-    <string name="restartAppMessage">Reiniciar aplicación...</string>
+    <string name="access_denied_message">Acceso denegado...</string>
+    <string name="restart_app_message">Reiniciar aplicación...</string>
 
 
     <!--    ICONOS DEL MENU ACTIONBAR -->
@@ -63,10 +63,12 @@
     <string name="btn_photo_restaurant">Toma una foto frontal del restaurante</string>
     <!-- Restaurant viewRestlist-->
     <string name="tv_owner">Propietario</string>
-    <string name="tv_phone">Teléfono(s)</string>
+    <string name="tv_phone">Teléfono</string>
     <string name="tv_address">Dirección</string>
     <string name="tv_origin_desc">Sobre el restaurante</string>
+    <string name="tv_photo">Foto</string>
     <string name="tv_menu">Menú</string>
+    <string name="tv_location">Localización</string>
     <!--  menu  -->
     <string name="tv_title_menu">Menú del restaurante</string>
     <string name="tv_rest_with_plate_title">Lista de restaurantes con este plato</string>
@@ -75,11 +77,12 @@
     <string name="btn_publish">Publicar</string>
     <string name="confirm_message_publish">Se publicará este restaurante, ¿Quieres continuar?</string>
     <string name="confirm_message_publish_of">Se dejará de publicar este restaurante, ¿Quieres continuar?</string>
-    <string name="confirm_message_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
+    <string name="confirm_message_restaurant_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
     <string name="btn_continue">Continuar</string>
     <string name="btn_visit">Visitar</string>
     <string name="btnAuthor">Autor</string>
     <string name="tvAuthorId">Autor: </string>
+    <string name="cbPublic">Público</string>
 
     <!--    Maps-->
     <string name="search_address">Buscar dirección...</string>
@@ -126,7 +129,7 @@
     <string name="btn_store">Guardar</string>
 
     <!--  No definidos  -->
-    <string name="tvUndefined">No definido</string>
+    <string name="tv_undefined">No definido</string>
     <string name="title_activity_set_location_map">Map</string>
 
     <!--  Login  -->
@@ -141,8 +144,7 @@
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
     <string name="et_optional_experience">Cuentanos tu experiencia (opcional)...</string>
-
-
+    
     <!--  Messages Toast and alerts  -->
     <string name="message_invalid_option">Opción inválida...</string>
     <string name="message_establish">Establedido</string>
@@ -151,6 +153,40 @@
     <string name="remove_from_list_favorite_plates">Se quitó de la lista de platos favoritos</string>
     <string name="add_restaurant_to_favorite_list">Se agregó a la lista de restaurantes favoritos</string>
     <string name="remove_from_list_favorite_restaurants">Se quitó de la lista de restaurantes favoritos</string>
+    <string name="title_confirm_message">Nota</string>
+    <string name="confirm_message">gracias por confiar en nosotros!
+        \n\nLos administradores verificarán la información ingresada.
+        \n\ndebes estar atento, es posible que se pongan en contacto contigo</string>
+    <string name="message_store_complete">Se almacenó correctamete</string>
+    <string name="message_store_incomplete">No se pudo almacenar correctamente</string>
+    <string name="message_update_complete">Se actualizó correctamete</string>
+    <string name="message_update_incomplete">No se pudo actualizar correctamente</string>
+    <string name="message_delete_complete">Se eliminó correctamente</string>
+    <string name="message_delete_incomplete">No se eliminó correctamente</string>
+    <string name="message_deleting">Eliminando...</string>
+    <string name="message_uploading">Subiendo...</string>
+    <string name="message_updating">Actualizando...</string>
+    <string name="message_delete_question">Se eliminará permanentemente ¿Quieres continuar?</string>
+    <string name="confirm_title">Confirmar</string>
+    <string name="message_check_the_fields">Error: Veririque los campos</string>
+    <string name="message_record_already_exists">Ya existe un registro con el mismo nombre</string>
+    <string name="message_name_required">El nombre es requerido</string>
+    <string name="message_description_required">El origen es requerido</string>
+    <string name="message_ingredients_required">Los ingredientes son requeridos</string>
+    <string name="message_image_required">La imagen es requerida</string>
+    <string name="message_owner_name_invalid">El nombre del propietario es inválido</string>
+    <string name="message_address_required">La dirección es requerida</string>
+    <string name="message_phone_required">El teléfono es requerido</string>
+    <string name="message_phone_invalid">El teléfono es inválido</string>
+    <string name="message_coordinates_required">Las coordenadas son requeridas</string>
+    <string name="message_searching">Buscando</string>
+    <string name="message_reference_not_found">No se encontró la referencia</string>
+    <string name="message_error">Algo salió mal...</string>
+    <string name="message_check_the_fileds">Revisa los campos...</string>
+    <string name="message_remove">Quitar...</string>
+
+    <!--  Title  -->
+    <string name="title_confirmation">Confirmación</string>
 
     <!--  favorits  -->
     <string name="tv_title_plate_favorit_list">Lista de platos favoritos</string>
@@ -217,6 +253,11 @@
         \nEl Prof. Wilfredo Camacho García (+), reconocido antropólogo, decía “La llajta cochabambina mereció el título de Granero de Bolivia por la exuberante producción de cereales y otros productos en sus diferentes pisos ecológicos”. Este aspecto la hizo merecedora del título de “Capital de la gastronomía boliviana”, por el exquisito sabor e inigualable sazón de las y los cochabambinos en el momento de preparar la variedad de platos en el menú cochabambino.
     </string>
 
-    <string name="tvId">Identificador</string>
+    <string name="tv_id">Identificador</string>
+    <string name="tv_text_lorem">El usuario prefirió no especificarlo
+    \n
+    </string>
+
+
 
 </resources>
