@@ -58,12 +58,12 @@
     <string name="et_restaurant_name">Nombre del restaurante</string>
     <string name="et_owner_name">Nombre del propietario</string>
     <string name="et_address">Dirección del restaurante</string>
-    <string name="et_phone">Teléfono</string>
+    <string name="et_phone">Teléfonos</string>
     <string name="et_origin_desc">Origen y descipción del lugar</string>
     <string name="btn_photo_restaurant">Toma una foto frontal del restaurante</string>
     <!-- Restaurant viewRestlist-->
     <string name="tv_owner">Propietario</string>
-    <string name="tv_phone">Teléfono</string>
+    <string name="tv_phone">☎ Teléfonos</string>
     <string name="tv_address">Dirección</string>
     <string name="tv_origin_desc">Sobre el restaurante</string>
     <string name="tv_photo">Foto</string>
@@ -176,8 +176,8 @@
     <string name="message_image_required">La imagen es requerida</string>
     <string name="message_owner_name_invalid">El nombre del propietario es inválido</string>
     <string name="message_address_required">La dirección es requerida</string>
-    <string name="message_phone_required">El teléfono es requerido</string>
-    <string name="message_phone_invalid">El teléfono es inválido</string>
+    <string name="message_phone_required">El campo teléfono es requerido</string>
+    <string name="message_phone_invalid">El campo teléfono es inválido \nej.(4XXXXXX,7XXXXXXX,6XXXXXXX)</string>
     <string name="message_coordinates_required">Las coordenadas son requeridas</string>
     <string name="message_searching">Buscando</string>
     <string name="message_reference_not_found">No se encontró la referencia</string>
@@ -257,7 +257,5 @@
     <string name="tv_text_lorem">El usuario prefirió no especificarlo
     \n
     </string>
-
-
 
 </resources>

@@ -66,18 +66,15 @@ public class Validation {
 
         boolean isPhone = true;
         for(String number : phoneList){
-            Log.println(150, "printX", "----------------------------------------> " +number);
             if(number.length() == 7){ // Si es teléfono 7 dígitos
                 if(number.charAt(0) == '4'){
                     isPhone &= true;
-                    Log.println(150, "printX", number + " es teléfono" );
                 }else{
                     isPhone &= false;
                 }
             }else if(number.length() == 8){ // Si es celular u8 dígitos
                 if(number.charAt(0) == '7' || number.charAt(0) == '6'){
                     isPhone &= true;
-                    Log.println(150, "printX", number + " es movil" );
                 }else{
                     isPhone &= false;
                 }
@@ -85,7 +82,6 @@ public class Validation {
                 isPhone &= false;
             }
         }
-        Log.println(150, "printX",  "-------------------> " +  isPhone);
         return isPhone;
     }
 

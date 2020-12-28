@@ -337,7 +337,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             this.restaurant = restaurant;
             tvName.setText(restaurant.getName());
             tvOwnerName.setText(restaurant.getOwnerName());
-            tvPhone.setText(restaurant.getPhone());
+            tvPhone.setText(restaurant.getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
             tvAddress.setText(restaurant.getAddress());
             tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
             Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);

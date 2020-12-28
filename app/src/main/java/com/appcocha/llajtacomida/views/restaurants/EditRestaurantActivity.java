@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
@@ -212,7 +213,8 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
      * Este método escribe el formulario en el objeto
      */
     private void whriteRestaurant() {
-        restaurant.setName(etName.getText().toString());
+//        restaurant.setName(etName.getText().toString());
+        restaurant.setName(Validation.correctText(etName.getText().toString()));
         restaurant.setOwnerName(etOwnerName.getText().toString());
         restaurant.setAddress(etAddress.getText().toString());
         restaurant.setPhone(etPhone.getText().toString());

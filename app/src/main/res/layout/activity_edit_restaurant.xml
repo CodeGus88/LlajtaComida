@@ -36,13 +36,16 @@
                     android:id="@+id/tilName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text">
+                    android:background="@drawable/edit_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50">
                     <EditText
                         android:id="@+id/etName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/et_restaurant_name"
-                        android:inputType="textWebEditText"/>
+                        android:inputType="textWebEditText"
+                        android:maxLength="50"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -50,14 +53,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50">
                     <EditText
                         android:id="@+id/etOwnerName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/et_owner_name"
                         android:gravity="left"
-                        android:inputType="textPersonName"/>
+                        android:inputType="textPersonName"
+                        android:maxLength="50"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -67,7 +73,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="36">
                     <EditText
                         android:id="@+id/etPhone"
                         android:layout_width="match_parent"
@@ -75,7 +83,8 @@
                         android:hint="@string/et_phone"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
-                        android:inputType="phone"/>
+                        android:inputType="phone"
+                        android:maxLength="36"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -87,7 +96,9 @@
                     android:id="@+id/tilAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text">
+                    android:background="@drawable/edit_text"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200">
                     <EditText
                         android:id="@+id/etAddress"
                         android:layout_width="match_parent"
@@ -95,7 +106,8 @@
                         android:hint="@string/et_address"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
-                        android:inputType="textWebEditText"/>
+                        android:inputType="textWebEditText"
+                        android:maxLength="200"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <Space
                     android:layout_width="match_parent"
@@ -195,7 +207,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1500">
                     <EditText
                         android:id="@+id/etOriginAndDescriptiono"
                         android:layout_width="match_parent"
@@ -204,7 +218,8 @@
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="textMultiLine"
-                        android:maxLines="5"/>
+                        android:maxLines="5"
+                        android:maxLength="1500"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout

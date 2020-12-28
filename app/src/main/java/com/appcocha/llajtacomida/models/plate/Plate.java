@@ -38,7 +38,7 @@ public class Plate extends ObjectParent {
 
     @Override
     public String toString() {
-        return name;
+        return name + " " + ingredients + " " + origin + " " + id + " " + punctuation;
     }
 
     @Exclude

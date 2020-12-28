@@ -42,7 +42,8 @@
                 android:id="@+id/tvId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/tv_undefined"/>
+                android:hint="@string/tv_undefined"
+                />
         </LinearLayout>
         <Space
             android:layout_width="match_parent"

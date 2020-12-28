@@ -61,14 +61,14 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             Button btnEdit = (Button) view.findViewById(R.id.btnEdit);
             Button btnAuthor = (Button) view.findViewById(R.id.btnAuthor);
             // Cargar...
-            tvTitle.setText(restaurantList.get(position).getName());
-            Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivImage);
-            tvOwnerName.setText(restaurantList.get(position).getOwnerName());
-            tvAddress.setText(restaurantList.get(position).getAddress());
-            tvPhone.setText(restaurantList.get(position).getPhone());
-            tvDescription.setText(restaurantList.get(position).getOriginAndDescription());
-            tvId.setText(restaurantList.get(position).getId());
-            tvAuthorId.setText(context.getString(R.string.tvAuthorId) + " " + restaurantList.get(position).getAuthor());
+            if (!restaurantList.get(position).getName().isEmpty()) tvTitle.setText(restaurantList.get(position).getName());
+            if (!restaurantList.get(position).getUrl().isEmpty()) Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivImage);
+            if (!restaurantList.get(position).getOwnerName().isEmpty()) tvOwnerName.setText(restaurantList.get(position).getOwnerName());
+            if (!restaurantList.get(position).getAddress().isEmpty()) tvAddress.setText(restaurantList.get(position).getAddress());
+            if (!restaurantList.get(position).getPhone().isEmpty())tvPhone.setText(restaurantList.get(position).getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
+            if (!restaurantList.get(position).getOriginAndDescription().isEmpty()) tvDescription.setText(restaurantList.get(position).getOriginAndDescription());
+            if (!restaurantList.get(position).getId().isEmpty()) tvId.setText(restaurantList.get(position).getId());
+            if (!restaurantList.get(position).getAuthor().isEmpty()) tvAuthorId.setText(context.getString(R.string.tvAuthorId) + " " + restaurantList.get(position).getAuthor());
             // Cargar accion de los botones
             btnPublish.setOnClickListener(new View.OnClickListener() {
                 @Override

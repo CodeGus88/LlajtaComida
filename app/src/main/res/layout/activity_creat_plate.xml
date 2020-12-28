@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text"
                 app:counterEnabled="true"
-                app:counterMaxLength="30">
+                app:counterMaxLength="50">
 
                 <EditText
                     android:id="@+id/etName"
@@ -47,7 +47,7 @@
                     android:layout_height="50dp"
                     android:hint="@string/et_plate_name"
                     android:inputType="textWebEditText"
-                    android:maxLength="30"/>
+                    android:maxLength="50"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

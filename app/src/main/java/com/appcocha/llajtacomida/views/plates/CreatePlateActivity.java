@@ -20,6 +20,7 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.ByteArrayOutputStream;
@@ -87,38 +88,10 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
 
     private void storePlate() throws InterruptedException {
-        String name = etName.getText().toString();
+//        String name = etName.getText().toString();
+        String name = Validation.correctText(etName.getText().toString());
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
-
-        textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
-        textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
-        textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
-        textInputLayoutImage = (TextInputLayout) findViewById(R.id.tilImage);
-
-//        if(Validation.isNotEmpty(name) ){
-//            textInputLayoutName.setError(null);
-//            if(Validation.isNotEmpty(ingredients)){
-//                textInputLayoutIngredients.setError(null);
-//                if(Validation.isNotEmpty(origin)){
-//                    textInputLayoutOrigin.setError(null);
-//                    if(thumb_byte != null){
-////                        Toast.makeText(this, getString(R.string.message_uploading), Toast.LENGTH_LONG).show();
-//                        progressDialog.show();
-//                        Plate plate = new Plate();
-//                        plate.setName(name);
-//                        plate.setIngredients(ingredients);
-//                        plate.setOrigin(origin);
-////                        PlateModelManager platesDataBase = new PlateModelManager(this, plate, thumb_byte);
-//                        presenterPlateManager.store(plate, thumb_byte);
-////                        platesDataBase.storePlate();
-//
-//                    }else Toast.makeText(this, "La imagen es obligatoria", Toast.LENGTH_SHORT).show();
-//                }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();
-//            } else  textInputLayoutIngredients.setError("El campo ingredientes es obligatorio"); // etIngredients.setError("El campo ingredientes es obligatorio"); // Toast.makeText(this, "El campo ingredientes es obligatorio", Toast.LENGTH_SHORT).show();
-//        }else textInputLayoutName.setError("El campo nombre es obligatorio"); // etName.setError("El campo nombre es obligatorio"); //Toast.makeText(this, "El campo nombre es obligatorio", Toast.LENGTH_SHORT).show();
-
-
 
         progressDialog.show();
         Plate plate = new Plate();
@@ -171,7 +144,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         etName = (EditText) findViewById(R.id.etName);
         etIngredients = (EditText) findViewById(R.id.etIngredients);
         etOrigin = (EditText) findViewById(R.id.etOrigin);
-
+        initTextInputLayout();
         Display display = getWindowManager().getDefaultDisplay();
         int x= (int) (ScreenSize.getWidth(display)*0.855);
         int y = (int) (x*0.6666667);
@@ -185,6 +158,13 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setMessage(getString(R.string.message_uploading));
+    }
+
+    private void initTextInputLayout(){
+        textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
+        textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
+        textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
+        textInputLayoutImage = (TextInputLayout) findViewById(R.id.tilImage);
     }
 
     /**

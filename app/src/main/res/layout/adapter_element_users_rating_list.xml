@@ -62,7 +62,8 @@
         android:justificationMode="inter_word"
         android:textSize="11dp"
         android:hint="@string/tv_text_lorem"
-        android:maxLines="2"/>
+        android:maxLines="2"
+        android:ellipsize="end"/>
 
     <ImageButton
         android:id="@+id/btnDelete"

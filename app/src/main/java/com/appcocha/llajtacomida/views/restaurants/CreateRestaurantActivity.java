@@ -198,11 +198,8 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     }
 
     private void storeRestaurant(){
-//        Toast.makeText(this, getString(R.string.message_uploading), Toast.LENGTH_LONG).show();
         progressDialog.show();
         whriteRestaurant();
-//            RestaurantGestorDB platesDataBase = new RestaurantGestorDB(this, restaurant, thumb_byte);
-//            platesDataBase.storeRestaurant();
         restaurantManagerPresenter.store(restaurant, thumb_byte);
     }
 
@@ -210,7 +207,8 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
      * Este método escribe el formulario en el objeto
      */
     private void whriteRestaurant() {
-        restaurant.setName(etName.getText().toString());
+//        restaurant.setName(etName.getText().toString());
+        restaurant.setName(Validation.correctText(etName.getText().toString()));
         restaurant.setOwnerName(etOwnerName.getText().toString());
         restaurant.setAddress(etAddress.getText().toString());
         restaurant.setPhone(etPhone.getText().toString());

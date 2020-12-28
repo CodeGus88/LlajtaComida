@@ -42,16 +42,16 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     private EditText etSearch;
     // user alert
     private static AlertDialog userAlertDialog;
-    private static ImageView ivAvatar;
-    private static TextView tvId;
-    private static TextView tvFulName;
-    private static TextView tvEmail;
-    private static TextView tvRole;
-    private static RadioButton rbIsAdmin;
-    private static RadioButton rbIsCollaborator;
-    private static RadioButton rbIsVoter;
-    private static RadioButton rbIsReader;
-    private static RadioButton rbIsNone;
+    private ImageView ivAvatar;
+    private TextView tvId;
+    private TextView tvFulName;
+    private TextView tvEmail;
+    private TextView tvRole;
+    private RadioButton rbIsAdmin;
+    private RadioButton rbIsCollaborator;
+    private RadioButton rbIsVoter;
+    private RadioButton rbIsReader;
+    private RadioButton rbIsNone;
     private Button btnSave;
     private Button btnCancel;
     @Override
@@ -110,9 +110,9 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
     }
-    public static AlertDialog getUserAlertDialog(){
-        return userAlertDialog;
-    }
+//    public static AlertDialog getUserAlertDialog(){
+//        return userAlertDialog;
+//    }
 
     @Override
     public void showRestPublicOf(ArrayList<Restaurant> restaurantList) {

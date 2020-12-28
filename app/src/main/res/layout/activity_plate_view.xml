@@ -142,7 +142,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="¿Qué ingredientes lleva y cómo se prepara?"
+                    android:text="@string/tv_ingredients_plate_view"
                     style="@style/CodeFontContentTitle"/>
                 <Space
                     android:layout_width="wrap_content"

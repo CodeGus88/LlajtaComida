@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
@@ -137,7 +138,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Cargar y comprimir el archivo
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -171,45 +171,15 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
 
     private void updatePlate(){
-
-        String name = etName.getText().toString();
+//        String name = etName.getText().toString();
+        String name = Validation.correctText(etName.getText().toString());
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
-
-//        TextInputLayout textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
-//        TextInputLayout textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);
-//        TextInputLayout textInputLayoutOrigin = (TextInputLayout) findViewById(R.id.tilOriginAndDescription);
-
-//        if(Validation.isNotEmpty(name) ){
-//            textInputLayoutName.setError(null);
-//            if(Validation.isNotEmpty(ingredients)){
-//                textInputLayoutIngredients.setError(null);
-//                if(Validation.isNotEmpty(origin)){
-//                    textInputLayoutOrigin.setError(null);
-////                        Toast.makeText(this, getString(R.string.message_updating), Toast.LENGTH_LONG).show();
-//                    progressDialog.show();
-////                        Plate plate = this.plate;
-//                    plate.setName(name);
-//                    plate.setIngredients(ingredients);
-//                    plate.setOrigin(origin);
-////                        PlateModelManager platesDataBase = new PlateModelManager(this, plate, thumb_byte);
-////                        platesDataBase.upDate();
-//                    plateGestorPresenter.update(plate, thumb_byte);
-////                    onBackPressed();
-//                }else textInputLayoutOrigin.setError("El campo origen es obligatorio"); // etOrigin.setError("El campo origen es obligatorio");// Toast.makeText(this, "El campo origen es obligatorio", Toast.LENGTH_SHORT).show();
-//            } else  textInputLayoutIngredients.setError("El campo ingredientes es obligatorio"); // etIngredients.setError("El campo ingredientes es obligatorio"); // Toast.makeText(this, "El campo ingredientes es obligatorio", Toast.LENGTH_SHORT).show();
-//        }else textInputLayoutName.setError("El campo nombre es obligatorio");
-
-//        textInputLayoutOrigin.setError(null);
-//                        Toast.makeText(this, getString(R.string.message_updating), Toast.LENGTH_LONG).show();
-                    progressDialog.show();
-//                        Plate plate = this.plate;
-                    plate.setName(name);
-                    plate.setIngredients(ingredients);
-                    plate.setOrigin(origin);
-//                        PlateModelManager platesDataBase = new PlateModelManager(this, plate, thumb_byte);
-//                        platesDataBase.upDate();
-                    plateGestorPresenter.update(plate, thumb_byte);
+        progressDialog.show();
+        plate.setName(name);
+        plate.setIngredients(ingredients);
+        plate.setOrigin(origin);
+        plateGestorPresenter.update(plate, thumb_byte);
 
     }
 
