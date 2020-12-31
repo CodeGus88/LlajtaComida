@@ -253,7 +253,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
             default:
-                Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
         }
     }
     @Override

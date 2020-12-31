@@ -161,7 +161,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         btnUpdate.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle(getString(R.string.message_updating));
+        progressDialog.setMessage(getString(R.string.message_updating));
         progressDialog.setCancelable(false);
     }
 
@@ -202,10 +202,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
 
     private void updateRestaurant(){
         whriteRestaurant();
-//        Toast.makeText(this, getString(R.string.message_updating), Toast.LENGTH_LONG).show();
         progressDialog.show();
-//        RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(this, restaurant, thumb_byte);
-//        restaurantDataBase.upDate();
         restaurantManagerPresenter.update(restaurant, thumb_byte);
     }
 
@@ -264,9 +261,6 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
 
     @Override
     public void report(ArrayList<Integer> errors) {
-//        progressDialog.dismiss();
-//        Toast.makeText(this, getString(message), Toast.LENGTH_SHORT).show();
-
         progressDialog.dismiss();
         tilName.setError(null);
         tilOwnerName.setError(null);

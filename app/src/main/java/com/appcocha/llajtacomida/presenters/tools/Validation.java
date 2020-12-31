@@ -1,8 +1,4 @@
 package com.appcocha.llajtacomida.presenters.tools;
-
-import android.util.Log;
-import android.widget.Toast;
-
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.plate.PlateList;
 
@@ -15,13 +11,13 @@ public class Validation {
      * @param text
      * @return
      */
-    public static boolean isNotEmpty(String text){
+    public static boolean isEmpty(String text){
         text = Validation.correctText(text);
         text = text.trim();
         if(text.isEmpty()){
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
 

@@ -42,6 +42,12 @@
         android:label="@string/tv_user_option_list"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
 
+    <fragment
+        android:id="@+id/nav_about_us"
+        android:name="com.appcocha.llajtacomida.views.main.AboutUsFragment"
+        android:label="@string/menu_about_us"
+        tools:layout="@layout/fragment_about_us" />
+
     <!--    falta crear sobre nosotros-->
     <!--    <fragment-->
     <!--        android:id="@+id/nav_users"-->

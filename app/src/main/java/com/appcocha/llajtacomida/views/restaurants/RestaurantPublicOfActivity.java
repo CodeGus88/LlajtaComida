@@ -3,6 +3,8 @@ package com.appcocha.llajtacomida.views.restaurants;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,6 +20,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.main.MainNavigation;
+import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.FavoriteInterface;
@@ -109,10 +113,8 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         btnSave = (Button) viewAlert.findViewById(R.id.btnSave);
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+        tvEmail.setOnClickListener(this);
     }
-//    public static AlertDialog getUserAlertDialog(){
-//        return userAlertDialog;
-//    }
 
     @Override
     public void showRestPublicOf(ArrayList<Restaurant> restaurantList) {
@@ -170,6 +172,9 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
                 break;
             case R.id.btnCancel:
                 userAlertDialog.dismiss();
+                break;
+            case R.id.tvEmail:
+                UserNavegation.openMail(this, tvEmail.getText().toString());
                 break;
         }
     }

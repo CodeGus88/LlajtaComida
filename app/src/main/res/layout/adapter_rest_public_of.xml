@@ -11,7 +11,8 @@
         android:text="@string/tv_undefined"
         android:layout_marginTop="10dp"
         android:textSize="20dp"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textIsSelectable="true"/>
 
     <ImageView
         android:id="@+id/ivImage"
@@ -43,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/tv_undefined"
-                />
+                android:textIsSelectable="true"/>
         </LinearLayout>
         <Space
             android:layout_width="match_parent"
@@ -72,7 +73,8 @@
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tv_undefined" />
+                    android:hint="@string/tv_undefined"
+                    android:textIsSelectable="true"/>
             </LinearLayout>
 
             <LinearLayout
@@ -80,21 +82,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_weight="1">
-
                 <TextView
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/tv_phone"
                     android:textStyle="bold"/>
-
                 <TextView
                     android:layout_marginTop="5dp"
                     android:id="@+id/tvPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/tv_undefined"/>
+                    android:hint="@string/tv_undefined"
+                    android:textIsSelectable="true"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -112,15 +113,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_address"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
             <TextView
                 android:id="@+id/tvAddress"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_undefined"
-                android:textColor="#3B4CA3"
-                android:textStyle="italic"/>
+                android:hint="@string/tv_undefined"
+                android:textColor="#673AB7"
+                android:textStyle="italic"
+                android:textIsSelectable="true"/>
         </LinearLayout>
 
         <Space
@@ -142,7 +144,8 @@
                 android:id="@+id/tvRestInformation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_undefined"/>
+                android:hint="@string/tv_undefined"
+                android:textIsSelectable="true"/>
         </LinearLayout>
 
         <Space
@@ -154,7 +157,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/tv_undefined"
-            android:textSize="9sp"
+            android:textSize="10sp"
+            android:textColor="#555555"
             android:textAlignment="textEnd"
             android:textIsSelectable="true"/>
     </LinearLayout>

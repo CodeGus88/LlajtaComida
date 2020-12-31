@@ -44,7 +44,8 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, UserInterface.ViewUser,UserInterface.ViewUserRealTime {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+        UserInterface.ViewUser,UserInterface.ViewUserRealTime {
 
     private AppBarConfiguration mAppBarConfiguration;
     // Login silencioso
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private User user;
     private NavigationView navigationView;
     private String rol; // Para reinikciar la aplicación  si cambia el rol
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         // Login silencioso
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         googleApiClient = new GoogleApiClient.Builder(this)
@@ -154,14 +157,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             ImageView ivAvatar = header.findViewById(R.id.ivAvatar);
             TextView tvName = header.findViewById(R.id.tvName);
             TextView tvEmail = header.findViewById(R.id.tvEmail);
-            if(account.getPhotoUrl() != null){
-                Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
-            }
             userDataList.put("name", account.getGivenName());
             userDataList.put("family_name", account.getFamilyName());
             userDataList.put("email", account.getEmail());
-            userDataList.put("phone", "");
+//            userDataList.put("phone", account.get);
             userDataList.put("state", "conectado");
+            if(account.getPhotoUrl() != null) Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
             ivAvatar.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     logOut(userDataList);
                 }
             });
-
         }else{
             getPregressDialog("USUARIO5", "Cerrando...");
             MainNavigation.showLogin(MainActivity.this);
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void loadDataUser(GoogleSignInAccount account){
         try {
             String role;
-            if(account.getId().equalsIgnoreCase("105708453298523886510")) role = "admin";
+            if(account.getId().equalsIgnoreCase(getString(R.string.user_id_admin_default))) role = "admin";
             else role =  "collaborator";
             user = new User(
                 FirebaseAuth.getInstance().getUid(),
@@ -203,19 +203,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      */
     private void logOut(Hashtable<String, String> user){
         AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-        confirmDialog.setTitle("INFORMACIÓN DEL USUARIO");
+        confirmDialog.setTitle(getString(R.string.user_information));
         confirmDialog.setMessage(
-                            "Nombre: " + user.get("name")
-                        + "\nApellidos: " + user.get("family_name")
-                        + "\nEmail: " + user.get("email")
-                        + "\nEstado: " + user.get("state"));
+                            getString(R.string.tv_user_name)+" " + user.get("name")
+                        + "\n" +getString(R.string.tv_user_fast_name)+" "+ user.get("family_name")
+                        + "\n"+getString(R.string.tv_email)+ " "+ user.get("email")
+                        + "\n"+getString(R.string.tv_state)+ " " + user.get("state"));
         confirmDialog.setCancelable(false);
-        confirmDialog.setPositiveButton("Cerrar Sesión", new DialogInterface.OnClickListener() {
+        confirmDialog.setPositiveButton(getString(R.string.btn_sign_out), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 signOut();
             }
         });
-        confirmDialog.setNegativeButton("Vale", new DialogInterface.OnClickListener() {
+        confirmDialog.setNegativeButton(getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
 //               Toast.makeText(MainActivity.this, "Cancelaste", Toast.LENGTH_SHORT).show();
             }
@@ -229,11 +229,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onResult(@NonNull Status status) {
                 if(status.isSuccess()){
-                    getPregressDialog("USUARIO", "Cerrando...");
+                    getPregressDialog(getString(R.string.tv_user_title), getString(R.string.message_clossing));
                     MainNavigation.showLogin(MainActivity.this);
                     progressDialog.dismiss();
                 }else{
-                    Toast.makeText(MainActivity.this, "Algo salió mal", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
                 }
             }
         });

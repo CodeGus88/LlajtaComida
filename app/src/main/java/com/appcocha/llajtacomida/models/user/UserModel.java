@@ -43,8 +43,12 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
      */
     @Override
     public void storeUser(User user) {
-        this.user = user;
-        databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
+        try{
+            this.user = user;
+            databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
+        }catch(Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
     @Override

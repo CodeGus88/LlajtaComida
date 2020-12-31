@@ -64,6 +64,7 @@ public class ArrayAdapterUser extends ArrayAdapter<User> {
             }else if(userList.get(position).getRole().equalsIgnoreCase("none")){
                 tvRole.setTextColor(Color.RED);
             }
+
         }catch(Exception e){
             Log.e("Error: ", e.getMessage());
         }

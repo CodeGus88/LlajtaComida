@@ -2,7 +2,6 @@ package com.appcocha.llajtacomida.views.plates;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -26,7 +24,6 @@ import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -90,9 +87,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
         initTextInputLayout();
 
-//        Display display = getWindowManager().getDefaultDisplay();
-//        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
-//        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
         Display display = getWindowManager().getDefaultDisplay();
         int x= (int) (ScreenSize.getWidth(display)*0.855);
         int y = (int) (x*0.6666667);
@@ -105,7 +99,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         btnUpdate.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage(getString(R.string.message_uploading));
+        progressDialog.setMessage(getString(R.string.message_updating));
         progressDialog.setCancelable(false);
      }
 

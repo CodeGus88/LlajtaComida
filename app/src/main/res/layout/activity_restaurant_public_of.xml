@@ -15,12 +15,13 @@
         android:textAlignment="center"
         android:fontFamily="serif"
         android:textColor="#353535"
-        android:gravity="center" />
+        android:gravity="center"
+        android:background="#74FFFFFF"/>
     <EditText
         android:id="@+id/etSearch"
         android:layout_below="@+id/tvTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@drawable/edit_text"
         android:paddingVertical="5dp"
         android:paddingHorizontal="10dp"

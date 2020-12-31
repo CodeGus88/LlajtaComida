@@ -29,6 +29,9 @@
     <string name="access_denied_message">Acceso denegado...</string>
     <string name="restart_app_message">Reiniciar aplicación...</string>
 
+    <string name="btn_sign_out">Cerrar se sesión</string>
+    <string name="btn_ok">Vale</string>
+
 
     <!--    ICONOS DEL MENU ACTIONBAR -->
     <string name="add_icon">Agregar</string>
@@ -139,12 +142,11 @@
     <string name="title_sigIn_progress_dialog">ACCESO</string>
     <string name="message_sign_in_progress_dialog">Conectando...</string>
     <string name="welcome">Bienvenido</string>
-    <!--    <string name="welcome">ᴮⁱᵉⁿᵛᵉⁿⁱᵈᵒ</string>-->
 
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
     <string name="et_optional_experience">Cuentanos tu experiencia (opcional)...</string>
-    
+
     <!--  Messages Toast and alerts  -->
     <string name="message_invalid_option">Opción inválida...</string>
     <string name="message_establish">Establedido</string>
@@ -166,7 +168,7 @@
     <string name="message_deleting">Eliminando...</string>
     <string name="message_uploading">Subiendo...</string>
     <string name="message_updating">Actualizando...</string>
-    <string name="message_delete_question">Se eliminará permanentemente ¿Quieres continuar?</string>
+    <string name="message_delete_question">Se eliminará permanentemente \n¿Quieres continuar?</string>
     <string name="confirm_title">Confirmar</string>
     <string name="message_check_the_fields">Error: Veririque los campos</string>
     <string name="message_record_already_exists">Ya existe un registro con el mismo nombre</string>
@@ -184,6 +186,7 @@
     <string name="message_error">Algo salió mal...</string>
     <string name="message_check_the_fileds">Revisa los campos...</string>
     <string name="message_remove">Quitar...</string>
+    <string name="message_clossing">Cerrando...</string>
 
     <!--  Title  -->
     <string name="title_confirmation">Confirmación</string>
@@ -196,8 +199,12 @@
     <string name="et_search_user">Buscar usuarios</string>
     <string name="tv_user_option_list">Usuarios</string>
     <string name="tv_user_name">Usuario:</string>
+    <string name="tv_user_fast_name">Apellidos:</string>
+    <string name="tv_user_title">USUARIO</string>
     <string name="tv_email">Email:</string>
+    <string name="tv_state">Estado:</string>
     <string name="tv_role">Rol:</string>
+    <string name="user_information">INFORMACIÓN DEL USUARIO</string>
     <!--    Roles -->
     <string name="rb_is_admin">Administrador</string>
     <string name="rb_is_collaborator">Colaborador</string>
@@ -208,10 +215,11 @@
     <string name="btn_close">Cerrar</string>
     <string name="btn_save">Guardar</string>
 
+
     <!--    home  -->
     <string name="tv_welcome">Hola</string>
     <!--    La frase continua con.....  -->
-    <string name="tv_welcome_continue">, antes de nada te invitamos a conocer más sobre la gastronomía de nuestra Llajta!!!</string>
+    <string name="tv_welcome_continue">, ¡Antes de nada te invitamos a conocer más sobre la gastronomía de nuestra Llajta!</string>
     <!--    Titles -->
     <string name="tv_pre_colonial_title">Gastronomía Pre Colonial</string>
     <string name="tv_colonial_title">Gastronomía Colonial</string>
@@ -238,7 +246,7 @@
         \nLos requerimientos para contar con productos apropiados para preparar las recetas de la gastronomía de los migrantes llegados a estas tierras, modificó la producción agrícola practicada por los nativos, quienes tuvieron que cultivar nuevas especies y variedades de productos alimenticios.
         
     </string>
-    
+
     <string name="tv_republicana_content">
         Al finalizar la guerra de la independencia; en la que participaron originarios y campesinos andinos, surge la República de Bolivia, pero sin brindar reivindicación socio cultural, política o económica alguna para las poblacionales indígenas.
         \n
@@ -257,5 +265,20 @@
     <string name="tv_text_lorem">El usuario prefirió no especificarlo
     \n
     </string>
+
+
+    <string name="tv_resume_title">Resumen</string>
+    <string name="tv_resume">
+        El objetivo de la aplicación \"Llajta Comida\" es el de realzar una de las cualidades más importantes del departamento de Cochabamba como es la gastronomía,
+        proporcionando a los locales y visitantes de una herramienta para sus dispositivos móviles para que a través de esta, estos cuenten con la información necesaria
+        para que puedan informarse de las opciones en comida y los lugares donde pueden ser encontrados.
+    </string>
+    <string name="tv_credits">Univervidad Mayor de San Simón
+        \nFacultad de Ciencias y Tecnología
+        \nIngeniería de Sistemas</string>
+    <string name="tv_mail">Email: llajta.comida.app@gmail.com</string>
+
+    <!--    Usuario administrador por defecto (ID google) -->
+    <string name="user_id_admin_default">105708453298523886510</string>
 
 </resources>

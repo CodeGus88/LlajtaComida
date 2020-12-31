@@ -127,8 +127,6 @@ public class PlateViewActivity extends AppCompatActivity
 
     private void initPresenters(){
         // iniciando presentadores
-//        presenterUser = new UserPresenter(this);
-//        presenterUser.findUser(FirebaseAuth.getInstance().getUid());
         restListPresenter = new PlateRestListPresenter(this);
         restListPresenter.filterRestaurantListWithPlate(id);
         platePresenter = new PlatePresenter(this);
@@ -207,23 +205,21 @@ public class PlateViewActivity extends AppCompatActivity
 
     private void delete() {
         AlertDialog.Builder confirm = new AlertDialog.Builder(this);
-        confirm.setTitle("Confimación");
-        confirm.setMessage("¿Estás seguro de continuar? \n Se elemininará permanentemente");
+        confirm.setTitle(getString(R.string.confirm_title));
+        confirm.setMessage(getString(R.string.message_delete_question));
         confirm.setCancelable(false);
-        confirm.setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+        confirm.setPositiveButton(getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                PlateManagerModel platesDataBase = new PlateManagerModel(PlateViewActivity.this, plate);
                 Toast.makeText(PlateViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
                 // Antes de eliminar el plato, debemos eliminar todos sus archivos
                 GaleryDatabase galeryDatabase = new GaleryDatabase(PlateViewActivity.this, "plates", plate.getId());
                 galeryDatabase.deleteAllData(); // es un metodo estatico
-//                platesDataBase.delete();
                 plateManagerPresenter.delete(plate.getId());
                 stopRealtimeDatabse();
                 onBackPressed();
             }
         });
-        confirm.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        confirm.setNegativeButton(getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
 //                Toast.makeText(PlateViewActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
             }

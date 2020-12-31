@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
@@ -101,7 +102,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         btnSave = (Button) viewAlert.findViewById(R.id.btnSave);
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
-
+        tvEmail.setOnClickListener(this);
 
         etSearch.addTextChangedListener(new TextWatcher() { // para buscar mientras se escribe
             @Override
@@ -158,6 +159,9 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
                 changeUser();
                 userPresenter.storeUser(user);
                 alertDialog.dismiss();
+                break;
+            case R.id.tvEmail:
+                UserNavegation.openMail(getContext(), tvEmail.getText().toString());
                 break;
         }
     }
