@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +72,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private int height, width;
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
+    private LinearLayout llOwnerName;
     private ArrayAdapterPlate arrayAdapterPlate;
 //    private ArrayList<Image> imagesList;
     private ArrayList<Plate> plateList;
@@ -85,6 +87,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private RatingRecordFragment ratingRecordFragment;
     private FavoriteObjectFragment favoriteObjectFragment;
 
+    // Toast personaliado
+    private Toast toast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,10 +97,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.restaurants_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        imagesList = new ArrayList<Image>();
-//        isAnAdministrator = true;
-//        isAuthor = true;
 
         // Para el tamaño de las imagenes
         Display display = getWindowManager().getDefaultDisplay();
@@ -134,8 +134,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         final String NODE_COLECTION = "restaurants";
         imagePresenter.searchImages(NODE_COLECTION, id);
         restaurantManagerPresenter = new RestaurantManagerPresenter(this);
-
-
     }
 
     private void initAnimation(){
@@ -155,6 +153,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         tvPhone = (TextView) findViewById(R.id.tvPhone);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
         tvOriginAndDescription = (TextView) findViewById(R.id.tvOriginAndDescription);
+        llOwnerName = (LinearLayout) findViewById(R.id.llOwner);
         ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
         ivPhoto.getLayoutParams().width = (int) (width * 0.984); //(int) (width*0.89);//width;
         btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
@@ -175,6 +174,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnMenuEdit.setOnClickListener(this);
         btnVisit.setOnClickListener(this);
         viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
+        tvName.setOnClickListener(this);
+
+        toast = new Toast(this);
     }
 
 
@@ -252,10 +254,36 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.btnVisit:
                 MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
+            case R.id.tvName:
+                pauseResume();
+                break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void pauseResume(){
+        if(viewFlipper.isFlipping()){
+            viewFlipper.stopFlipping();
+            ImageView imageView = new ImageView(this);
+            imageView.setImageResource(R.mipmap.pause);
+            toast.setView(imageView);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            if(viewFlipper.getChildCount() > 1) {
+                viewFlipper.startFlipping();
+                ImageView imageView = new ImageView(this);
+                imageView.setImageResource(R.mipmap.play);
+                toast.setView(imageView);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
+            }else{
+                Toast.makeText(this, getString(R.string.message__not_contain_images), Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -294,15 +322,15 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         confirm.setCancelable(false);
         confirm.setPositiveButton(getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(RestaurantViewActivity.this, restaurant);
-                // Antes de eliminar el plato, debemos eliminar todos sus archivos
-                GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
-                galeryDatabase.deleteAllData(); // es un metodo estatico
+//           RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(RestaurantViewActivity.this, restaurant);
+            // Antes de eliminar el plato, debemos eliminar todos sus archivos
+            GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
+            galeryDatabase.deleteAllData(); // es un metodo estatico
 //                restaurantDataBase.delete();
-                Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
-                restaurantManagerPresenter.delete(restaurant.getId());
-                stopRealtimeDatabase();
-                onBackPressed();
+            Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
+            restaurantManagerPresenter.delete(restaurant.getId());
+            stopRealtimeDatabase();
+            onBackPressed();
 
             }
         });
@@ -335,14 +363,23 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     public void showRestaurant(Restaurant restaurant) {
         try{
             this.restaurant = restaurant;
+            if(!restaurant.getOwnerName().isEmpty()){
+                llOwnerName.setVisibility(View.VISIBLE);
+                tvOwnerName.setText(restaurant.getOwnerName());
+            }else llOwnerName.setVisibility(View.GONE);
             tvName.setText(restaurant.getName());
-            tvOwnerName.setText(restaurant.getOwnerName());
-            tvPhone.setText(restaurant.getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
+            tvPhone.setText(restaurant.getPhone()
+                    .replace(",", " - ")
+                    .replace(".", " - ")
+                    .replace("-", " - ")
+                    .replace(";", " - ")
+                    .replace(":", " - "));
             tvAddress.setText(restaurant.getAddress());
             tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
             Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             tvRating.setText(String.valueOf(decimalFormat.format(restaurant.getPunctuation())));
+            getSupportActionBar().setSubtitle(restaurant.getName());  // subtitulo del toolbar
             changeIcon();
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());

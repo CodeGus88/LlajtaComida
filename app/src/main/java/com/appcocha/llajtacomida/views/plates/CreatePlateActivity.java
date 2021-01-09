@@ -57,6 +57,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.plates_title);
 //        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        getSupportActionBar().setSubtitle(getString(R.string.title_creat_plate));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
@@ -88,8 +89,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
 
     private void storePlate() throws InterruptedException {
-//        String name = etName.getText().toString();
-        String name = Validation.correctText(etName.getText().toString());
+        String name = etName.getText().toString();
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
 

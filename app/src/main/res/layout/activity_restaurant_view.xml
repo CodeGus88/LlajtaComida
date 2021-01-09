@@ -145,6 +145,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
                     <LinearLayout
+                        android:id="@+id/llOwner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -194,7 +195,6 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <!--                El de arriba-->
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>

@@ -201,7 +201,7 @@
             android:id="@+id/btnAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btnAuthor"
+            android:text="@string/btn_author"
             android:drawableLeft="@drawable/user_icon"
             android:textColor="#fff"
             android:background="#80303030"

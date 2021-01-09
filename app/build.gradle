@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'  // Librería para hacer menos código
 //    implementation 'com.google.firebase:firebase-core:17.5.1'
     implementation 'com.google.firebase:firebase-core:18.0.0'
-    implementation 'com.android.support:design:30.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0' // para cargar imagenes a un imageView desde url
 
@@ -63,4 +63,17 @@ dependencies {
 
     // Zoom de imagen
     implementation 'com.zolad:zoominimageview:1.0.0'
+
+
+    // permiso de ubicacion actual
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+
+
+    // rutas
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
 }
+
+

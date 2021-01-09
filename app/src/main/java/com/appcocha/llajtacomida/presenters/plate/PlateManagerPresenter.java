@@ -30,6 +30,7 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
 
     @Override
     public void store(Plate plate, byte[] thumb_byte) {
+        plate.setName(Validation.correctText(plate.getName()));
         if(!Validation.existPlateName(plate.getName()) &&
             !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
             !plate.getIngredients().isEmpty() && thumb_byte != null
@@ -48,6 +49,7 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
 
     @Override
     public void update(Plate plate, final byte [] thumb_byte) {
+        plate.setName(Validation.correctText(plate.getName()));
         if(!Validation.existPlateNameExcludePlateId(plate.getId(), plate.getName()) &&
                 !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
                 !plate.getIngredients().isEmpty()){

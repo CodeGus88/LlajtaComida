@@ -66,7 +66,8 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_edit_restaurant);
         uri = null;
         //Configiración del boton atrás
-        getSupportActionBar().setTitle(R.string.plates_title);
+        getSupportActionBar().setTitle(R.string.restaurants_title);
+        getSupportActionBar().setSubtitle(getString(R.string.title_edit_restaurant));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();

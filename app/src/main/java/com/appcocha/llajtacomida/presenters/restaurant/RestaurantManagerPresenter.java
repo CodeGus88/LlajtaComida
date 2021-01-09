@@ -9,6 +9,7 @@ import com.appcocha.llajtacomida.presenters.tools.Validation;
 import java.util.ArrayList;
 
 public class RestaurantManagerPresenter implements RestaurantInterface.PresenterRestaurantManager {
+
     private RestaurantInterface.ViewRestaurantManager viewRestaurantManager;
     private RestaurantInterface.ModelRestaurantManager modelRestaurantManager;
 
@@ -29,6 +30,8 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
 
     @Override
     public void store(Restaurant restaurant, byte[] thumb_byte) {
+        restaurant.setName(Validation.correctText(restaurant.getName()));
+        restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
                 && (restaurant.getOwnerName().isEmpty() || (!restaurant.getAuthor().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())))
                 && !restaurant.getPhone().isEmpty() && Validation.isPhone(restaurant.getPhone())
@@ -52,6 +55,8 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
 
     @Override
     public void update(Restaurant restaurant, final byte [] thumb_byte) {
+        restaurant.setName(Validation.correctText(restaurant.getName()));
+        restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
                 && (restaurant.getOwnerName().isEmpty() || (!restaurant.getAuthor().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())) )
                 && !restaurant.getPhone().isEmpty() && Validation.isPhone(restaurant.getPhone())

@@ -65,13 +65,13 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images_galery);
 
+
         // Recojer datos de entrada
         nodeCollectionName = getIntent().getStringExtra("nodeCollectionName");
         parentName = getIntent().getStringExtra("parentName");
         parentId = getIntent().getStringExtra("parentId");
-
-        //Configiración del titlo del toolbar y boton atrás
-        getSupportActionBar().setTitle(nodeCollectionName);
+        getSupportActionBar().setTitle(parentName);
+        getSupportActionBar().setSubtitle(getString(R.string.sub_title_images));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         isAnAdministrator = true;
 
@@ -93,15 +93,15 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
     private void initComponents(){
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         gvGalery= (GridView) findViewById(R.id.gvImages);
-        tvTitle.setText("Imágenes de " + parentName);
+        tvTitle.setText(getString(R.string.images_title)+ " " + parentName);
 
         gvGalery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 image = arrayAdapterImagesGalery.getImage(position);
-                addDeleteImage("Imagen", "Id: "+image.getId()
+                addDeleteImage(getString(R.string.image), "Id: "+image.getId()
                         +"\nUrl: " + image.getUrl()
-                        +"\n¿Quitar esta imagen?", "delete", image, "Quitar");
+                        +"\n"+getString(R.string.remove_image), "delete", image, getString(R.string.message_remove));
             }
         });
     }
@@ -158,7 +158,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
                 // Fin del compresor
                 if(thumb_bitmap != null){
                     image = new Image();
-                    addDeleteImage("Agregar", "¿Quiere agregar la imagen recortada?", "add", image, "Agregar");
+                    addDeleteImage(getString(R.string.add_image_title), getString(R.string.add_image_question), "add", image, getString(R.string.add_icon));
                 }
                 thumb_bitmap = null;
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -186,15 +186,15 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
                 String resurceDestination = "images/"+nodeCollectionName+"/"+parentId+"/"+image.getId()+".jpg";
                 GaleryDatabase galeryDatabase = new GaleryDatabase(ImagesActivity.this, nodeCollectionName, parentId, resurceDestination, image, thumb_byte);
                 if(verbo.equalsIgnoreCase("add")){
-                    Toast.makeText(ImagesActivity.this, "Subiendo...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImagesActivity.this, getString(R.string.message_uploading), Toast.LENGTH_SHORT).show();
                     galeryDatabase.uploadData();
                 }else if(verbo.equalsIgnoreCase("delete")){
-                    Toast.makeText(ImagesActivity.this, "Quitando imagen...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ImagesActivity.this, getString(R.string.removing_image), Toast.LENGTH_SHORT).show();
                     galeryDatabase.deleteData();
                 }
             }
         });
-        confirm.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        confirm.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
 //                Toast.makeText(GaleryActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
             }

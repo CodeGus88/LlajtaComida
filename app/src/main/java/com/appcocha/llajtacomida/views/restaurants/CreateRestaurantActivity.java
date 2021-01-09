@@ -74,7 +74,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_create_restaurant);
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.restaurants_title);
-//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+        getSupportActionBar().setSubtitle(getString(R.string.title_creat_restaurant));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initComponents();
         readObjectIntent();
@@ -208,7 +208,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
      */
     private void whriteRestaurant() {
 //        restaurant.setName(etName.getText().toString());
-        restaurant.setName(Validation.correctText(etName.getText().toString()));
+        restaurant.setName(etName.getText().toString());
         restaurant.setOwnerName(etOwnerName.getText().toString());
         restaurant.setAddress(etAddress.getText().toString());
         restaurant.setPhone(etPhone.getText().toString());

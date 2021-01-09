@@ -58,16 +58,19 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private NavigationView navigationView;
     private String rol; // Para reinikciar la aplicación  si cambia el rol
 
-    private Toolbar toolbar;
+    private AuthUser authUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
+        getPregressDialog(getString(R.string.title_alert_init_title), getString(R.string.title_alert_init_message));
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-//        toolbar.setLogo(R.drawable.common_google_signin_btn_icon_dark_focused);
+//        getSupportActionBar().setIcon(R.mipmap.image_icon);
+        toolbar.setSubtitle(getString(R.string.sub_title));
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setVisibility(View.GONE); // inicia en oculto (menu lateral)
@@ -94,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        progressDialog = new ProgressDialog(this);
         // Solo si es administrador mostrará la lista de usuarios
 
         navigationView.getMenu().findItem(R.id.nav_users).setVisible(false); // de inicio debe estar oculto
+
     } // End onCreate
 
 
@@ -122,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        Toast.makeText(getBaseContext(), "Algo salió mal", Toast.LENGTH_SHORT).show();
         Toast.makeText(getBaseContext(), getString(R.string.message_error), Toast.LENGTH_SHORT).show();
     }
 
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
                 public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
-                    handleSingInResult(googleSignInResult);
+                handleSingInResult(googleSignInResult);
                 }
             });
         }
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             userDataList.put("family_name", account.getFamilyName());
             userDataList.put("email", account.getEmail());
 //            userDataList.put("phone", account.get);
-            userDataList.put("state", "conectado");
+            userDataList.put("state", getString(R.string.state));
             if(account.getPhotoUrl() != null) Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
@@ -172,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             });
         }else{
-            getPregressDialog("USUARIO5", "Cerrando...");
+            getPregressDialog(getString(R.string.usersTitle).toUpperCase(), getString(R.string.message_clossing));
             MainNavigation.showLogin(MainActivity.this);
             progressDialog.dismiss();
         }
@@ -192,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             userPresenter = new UserPresenter(this);
             userPresenter.findUser(FirebaseAuth.getInstance().getUid());
             userRealTimePresenter = new UserRealTimePresenter(this);
-//            userRealTimePresenter.findUser(FirebaseAuth.getInstance().getUid());
         }catch(Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -228,13 +229,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
-                if(status.isSuccess()){
-                    getPregressDialog(getString(R.string.tv_user_title), getString(R.string.message_clossing));
-                    MainNavigation.showLogin(MainActivity.this);
-                    progressDialog.dismiss();
-                }else{
-                    Toast.makeText(MainActivity.this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
-                }
+            if(status.isSuccess()){
+                getPregressDialog(getString(R.string.tv_user_title), getString(R.string.message_clossing));
+                MainNavigation.showLogin(MainActivity.this);
+                authUser = null;
+                progressDialog.dismiss();
+                System.exit(0);
+//                onDestroy();
+            }else{
+                Toast.makeText(MainActivity.this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
+            }
             }
         });
     }
@@ -247,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void showUser(User user) {
+        progressDialog.dismiss();
         // Cargar el usuario
         if (user != null) {
             try {
@@ -263,9 +268,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         rol = this.user.getRole(); // El rol puede cambiar
         userPresenter = new UserPresenter(this);
         userPresenter.storeUser(this.user);
-        // inicia el preseentador de usuario en tiempo real
+        // inicia el presentador de usuario en tiempo real
         userRealTimePresenter.findUser(FirebaseAuth.getInstance().getUid());
-
     }
 
     @Override
@@ -275,7 +279,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void showUserRT(User user) {
-        AuthUser authUser = new AuthUser(user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
+        authUser = null;
+        authUser = new AuthUser(user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
         if(user.getRole().equalsIgnoreCase("admin")) navigationView.getMenu().findItem(R.id.nav_users).setVisible(true);
         else navigationView.getMenu().findItem(R.id.nav_users).setVisible(false);
 
@@ -296,11 +301,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             }
         }else{ // es usuario none
             stopRealtimeDatabase();
-            rol = user.getRole();
-            Toast.makeText(this, getString(R.string.restart_app_message), Toast.LENGTH_LONG).show();
             MainNavigation.accessToApp(this);
-//            finish();
-            this.onDestroy();
+//            rol = user.getRole();
+            Toast.makeText(this, getString(R.string.restart_app_message), Toast.LENGTH_LONG).show();
+            authUser = null;
+            System.exit(0);
+//            this.onPause();
+//            this.onStop();
+//            this.finishAffinity();
+//            this.onDestroy();
         }
         navigationView.setVisibility(View.VISIBLE); // Una ves que carga el usuario, ya puede muestrar el menu lateral
     }

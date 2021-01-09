@@ -55,6 +55,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_plate);
+        getSupportActionBar().setSubtitle(getString(R.string.title_edit_plate));
 
         //Configiración del boton atrás
         getSupportActionBar().setTitle(R.string.plates_title);
@@ -166,7 +167,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
     private void updatePlate(){
 //        String name = etName.getText().toString();
-        String name = Validation.correctText(etName.getText().toString());
+        String name = etName.getText().toString();
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
         progressDialog.show();

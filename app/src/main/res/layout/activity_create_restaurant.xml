@@ -274,7 +274,7 @@
                     android:id="@+id/cbPublic"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/cbPublic"
+                    android:text="@string/cb_public"
                     android:layout_marginTop="10dp"
                     android:visibility="gone"
                     android:checked="false"/>

@@ -1,34 +1,66 @@
 package com.appcocha.llajtacomida.views.maps;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
+import com.appcocha.llajtacomida.presenters.tools.RandomColor;
+import com.bumptech.glide.Glide;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
-public class SetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
+import java.text.DecimalFormat;
+
+public class SetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private GoogleMap mMap;
-    private Marker marker;
 
     // Components
     private Spinner spTypesOfMaps;
     private Button btnBack;
+    private LinearLayout llData;
+    private TextView tvRating, tvRestaurantName, tvAddress, tvPhone;
+    private ImageView ivRestaurantImage;
+    private CardView cvImage;
+
+    private Restaurant restaurant;
+
+    private LatLng latLngOrigin, latLngDestination;
+
+    // GPS
+    private final int REQUEST_ACCESS = 1;
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +71,31 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Intent intent = getIntent();
+        if(intent.hasExtra("restaurant")){
+            restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
+        }else{
+            restaurant = new Restaurant();
+        }
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         initComponents();
+
     }
 
+    /**
+     * Inicia todos los componentes
+     */
     private void initComponents(){
         spTypesOfMaps = (Spinner) findViewById(R.id.spTypesOfMaps);
         btnBack = (Button) findViewById(R.id.btnBack);
+        llData = (LinearLayout) findViewById(R.id.llData);
+        tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
+        tvAddress = (TextView) findViewById(R.id.tvAddress);
+        tvPhone = (TextView) findViewById(R.id.tvPhone);
+        tvRating = (TextView) findViewById(R.id.tvRating);
+        cvImage = (CardView) findViewById(R.id.cvImage);
+        ivRestaurantImage = (ImageView) findViewById(R.id.ivRestaurantImage);
         String [] options = {
                 getString(R.string.item_normal),
                 getString(R.string.item_hibrid),
@@ -72,11 +123,30 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
 
             }
         });
+        DecimalFormat decimalFormat = new DecimalFormat("0.0");
+        tvRating.setText(getString(R.string.tv_rating)+": "+String.valueOf(decimalFormat.format(restaurant.getPunctuation()) + "✭"));
+        tvRestaurantName.setText(restaurant.getName());
+        tvAddress.setText(restaurant.getAddress());
+        tvPhone.setText("☎: " + restaurant.getPhone()
+                .replace(",", " - ")
+                .replace(".", " - ")
+                .replace("-", " - ")
+                .replace(";", " - ")
+                .replace(":", " - "));
+        Glide.with(this).load(restaurant.getUrl()).into(ivRestaurantImage);
         spTypesOfMaps.setSelection(1);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        llData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cvImage.getVisibility() == View.VISIBLE){
+                    cvImage.setVisibility(View.GONE);
+                }else cvImage.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -92,18 +162,96 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-    mMap = googleMap;
-        Intent intent = getIntent();
-        Restaurant restaurant;
-        if(intent.hasExtra("restaurant")){
-            restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
-        }else{
-            restaurant = new Restaurant();
+        mMap = googleMap;
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        loadLocations();
+        getPermission();
+    }
+
+    /**
+     * Carga lalocalización del restaurante
+     */
+    private void loadLocations() {
+        latLngDestination = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
+        MarkerOptions markerOptions = new MarkerOptions().position(latLngDestination).title(restaurant.getName()).snippet(restaurant.getAddress());
+        RandomColor randomColor = new RandomColor();
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(randomColor.getRandonColor()));
+        mMap.addMarker(markerOptions);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLngDestination));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngDestination, 15.5f));
+    }
+
+    /**
+     * Verifica si se le proporcionó el permiso de uso de GPS
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_ACCESS) {
+            getPermission();
         }
-        LatLng restaurantLocation = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
-        marker = mMap.addMarker(new MarkerOptions().position(restaurantLocation).title(restaurant.getName()).snippet(getString(R.string.tv_phone) + ": " + restaurant.getPhone()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(restaurantLocation));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(restaurantLocation, 15.5f));
-        mMap.getUiSettings().setZoomControlsEnabled(true); // opciones de zoom del mapa
+    }
+
+    /**
+     * Solicita permiso para el uso de GPS, en caso de no contar con este
+     */
+    private void getPermission(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS);
+            return;
+        }
+        try {
+            mMap.setMyLocationEnabled(true);
+        }catch (Exception e){
+            Toast.makeText(this, getString(R.string.message_gps_disconected), Toast.LENGTH_SHORT).show();
+        }
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() { // Centrar en la ubicación actual
+            @Override
+            public void onSuccess(Location location) {
+            try {
+                if(location != null){
+//                        LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
+                    latLngOrigin = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 9f));
+                    latLngOrigin = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 12f));
+                }
+            }catch (Exception e){
+                Log.e("Error GPS", e.getMessage());
+                Toast.makeText(SetLocationMapActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            }
+        });
+        // Activar GPS
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            startGPS();
+        }
+    }
+
+    /**
+     * Solicita activar el GPS
+     */
+    private void startGPS(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.message_gps_activate))
+                .setTitle(getString(R.string.confirm_title))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.btn_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton(getString(R.string.btn_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
     }
 }

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/marcoPrincipal"
+<LinearLayout android:id="@+id/marcoPrincipal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -40,7 +38,7 @@
                 android:layout_height="25dp"
                 android:background="#B3FF5722"
                 android:padding="0dp"
-                android:text="Volver"
+                android:text="@string/btn_back"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textAlignment="textStart"
@@ -48,39 +46,78 @@
                 android:textSize="14sp"
                 android:autoSizeTextType="none"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="55dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/panel_dark_transparent"
+            android:gravity="center">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginVertical="3dp"
+                app:cardCornerRadius="10dp"
+                android:background="#08FFFFFF"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/ivRestaurantImage"
+                    android:layout_width="130dp"
+                    android:layout_height="86.6dp"
+                    android:src="@drawable/image_icon"/>
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="66.666dp"-->
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/llData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toRightOf="@+id/cvImage"
+                android:paddingHorizontal="8dp"
+                android:layout_weight="10"
+                android:gravity="center">
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tv_undefined"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="10sp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:id="@+id/tvRestaurantName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tv_undefined"
+                    android:textColor="#fff"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tv_undefined"
+                    android:textSize="9sp"
+                    android:textColor="#B9FFFFFF"
+                    android:textStyle="normal"/>
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/tv_undefined"
+                    android:textSize="10sp"
+                    android:textColor="#B9FFFFFF"
+                    android:textStyle="normal"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
-
 </LinearLayout>
-
-
-
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-
-    <!--    <fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--        xmlns:map="http://schemas.android.com/apk/res-auto"-->
-    <!--        xmlns:tools="http://schemas.android.com/tools"-->
-    <!--        android:id="@+id/map"-->
-    <!--        android:name="com.google.android.gms.maps.SupportMapFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        tools:context=".views.mapsViews.GetLocationMapActivity">-->
-
-    <!--        <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:weightSum="10"-->
-    <!--        android:layout_marginHorizontal="50dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:background="@drawable/edit_text_transparent">-->
-    <!--            <SearchView-->
-    <!--                android:id="@+id/searchView"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:queryHint="@string/search_Address"-->
-    <!--                android:iconifiedByDefault="true"-->
-    <!--                android:elevation="5dp"/>-->
-    <!--        </LinearLayout>-->
-    <!--</fragment>-->

@@ -64,6 +64,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         setContentView(R.layout.activity_restaurant_public_of);
 
         getSupportActionBar().setTitle(R.string.restaurants_title);
+        getSupportActionBar().setSubtitle(R.string.sub_title_restaurant_public_of);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();

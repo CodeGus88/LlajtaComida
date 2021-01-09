@@ -16,10 +16,4 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-<!--    Para cambiaar el color de las estrellas-->
-<!--    <style name="RatingBar" parent="Theme.AppCompat">-->
-<!--        <item name="colorControlNormal">#7C7C7C</item>-->
-<!--        <item name="colorControlActivated">#FFEB3B</item>-->
-<!--    </style>-->
-
 </resources>

@@ -43,7 +43,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         // Configuración del boton atrás
-        getSupportActionBar().setTitle(R.string.restaurants_title);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Premisos
@@ -53,12 +53,14 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         Intent intent = getIntent();
         if(intent.hasExtra("restaurant")){
             restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
+            getSupportActionBar().setTitle(restaurant.getName());
+            getSupportActionBar().setSubtitle(R.string.menu);
         }else{
-            Toast.makeText(this, "No se encontró la informacción necesaria", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.not_found), Toast.LENGTH_SHORT).show();
         }
 
         initComponents();
-        tvTitle.setText("Menu de " + restaurant.getName());
+        tvTitle.setText(getString(R.string.menu_title) + " " + restaurant.getName());
 
         // Inicializar el presentador
         setMenuListPresenter = new SetMenuListPresenter(this);
@@ -110,7 +112,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
                 onBackPressed();
                 break;
             default:
-                Log.d("Null", "Ícono desconocido");
+                Log.d("Null", getString(R.string.message_invalid_option));
         }
         return super.onOptionsItemSelected(item);
     }

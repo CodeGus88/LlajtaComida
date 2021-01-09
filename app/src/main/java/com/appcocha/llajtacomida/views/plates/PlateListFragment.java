@@ -3,6 +3,7 @@ package com.appcocha.llajtacomida.views.plates;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -126,7 +127,6 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
             Log.e("Error", "-------------------------------------------------> " + e.getMessage());
         }
-
 
     }
 

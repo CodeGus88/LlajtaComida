@@ -68,7 +68,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             if (!restaurantList.get(position).getPhone().isEmpty())tvPhone.setText(restaurantList.get(position).getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
             if (!restaurantList.get(position).getOriginAndDescription().isEmpty()) tvDescription.setText(restaurantList.get(position).getOriginAndDescription());
             if (!restaurantList.get(position).getId().isEmpty()) tvId.setText(restaurantList.get(position).getId());
-            if (!restaurantList.get(position).getAuthor().isEmpty()) tvAuthorId.setText(context.getString(R.string.tvAuthorId) + " " + restaurantList.get(position).getAuthor());
+            if (!restaurantList.get(position).getAuthor().isEmpty()) tvAuthorId.setText(context.getString(R.string.tv_author_id) + " " + restaurantList.get(position).getAuthor());
             // Cargar accion de los botones
             btnPublish.setOnClickListener(new View.OnClickListener() {
                 @Override

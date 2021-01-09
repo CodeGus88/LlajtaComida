@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+import com.appcocha.llajtacomida.presenters.map.MapNavegation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
@@ -29,7 +29,6 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.image.GaleryDatabase;
 import com.appcocha.llajtacomida.presenters.image.ImagePresenter;
-import com.appcocha.llajtacomida.models.plate.PlateManagerModel;
 import com.appcocha.llajtacomida.presenters.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.plate.PlatePresenter;
@@ -41,16 +40,19 @@ import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.appcocha.llajtacomida.views.favorites.FavoriteObjectFragment;
 import com.appcocha.llajtacomida.views.rating.RatingRecordFragment;
 import com.zolad.zoominimageview.ZoomInImageView;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class PlateViewActivity extends AppCompatActivity
+ /**
+  * Esta clase es la vista de la sección ver plato
+  */
+ public class PlateViewActivity extends AppCompatActivity
     implements View.OnClickListener, PlateInterface.ViewPlate, ImageInterface.ViewImage,
         PlateInterface.ViewRestlist, PlateInterface.ViewPlateManager {
 
     private ZoomInImageView ivPhoto;
-    private TextView tvName, tvIngredients, tvOrigin;
+    private TextView tvName, tvIngredients, tvOrigin, tvTitleRestaurants, tvRestaurantsFound;
+
 
     public static String id;
     private MenuItem iconEdit, iconDelete, iconGalery;
@@ -72,6 +74,7 @@ public class PlateViewActivity extends AppCompatActivity
     private ListView lvRestaurants;
     private ArrayList<Restaurant> restaurantList;
     private TextView tvRating;
+    private ImageButton btnMarkersView;
     // button of favorite
 //    private ImageButton btnFavorite;
 
@@ -85,6 +88,9 @@ public class PlateViewActivity extends AppCompatActivity
     private RatingRecordFragment ratingRecordFragment;
     private FavoriteObjectFragment favoriteObjectFragment;
 
+    // Toast personalizado (pause resume)
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +98,7 @@ public class PlateViewActivity extends AppCompatActivity
         // edit title toolbar
         getSupportActionBar().setTitle(R.string.plates_title);
         // getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
+
         //Configiración del boton atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         restaurantList = new ArrayList<Restaurant>();
@@ -108,7 +115,6 @@ public class PlateViewActivity extends AppCompatActivity
 
         // Agregar fragmento fragment
         initFragments();
-
     }
 
     private void initFragments() {
@@ -153,6 +159,10 @@ public class PlateViewActivity extends AppCompatActivity
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
         tvOrigin = (TextView) findViewById(R.id.tvOrigin);
         tvRating = (TextView) findViewById(R.id.tvRating);
+        btnMarkersView = (ImageButton) findViewById(R.id.btnMarkersView);
+
+        tvTitleRestaurants = (TextView) findViewById(R.id.tvTitleRestaurants);
+        tvRestaurantsFound = (TextView) findViewById(R.id.tvRestaurantsFound);
 
         ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
         ivPhoto.getLayoutParams().width = (int) (width*0.984);
@@ -171,6 +181,10 @@ public class PlateViewActivity extends AppCompatActivity
                 RestaurantNavegation.showRestaurantView(PlateViewActivity.this, restaurantList.get(position).getId());
             }
         });
+        btnMarkersView.setOnClickListener(this);
+        tvName.setOnClickListener(this);
+
+        toast = new Toast(this);
 
     }
 
@@ -184,7 +198,6 @@ public class PlateViewActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         initIconMenu(menu);
-//        presenterUser.findUser(FirebaseAuth.getInstance().getUid());
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -243,7 +256,6 @@ public class PlateViewActivity extends AppCompatActivity
         }
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -259,8 +271,37 @@ public class PlateViewActivity extends AppCompatActivity
                 viewFlipper.setFlipInterval(TIME_ANIMATION); // Para reiniciar tiempo
                 viewFlipper.showPrevious();
                 break;
+            case R.id.btnMarkersView:
+                if(restaurantList.size() > 0) MapNavegation.showSetAllLocationMapActivity(this, plate,restaurantList);
+                else Toast.makeText(this, getString(R.string.message_not_found_restaurants), Toast.LENGTH_LONG).show();
+                break;
+            case R.id.tvName:
+                pauseResume();
+                break;
             default:
-                Toast.makeText(this, "Opción inválida", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void pauseResume(){
+        if(viewFlipper.isFlipping()){
+            viewFlipper.stopFlipping();
+                ImageView imageView = new ImageView(this);
+                imageView.setImageResource(R.mipmap.pause);
+                toast.setView(imageView);
+                toast.setDuration(Toast.LENGTH_SHORT);
+                toast.show();
+        }else{
+            if(viewFlipper.getChildCount() > 1) {
+                viewFlipper.startFlipping();
+                    ImageView imageView = new ImageView(this);
+                    imageView.setImageResource(R.mipmap.play);
+                    toast.setView(imageView);
+                    toast.setDuration(Toast.LENGTH_SHORT);
+                    toast.show();
+            }else{
+                Toast.makeText(this, getString(R.string.message__not_contain_images), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -271,15 +312,16 @@ public class PlateViewActivity extends AppCompatActivity
     @Override
     public void showRestList(ArrayList<Restaurant> list) {
         try {
+            restaurantList.clear();
             restaurantList = list;
             arrayAdapterRestaurant = new ArrayAdapterRestaurant(this, R.layout.adapter_element_list, list);
             lvRestaurants.setAdapter(arrayAdapterRestaurant);
             ScreenSize.setListViewHeightBasedOnChildren(lvRestaurants);
+            tvRestaurantsFound.setText("("+restaurantList.size() + " " +getString(R.string.tv_restaurants_found)+")");
         }catch (Exception e){
             Toast.makeText(this, "Error:", Toast.LENGTH_SHORT).show();
             Log.e("Error", e.getMessage());
         }
-
     }
 
     /**
@@ -296,6 +338,8 @@ public class PlateViewActivity extends AppCompatActivity
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
             tvRating.setText(String.valueOf(decimalFormat.format(plate.getPunctuation())));
             Glide.with(PlateViewActivity.this).load(plate.getUrl()).into(ivPhoto);
+            getSupportActionBar().setSubtitle(plate.getName()); // subtitulo del toolbar
+            tvTitleRestaurants.setText(getString(R.string.tv_rest_with_plate_title) + " \"" + plate.getName() +"\"");
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());
         }
@@ -342,7 +386,6 @@ public class PlateViewActivity extends AppCompatActivity
                     Log.e("Error:", e.getMessage() );
                 }
             }
-
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -368,6 +411,5 @@ public class PlateViewActivity extends AppCompatActivity
     @Override
     public void report(ArrayList<Integer> errors) {
         // no se utiliza para este caso
-//        Toast.makeText(this, getString(message), Toast.LENGTH_SHORT).show();
     }
 }

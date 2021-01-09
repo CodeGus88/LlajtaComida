@@ -19,7 +19,6 @@ import com.appcocha.llajtacomida.models.user.User;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.appcocha.llajtacomida.presenters.user.UserPresenter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 

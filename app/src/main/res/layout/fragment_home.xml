@@ -176,6 +176,18 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="50dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_source"
+                android:textSize="9dp"
+                android:textStyle="italic"
+                android:textColor="#A3A3A3"
+                android:textAlignment="center"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

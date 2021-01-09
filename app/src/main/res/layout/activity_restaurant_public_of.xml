@@ -7,19 +7,8 @@
     android:orientation="vertical"
     android:background="@drawable/list_panel_white_gradient">
 
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:text="@string/tv_publish_of_list_title"
-        android:textAlignment="center"
-        android:fontFamily="serif"
-        android:textColor="#353535"
-        android:gravity="center"
-        android:background="#74FFFFFF"/>
     <EditText
         android:id="@+id/etSearch"
-        android:layout_below="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/edit_text"

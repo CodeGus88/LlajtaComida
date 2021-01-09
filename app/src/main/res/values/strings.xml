@@ -28,6 +28,8 @@
     <string name="content">Bienvenido a Llajta Comida, accede con tu cuenta de Google</string>
     <string name="access_denied_message">Acceso denegado...</string>
     <string name="restart_app_message">Reiniciar aplicación...</string>
+    <string name="title_alert_init_title">INICIO</string>
+    <string name="title_alert_init_message">Cargando...</string>
 
     <string name="btn_sign_out">Cerrar se sesión</string>
     <string name="btn_ok">Vale</string>
@@ -64,17 +66,19 @@
     <string name="et_phone">Teléfonos</string>
     <string name="et_origin_desc">Origen y descipción del lugar</string>
     <string name="btn_photo_restaurant">Toma una foto frontal del restaurante</string>
-    <!-- Restaurant viewRestlist-->
-    <string name="tv_owner">Propietario</string>
-    <string name="tv_phone">☎ Teléfonos</string>
-    <string name="tv_address">Dirección</string>
+    <!-- Restaurant viewRestlist ☎-->
+    <string name="tv_owner">Propietario:</string>
+    <string name="tv_phone">Teléfonos:</string>
+    <string name="tv_address">Dirección:</string>
     <string name="tv_origin_desc">Sobre el restaurante</string>
     <string name="tv_photo">Foto</string>
     <string name="tv_menu">Menú</string>
     <string name="tv_location">Localización</string>
     <!--  menu  -->
     <string name="tv_title_menu">Menú del restaurante</string>
-    <string name="tv_rest_with_plate_title">Lista de restaurantes con este plato</string>
+    <string name="tv_rest_with_plate_title">Restaurantes con</string>
+    <string name="tv_restaurants_found">encontrados</string>
+    <string name="tv_rest_with_title">Restaurantes con:</string>
     <!--  public of  -->
     <string name="tv_publish_of_list_title">Restaurantes no publicados</string>
     <string name="btn_publish">Publicar</string>
@@ -83,9 +87,10 @@
     <string name="confirm_message_restaurant_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
     <string name="btn_continue">Continuar</string>
     <string name="btn_visit">Visitar</string>
-    <string name="btnAuthor">Autor</string>
-    <string name="tvAuthorId">Autor: </string>
-    <string name="cbPublic">Público</string>
+    <string name="btn_author">Autor</string>
+    <string name="tv_author_id">Autor: </string>
+    <string name="cb_public">Público</string>
+    <string name="sub_title_restaurant_public_of">Sin publicar</string>
 
     <!--    Maps-->
     <string name="search_address">Buscar dirección...</string>
@@ -146,6 +151,7 @@
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
     <string name="et_optional_experience">Cuentanos tu experiencia (opcional)...</string>
+    <string name="tv_rating">Puntuación</string>
 
     <!--  Messages Toast and alerts  -->
     <string name="message_invalid_option">Opción inválida...</string>
@@ -179,7 +185,7 @@
     <string name="message_owner_name_invalid">El nombre del propietario es inválido</string>
     <string name="message_address_required">La dirección es requerida</string>
     <string name="message_phone_required">El campo teléfono es requerido</string>
-    <string name="message_phone_invalid">El campo teléfono es inválido \nej.(4XXXXXX,7XXXXXXX,6XXXXXXX)</string>
+    <string name="message_phone_invalid">El campo teléfono es inválido \nej.(4XXXXXX;7XXXXXXX;6XXXXXXX)</string>
     <string name="message_coordinates_required">Las coordenadas son requeridas</string>
     <string name="message_searching">Buscando</string>
     <string name="message_reference_not_found">No se encontró la referencia</string>
@@ -187,6 +193,12 @@
     <string name="message_check_the_fileds">Revisa los campos...</string>
     <string name="message_remove">Quitar...</string>
     <string name="message_clossing">Cerrando...</string>
+    <string name="message_gps_disconected">GPS desconectado...</string>
+    <string name="message_gps_activate">El GPS está desactivado\n¿Quieres activarlo?</string>
+    <string name="message_not_found_restaurants">No existen restaurantes con este plato en su menú</string>
+    <string name="message_image_player_paused">Reproducción de imágenes pausada</string>
+    <string name="message_image_player_resumed">Reproducción de imágenes reanudada</string>
+    <string name="message__not_contain_images">No contiene imágenes en presentación...</string>
 
     <!--  Title  -->
     <string name="title_confirmation">Confirmación</string>
@@ -205,6 +217,8 @@
     <string name="tv_state">Estado:</string>
     <string name="tv_role">Rol:</string>
     <string name="user_information">INFORMACIÓN DEL USUARIO</string>
+    <string name="state">Conectado</string>
+    <string name="usersTitle">Usuarios</string>
     <!--    Roles -->
     <string name="rb_is_admin">Administrador</string>
     <string name="rb_is_collaborator">Colaborador</string>
@@ -214,7 +228,6 @@
     <!--    buttons-->
     <string name="btn_close">Cerrar</string>
     <string name="btn_save">Guardar</string>
-
 
     <!--    home  -->
     <string name="tv_welcome">Hola</string>
@@ -261,6 +274,14 @@
         \nEl Prof. Wilfredo Camacho García (+), reconocido antropólogo, decía “La llajta cochabambina mereció el título de Granero de Bolivia por la exuberante producción de cereales y otros productos en sus diferentes pisos ecológicos”. Este aspecto la hizo merecedora del título de “Capital de la gastronomía boliviana”, por el exquisito sabor e inigualable sazón de las y los cochabambinos en el momento de preparar la variedad de platos en el menú cochabambino.
     </string>
 
+    <string name="tv_source">
+        La información de este apartado, fué obtenida de la revista
+        \n\"Misk’i\"
+        \nSaberes y sabores
+        \ncochabambinos
+
+    </string>
+
     <string name="tv_id">Identificador</string>
     <string name="tv_text_lorem">El usuario prefirió no especificarlo
     \n
@@ -269,9 +290,9 @@
 
     <string name="tv_resume_title">Resumen</string>
     <string name="tv_resume">
-        El objetivo de la aplicación \"Llajta Comida\" es el de realzar una de las cualidades más importantes del departamento de Cochabamba como es la gastronomía,
-        proporcionando a los locales y visitantes de una herramienta para sus dispositivos móviles para que a través de esta, estos cuenten con la información necesaria
-        para que puedan informarse de las opciones en comida y los lugares donde pueden ser encontrados.
+        Nuestro objetivo con la aplicación \"Llajta Comida\" es el de realzar una de las cualidades más importantes de Cochabamba como es la gastronomía,
+        proporcionando a la población local y visitante de una herramienta para sus dispositivos móviles para que a través de esta, cuenten con la información necesaria
+        para que puedan conocer sobre las opciones en comida y los lugares donde pueden ser encontradas.
     </string>
     <string name="tv_credits">Univervidad Mayor de San Simón
         \nFacultad de Ciencias y Tecnología
@@ -280,5 +301,28 @@
 
     <!--    Usuario administrador por defecto (ID google) -->
     <string name="user_id_admin_default">105708453298523886510</string>
+
+    <string name="sub_title">Contenido</string>
+    <string name="sub_title_images">Imágenes</string>
+
+    <!--    IMAGENES    -->
+    <string name="images_title">Imágenes de</string>
+    <string name="image">Imagen</string>
+    <string name="remove_image">¿Quitar imagen?</string>
+    <string name="add_image_title">Agregar</string>
+    <string name="add_image_question">¿Quieres agregar la imagen recortada?</string>
+    <string name="removing_image">Quitando imagen...</string>
+
+    <!--    Menu    -->
+    <string name="menu">Menú</string>
+    <string name="menu_title">Menú de</string>
+    <string name="not_found">No se encontró la información necesaria</string>
+    <string name="title_activity_set_all_location_map">Map</string>
+
+
+<!--    buttons   -->
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
+    <string name="btn_back">Volver</string>
 
 </resources>
