@@ -30,8 +30,7 @@ import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Vista, muestra la lista de restaurantes
  */
 public class RestaurantListFragment extends Fragment implements RestaurantInterface.ViewRestaurant {
 
@@ -132,6 +131,8 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
                         etSearch.requestFocus();
                     }else{
                         etSearch.setVisibility(View.GONE);
+                        // Para que vuelga a cargar la lista (0 es cualquier numero)
+                        arrayAdapterRestaurant.filter("", 0);
                     }
                 break;
             case R.id.iconAdd:

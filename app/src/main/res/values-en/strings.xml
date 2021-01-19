@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Llajta Comida</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <!--    MENU DRAWER OPTIONS -->
+    <string name="menu_home">Home</string>
+    <string name="menu_plates">Dishes</string>
+    <string name="menu_restaurants">Restaurants</string>
+    <string name="menu_favorit_plates">Favorite dishes</string>
+    <string name="menu_favorit_restaurants">Favorite restaurants</string>
+    <string name="menu_about_us">About us</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_get_location_maps">Map</string>
+
+    <!--    Login   -->
+    <string name="title">Log in</string>
+    <string name="btn_start">To access</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="content">Welcome to Llajta Comida, sign in with your Google account</string>
+    <string name="access_denied_message">Access denied...</string>
+    <string name="restart_app_message">Restart application...</string>
+    <string name="title_alert_init_title">START</string>
+    <string name="title_alert_init_message">Loading...</string>
+
+    <string name="btn_sign_out">Sign off</string>
+    <string name="btn_ok">Ok</string>
+
+
+    <!--    ICONOS DEL MENU ACTIONBAR -->
+    <string name="add_icon">Add</string>
+    <string name="edit_icon">Edit</string>
+    <string name="delete_icon">Remove</string>
+    <string name="search_icon">Search</string>
+    <string name="galery_icon">Gallery</string>
+    <string name="save_icon">Save</string>
+    <string name="menu_restaurant_icon">Menu</string>
+    <string name="rest_public_of_icon">Unpublished restaurants</string>
+
+    <!--    PLATES-->
+    <string name="title_plates_list">Plate list</string>
+    <string name="et_search_plates">Search dishes...</string>
+    <string name="title_creat_plate">Create plate</string>
+    <string name="title_edit_plate">Edit plate</string>
+    <string name="et_plate_name">Name of the dish</string>
+    <string name="et_plate_ingredients">Ingredients</string>
+    <string name="et_plate_origin">Origin</string>
+    <string name="btn_photo_plate">Load an image for the dish</string>
+
+    <!--  RESTAURANTS  -->
+    <string name="title_restaurants_list">Restaurants list</string>
+    <string name="search_restaurants">Find restaurants...</string>
+    <string name="title_creat_restaurant">Create restaurant</string>
+    <string name="title_edit_restaurant">Edit restaurant</string>
+    <string name="et_restaurant_name">Name of the restaurant</string>
+    <string name="et_owner_name">Owner name</string>
+    <string name="et_address">Restaurant address</string>
+    <string name="et_phone">Phones</string>
+    <string name="et_origin_desc">Origin and description of the place</string>
+    <string name="btn_photo_restaurant">Take a frontal photo of the restaurant</string>
+    <!-- Restaurant viewRestlist ☎-->
+    <string name="tv_owner">Owner:</string>
+    <string name="tv_phone">Phones:</string>
+    <string name="tv_address">Direction:</string>
+    <string name="tv_origin_desc">About the restaurant</string>
+    <string name="tv_photo">Photo</string>
+    <string name="tv_menu">Menu</string>
+    <string name="tv_location">Location</string>
+    <!--  menu  -->
+    <string name="tv_title_menu">Restaurant menu</string>
+    <string name="tv_rest_with_plate_title">Restaurants with</string>
+    <string name="tv_restaurants_found">found</string>
+    <string name="tv_rest_with_title">Restaurants with:</string>
+    <!--  public of  -->
+    <string name="tv_publish_of_list_title">Unpublished restaurants</string>
+    <string name="btn_publish">Publicate</string>
+    <string name="confirm_message_publish">This restaurant will be published, do you want to continue?</string>
+    <string name="confirm_message_publish_of">This restaurant will stop publishing, do you want to continue?</string>
+    <string name="confirm_message_restaurant_delete">This restaurant will be removed, do you want to continue?</string>
+    <string name="btn_continue">Continue</string>
+    <string name="btn_visit">Visit</string>
+    <string name="btn_author">Author</string>
+    <string name="tv_author_id">Author: </string>
+    <string name="cb_public">Public</string>
+    <string name="sub_title_restaurant_public_of">Unpublished</string>
+
+    <!--    Maps-->
+    <string name="search_address">Find address...</string>
+    <string name="tv_latitude">Latitude</string>
+    <string name="tv_longitude">Longitude</string>
+    <string name="tv_lat_lng">Undefined...</string>
+    <string name="marker_title">Move</string>
+    <string name="marker_search_description">Hold down the marker</string>
+    <string name="load_position">Establishing coordinates...</string>
+    <!--    // spinner options-->
+    <string name="item_normal">Normal</string>
+    <string name="item_hibrid">Hybrid</string>
+    <string name="item_satellite">Satelite</string>
+    <string name="item_terrain">Ground</string>
+
+    <!-- toolBar titles   -->
+    <string name="plates_title">Dishes</string>
+    <string name="restaurants_title">Restaurants</string>
+
+
+    <!--  Plate viewRestlist  -->
+    <string name="tv_name_plate_view">Name of the dish</string>
+    <string name="tv_ingredients_plate_view">What ingredients does it have and how is it prepared?</string>
+    <string name="tv_origin_plate_view">Let is talk a little about its Origin and History</string>
+
+
+    <!--  Crop image  -->
+    <string name="plate_image_crop_title">Select an image of the plate</string>
+    <string name="restaurant_image_crop_title">Select an image of the Restaurant</string>
+
+
+    <string name="lorem_short">Lorem Ipsum es simplemente el texto de relleno de las imprentas
+        y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el
+        año 1500, cuando un impresor
+    </string>
+    <string name="lorem_long">Al contrario del pensamiento popular, el texto de Lorem Ipsum no es
+        simplemente texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del Latin, que data del
+        año 45 antes de Cristo, haciendo que este adquiera mas de 2000 años de antiguedad. Richard McClintock,
+        un profesor de Latin de la Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más oscuras.
+    </string>
+
+    <!--    BUTTONS -->
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_store">Save</string>
+
+    <!--  No definidos  -->
+    <string name="tv_undefined">Undefined</string>
+    <string name="title_activity_set_location_map">Map</string>
+
+    <!--  Login  -->
+    <string name="title_load_list_progress_dialog">SEARCH</string>
+    <string name="message_load_list_progress_dialog">Loading user list...</string>
+
+    <string name="title_sigIn_progress_dialog">ACCESS</string>
+    <string name="message_sign_in_progress_dialog">Connecting...</string>
+    <string name="welcome">Welcome</string>
+
+    <!--  Rating  -->
+    <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
+    <string name="et_optional_experience">Tell us about your experience (optional)...</string>
+    <string name="tv_rating">Punctuation</string>
+
+    <!--  Messages Toast and alerts  -->
+    <string name="message_invalid_option">Invalid option...</string>
+    <string name="message_establish">Settled down</string>
+    <string name="message_is_failed">The process failed...</string>
+    <string name="add_plate_to_favorite_list">Added to the list of favorites</string>
+    <string name="remove_from_list_favorite_plates">Removed from the list of favorites</string>
+    <string name="add_restaurant_to_favorite_list">Added to the list of favorite restaurants</string>
+    <string name="remove_from_list_favorite_restaurants">Removed from the list of favorite restaurants</string>
+    <string name="title_confirm_message">Note</string>
+    <string name="confirm_message">thanks for trusting us!
+        \n\nAdministrators will verify the information entered.
+        \n\nyou should be vigilant, they may contact you</string>
+    <string name="message_store_complete">It was stored correctly</string>
+    <string name="message_store_incomplete">Could not store properly</string>
+    <string name="message_update_complete">It was updated correctly</string>
+    <string name="message_update_incomplete">Could not update successfully</string>
+    <string name="message_delete_complete">Was successfully removed</string>
+    <string name="message_delete_incomplete">It was not removed correctly</string>
+    <string name="message_deleting">Removing...</string>
+    <string name="message_uploading">Uploading...</string>
+    <string name="message_updating">Updating...</string>
+    <string name="message_delete_question">It will be permanently deleted \ nDo you want to continue?</string>
+    <string name="confirm_title">Confirm</string>
+    <string name="message_check_the_fields">Error: Verify the fields</string>
+    <string name="message_record_already_exists">A record with the same name already exists</string>
+    <string name="message_name_required">The name is required</string>
+    <string name="message_description_required">Origin is required</string>
+    <string name="message_ingredients_required">Ingredients are required</string>
+    <string name="message_image_required">Image is required</string>
+    <string name="message_owner_name_invalid">The owner’s name is invalid</string>
+    <string name="message_address_required">Address is required</string>
+    <string name="message_phone_required">The phone field is required</string>
+    <string name="message_phone_invalid">The phone field is invalid \nex.(4XXXXXX;7XXXXXXX;6XXXXXXX)</string>
+    <string name="message_coordinates_required">Coordinates are required</string>
+    <string name="message_searching">Searching</string>
+    <string name="message_reference_not_found">Reference not found</string>
+    <string name="message_error">Something went wrong...</string>
+    <string name="message_check_the_fileds">Check the fields...</string>
+    <string name="message_remove">Remove...</string>
+    <string name="message_clossing">Closing...</string>
+    <string name="message_gps_disconected">GPS disconnected...</string>
+    <string name="message_gps_activate">GPS is disabled\nDo you want to enable it?</string>
+    <string name="message_not_found_restaurants">There are no restaurants with this dish on their menu</string>
+    <string name="message_image_player_paused">Image Playback Paused</string>
+    <string name="message_image_player_resumed">Image Playback Resumed</string>
+    <string name="message_not_contain_images">Does not contain images in presentation...</string>
+    <string name="message_processed_correct" translatable="false">Was processed successfully</string>
+    <string name="message_image_error">An error occurred while uploading the image</string>
+    <string name="message_image_null">No image was detected</string>
+    <string name="message_image_was_removed">The image was removed</string>
+    <string name="something_went_wrong">Oh no, something went wrong</string>
+    <string name="menu_size">Items in list:</string>
+
+    <!--  Title  -->
+    <string name="title_confirmation">Confirmation</string>
+
+    <!--  favorits  -->
+    <string name="tv_title_plate_favorit_list">List of favorite dishes</string>
+    <string name="tv_title_rest_favorit_list">List of favorite restaurants</string>
+
+    <!--  USERS  -->
+    <string name="et_search_user">Search users</string>
+    <string name="tv_user_option_list">Users</string>
+    <string name="tv_user_name">User:</string>
+    <string name="tv_user_fast_name">Surnames:</string>
+    <string name="tv_user_title">USER</string>
+    <string name="tv_email">E-mail:</string>
+    <string name="tv_state">State:</string>
+    <string name="tv_role">Role:</string>
+    <string name="user_information">USER INFORMATION</string>
+    <string name="state">Connected</string>
+    <string name="usersTitle">Users</string>
+    <!--    Roles -->
+    <string name="role_admin">Administrator</string>
+    <string name="role_collaborator">Collaborator</string>
+    <string name="role_voter">Voter</string>
+    <string name="role_reader">Reader</string>
+    <string name="role_none">None</string>
+    <!--    buttons-->
+    <string name="btn_close">Close</string>
+    <string name="btn_save">Save</string>
+
+    <!--    home  -->
+    <string name="tv_welcome">Hello</string>
+    <!--    La frase continua con.....  -->
+    <string name="tv_welcome_continue">, First of all, we invite you to learn more about the gastronomy of our Llajta!</string>
+    <!--    Titles -->
+    <string name="tv_pre_colonial_title">Pre Colonial Gastronomy</string>
+    <string name="tv_colonial_title">Colonial Gastronomy</string>
+    <string name="tv_republicana_title">Republican gastronomy</string>
+    <!--  Content  -->
+    <string name="tv_pre_colonial_content">
+        In the green and fertile valleys of the extensive Q’ochapampa, where various primitive cultures developed such as the Cotas, Chuis and Soras, in which upon the arrival of the Inca Huayna Capac, a vast corn production program was established. It allows us to understand some of the characteristics and peculiarities of the Q’ochala identity and to particularize the characteristics of gastronomy.
+        \n
+        \nThe more than 2000 Qollqas (silos) for the storage of corn, built in 1450 in Cotapachi, south of the Municipality of Quillacollo, around the Cotapachi Lagoon, are the guideline to understand the levels of agricultural production of the llajta. For this reason, corn is one of the basic and emblematic products of the Q’ochalas gastronomy in pre-colonial times.
+        \n
+        \nThe chronicles allow us to know that the eating habits of the inhabitants of this time were reduced to eating twice a day, consuming cereals, tubers and even pumpkins in Ch’aqui Pacha (dry weather). In the Paray Pacha (rainy season) abundant weeds or salads are eaten, as well as fruits, names by which the seasons of the agricultural year were designated.
+        \n
+        \nAs for the ways of preparing food, mention is made of those boiled in water and steamed, buried, k’alapari and kalapurka, grilled and stone-roasted or kankas and k’aspas, khaw’i or sunny, the torrados or jank’as, the flours or j’akus and the dehydrated ones, such as chuños and tuntas.
+    </string>
+
+    <string name="tv_colonial_content">
+        In the Abya Yala; Before the arrival of the Spaniards, social, cultural, political and economic changes took place, which affected the daily life of the inhabitants of the fertile lands of Q’ochapampa.
+        \n
+        \nRegarding the food issue, there were also modifications in reaction to the processes for preparing food. In this process of miscegenation, the daily consumption of different meats, such as beef, pork, chicken and lamb, was introduced into the diet, in the same way the use of condiments when cooking, such as pepper, nutmeg, saffron, cinnamon , cloves, sugar and other ingredients such as wheat, onions, garlic, parsley, oregano, coriander, vinegars and others.
+        \n
+        \nIn this food context, people began to consume fried foods, pickles, the combination of salty and sweet flavor in a single preparation, as well as the consumption of wheat bread and a variety of Spanish pastry products.
+        \n
+        \nThe requirements to have appropriate products to prepare the recipes of the gastronomy of the migrants who arrived in these lands, modified the agricultural production practiced by the natives, who had to cultivate new species and varieties of food products.
+
+    </string>
+
+    <string name="tv_republicana_content">
+        At the end of the war of independence; In which Andean natives and peasants participated, the Republic of Bolivia arises, but without providing any socio-cultural, political or economic claim to the indigenous population.
+        \n
+        \nThe marked European influence on the thinking and sentiment of the new republicans, the changes in the social, political, economic and cultural structures of the cities, is also felt in the mestizo and creole gastronomy that emerged during the colony.
+        \n
+        \nThe use of innovative utensils of different shapes and materials to prepare food, as well as the use of other sources of energy for cooking, also make a difference in the flavors and presentation of food.
+        \n
+        \nAt this time, it is no longer possible to taste food cooked over a slow fire, as when using the brazier or the q’onchas fueled with firewood, since the use of fuels derived from petroleum or electricity is already emerging.
+        \n
+        \nThe nationalist airs, the colonial remnants and the new gastronomic influences of the old world, function and give rise; Beatriz Rossells, a renowned historian, says, “to the emergence of national food” in which it is possible to taste a varied combination of native products and many others from different countries and continents.
+        \n
+        \nProf. Wilfredo Camacho García (+), renowned anthropologist, said "La llajta Cochabambina deserved the title of Granary of Bolivia for the exuberant production of cereals and other products in its different ecological floors." This aspect made it worthy of the title of "Capital of Bolivian gastronomy", for the exquisite flavor and unmatched seasoning of the Cochabamba people at the time of preparing the variety of dishes on the Cochabambino menu.
+    </string>
+
+    <string name="tv_source">
+        The information in this section was obtained from the magazine
+        \n\"Misk’i\"
+        \nKnowledge and flavors
+        \ncochabambinos
+
+    </string>
+
+    <string name="tv_id">Identifier</string>
+    <string name="tv_text_lorem">The user preferred not to specify it
+    \n
+    </string>
+
+
+    <string name="tv_resume_title">Summary</string>
+    <string name="tv_resume">
+        Our goal with the \"Llajta Comida \" application is to enhance one of the most important qualities of Cochabamba, such as gastronomy,
+        providing the local and visitor population with a tool for their mobile devices so that through it, they have the necessary information
+        so they can learn about food options and the places where they can be found.
+    </string>
+    <string name="tv_credits">Univervidad Mayor de San Simón
+        \nFacultad de Ciencias y Tecnología
+        \nIngeniería de Sistemas</string>
+    <string name="tv_mail">E-mail: llajta.comida.app@gmail.com</string>
+    <string name="mail">llajta.comida.app@gmail.com</string>
+    <!--    Usuario administrador por defecto (ID google) -->
+    <string name="user_id_admin_default">105708453298523886510</string>
+
+    <string name="sub_title">Content</string>
+    <string name="sub_title_images">Images</string>
+
+    <!--    IMAGENES    -->
+    <string name="images_title">Images of</string>
+    <string name="image">Image</string>
+    <string name="remove_image">Remove image?</string>
+    <string name="add_image_title">Add</string>
+    <string name="add_image_question">Do you want to add the cropped image?</string>
+    <string name="removing_image">Removing image...</string>
+
+    <!--    Menu    -->
+    <string name="menu">Menu</string>
+    <string name="menu_title">Menu for</string>
+    <string name="not_found">Required information not found</string>
+    <string name="title_activity_set_all_location_map">Map</string>
+
+
+    <!--    buttons   -->
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="btn_back">Back</string>
+
+    <string name="id">ID:</string>
+
+</resources>

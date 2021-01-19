@@ -1,7 +1,6 @@
 package com.appcocha.llajtacomida.models.restaurant;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
@@ -31,7 +30,7 @@ public class RestaurantModel implements RestaurantInterface.ModelRestaurant, Val
 
     @Override
     public void loadRestaurantList() {
-        Query query = databaseReference.child("App").child("restaurants");
+        Query query = databaseReference.child("App").child("restaurants").orderByChild("name");
         query.addValueEventListener(this);
     }
 

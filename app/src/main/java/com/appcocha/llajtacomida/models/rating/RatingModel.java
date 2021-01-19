@@ -1,10 +1,7 @@
 package com.appcocha.llajtacomida.models.rating;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-
 import com.appcocha.llajtacomida.interfaces.RatingInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -16,12 +13,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Set;
 
+/**
+ * Modelo
+ * Gestiona el rating de los platos y restaurantes
+ */
 public class RatingModel implements RatingInterface.ModelRating, ValueEventListener {
 
     private RatingInterface.PresenterRating presenterRating;
@@ -30,6 +28,11 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
     private Rating rating;
     private ArrayList<User> userList;
 
+    /**
+     * @param presenterRating
+     * @param nodeCollectionName
+     * @param objectId
+     */
     public RatingModel(RatingInterface.PresenterRating presenterRating, String nodeCollectionName, String objectId){
         this.presenterRating = presenterRating;
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -39,6 +42,11 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
 
     }
 
+    /**
+     * Sin interfaz de presentador
+     * @param nodeCollectionName
+     * @param objectId
+     */
     public RatingModel(String nodeCollectionName, String objectId){
         databaseReference = FirebaseDatabase.getInstance().getReference();
         this.nodeCollectionName = nodeCollectionName;
@@ -124,7 +132,7 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
     }
 
     /**
-     * iniciara despues de buscar el rating del objeto
+     * Iniciara después de buscar el rating del objeto
      */
     private void initSearchUsers(){
         databaseReference.child("App").child("users").addValueEventListener(this);
@@ -156,7 +164,7 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
 
 
     /**
-     * Actualiza la punctuacion del atributo punctuation de los objetos rating y objecto (plate o restaurant)
+     * Actualiza la punctuación del atributo punctuation de los objetos rating y objecto (plate o restaurant)
      */
     private void updatePunctuation(){
         final float punctuation [] = new float[1]; // por necesitar ser constante, evadimos la regla si lo metemos dentro de un arreglo

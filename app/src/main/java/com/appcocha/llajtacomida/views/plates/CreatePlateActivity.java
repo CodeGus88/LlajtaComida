@@ -20,7 +20,6 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
-import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.ByteArrayOutputStream;
@@ -29,6 +28,9 @@ import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
+/**
+ * Vista, Crea un nuevo plato
+ */
 public class CreatePlateActivity extends AppCompatActivity implements View.OnClickListener, PlateInterface.ViewPlateManager {
 
     // componetes
@@ -40,7 +42,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     private TextInputLayout textInputLayoutIngredients;
     private TextInputLayout textInputLayoutOrigin;
     private TextInputLayout textInputLayoutImage;
-
 
     // Comprimir foto
     private Bitmap thumb_bitmap;
@@ -88,6 +89,10 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     }
 
 
+    /**
+     * Solicita almacenar en la base de datos
+     * @throws InterruptedException
+     */
     private void storePlate() throws InterruptedException {
         String name = etName.getText().toString();
         String ingredients = etIngredients.getText().toString();
@@ -136,6 +141,9 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         btnSelectFoto = (Button) findViewById(R.id.btnSelectPhoto);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -160,6 +168,9 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         progressDialog.setMessage(getString(R.string.message_uploading));
     }
 
+    /**
+     * Inicializa los componentes textInputLayout
+     */
     private void initTextInputLayout(){
         textInputLayoutName = (TextInputLayout) findViewById(R.id.tilName);
         textInputLayoutIngredients = (TextInputLayout) findViewById(R.id.tilIngredients);

@@ -1,9 +1,7 @@
 package com.appcocha.llajtacomida.models.favorite;
 
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.appcocha.llajtacomida.interfaces.FavoriteInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -17,6 +15,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Esta clase gestiona los elementos favoritos (platos, restaurantes) en la BD
+ */
 public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEventListener {
 
     private final FavoriteInterface.PresenterFavorite presenterFavorite;
@@ -25,6 +26,12 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
     private final ArrayList<String> favoriteList;
     private final ArrayList<Object> favoriteObjectList;
 
+    /**
+     *
+     * @param presenterFavorite
+     * @param userId
+     * @param nodeCollectionName
+     */
     public FavoriteModel(FavoriteInterface.PresenterFavorite presenterFavorite, String userId, String nodeCollectionName){
         this.presenterFavorite = presenterFavorite;
         this.userId = userId;
@@ -53,7 +60,7 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
     @Override
     public void searchObjectFavoriteList() {
         databaseReference.child("App").child("users").child(userId).child(favoritesNode).addValueEventListener(this);
-        databaseReference.child("App").child(nodeCollectionName).addValueEventListener(this);
+        databaseReference.child("App").child(nodeCollectionName).orderByChild("name").addValueEventListener(this);
     }
 
     @Override

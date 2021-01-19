@@ -1,15 +1,19 @@
 package com.appcocha.llajtacomida.presenters.plate;
 
-import android.util.Log;
-
 import com.appcocha.llajtacomida.models.plate.Plate;
-
 import java.util.ArrayList;
 
+/**
+ * Lista de platos (muestra la lista de platos en cualquier clase)
+ */
 public class PlateList {
 
     private static ArrayList<Plate> plateList;
 
+    /**
+     * Constructor, Establece la lista de platos
+     * @param plateList
+     */
     public  PlateList(ArrayList<Plate> plateList){
         if(plateList != null){
             this.plateList = plateList;
@@ -18,6 +22,10 @@ public class PlateList {
         }
     }
 
+    /**
+     * Establece la lsiat de platos
+     * @param plateListX
+     */
     public static void setPlateList(ArrayList<Plate> plateListX){
         if(plateList != null){
             plateList.clear();
@@ -27,6 +35,10 @@ public class PlateList {
         }
     }
 
+    /**
+     * Obtiene la lista de platos
+     * @return
+     */
     public static ArrayList<Plate> getPlateList(){
         if(plateList == null){
             plateList = new ArrayList<Plate>();

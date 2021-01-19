@@ -18,7 +18,10 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
+/**
+ * Este es un adaptador para la lista de platos
+ * Carga todos los platos
+ */
 public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
 
     private ArrayList<Plate> plateList;
@@ -26,6 +29,12 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
     private Context context;
     private int resource;
 
+    /**
+     * Contructor
+     * @param context de la actividad
+     * @param resource, es el item (xml)
+     * @param objects, lista de objetos plato
+     */
     public ArrayAdapterPlate(@NonNull Context context, int resource, @NonNull ArrayList <Plate> objects) {
             super(context, resource, objects);
             this.resource = resource;
@@ -35,6 +44,13 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
             this.plateListCopy.addAll(objects);
     }
 
+    /**
+     * Carga la lista de platos
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -45,7 +61,6 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
-//        tvRating.setText(String.valueOf(decimalFormat.format(plate.getPunctuation())));
         TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
         DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenda solo un decimal
         tvRating.setText(String.valueOf(decimalFormat.format(plateList.get(position).getPunctuation())));
@@ -56,7 +71,10 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         return view;
     }
 
-    /* Filtra los datos del adaptador */
+    /**
+     * Este método sirve para realizar búsquedas
+     *  Filtra los datos del adaptador
+     */
     public void filter(String texto, int previousLentg) {
         texto = texto.toLowerCase();
         if(!texto.isEmpty()) {
@@ -74,7 +92,11 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         notifyDataSetChanged();
     }
 
-    public void search(String texto){
+    /**
+     * Busca
+     * @param texto, elemento buscado
+     */
+    public  void search(String texto){
         int i = 0;
         while (i < plateList.size()) {
             String string = plateList.get(i).toString().toLowerCase();

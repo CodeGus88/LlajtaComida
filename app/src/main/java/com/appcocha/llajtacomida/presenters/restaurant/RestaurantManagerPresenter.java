@@ -5,14 +5,20 @@ import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantManagerModel;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
-
 import java.util.ArrayList;
 
+/**
+ * Presentador, gestor de estaurante
+ */
 public class RestaurantManagerPresenter implements RestaurantInterface.PresenterRestaurantManager {
 
     private RestaurantInterface.ViewRestaurantManager viewRestaurantManager;
     private RestaurantInterface.ModelRestaurantManager modelRestaurantManager;
 
+    /**
+     * Constructor, establece viewRestaurantManager
+     * @param viewRestaurantManager
+     */
     public RestaurantManagerPresenter(RestaurantInterface.ViewRestaurantManager viewRestaurantManager){
         this.viewRestaurantManager = viewRestaurantManager;
         modelRestaurantManager = new RestaurantManagerModel(this);

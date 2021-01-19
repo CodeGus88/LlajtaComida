@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".views.restaurants.RestaurantPublicOfActivity"
     android:orientation="vertical"
-    android:background="@drawable/list_panel_white_gradient">
+    android:background="@drawable/panel_list_white_gradient">
 
     <EditText
         android:id="@+id/etSearch"
@@ -24,6 +24,6 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_below="@+id/etSearch"
-       android:background="@drawable/list_panel_white_gradient"/>
+       android:background="@drawable/panel_list_white_gradient"/>
 
 </RelativeLayout>

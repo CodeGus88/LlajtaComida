@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".views.plates.PlateListFragment"
     android:orientation="vertical"
-    android:background="@drawable/list_panel_white_gradient">
+    android:background="@drawable/panel_list_white_gradient">
 
 
 <!--    <TextView-->
@@ -35,7 +35,7 @@
             android:id="@+id/lvRestaurants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/list_panel_white_gradient"
+            android:background="@drawable/panel_list_white_gradient"
             android:layout_marginTop="1dp"/>
 
 </LinearLayout>

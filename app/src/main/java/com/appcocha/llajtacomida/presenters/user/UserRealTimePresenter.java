@@ -4,16 +4,22 @@ import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.models.user.User;
 import com.appcocha.llajtacomida.models.user.UserRealTimeModel;
 
+/**
+ * Presentador, usuario
+ */
 public class UserRealTimePresenter implements UserInterface.PresenterUserRealTime{
 
     private UserInterface.ViewUserRealTime viewUserRealTime;
     UserInterface.ModelUserRealTime modelUserRealTime;
 
+    /**
+     * Constructor, inicializa viewUserRealTime
+     * @param viewUserRealTime
+     */
     public UserRealTimePresenter(UserInterface.ViewUserRealTime viewUserRealTime){
         this.viewUserRealTime = viewUserRealTime;
         modelUserRealTime = new UserRealTimeModel(this);
     }
-
 
     @Override
     public void showUserRT(User user) {

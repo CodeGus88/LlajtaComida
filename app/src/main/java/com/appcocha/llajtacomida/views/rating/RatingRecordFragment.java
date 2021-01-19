@@ -26,6 +26,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+/**
+ * Vista, maneja los votos del objeto (plato o restaurante)
+ */
 public class RatingRecordFragment extends Fragment implements View.OnClickListener, RatingInterface.ViewRating {
 
     // Components
@@ -68,6 +71,9 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         rbStars = (RatingBar) view.findViewById(R.id.rbStars);
         rbStars.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -78,9 +84,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 }
             }
         });
-//        LayerDrawable stars = (LayerDrawable) rbStars.getProgressDrawable();
-//        stars.getDrawable(2).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP); // Estrellas
-//        stars.getDrawable(1).setColorFilter(Color.LTGRAY, PorterDuff.Mode.SRC_ATOP); // Sombras
+
         lvUserExperiences = (ListView) view.findViewById(R.id.lvUserExperiences);
 
         // alert de rating para votar
@@ -100,6 +104,9 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /**
+     * Solicita guardar una votación
+     */
     private void saveVote(){
         alertDialog.show();
     }
@@ -148,6 +155,11 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         }else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
     }
 
+    /**
+     * Verifica si un usuario ya votó por el objeto
+     * @param userList
+     * @return userVoteAlready
+     */
     private boolean userVoteAlready(ArrayList<User> userList){
         boolean userVoteAlready = false;
         for(User user : userList){
@@ -166,6 +178,9 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     }
 
 
+    /**
+     * Detiene la BD
+     */
     public void stopRealtimeDatabase(){
         ratingPresenter.stopRealtimeDatabase();
     }

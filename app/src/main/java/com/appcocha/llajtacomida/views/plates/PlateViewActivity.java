@@ -44,7 +44,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
  /**
-  * Esta clase es la vista de la sección ver plato
+  * Vista, Esta clase es la vista de la sección ver plato
   */
  public class PlateViewActivity extends AppCompatActivity
     implements View.OnClickListener, PlateInterface.ViewPlate, ImageInterface.ViewImage,
@@ -75,8 +75,6 @@ import java.util.ArrayList;
     private ArrayList<Restaurant> restaurantList;
     private TextView tvRating;
     private ImageButton btnMarkersView;
-    // button of favorite
-//    private ImageButton btnFavorite;
 
     //  Presentadores del plato y de la lista de restaurantes
     private PlateInterface.presenterRestList restListPresenter;
@@ -234,7 +232,6 @@ import java.util.ArrayList;
         });
         confirm.setNegativeButton(getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                Toast.makeText(PlateViewActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
             }
         });
         confirm.show();
@@ -244,7 +241,6 @@ import java.util.ArrayList;
         iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
         iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
         iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
-
         if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
             iconGalery.setVisible(true);
             iconDelete.setVisible(true);
@@ -283,6 +279,9 @@ import java.util.ArrayList;
         }
     }
 
+     /**
+      * Pausa, reanuda la reproducción de las imágenes del plato
+      */
     private void pauseResume(){
         if(viewFlipper.isFlipping()){
             viewFlipper.stopFlipping();
@@ -300,7 +299,7 @@ import java.util.ArrayList;
                     toast.setDuration(Toast.LENGTH_SHORT);
                     toast.show();
             }else{
-                Toast.makeText(this, getString(R.string.message__not_contain_images), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.message_not_contain_images), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -370,14 +369,12 @@ import java.util.ArrayList;
                     ImageView ivImg = new ImageView(PlateViewActivity.this);
                     Glide.with(PlateViewActivity.this).load(image.getUrl()).into(ivImg);
                     ivImg.setLayoutParams( // Tamaño de la imagen
-//                            new ViewGroup.LayoutParams((int) (width*0.89),(int) (height*0.89))
                             new ViewGroup.LayoutParams((int) (width*0.984),(int) (height*0.984))
                     );
                     CardView cv = new CardView(PlateViewActivity.this);
                     cv.addView(ivImg);
                     cv.setRadius(35);
                     cv.setLayoutParams( // Tamaño de la imagen
-//                            new ViewGroup.LayoutParams((int) (width*0.89), (int) (height*0.89))
                             new ViewGroup.LayoutParams((int) (width*0.984), (int) (height*0.984))
                     );
                     viewFlipper.addView(cv);
@@ -391,6 +388,9 @@ import java.util.ArrayList;
         }
     }
 
+     /**
+      * Detiene la BD
+      */
     private void stopRealtimeDatabse(){
         platePresenter.stopRealtimeDatabase();
         restListPresenter.stopRealtimeDatabase();

@@ -5,26 +5,62 @@ import com.appcocha.llajtacomida.models.image.Image;
 import java.util.ArrayList;
 
 /**
- * Estas interaces muestran todas las imágenes de un elemento
+ * @Author: Gustavo Abasto Argote
+ * Contiene las interfaces modelo, vista y presentador de las imágernes
  */
 public interface ImageInterface {
 
+    /**
+     * Vista
+     */
     interface ViewImage{
+
+        /**
+         * Muestra la lista de imágenes
+         * @param imagesList
+         */
         public void showImages(ArrayList<Image> imagesList);
     }
 
+    /**
+     * Presentador
+     */
     interface PresenterImage{
+
+        /**
+         * Determina mostrar la lista de imágenes
+         * @param imageList
+         */
         public void showImages(ArrayList<Image> imageList);
+
+        /**
+         * Determina buscar una lista de imágenes
+         * @param model
+         * @param modelId
+         */
         public void searchImages(String model, String modelId);
+
+        /**
+         * Determina detener la BD
+         */
         public void stopRealtimeDatabase();
     }
 
     /**
-     * modelId es el modelo al que se hace referencia (Plate Restaurant, etc)
-     * model es el tipo de modelo (plate, restaurant)
+     * Modelo
      */
     interface ModelImage{
+
+        /**
+         * Busca la lista de imágenes
+         * @param nodeCollectionName
+         * @param modelId
+         */
         public void searchImages(String nodeCollectionName, String modelId);
+
+        /**
+         * Detiene la BD
+         */
         public void stopRealtimeDatabse();
     }
 }

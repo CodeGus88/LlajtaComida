@@ -24,11 +24,21 @@ import com.appcocha.llajtacomida.views.restaurants.RestaurantPublicOfActivity;
 
 import java.util.ArrayList;
 
+/**
+ * Adaptador
+ */
 public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
     private ArrayList<Restaurant> restaurantList;
     private ArrayList<Restaurant> restaurantListCopy;
     private Context context;
     private int resource;
+
+    /**
+     * Constructor, inicializa context, resource, objects
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public ArrayAdapterRestPublicOf(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> objects) {
         super(context, resource, objects);
         this.resource = resource;
@@ -111,7 +121,9 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         return view;
     }
 
-    /* Filtra los datos del adaptador */
+    /**
+     *  Filtra los datos del adaptador
+     */
     public void filter(String texto, int previousLentg) {
         texto = texto.toLowerCase();
         if(!texto.isEmpty()) {
@@ -129,6 +141,10 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Busca el texto en el toString del objeto
+     * @param texto
+     */
     public void search(String texto){
         int i = 0;
         while (i < restaurantList.size()) {
@@ -141,6 +157,10 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         }
     }
 
+    /**
+     * Establece publicar o dejar de publicar un restaurante
+     * @param restaurant
+     */
     public void publishRestaurant(final Restaurant restaurant){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.confirm_message_publish)
@@ -159,6 +179,10 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         builder.show();
     }
 
+    /**
+     * Elimina un restaurante "no" publicado
+     * @param restaurant
+     */
     public void deleteRestaurante(final Restaurant restaurant){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(R.string.confirm_message_restaurant_delete)

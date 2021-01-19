@@ -9,19 +9,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Modelo, lee los restaurantes que tiene  un plato en su menú
+ * Implementa PlateInterface.ModelRestList
+ */
 public class PlateModelRestList implements PlateInterface.ModelRestList,  ValueEventListener{
 
     private PlateInterface.presenterRestList restListPresenter;
     private ArrayList<Restaurant> restaurantList;
     private String plateId;
-
     private DatabaseReference databaseReference;
 
+    /**
+     * Contructor
+     * @param restListPresenter
+     */
     public PlateModelRestList(PlateInterface.presenterRestList restListPresenter){
         this.restListPresenter = restListPresenter;
         restaurantList = new ArrayList<Restaurant>();

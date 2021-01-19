@@ -1,6 +1,5 @@
 package com.appcocha.llajtacomida.models.restaurant.menu;
 
-import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,11 +14,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Interactua la base de datos para el menú
+ */
 public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, ValueEventListener {
 
     private RestaurantInterface.PresenterSetMenuList presenterSetMenuList;
     private DatabaseReference databaseReference, databaseReferenceM;
-//    private String restaurantId;
     private ArrayList<Plate> plateList;
     private Menu menu;
 
@@ -30,9 +31,14 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
         plateList = new ArrayList<Plate>();
     }
 
+    /**
+     * Recupera la lista de platos
+     * Recupera la lista de id's del menú de los platos
+     * @param restaurantId
+     */
     @Override
     public void searchSetMenuList(String restaurantId) {
-        databaseReference.child("App").child("plates").addValueEventListener(this);
+        databaseReference.child("App").child("plates").orderByChild("name").addValueEventListener(this);
         databaseReferenceM.child("App").child("restaurants").child(restaurantId)
                 .child("menus").child("local").addValueEventListener(this);
     }

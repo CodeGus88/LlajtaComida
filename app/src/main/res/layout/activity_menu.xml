@@ -34,5 +34,5 @@
           android:id="@+id/lvPlates"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:background="@drawable/list_panel_white_gradient"/>
+          android:background="@drawable/panel_list_white_gradient"/>
 </LinearLayout>

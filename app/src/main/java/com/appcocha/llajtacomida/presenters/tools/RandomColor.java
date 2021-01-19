@@ -30,10 +30,18 @@ public class RandomColor {
         colorListCopy.addAll(getColorList());
     }
 
+    /**
+     * Obtiene lista de colores
+     * @return
+     */
     public ArrayList<Float> getColorList() {
         return colorList;
     }
 
+    /**
+     * Obtiene un color al azar
+     * @return
+     */
     public float getRandonColor(){
         int indexColor = ThreadLocalRandom.current().nextInt(0, colorListCopy.size());
         final float colorCode = colorListCopy.get(indexColor);

@@ -2,7 +2,6 @@ package com.appcocha.llajtacomida.views.main;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
@@ -31,7 +29,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -40,35 +37,46 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Timer;
+import java.util.TimerTask;
 
+/**
+ * Vista, Esta es la clase donde se cargn todos los fragmentos del menú
+ */
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
-        UserInterface.ViewUser,UserInterface.ViewUserRealTime {
+        UserInterface.ViewUser,UserInterface.ViewUserRealTime, View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     // Login silencioso
     private GoogleApiClient googleApiClient;
-    private final Hashtable<String, String> userDataList = new Hashtable<String, String>();
     private ProgressDialog progressDialog;
     private UserPresenter userPresenter;
     private UserRealTimePresenter userRealTimePresenter;
     private User user;
     private NavigationView navigationView;
-    private String rol; // Para reinikciar la aplicación  si cambia el rol
-
+    private String rol; // Para reiniciar la aplicación  si cambia el rol
     private AuthUser authUser;
+
+    // Alert COMPONENTS
+    private AlertDialog alertDialog;
+    private ImageView ivAvatar;
+    private TextView tvId;
+    private TextView tvFulName;
+    private TextView tvEmail;
+    private TextView tvRole;
+    private TextView btnSignOut, btnOk;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
         getPregressDialog(getString(R.string.title_alert_init_title), getString(R.string.title_alert_init_message));
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-//        getSupportActionBar().setIcon(R.mipmap.image_icon);
         toolbar.setSubtitle(getString(R.string.sub_title));
         setSupportActionBar(toolbar);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -101,8 +109,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         navigationView.getMenu().findItem(R.id.nav_users).setVisible(false); // de inicio debe estar oculto
 
+        initComponents();
     } // End onCreate
 
+    /**
+     * Inicializa los componentes
+     */
+    private void initComponents(){
+        View viewAlert = getLayoutInflater().inflate(R.layout.alert_user_data, null);
+        ivAvatar = (ImageView) viewAlert.findViewById(R.id.ivAvatar);
+        tvId = (TextView) viewAlert.findViewById(R.id.tvId);
+        tvFulName = (TextView) viewAlert.findViewById(R.id.tvFulName);
+        tvEmail = (TextView) viewAlert.findViewById(R.id.tvEmail);
+        tvRole = (TextView) viewAlert.findViewById(R.id.tvRole);
+        btnSignOut = (TextView) viewAlert.findViewById(R.id.tvSignOut);
+        btnOk = (TextView) viewAlert.findViewById(R.id.tvOk);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(viewAlert);
+        alertDialog = builder.create();
+
+        ivAvatar.setOnClickListener(this);
+        btnSignOut.setOnClickListener(this);
+        btnOk.setOnClickListener(this);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,20 +189,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             ImageView ivAvatar = header.findViewById(R.id.ivAvatar);
             TextView tvName = header.findViewById(R.id.tvName);
             TextView tvEmail = header.findViewById(R.id.tvEmail);
-            userDataList.put("name", account.getGivenName());
-            userDataList.put("family_name", account.getFamilyName());
-            userDataList.put("email", account.getEmail());
-//            userDataList.put("phone", account.get);
-            userDataList.put("state", getString(R.string.state));
             if(account.getPhotoUrl() != null) Glide.with(this).load(account.getPhotoUrl()).into(ivAvatar);
             tvName.setText(account.getDisplayName());
             tvEmail.setText(account.getEmail());
-            ivAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    logOut(userDataList);
-                }
-            });
+            ivAvatar.setOnClickListener(this);
         }else{
             getPregressDialog(getString(R.string.usersTitle).toUpperCase(), getString(R.string.message_clossing));
             MainNavigation.showLogin(MainActivity.this);
@@ -180,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    /**
+     * Inicializa los datos del usuario cuando este se identifica (le da el rol de admin si es llajta.comida.app)
+     * @param account
+     */
     private void loadDataUser(GoogleSignInAccount account){
         try {
             String role;
@@ -199,31 +223,51 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    /**
-     * Este método sirve para cerrar sesión
-     */
-    private void logOut(Hashtable<String, String> user){
-        AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
-        confirmDialog.setTitle(getString(R.string.user_information));
-        confirmDialog.setMessage(
-                            getString(R.string.tv_user_name)+" " + user.get("name")
-                        + "\n" +getString(R.string.tv_user_fast_name)+" "+ user.get("family_name")
-                        + "\n"+getString(R.string.tv_email)+ " "+ user.get("email")
-                        + "\n"+getString(R.string.tv_state)+ " " + user.get("state"));
-        confirmDialog.setCancelable(false);
-        confirmDialog.setPositiveButton(getString(R.string.btn_sign_out), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.ivAvatar:
+                Glide.with(MainActivity.this).load(user.getAvatarUrl()).into(ivAvatar);
+                tvId.setText(user.getId());
+                tvFulName.setText(user.getFulName());
+                tvEmail.setText(user.getEmail());
+                tvRole.setText(getTraslateRole(user.getRole()));
+                alertDialog.show();
+                break;
+            case R.id.tvSignOut:
                 signOut();
-            }
-        });
-        confirmDialog.setNegativeButton(getString(R.string.btn_ok), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialogo1, int id) {
-//               Toast.makeText(MainActivity.this, "Cancelaste", Toast.LENGTH_SHORT).show();
-            }
-        });
-        confirmDialog.show();
+                break;
+            case R.id.tvOk:
+                alertDialog.dismiss();
+                break;
+            default:
+                Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
+        }
     }
 
+    /**
+     * Traduce los roles al idioma correspondiente (español)
+     * @param role
+     * @return
+     */
+    private String getTraslateRole(String role){
+        if(role.equalsIgnoreCase("admin")){
+            role = getString(R.string.role_admin);
+        }else if(role.equalsIgnoreCase("collaborator")){
+            role = getString(R.string.role_collaborator);
+        }else if(role.equalsIgnoreCase("voter")){
+            role = getString(R.string.role_voter);
+        }else if(role.equalsIgnoreCase("reader")){
+            role = getString(R.string.role_reader);
+        }else if(role.equalsIgnoreCase("none")){
+            role = getString(R.string.role_none);
+        }
+        return role;
+    }
+
+    /**
+     * Cierra sesión del usuario
+     */
     private void signOut(){
         userRealTimePresenter.stopRealtimeDatabase();
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
@@ -231,11 +275,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onResult(@NonNull Status status) {
             if(status.isSuccess()){
                 getPregressDialog(getString(R.string.tv_user_title), getString(R.string.message_clossing));
-                MainNavigation.showLogin(MainActivity.this);
-                authUser = null;
-                progressDialog.dismiss();
-                System.exit(0);
-//                onDestroy();
+                FirebaseAuth.getInstance().signOut();
+                new Timer().schedule(new TimerTask() { // esperamos 2 seg  para que termine de cerrar correctamente antes de matar el proceso
+                    @Override
+                    public void run() {
+                        MainNavigation.showLogin(MainActivity.this);
+                        authUser.setUser(null);
+                        authUser = null;
+                        progressDialog.dismiss();
+                        System.exit(0);
+                    }
+                }, 2000);
+
             }else{
                 Toast.makeText(MainActivity.this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
             }
@@ -243,6 +294,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
+    /**
+     * Muestra un diálogo de progreso
+     * @param title
+     * @param message
+     */
     private void getPregressDialog(String title, String message){
         progressDialog.setTitle(title);
         progressDialog.setMessage(message);
@@ -261,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     }
                 }
             } catch (Exception e) { // Si no existe el usuario no habrá rol que leer, debe cerrarse la sesión
+                Log.e("Error", e.getMessage());
                 signOut();
                 stopRealtimeDatabase();
             }
@@ -302,14 +359,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }else{ // es usuario none
             stopRealtimeDatabase();
             MainNavigation.accessToApp(this);
-//            rol = user.getRole();
             Toast.makeText(this, getString(R.string.restart_app_message), Toast.LENGTH_LONG).show();
             authUser = null;
             System.exit(0);
-//            this.onPause();
-//            this.onStop();
-//            this.finishAffinity();
-//            this.onDestroy();
         }
         navigationView.setVisibility(View.VISIBLE); // Una ves que carga el usuario, ya puede muestrar el menu lateral
     }
@@ -322,6 +374,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
+    /**
+     * Detiene la base de datos
+     */
     private void stopRealtimeDatabase(){
         userPresenter.stopRealtimeDatabase();
         userRealTimePresenter.stopRealtimeDatabase();

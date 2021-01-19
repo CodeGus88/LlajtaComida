@@ -4,10 +4,13 @@ import com.appcocha.llajtacomida.presenters.plate.PlateList;
 
 import java.util.ArrayList;
 
+/**
+ * Validaciones de registros y actualizaciones
+ */
 public class Validation {
 
     /**
-     * verifica si un texto está o no vacio (Sin tomar en cuenta espacios)
+     * verifica si un texto está o no vacio (Sin tomar en cuenta los espacios)
      * @param text
      * @return
      */
@@ -22,7 +25,7 @@ public class Validation {
     }
 
     /**
-     * quitara los espacios demás
+     * Quita los espacios demás
      * @param text
      * @return
      */
@@ -43,6 +46,11 @@ public class Validation {
         return resultText;
     }
 
+    /**
+     * Verifica si es o son teléfonos los que están en el campo phones
+     * @param phones
+     * @return isPhone
+     */
     public static boolean isPhone(String phones){
         ArrayList<String> phoneList = new ArrayList<String>();
         String phone = "";
@@ -96,6 +104,11 @@ public class Validation {
         return isPhone;
     }
 
+    /**
+     * Obtiene la primera palabra del campo fulName
+     * @param fulName
+     * @return firstName
+     */
     public static String getFirstName(String fulName){
         String firstName = "";
         for(int i = 0; i<fulName.length(); i++){
@@ -139,13 +152,30 @@ public class Validation {
         return exist;
     }
 
+    /**
+     * Verifica que el el nombre no tenga caracteres que no correspondan
+     * @param name
+     * @return
+     */
     public static boolean isPersonName(String name){
         boolean isName=  true;
         name = name.toLowerCase();
         for(int i = 0; i < name.length(); i ++){
-            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122) || name.charAt(i) == 'ñ'
-                    || name.charAt(i) == 'á' || name.charAt(i) == 'é' || name.charAt(i) == 'í'
-                    || name.charAt(i) == 'ó' || name.charAt(i) == 'ú' || name.charAt(i) == ' ') ){
+
+            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
+                    || name.charAt(i) == 164 || name.charAt(i) == 160 || name.charAt(i) == 130 || name.charAt(i) == 161 || name.charAt(i) == 162
+                    || name.charAt(i) == 163 || name.charAt(i) == 32) || name.charAt(i) == 129){
+//            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
+//                    || name.charAt(i) == 'ñ' || name.charAt(i) == 'á' || name.charAt(i) == 'é' || name.charAt(i) == 'í' || name.charAt(i) == 'ó'
+//                    || name.charAt(i) == 'ú' || name.charAt(i) == ' ') || name.charAt(i) == 'ü'){
+//                if(!((Character.getNumericValue(name.charAt(i)) >= 97 && Character.getNumericValue(name.charAt(i)) <= 122)
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ñ')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('á')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('é')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('í')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ó')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ú')
+//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue(' ')) ){
                 isName = false;
                 break;
             }

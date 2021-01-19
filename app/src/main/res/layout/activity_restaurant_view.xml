@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.plates.PlateViewActivity"
-    android:background="#fff"
+    android:background="@drawable/panel_white"
     android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <!--android:fillViewport="true"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,7 +126,10 @@
                 android:textSize="25dp"
                 android:gravity="center"
                 android:hint="@string/tv_undefined"
-                style="@style/CodeFontContentTitle"/>
+                style="@style/CodeFontContentTitle"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:layout_marginHorizontal="1dp"/>
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
@@ -137,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_gray"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="1dp"
                 android:padding="10dp">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -225,7 +227,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@drawable/panel_gray"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="1dp"
                 android:padding="10dp">
 
                 <LinearLayout
@@ -259,7 +261,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="1dp"
                 android:background="@drawable/panel_gray">
 
                 <RelativeLayout
@@ -316,7 +318,8 @@
             <FrameLayout
                 android:id="@+id/flRating"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="1dp"/>
 
         </LinearLayout>
 

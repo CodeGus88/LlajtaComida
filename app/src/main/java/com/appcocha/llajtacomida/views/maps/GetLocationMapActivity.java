@@ -29,6 +29,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Vista, Obtiene las coordenadas de una ubicación (Para establecer la ubicación de un restaurante)
+ */
 public class GetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
@@ -76,6 +79,9 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents() {
         searchView = (SearchView) findViewById(R.id.etSearch);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -165,6 +171,9 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         updateLatLng();
     }
 
+    /**
+     * Actualiza la latitud y longitud
+     */
     private void updateLatLng(){
         tvLatitude.setText("Lat: " + marker.getPosition().latitude);
         tvLongitude.setText("Lon: " + marker.getPosition().longitude);

@@ -9,11 +9,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
+/**
+ * Modelo, leer plato(s)
+ * Implementa PlateInterface.ModelPlate
+ */
 public class PlateModel implements ValueEventListener, PlateInterface.ModelPlate {
 
     private PlateInterface.PresenterPlate presenterPlate;
     private DatabaseReference databaseReference;
 
+    /**
+     * Inicializa el presentador y la base de datos
+     * @param presenterPlate
+     */
     public PlateModel(PlateInterface.PresenterPlate presenterPlate){
         databaseReference = FirebaseDatabase.getInstance().getReference();
         this.presenterPlate = presenterPlate;

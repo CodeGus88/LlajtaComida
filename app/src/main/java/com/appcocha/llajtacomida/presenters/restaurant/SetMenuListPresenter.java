@@ -7,11 +7,18 @@ import com.appcocha.llajtacomida.models.restaurant.menu.SetMenuListModel;
 
 import java.util.ArrayList;
 
+/**
+ * Presentador, gestor de menú
+ */
 public class SetMenuListPresenter implements RestaurantInterface.PresenterSetMenuList {
 
     private RestaurantInterface.ViewSetMenuList viewSetMenuList;
     private RestaurantInterface.ModelSetMenuList modelSetMenuList;
 
+    /**
+     * Constructor, establece viewSetMenuList
+     * @param viewSetMenuList
+     */
     public SetMenuListPresenter(RestaurantInterface.ViewSetMenuList viewSetMenuList){
         this.viewSetMenuList = viewSetMenuList;
         modelSetMenuList = new SetMenuListModel(this);

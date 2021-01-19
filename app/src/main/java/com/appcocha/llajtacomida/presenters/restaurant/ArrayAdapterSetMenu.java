@@ -21,6 +21,9 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 
 import java.util.ArrayList;
 
+/**
+ * Adaptador
+ */
 public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements CompoundButton.OnCheckedChangeListener
 
     private final Context context;
@@ -29,6 +32,13 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
     private ArrayList<Plate> plateListCopy;
     private final Menu menu;
 
+    /**
+     * Constructor, inicializa context, resource, platesList, menu
+     * @param context
+     * @param resource
+     * @param platesList
+     * @param menu
+     */
     public ArrayAdapterSetMenu(@NonNull Context context, int resource, ArrayList<Plate> platesList, final Menu menu) {
         super(context, resource, platesList);
         this.context = context;
@@ -73,8 +83,7 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         return view;
     }
 
-    // Search
-    /* Filtra los datos del adaptador */
+    /** Filtra los datos del adaptador */
     public void filter(String texto, int previousLentg) {
         texto = texto.toLowerCase();
         if(!texto.isEmpty()) {
@@ -92,6 +101,9 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         notifyDataSetChanged();
     }
 
+    /**
+     * Busca el texto en el  toString del objeto
+     */
     public void search(String texto){
         int i = 0;
         while (i < plateList.size()) {
@@ -121,12 +133,20 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         return exist;
     }
 
+    /**
+     * Agrega un plato en la lista del menú
+     * @param plateId
+     */
     private void addPlate(String plateId){
         if(!existInList(plateId, menu.getMenuList())){
             menu.getMenuList().add(plateId);
         }
     }
 
+    /**
+     * Elimina el plato de la lista del restaurante
+     * @param plateId
+     */
     private void removePlate(String plateId){
         for(int i = 0; i < menu.getMenuList().size(); i ++){
             if(menu.getMenuList().get(i).equals(plateId)){
@@ -135,6 +155,9 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         }
     }
 
+    /**
+     * Elimina del menú los platos que no existen
+     */
     private void clearNonExistentPlates(){
         ArrayList<String> platesListIdExistents = new ArrayList<String>();
         for(int i = 0; i< plateListCopy.size(); i++){
@@ -151,9 +174,13 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         }
     }
 
+    /**
+     * Obtiene el menú
+     * @return menu
+     */
     public Menu getMenu(){
         clearNonExistentPlates();
-        Toast.makeText(context, "Elementos en lista: " + menu.getMenuList().size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, context.getString(R.string.menu_size) + " " + menu.getMenuList().size(), Toast.LENGTH_SHORT).show();
         return menu;
     }
 }

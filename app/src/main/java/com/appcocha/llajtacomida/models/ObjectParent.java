@@ -10,7 +10,7 @@ public abstract class ObjectParent implements Serializable {
     protected String url;
     protected float punctuation;
     /**
-     * Utilizamos poliformismo
+     * Utiliza poliformismo
      * Para evitarse de mal entendidos el objeto le dará un id automaticamente si no se lo proporciona
      */
     public ObjectParent(){

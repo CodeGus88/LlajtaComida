@@ -31,7 +31,7 @@
     <string name="title_alert_init_title">INICIO</string>
     <string name="title_alert_init_message">Cargando...</string>
 
-    <string name="btn_sign_out">Cerrar se sesión</string>
+    <string name="btn_sign_out">Cerrar sesión</string>
     <string name="btn_ok">Vale</string>
 
 
@@ -155,7 +155,7 @@
 
     <!--  Messages Toast and alerts  -->
     <string name="message_invalid_option">Opción inválida...</string>
-    <string name="message_establish">Establedido</string>
+    <string name="message_establish">Establecido</string>
     <string name="message_is_failed">Falló el proceso...</string>
     <string name="add_plate_to_favorite_list">Se agregó a la lista de platos favoritos</string>
     <string name="remove_from_list_favorite_plates">Se quitó de la lista de platos favoritos</string>
@@ -198,7 +198,14 @@
     <string name="message_not_found_restaurants">No existen restaurantes con este plato en su menú</string>
     <string name="message_image_player_paused">Reproducción de imágenes pausada</string>
     <string name="message_image_player_resumed">Reproducción de imágenes reanudada</string>
-    <string name="message__not_contain_images">No contiene imágenes en presentación...</string>
+    <string name="message_not_contain_images">No contiene imágenes en presentación...</string>
+<!--    <string name="message_processed_correct">Se procesó correctamente</string>-->
+    <string name="message_processed_correct">Se procesó correctamente</string>
+    <string name="message_image_error">Ocurrió un error al subir la imagen</string>
+    <string name="message_image_null">No se detectó ninguna imagen</string>
+    <string name="message_image_was_removed">Se quitó la imagen</string>
+    <string name="something_went_wrong">Oh no, algo salió mal</string>
+    <string name="menu_size">Elementos en lista:</string>
 
     <!--  Title  -->
     <string name="title_confirmation">Confirmación</string>
@@ -220,11 +227,11 @@
     <string name="state">Conectado</string>
     <string name="usersTitle">Usuarios</string>
     <!--    Roles -->
-    <string name="rb_is_admin">Administrador</string>
-    <string name="rb_is_collaborator">Colaborador</string>
-    <string name="rb_is_oter">Votante</string>
-    <string name="rb_is_reader">Lector</string>
-    <string name="rb_is_none">Ninguno</string>
+    <string name="role_admin">Administrador</string>
+    <string name="role_collaborator">Colaborador</string>
+    <string name="role_voter">Votante</string>
+    <string name="role_reader">Lector</string>
+    <string name="role_none">Ninguno</string>
     <!--    buttons-->
     <string name="btn_close">Cerrar</string>
     <string name="btn_save">Guardar</string>
@@ -298,7 +305,7 @@
         \nFacultad de Ciencias y Tecnología
         \nIngeniería de Sistemas</string>
     <string name="tv_mail">Email: llajta.comida.app@gmail.com</string>
-
+    <string name="mail">llajta.comida.app@gmail.com</string>
     <!--    Usuario administrador por defecto (ID google) -->
     <string name="user_id_admin_default">105708453298523886510</string>
 
@@ -324,5 +331,9 @@
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
     <string name="btn_back">Volver</string>
+
+    <string name="id">ID:</string>
+
+
 
 </resources>

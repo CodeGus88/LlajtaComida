@@ -35,6 +35,9 @@ import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
+/**
+ * Vista, Edita un restaurante
+ */
 public class EditRestaurantActivity extends AppCompatActivity implements View.OnClickListener, RestaurantInterface.ViewRestaurantManager {
 
     // Components
@@ -51,7 +54,6 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
     private TextInputLayout tilAddress;
     private TextInputLayout tilLatLon;
     private TextInputLayout tilDescription;
-
 
     // Comprimir foto
     private Bitmap thumb_bitmap;
@@ -77,6 +79,9 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         restaurantManagerPresenter = new RestaurantManagerPresenter(this);
     }
 
+    /**
+     * En caso de que se contenga un objeto de entrada (modificado) (volver desde la actividad para establecer la ubicacion en el mapa)
+     */
     private void readObjectData(){
         final Intent intent = this.getIntent();
         if(intent.hasExtra("restaurant")){
@@ -114,6 +119,10 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Muestra la imagen del restaurante (actual o modificado)
+     * @param file
+     */
     private void  processImage(File file){
         ivPhoto.setImageURI(uri);
         //Comprimir imagen
@@ -131,6 +140,9 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         thumb_byte = biByteArrayOutputStream.toByteArray(); // Contiene la imagen comprimida
     }
 
+    /**
+     * Inicializa los componetes
+     */
     private void initComponents(){
         etName = (EditText) findViewById(R.id.etName);
         etOwnerName = (EditText) findViewById(R.id.etOwnerName);
@@ -146,9 +158,6 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         btnUpdate = (Button) findViewById(R.id.btnUpdate);
         ivPhoto = (ImageView) findViewById(R.id.ivPhoto);
         initTextInputLayout();
-//        Display display = getWindowManager().getDefaultDisplay();
-//        ivPhoto.getLayoutParams().height = (int) (ScreenSize.getWidth(display)*0.6666667);
-//        ivPhoto.getLayoutParams().width = ScreenSize.getWidth(display);
         Display display = getWindowManager().getDefaultDisplay();
         int x= (int) (ScreenSize.getWidth(display)*0.855);
         int y = (int) (x*0.6666667);
@@ -166,6 +175,9 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         progressDialog.setCancelable(false);
     }
 
+    /**
+     * Inicializa los compoenentes TextInputLayout
+     */
     public void initTextInputLayout(){
         tilName = (TextInputLayout) findViewById(R.id.tilName);
         tilOwnerName = (TextInputLayout) findViewById(R.id.tilOwnerName);
@@ -201,6 +213,9 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
     }
 
 
+    /**
+     * Solicita actualizar el objeto
+     */
     private void updateRestaurant(){
         whriteRestaurant();
         progressDialog.show();

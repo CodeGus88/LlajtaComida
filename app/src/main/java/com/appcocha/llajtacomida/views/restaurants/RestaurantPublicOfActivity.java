@@ -35,6 +35,9 @@ import com.appcocha.llajtacomida.presenters.user.UserPresenter;
 
 import java.util.ArrayList;
 
+/**
+ * Vista, muetra la lista de restaurantes lno publicados
+ */
 public class RestaurantPublicOfActivity extends AppCompatActivity implements RestaurantInterface.ViewRestPublicOf, View.OnClickListener, UserInterface.ViewUser {
 
     private static UserInterface.PresenterUser presenterUser;
@@ -73,6 +76,9 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         presenterUser = new UserPresenter(this);
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents() {
         etSearch = (EditText) findViewById(R.id.etSearch);
         lvPublicOfRest = (ListView) findViewById(R.id.lvPublicOfRest);
@@ -94,6 +100,9 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         initAlertDialog();
     }
 
+    /**
+     * Iniciliza el alert de opciones del autor del autor n de un restaurante
+     */
     private void initAlertDialog() {
         View viewAlert = getLayoutInflater().inflate(R.layout.alert_user_options, null);
         ivAvatar = (ImageView) viewAlert.findViewById(R.id.ivAvatar);
@@ -143,6 +152,10 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Iniciliza los íconos
+     * @param menu
+     */
     private void initIcon(Menu menu) {
         iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
         iconSearch.setVisible(true);
@@ -180,10 +193,18 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         }
     }
 
+    /**
+     * Carga un al autor de un restaurante
+     * @param userId
+     */
     public static void loadAuthor(String userId){
         presenterUser.findUser(userId);
     }
 
+    /**
+     * Selecciona el rol de un autor
+     * @return role
+     */
     private String changeUserRole(){
         if(rbIsAdmin.isChecked()){
             return ("admin");

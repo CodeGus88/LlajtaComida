@@ -3,14 +3,20 @@ package com.appcocha.llajtacomida.presenters.plate;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.plate.PlateModel;
-
 import java.util.ArrayList;
 
+/**
+ * Presentador, plato
+ */
 public class PlatePresenter implements PlateInterface.PresenterPlate{
 
     private PlateInterface.ViewPlate viewPlate;
     private PlateInterface.ModelPlate modelPlate;
 
+    /**
+     * Contructor, establece viewPlate
+     * @param viewPlate
+     */
     public PlatePresenter(PlateInterface.ViewPlate viewPlate){
         this.viewPlate = viewPlate;
         modelPlate = new PlateModel(this);

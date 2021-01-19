@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".views.main.AboutUsFragment"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#F2FFFFFF">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -68,7 +68,9 @@
                 android:textSize="8dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:textIsSelectable="true"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
+<!--            android:textIsSelectable="true"-->
         </LinearLayout>
     </ScrollView>
 

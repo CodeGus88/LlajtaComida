@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -43,6 +41,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Vista, Ubica los restaurantes que contienen un determinado plato en sus menús en un mapa
+ */
 public class SetAllLocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -58,7 +59,6 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
     private TextView tvPlateName, tvRestaurantsFound, tvRating;
     private ImageView ivPlateImage;
     private CardView cvImage;
-
     private Plate plate;
 
     @Override
@@ -84,6 +84,9 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         initComponents();
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         spTypesOfMaps = (Spinner) findViewById(R.id.spTypesOfMaps);
         btnBack = (Button) findViewById(R.id.btnBack);
@@ -169,6 +172,9 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         }
     }
 
+    /**
+     * Optiene los permisos de uso de GPS
+     */
     private void getPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -201,6 +207,9 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         }
     }
 
+    /**
+     * Solicita activar el GPS, en caso de que este esté desactivado
+     */
     private void startGPS(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(R.string.message_gps_activate))
@@ -219,6 +228,9 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         }).show();
     }
 
+    /**
+     * Carga las localizaciones de los restaurantes en el mapa
+     */
     private void loadLocations(){
         RandomColor randomColor = new RandomColor();
         for(int i = 0; i < restaurantList.size(); i++){
@@ -234,7 +246,6 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(randomColor.getRandonColor())); //BitmapDescriptorFactory.HUE_VIOLET
             mMap.addMarker(markerOptions);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-//            mMap.getUiSettings().setZoomControlsEnabled(true);
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f));
         }

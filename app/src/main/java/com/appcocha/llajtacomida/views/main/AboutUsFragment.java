@@ -3,11 +3,9 @@ package com.appcocha.llajtacomida.views.main;
 import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.appcocha.llajtacomida.R;
-import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 
-
+/**
+ * Vista, Sobre nosotros
+ */
 public class AboutUsFragment extends Fragment {
 
     private ImageView ivIconImage;
@@ -39,6 +38,9 @@ public class AboutUsFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         ivIconImage = (ImageView) view.findViewById(R.id.ivIconImage);
         tvEmail = (TextView) view.findViewById(R.id.tvEmail);
@@ -50,7 +52,7 @@ public class AboutUsFragment extends Fragment {
         tvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserNavegation.openMail(getContext(), tvEmail.getText().toString().replace("Email: ", "").trim()); // "Email: quita el subtitulo del correlo"
+                UserNavegation.openMail(getContext(), getString(R.string.mail).trim());
             }
         });
     }

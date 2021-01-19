@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/panel_white">
 
     <TextView
         android:id="@+id/tvTitle"
@@ -122,7 +123,8 @@
                 android:hint="@string/tv_undefined"
                 android:textColor="#673AB7"
                 android:textStyle="italic"
-                android:textIsSelectable="true"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"/>
         </LinearLayout>
 
         <Space

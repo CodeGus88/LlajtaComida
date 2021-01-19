@@ -5,14 +5,20 @@ import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.plate.PlateManagerModel;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
-
 import java.util.ArrayList;
 
+/**
+ * Presentador, platos
+ */
 public class PlateManagerPresenter implements PlateInterface.PresenterPlateManager{
 
     private PlateInterface.ViewPlateManager viewPlateManager;
     private PlateInterface.ModelPlateManager modelPlateManager;
 
+    /**
+     * Constructor, establece viewPlateManager
+     * @param viewPlateManager
+     */
     public PlateManagerPresenter(PlateInterface.ViewPlateManager viewPlateManager){
         this.viewPlateManager = viewPlateManager;
         modelPlateManager = new PlateManagerModel(this);

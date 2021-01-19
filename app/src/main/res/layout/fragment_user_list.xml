@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".views.users.UserListFragment"
     android:orientation="vertical"
-    android:background="@drawable/list_panel_white_gradient">
+    android:background="@drawable/panel_list_white_gradient">
 
     <EditText
         android:id="@+id/etSearch"

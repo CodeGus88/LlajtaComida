@@ -3,14 +3,20 @@ package com.appcocha.llajtacomida.presenters.restaurant;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.RestPublicOfModel;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
-
 import java.util.ArrayList;
 
+/**
+ * Presenter, restaurantes no publicados
+ */
 public class RestPublicOfPresenter implements RestaurantInterface.PresenterRestPublicOf {
 
     private RestaurantInterface.ModelRestPublicOf modelRestPublicOf;
     private RestaurantInterface.ViewRestPublicOf viewRestPublicOf;
 
+    /**
+     * Constructor, inicializa viewRestPublicOf
+     * @param viewRestPublicOf
+     */
     public RestPublicOfPresenter(RestaurantInterface.ViewRestPublicOf viewRestPublicOf){
         this.viewRestPublicOf = viewRestPublicOf;
         modelRestPublicOf = new RestPublicOfModel(this);

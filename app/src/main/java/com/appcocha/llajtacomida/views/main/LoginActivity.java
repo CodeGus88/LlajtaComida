@@ -25,6 +25,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * Vista, inicio de sesión
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
@@ -48,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
     }
 
+    /**
+     * Inicia la actividad de google para el inicio de sesión
+     */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -76,32 +82,31 @@ public class LoginActivity extends AppCompatActivity {
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(LoginActivity.this, "\uD83C\uDF7D  ''LLajta Comida'' \uD83D\uDCF2" +"\n"
-                                    +"✅"  + " "+getString(R.string.welcome)
-                                    + " " + getFirstWord(task.getResult().getUser().getDisplayName()), Toast.LENGTH_LONG).show();
-                            MainNavigation.accessToApp(LoginActivity.this);
-//                            updateUI(user);
-                            progressDialog.dismiss();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithCredential:success");
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Toast.makeText(LoginActivity.this, "\uD83C\uDF7D  \""+getString(R.string.app_name)+"\" \uD83D\uDCF2" +"\n"
+                                +"✅"  + " "+getString(R.string.welcome)
+                                + " " + getFirstWord(task.getResult().getUser().getDisplayName()), Toast.LENGTH_LONG).show();
+                        MainNavigation.accessToApp(LoginActivity.this);
+                        progressDialog.dismiss();
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithCredential:failure", task.getException());
 //                            Snackbar.make(mBinding.mainLayout, "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
-                            progressDialog.dismiss();
-                        }
+                        updateUI(null);
+                        progressDialog.dismiss();
                     }
-                });
+                }
+            });
     }
 
     private void updateUI(Object o) {
-        Toast.makeText(this, "updating....", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.message_updating), Toast.LENGTH_SHORT).show();
     }
 
     public void access(View view) {

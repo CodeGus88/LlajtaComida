@@ -3,7 +3,6 @@ package com.appcocha.llajtacomida.models.user;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -11,6 +10,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+/**
+ * Modelo
+ */
 public class UserRealTimeModel implements  UserInterface.ModelUserRealTime, ValueEventListener {
 
     private UserInterface.PresenterUserRealTime presenterUserRealTime;

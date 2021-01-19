@@ -13,11 +13,18 @@ import com.appcocha.llajtacomida.models.restaurant.RestaurantModel;
 
 import java.util.ArrayList;
 
+/**
+ * Presentador, restaurante
+ */
 public class RestaurantPresenter implements RestaurantInterface.PresenterRestaurant {
 
     private RestaurantInterface.ViewRestaurant viewRestaurant;
     private RestaurantInterface.ModelRestaurant modelRestaurant;
 
+    /**
+     * Constructor, establee viewRestaurant
+     * @param viewRestaurant
+     */
     public RestaurantPresenter(RestaurantInterface.ViewRestaurant viewRestaurant){
         this.viewRestaurant = viewRestaurant;
         modelRestaurant = new RestaurantModel(this);

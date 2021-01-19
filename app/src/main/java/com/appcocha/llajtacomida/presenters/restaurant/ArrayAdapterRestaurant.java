@@ -13,11 +13,12 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-
+/**
+ * Adaptador
+ */
 public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
 
     private ArrayList<Restaurant> restaurantList;
@@ -25,6 +26,12 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
     private Context context;
     private int resource;
 
+    /**
+     * Constructor, inicializa context, resource, objects
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public ArrayAdapterRestaurant(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> objects) {
         super(context, resource, objects);
         this.resource = resource;
@@ -58,7 +65,9 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
         return view;
     }
 
-    /* Filtra los datos del adaptador */
+    /**
+     *  Filtra los datos del adaptador
+     */
     public void filter(String texto, int previousLentg) {
         texto = texto.toLowerCase();
         if(!texto.isEmpty()) {
@@ -76,6 +85,10 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
         notifyDataSetChanged();
     }
 
+    /**
+     * Busca el texto en el toString del objeto correspondiente
+     * @param texto
+     */
     public void search(String texto){
         int i = 0;
         while (i < restaurantList.size()) {

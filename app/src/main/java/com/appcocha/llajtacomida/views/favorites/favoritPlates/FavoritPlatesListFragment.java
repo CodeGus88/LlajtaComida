@@ -22,7 +22,9 @@ import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 
 import java.util.ArrayList;
 
-
+/**
+ * Vista, platos favoritos
+ */
 public class FavoritPlatesListFragment extends Fragment implements FavoriteInterface.ViewFavorite {
 
     private EditText etSearch;
@@ -40,7 +42,13 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
         // Required empty public constructor
     }
 
-
+    /**
+     * Inicializa la actividad a la que corresponde
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -52,6 +60,9 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
         return view;
     }
 
+    /**
+     * Inicializa los componentes del fragmento
+     */
     private void initComponents(){
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
@@ -78,6 +89,10 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
     }
 
 
+    /**
+     * Carga la lista de los platos favoritos del usuarios conectado en el adaptador
+     * @param objectsList
+     */
     @Override
     public void showFavoriteList(ArrayList<Object> objectsList) {
         try{

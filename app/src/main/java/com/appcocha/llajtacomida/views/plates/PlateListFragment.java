@@ -32,11 +32,11 @@ import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Vista, Este fragmento muestra la lista de platos
  */
 public class PlateListFragment extends Fragment implements PlateInterface.ViewPlate{
 
+    // view que hará referencia a la actividad contenedora de este fragmento
     private View view;
 
     // Iconos
@@ -50,13 +50,21 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
     private ArrayList<Plate> plateList;
     private ArrayAdapterPlate arrayAdapterPlate;
 
-    // presenters
+    /**
+     * Muestra la lista de platos
+     */
     private PlateInterface.PresenterPlate presenterPlate;
-//    private UserInterface.PresenterUser presenterUser;
 
+    /**
+     * Requiere de un constructor vacío
+     */
     public PlateListFragment() {
         // Required empty public constructor
     }
+
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents() {
 
         etSearch = (EditText) view.findViewById(R.id.etSearch);
@@ -88,6 +96,13 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
 
     }
 
+    /**
+     * Inicializa la actividad a la que corresponde
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -97,10 +112,14 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         initComponents();
         presenterPlate = new PlatePresenter(this);
         presenterPlate.loadPlatesList();
-//        presenterUser = new UserPresenter(this);
         return view;
     }
 
+    /**
+     * Inicializa los íconos del del toolbar
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
@@ -108,6 +127,10 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         initIconsMenu(menu);
     }
 
+    /**
+     * Inicializa todos lo íconos
+     * @param menu hace referenccia al menú de la actividad contenedora
+     */
     private void initIconsMenu(Menu menu) {
         iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
         for(int i = 0; i < menu.size(); i++){ // Ocultamos todo
@@ -117,7 +140,6 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
 
         try{
-            //        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
             if(AuthUser.user.getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
                 iconAdd.setVisible(true);
             }else{
@@ -130,23 +152,24 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
 
     }
 
+    /**
+     * Este método es el oyente de las acciones de los íconos
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSearch:
-                if(!plateList.isEmpty()){
-                    if(etSearch.getVisibility() == View.GONE){
-                        etSearch.setVisibility(View.VISIBLE);
-                        etSearch.setText(null);
-                        etSearch.setFocusable(true);
-                        etSearch.requestFocus();
-                    }else{
-                        etSearch.setVisibility(View.GONE);
-                        // Para que vuelga a cargar la lista (0 es cualquier numero)
-                        arrayAdapterPlate.filter("", 0);
-                    }
+                if(etSearch.getVisibility() == View.GONE){
+                    etSearch.setVisibility(View.VISIBLE);
+                    etSearch.setText(null);
+                    etSearch.setFocusable(true);
+                    etSearch.requestFocus();
                 }else{
-                    Toast.makeText(getContext(), "¡Aún no se cargaron datos!", Toast.LENGTH_SHORT).show();
+                    etSearch.setVisibility(View.GONE);
+                    // Para que vuelga a cargar la lista (0 es cualquier numero)
+                    arrayAdapterPlate.filter("", 0);
                 }
                 break;
             case R.id.iconAdd:
@@ -161,6 +184,10 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         //     no se usará
     }
 
+    /**
+     * recibe los la lista de platos
+     * @param plateList
+     */
     @Override
     public void showPlateList(ArrayList<Plate> plateList) {
         try {

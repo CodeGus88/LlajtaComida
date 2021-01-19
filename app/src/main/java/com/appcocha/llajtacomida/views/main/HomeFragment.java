@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 public class HomeFragment extends Fragment implements UserInterface.ViewUser {
 
     private View root;
+
+    // Components
     private TextView tvWelcome;
     private LinearLayout llfontTitle;
     // animation
@@ -47,11 +50,17 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
         return root;
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponets(){
         tvWelcome = (TextView) root.findViewById(R.id.tvWelcome);
         llfontTitle = (LinearLayout) root.findViewById(R.id.llfontTitle);
     }
 
+    /**
+     * Inicializa la animación de la tabla que sube en home
+     */
     private void animation(){
         AnimatorSet animatorSet = new AnimatorSet();
         animatorY = ObjectAnimator.ofFloat(llfontTitle, "y", -40F);
@@ -67,7 +76,6 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
             if(user.getFulName() != null){
                 title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(user.getFulName()) +
                         getString(R.string.tv_welcome_continue);
-
             }else{
                 title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()) +
                         getString(R.string.tv_welcome_continue);

@@ -56,7 +56,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
-//    private boolean isAnAdministrator, isAuthor;
     private Restaurant restaurant;
     // components
     private ImageButton btnNext;
@@ -74,7 +73,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
     private LinearLayout llOwnerName;
     private ArrayAdapterPlate arrayAdapterPlate;
-//    private ArrayList<Image> imagesList;
     private ArrayList<Plate> plateList;
 
     // Presenters
@@ -111,6 +109,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
        initRatingFragment();
     }
 
+    /**
+     * Inicializa el fragmento rating en la actividad actual
+     */
     private void initRatingFragment() {
         Bundle bundle = new Bundle();
         bundle.putString("objectId", id);
@@ -121,11 +122,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         favoriteObjectFragment = new FavoriteObjectFragment();
         favoriteObjectFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().add(R.id.flFavorite, favoriteObjectFragment).commit(); // muestra el fragmento favorite
-
     }
 
+    /**
+     *Inicializa los presentadores
+     */
     private void initPresenters() {
-        // iniciar presentadores
         restPlateListPresenter = new RestPlateListPresenter(this);
         restPlateListPresenter.filterPlateListInMenu(id);
         restaurantPresenter = new RestaurantPresenter(this);
@@ -136,6 +138,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         restaurantManagerPresenter = new RestaurantManagerPresenter(this);
     }
 
+    /**
+     * Inicializa la animación automática
+     */
     private void initAnimation(){
         viewFlipper.setDisplayedChild(0);
         viewFlipper.setFlipInterval(TIME_ANIMATION);
@@ -175,7 +180,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnVisit.setOnClickListener(this);
         viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
         tvName.setOnClickListener(this);
-
         toast = new Toast(this);
     }
 
@@ -262,6 +266,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Pausa o reanuda la presentación de las imágenes del restaurante
+     */
     private void pauseResume(){
         if(viewFlipper.isFlipping()){
             viewFlipper.stopFlipping();
@@ -279,7 +286,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 toast.setDuration(Toast.LENGTH_SHORT);
                 toast.show();
             }else{
-                Toast.makeText(this, getString(R.string.message__not_contain_images), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.message_not_contain_images), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -315,6 +322,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Solicita eliminar un registro
+     */
     private void delete() {
         AlertDialog.Builder confirm = new AlertDialog.Builder(this);
         confirm.setTitle(getString(R.string.confirm_title));
@@ -322,11 +332,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         confirm.setCancelable(false);
         confirm.setPositiveButton(getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//           RestaurantGestorDB restaurantDataBase = new RestaurantGestorDB(RestaurantViewActivity.this, restaurant);
             // Antes de eliminar el plato, debemos eliminar todos sus archivos
             GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
             galeryDatabase.deleteAllData(); // es un metodo estatico
-//                restaurantDataBase.delete();
             Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
             restaurantManagerPresenter.delete(restaurant.getId());
             stopRealtimeDatabase();
@@ -336,7 +344,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         });
         confirm.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-                //message to cancel
             }
         });
         confirm.show();
@@ -426,6 +433,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * Detiene la base de datos
+     */
     private void stopRealtimeDatabase(){
         restPlateListPresenter.stopRealtimeDatabse();
         imagePresenter.stopRealtimeDatabase();

@@ -24,6 +24,9 @@ import com.appcocha.llajtacomida.presenters.restaurant.SetMenuListPresenter;
 
 import java.util.ArrayList;
 
+/**
+ * Vista, gestor de menú de platos de un restaurante
+ */
 public class SetMenuActivity extends AppCompatActivity implements RestaurantInterface.ViewSetMenuList {
 
     // Componentes
@@ -67,6 +70,9 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         setMenuListPresenter.searchSetMenuList(restaurant.getId());
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         etSearch = (EditText) findViewById(R.id.etSearch);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -96,6 +102,10 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Iniciliza los íconos
+     * @param menu
+     */
     private void initIconMenu(Menu menu){
         if(isAdministrator || isAuthor){
             iconSave = (MenuItem)  menu.findItem(R.id.iconSave);
@@ -116,7 +126,6 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void showSetMenuList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.models.restaurant.menu.Menu menu) {

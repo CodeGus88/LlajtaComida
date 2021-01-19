@@ -3,7 +3,6 @@ package com.appcocha.llajtacomida.views.restaurants;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +37,9 @@ import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
+/**
+ * Vista, crea un nuevo restaurnate
+ */
 public class CreateRestaurantActivity extends AppCompatActivity implements View.OnClickListener, RestaurantInterface.ViewRestaurantManager {
 
     // Components
@@ -83,6 +85,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         restaurantManagerPresenter = new RestaurantManagerPresenter(this);
     }
 
+    /**
+     * En caso de que se contenga un objeto de entrada (volver desde la actividad para establecer la ubicacion en el mapa)
+     */
     private void readObjectIntent(){
         final Intent intent = this.getIntent();
         if(intent.hasExtra("restaurant")){
@@ -103,6 +108,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         }
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         etName = (EditText) findViewById(R.id.etName);
         etOwnerName = (EditText) findViewById(R.id.etOwnerName);
@@ -158,6 +166,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         progressDialog.setCancelable(false);
     }
 
+    /**
+     * Inicializa los compoenentes TextInputLayout
+     */
     public void initTextInputLayout(){
         tilName = (TextInputLayout) findViewById(R.id.tilName);
         tilOwnerName = (TextInputLayout) findViewById(R.id.tilOwnerName);
@@ -197,6 +208,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         }
     }
 
+    /**
+     * Solicita almacenar el el objeto y su imagen en la base de datos
+     */
     private void storeRestaurant(){
         progressDialog.show();
         whriteRestaurant();

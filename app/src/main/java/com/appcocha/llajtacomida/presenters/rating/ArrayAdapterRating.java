@@ -12,21 +12,21 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.rating.RatingModel;
 import com.appcocha.llajtacomida.models.user.User;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+/**
+ * Adaptador, rating
+ */
 public class ArrayAdapterRating extends ArrayAdapter<Object> {
 
     private final Context context;
@@ -66,9 +66,6 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
         final TextView tvExperience = (TextView) view.findViewById(R.id.tvExperience);
         final ImageButton btnDelete = (ImageButton) view.findViewById(R.id.btnDelete);
         final Hashtable<String, String> row = (Hashtable<String, String>)votesList.get(position);
-
-
-
 
         try {
             // obtener la primera fila de objetos que es un array (user, arrayListVotos)
@@ -156,16 +153,13 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
      */
     private void deleteVote(final String voteId){
         androidx.appcompat.app.AlertDialog.Builder confirm = new AlertDialog.Builder(context);
-//        confirm.setTitle("Confimación");
         confirm.setTitle(context.getString(R.string.title_confirmation));
-//        confirm.setMessage("¿Quitar la calificación?");
         confirm.setMessage(context.getString(R.string.message_delete_question));
         confirm.setCancelable(false);
         confirm.setPositiveButton(context.getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
                 Toast.makeText(context, context.getString(R.string.message_remove), Toast.LENGTH_SHORT).show();
                 RatingModel ratingModel = new RatingModel(nodeCollectionName, objectId);
-//                ratingModel.deleteVote(FirebaseAuth.getInstance().getUid());
                 ratingModel.deleteVote(voteId);
             }
         });

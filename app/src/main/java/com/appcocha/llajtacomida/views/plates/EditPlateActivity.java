@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
-import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
@@ -30,6 +29,9 @@ import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
+/**
+ * Vista, edita un plato
+ */
 public class EditPlateActivity extends AppCompatActivity implements View.OnClickListener, PlateInterface.ViewPlateManager {
 
     // components

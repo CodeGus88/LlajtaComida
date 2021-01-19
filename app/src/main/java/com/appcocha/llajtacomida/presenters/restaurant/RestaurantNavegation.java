@@ -3,7 +3,6 @@ package com.appcocha.llajtacomida.presenters.restaurant;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.views.images.ImagesActivity;
@@ -15,6 +14,9 @@ import com.appcocha.llajtacomida.views.restaurants.RestaurantViewActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+/**
+ * Navegación de restaurante
+ */
 public class RestaurantNavegation {
 
     /**
@@ -39,6 +41,10 @@ public class RestaurantNavegation {
         context.startActivity(intent);
     }
 
+    /**
+     * Muestra el selector y recortador de imágenes
+     * @param context
+     */
     public static void showCropImage(Activity context) {
         CropImage.activity()
             .setActivityTitle(context.getString(R.string.restaurant_image_crop_title))
@@ -48,6 +54,11 @@ public class RestaurantNavegation {
             .start(context);
     }
 
+    /**
+     * Muestra la vista de un restaurante
+     * @param context
+     * @param restaurantId
+     */
     public static void showRestaurantView(Context context, String restaurantId) {
         Intent intent = new Intent(context, RestaurantViewActivity.class);
         intent.putExtra("id", restaurantId);
@@ -66,7 +77,11 @@ public class RestaurantNavegation {
         context.startActivity(intent);
     }
 
-
+    /**
+     * Muestra la vista para editar un restaurante
+     * @param context
+     * @param restaurant
+     */
     public static void showEditRestaurantView(Context context, Restaurant restaurant) {
         Intent intent = new Intent(context, EditRestaurantActivity.class);
         intent.putExtra("restaurant", restaurant);
@@ -88,6 +103,12 @@ public class RestaurantNavegation {
         context.startActivity(intent);
     }
 
+    /**
+     * Muestra la galería de imágenes de un restaurante
+     * @param context
+     * @param parentId
+     * @param parentName
+     */
     public static void showGalery(Context context, String parentId,  String parentName){
         Intent intent = new Intent(context, ImagesActivity.class);
         intent.putExtra("nodeCollectionName", "restaurants"); // Para saber a que entidad pertenece
@@ -96,12 +117,21 @@ public class RestaurantNavegation {
         context.startActivity(intent);
     }
 
+    /**
+     * Muestra el gestor de menú de un restaurante
+     * @param context
+     * @param restaurant
+     */
     public static void showMenu(Context context, Restaurant restaurant){
         Intent intent = new Intent(context, SetMenuActivity.class);
         intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
     }
 
+    /**
+     * Muestra la lista de restaurantes no publicados
+     * @param context
+     */
     public static void showRestPublicOf(Context context){
         Intent intent = new Intent(context, RestaurantPublicOfActivity.class);
         context.startActivity(intent);

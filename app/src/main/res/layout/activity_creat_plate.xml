@@ -59,7 +59,6 @@
                 android:layout_marginTop="10dp"
                 app:counterEnabled="true"
                 app:counterMaxLength="1500">
-
                 <EditText
                     android:id="@+id/etIngredients"
                     android:layout_width="match_parent"
@@ -174,9 +173,7 @@
                     android:layout_marginLeft="2dp"/>
 
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

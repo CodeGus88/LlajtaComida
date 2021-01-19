@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.image.Image;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +23,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import java.util.Objects;
 
+/**
+ * Presentador
+ */
 public class GaleryDatabase {
 
     private DatabaseReference databaseReference;
@@ -33,11 +38,10 @@ public class GaleryDatabase {
     private Uri url;
     private String objectParentType;
     private String parentId;
-
     private String dir;
 
     /**
-     *
+     * Establece context, objectParentType, parentId, resurceDestination, image y thumb_byte
      * @param context
      * @param image
      * @param thumb_byte
@@ -95,7 +99,7 @@ public class GaleryDatabase {
                         return storageReference.getDownloadUrl();
                     } else {
                         GaleryDatabase.isSuccess = false;
-                        Toast.makeText(context, "Ocurrió un error al subir la imagen", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.message_image_error), Toast.LENGTH_SHORT).show();
                         throw Objects.requireNonNull(task.getException());
                     }
                 }
@@ -106,14 +110,14 @@ public class GaleryDatabase {
                         url = task.getResult();
                         image.setUrl(url.toString());
                         databaseReference.setValue(image);
-                        Toast.makeText(context, "Se procesó correctamente", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.message_processed_correct), Toast.LENGTH_SHORT).show();
                     }else{
                         Log.e("Error ------------------>", task.getException().getMessage());
                     }
                 }
             });
         }else{
-            Toast.makeText(context, "No se detectó ninguna imagen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.message_image_null), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -123,12 +127,12 @@ public class GaleryDatabase {
             @Override
             public void onSuccess(Void aVoid) {
                 databaseReference.removeValue();
-                Toast.makeText(context, "Se quitó la imagen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.message_image_was_removed), Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(context, "Oh no, algo salió mal\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getString(R.string.something_went_wrong)+"\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }).isSuccessful();
     }
@@ -146,7 +150,7 @@ public class GaleryDatabase {
                         storageReference2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Log.d("Error:", "Se eliminó la imagen");
+                                Log.d("Error:", context.getString(R.string.message_image_was_removed));
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -162,7 +166,7 @@ public class GaleryDatabase {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Error", "Algo salió mal");
+                Log.e("Error", error.getMessage());
             }
         });
     }

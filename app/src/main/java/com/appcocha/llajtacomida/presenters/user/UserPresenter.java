@@ -1,18 +1,24 @@
 package com.appcocha.llajtacomida.presenters.user;
 
 import android.util.Log;
-
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.models.user.User;
 import com.appcocha.llajtacomida.models.user.UserModel;
 
 import java.util.ArrayList;
 
+/**
+ * Presentador, usuario
+ */
 public class UserPresenter implements UserInterface.PresenterUser {
 
     private UserInterface.ViewUser viewUser;
     private UserInterface.ModelUser modelUser;
 
+    /**
+     * Constructor, inicializa viewUser
+     * @param viewUser
+     */
     public UserPresenter(UserInterface.ViewUser viewUser){
         this.viewUser = viewUser;
         this.modelUser = new UserModel(this);

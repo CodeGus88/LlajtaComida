@@ -13,9 +13,13 @@ import android.widget.ListView;
  */
 public class ScreenSize {
 
+    /**
+     * Obtiene el ancho de la pantalla
+     * @param display
+     * @return
+     */
     public static int getWidth(Display display){
         int width;
-//        Display display = getWindowManager().getDefaultDisplay();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
             display.getSize(size);
@@ -26,9 +30,13 @@ public class ScreenSize {
         return  width;
     }
 
+    /**
+     * obtiene el alto de la pantalla
+     * @param display
+     * @return
+     */
     public static int getHeight(Display display){
         int height;
-//        Display display = context.getWindowManager().getDefaultDisplay();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB_MR1) {  // > API 12
             Point size = new Point();
             display.getSize(size);
@@ -54,18 +62,9 @@ public class ScreenSize {
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
         }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight
                 + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
-
-
-//    public static void setListViewHeightBasedOnChildrenX(ListView listView) {
-//        ListAdapter listAdapter = listView.getAdapter();
-//        ViewGroup.LayoutParams params = listView.getLayoutParams();
-//        params.height = 1000  * listAdapter.getCount();
-//        listView.setLayoutParams(params);
-//    }
 }

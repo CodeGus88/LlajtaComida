@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.models.image.Image;
+import com.appcocha.llajtacomida.presenters.image.ArrayAdapterImagesGalery;
 import com.appcocha.llajtacomida.presenters.image.GaleryDatabase;
 import com.appcocha.llajtacomida.presenters.image.ImagePresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
@@ -36,6 +37,9 @@ import java.util.ArrayList;
 
 import id.zelory.compressor.Compressor;
 
+/**
+ * Vista, gestor de imágenes
+ */
 public class ImagesActivity extends AppCompatActivity implements ImageInterface.ViewImage {
 
     // Datos de entrada
@@ -65,7 +69,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images_galery);
 
-
         // Recojer datos de entrada
         nodeCollectionName = getIntent().getStringExtra("nodeCollectionName");
         parentName = getIntent().getStringExtra("parentName");
@@ -86,10 +89,13 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
      */
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed(); // accion del boton atras del sistema operativo
+        onBackPressed(); // acción del botón atrás del sistema operativo
         return false;
     }
 
+    /**
+     * Inicializa ls componentes
+     */
     private void initComponents(){
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         gvGalery= (GridView) findViewById(R.id.gvImages);
@@ -182,7 +188,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         confirm.setCancelable(false);
         confirm.setPositiveButton(btn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                String resurceDestination = "images/plates/"+parentId+"/"+image.getId()+".jpg";
                 String resurceDestination = "images/"+nodeCollectionName+"/"+parentId+"/"+image.getId()+".jpg";
                 GaleryDatabase galeryDatabase = new GaleryDatabase(ImagesActivity.this, nodeCollectionName, parentId, resurceDestination, image, thumb_byte);
                 if(verbo.equalsIgnoreCase("add")){
@@ -196,7 +201,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         });
         confirm.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-//                Toast.makeText(GaleryActivity.this, "Cancelar...", Toast.LENGTH_SHORT).show();
             }
         });
         confirm.show();

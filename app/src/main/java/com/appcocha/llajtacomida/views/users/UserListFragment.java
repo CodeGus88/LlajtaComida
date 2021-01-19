@@ -30,6 +30,9 @@ import com.appcocha.llajtacomida.presenters.user.UserPresenter;
 
 import java.util.ArrayList;
 
+/**
+ * Vista, Muestra y gestioma roles de los usuairos
+ */
 public class UserListFragment extends Fragment implements UserInterface.ViewUser, View.OnClickListener {
 
     View view;
@@ -78,6 +81,9 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         return view;
     }
 
+    /**
+     * Inicializa los componentes
+     */
     private void initComponents(){
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvUserList = (ListView) view.findViewById(R.id.lvUserList);
@@ -126,11 +132,31 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
                 tvId.setText(user.getId());
                 tvFulName.setText(user.getFulName());
                 tvEmail.setText(user.getEmail());
-                tvRole.setText(user.getRole());
+                tvRole.setText(getTraslateRole(user.getRole()));
                 alertDialog.show();
                 loadRoleInRadioButtons(user);
             }
         });
+    }
+
+    /**
+     * Traduce los roles
+     * @param role (en inglés)
+     * @return role (idioma del dispositivo)
+     */
+    private String getTraslateRole(String role){
+        if(role.equalsIgnoreCase("admin")){
+            role = getString(R.string.role_admin);
+        }else if(role.equalsIgnoreCase("collaborator")){
+            role = getString(R.string.role_collaborator);
+        }else if(role.equalsIgnoreCase("voter")){
+            role = getString(R.string.role_voter);
+        }else if(role.equalsIgnoreCase("reader")){
+            role = getString(R.string.role_reader);
+        }else if(role.equalsIgnoreCase("none")){
+            role = getString(R.string.role_none);
+        }
+        return role;
     }
 
     @Override
@@ -166,6 +192,9 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }
     }
 
+    /**
+     * Cambia el rol en el objeot user
+     */
     private void changeUser(){
         if(rbIsAdmin.isChecked()){
             user.setRole("admin");
@@ -182,6 +211,10 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }
     }
 
+    /**
+     * Carga el rol del usuario
+     * @param user
+     */
     private void loadRoleInRadioButtons(User user){
         if(user.getRole().equalsIgnoreCase("admin") && !rbIsAdmin.isChecked()){
             rbIsAdmin.setChecked(true);

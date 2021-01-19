@@ -2,33 +2,47 @@ package com.appcocha.llajtacomida.models.rating;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Modelo
+ */
 public class Rating {
 
     private String id;
     private Hashtable<String, Hashtable<String, String>> votesList; // /user_id/punctuation/experience/date
     private float punctuation;
 
+    /**
+     * Contructor
+     * Genera un nuevo identificador (id)
+     */
     public Rating(){
         this.id = UUID.randomUUID().toString();
         votesList = new Hashtable<String, Hashtable<String, String>>();
     }
 
+    /**
+     * Constructor
+     * Establece el id
+     * @param id
+     */
     public Rating(String id) {
         this.id = id;
         votesList = new Hashtable<String, Hashtable<String, String>>();
     }
 
+    /**
+     * Obtiene el id del objeto
+     * @return id
+     */
     public String getId() {
-        return id;
+        return this.id;
     }
 
-//    public Hashtable<String, Hashtable<String, String>> getPunctuationList() {
     @Exclude // Exclude porque firebase tiene problemas al intentar leer desde la base de damtos esta lista
     public Hashtable<String, Hashtable<String, String>> getVotesList() {
         return  votesList;
@@ -39,13 +53,16 @@ public class Rating {
     }
 
     /**
-     *
+     * Obtiene la puntuación (rating) del objeto (plato o restaurante)
      * @return Este método develve la puntuacion total
      */
     public float getPunctuation() {
         return punctuation;
     }
 
+    /**
+     * Calcula la media de votaciones para el rating
+     */
     private void calculateMedia(){
         punctuation = 0;
         for (Hashtable<String, String> vote : votesList.values()) {
@@ -54,8 +71,13 @@ public class Rating {
         punctuation = punctuation / votesList.size(); // Calculo de la media
     }
 
-
-
+    /**
+     * Agrega un nuevo voto, lo agrega en la lista y recalcula el rating (puntuación)
+     * @param userId
+     * @param punctuation
+     * @param experience
+     * @param date
+     */
     @Exclude
     public void putPunctuation(final String userId, final float punctuation, final String experience, final String date){
         Hashtable<String, String> punctuationData = new Hashtable<String, String>();
@@ -67,6 +89,10 @@ public class Rating {
         calculateMedia(); // Al ingresar un nuevo valor, se debe alcualizar su valor principal
     }
 
+    /**
+     * Genera un mapa de datos del objeto (para editar)
+     * @return
+     */
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
