@@ -56,7 +56,7 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
 
     @Override
     public void loadUserList() {
-        databaseReference.child("App").child("users").addValueEventListener(this);
+        databaseReference.child("App").child("users").orderByChild("fulName").addValueEventListener(this);
     }
 
     @Override

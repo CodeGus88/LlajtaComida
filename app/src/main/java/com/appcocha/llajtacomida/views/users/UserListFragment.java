@@ -18,8 +18,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -71,6 +71,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Sound.playClick();
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_list, container, false);
         userList = new ArrayList<User>();
@@ -87,9 +88,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
     private void initComponents(){
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvUserList = (ListView) view.findViewById(R.id.lvUserList);
-
         View viewAlert = getLayoutInflater().inflate(R.layout.alert_user_options, null);
-
         ivAvatar = (ImageView) viewAlert.findViewById(R.id.ivAvatar);
         tvId = (TextView) viewAlert.findViewById(R.id.tvId);
         tvFulName = (TextView) viewAlert.findViewById(R.id.tvFulName);
@@ -109,7 +108,6 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         tvEmail.setOnClickListener(this);
-
         etSearch.addTextChangedListener(new TextWatcher() { // para buscar mientras se escribe
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -127,6 +125,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         lvUserList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 user = userList.get(position);
                 Glide.with(getContext()).load(user.getAvatarUrl()).into(ivAvatar);
                 tvId.setText(user.getId());
@@ -177,6 +176,7 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnCancel:
                 alertDialog.dismiss();

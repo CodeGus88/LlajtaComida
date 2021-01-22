@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.FavoriteInterface;
 import com.appcocha.llajtacomida.presenters.favorite.FavoritePresenter;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,6 @@ public class FavoriteObjectFragment extends Fragment implements FavoriteInterfac
         favoritePresenter = new FavoritePresenter(this, nodeCollectionName);
         favoritePresenter.searchFavoriteObject(objectId);
         initComponents();
-
         return view;
     }
 
@@ -55,8 +55,8 @@ public class FavoriteObjectFragment extends Fragment implements FavoriteInterfac
         btnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isFavorite) favoritePresenter.removeObjectFavorite(objectId);
-                else favoritePresenter.saveObjectFavorite(objectId);
+                if(isFavorite){ favoritePresenter.removeObjectFavorite(objectId); Sound.playThrow();}
+                else {favoritePresenter.saveObjectFavorite(objectId); Sound.playMagic();}
             }
         });
     }

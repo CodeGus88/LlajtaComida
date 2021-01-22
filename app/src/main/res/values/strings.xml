@@ -333,7 +333,7 @@
     <string name="btn_back">Volver</string>
 
     <string name="id">ID:</string>
-
+    <string name="switch_sound">Sonido</string>
 
 
 </resources>

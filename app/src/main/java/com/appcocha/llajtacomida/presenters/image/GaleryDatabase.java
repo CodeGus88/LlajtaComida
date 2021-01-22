@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.image.Image;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -107,11 +108,13 @@ public class GaleryDatabase {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (isSuccess) {
+                        Sound.playSuccess();
                         url = task.getResult();
                         image.setUrl(url.toString());
                         databaseReference.setValue(image);
                         Toast.makeText(context, context.getString(R.string.message_processed_correct), Toast.LENGTH_SHORT).show();
                     }else{
+                        Sound.playError();
                         Log.e("Error ------------------>", task.getException().getMessage());
                     }
                 }
@@ -127,6 +130,7 @@ public class GaleryDatabase {
             @Override
             public void onSuccess(Void aVoid) {
                 databaseReference.removeValue();
+                Sound.playSuccess();
                 Toast.makeText(context, context.getString(R.string.message_image_was_removed), Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -138,7 +142,6 @@ public class GaleryDatabase {
     }
 
     public void deleteAllData() {
-
         databaseReference.child("App").child(objectParentType).child(parentId).child("images").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -156,7 +159,6 @@ public class GaleryDatabase {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
                                 Log.e("Error:", exception.getMessage());
-//                                Toast.makeText(context, "Oh no, algo salió mal\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }catch (Exception e){

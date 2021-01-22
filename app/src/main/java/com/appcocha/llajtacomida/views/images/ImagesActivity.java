@@ -29,6 +29,7 @@ import com.appcocha.llajtacomida.presenters.image.ImagePresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -104,6 +105,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         gvGalery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 image = arrayAdapterImagesGalery.getImage(position);
                 addDeleteImage(getString(R.string.image), "Id: "+image.getId()
                         +"\nUrl: " + image.getUrl()
@@ -128,6 +130,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconAdd:
                 if(nodeCollectionName.equalsIgnoreCase("plates")) PlateNavegation.showCropImage(this);
@@ -144,10 +147,8 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 uri = result.getUri();
-
                 // Segunda parte
                 File file = new File(uri.getPath());
-
                 try{
                     thumb_bitmap = new Compressor(this)
                             .setMaxWidth(640)
@@ -191,9 +192,11 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
                 String resurceDestination = "images/"+nodeCollectionName+"/"+parentId+"/"+image.getId()+".jpg";
                 GaleryDatabase galeryDatabase = new GaleryDatabase(ImagesActivity.this, nodeCollectionName, parentId, resurceDestination, image, thumb_byte);
                 if(verbo.equalsIgnoreCase("add")){
+                    Sound.playLoad();
                     Toast.makeText(ImagesActivity.this, getString(R.string.message_uploading), Toast.LENGTH_SHORT).show();
                     galeryDatabase.uploadData();
                 }else if(verbo.equalsIgnoreCase("delete")){
+                    Sound.playThrow();
                     Toast.makeText(ImagesActivity.this, getString(R.string.removing_image), Toast.LENGTH_SHORT).show();
                     galeryDatabase.deleteData();
                 }
@@ -201,6 +204,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         });
         confirm.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Sound.playClick();
             }
         });
         confirm.show();

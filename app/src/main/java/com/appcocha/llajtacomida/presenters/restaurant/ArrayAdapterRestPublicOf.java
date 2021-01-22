@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Adaptador
  */
-public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
+public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant>{
     private ArrayList<Restaurant> restaurantList;
     private ArrayList<Restaurant> restaurantListCopy;
     private Context context;
@@ -72,17 +73,26 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             Button btnAuthor = (Button) view.findViewById(R.id.btnAuthor);
             // Cargar...
             if (!restaurantList.get(position).getName().isEmpty()) tvTitle.setText(restaurantList.get(position).getName());
+            else tvTitle.setText(null);
             if (!restaurantList.get(position).getUrl().isEmpty()) Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivImage);
+            else Glide.with(context).load("null").into(ivImage);
             if (!restaurantList.get(position).getOwnerName().isEmpty()) tvOwnerName.setText(restaurantList.get(position).getOwnerName());
+            else tvOwnerName.setText(null);
             if (!restaurantList.get(position).getAddress().isEmpty()) tvAddress.setText(restaurantList.get(position).getAddress());
-            if (!restaurantList.get(position).getPhone().isEmpty())tvPhone.setText(restaurantList.get(position).getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
+            else tvAddress.setText(null);
+            if (!restaurantList.get(position).getPhone().isEmpty()) tvPhone.setText(restaurantList.get(position).getPhone().replace(",", " - ").replace(".", " - ").replace("-", " - "));
+            else tvPhone.setText(null);
             if (!restaurantList.get(position).getOriginAndDescription().isEmpty()) tvDescription.setText(restaurantList.get(position).getOriginAndDescription());
+            else tvDescription.setText(null);
             if (!restaurantList.get(position).getId().isEmpty()) tvId.setText(restaurantList.get(position).getId());
+            else tvId.setText(null);
             if (!restaurantList.get(position).getAuthor().isEmpty()) tvAuthorId.setText(context.getString(R.string.tv_author_id) + " " + restaurantList.get(position).getAuthor());
-            // Cargar accion de los botones
+            else tvAuthorId.setText(null);
+            // Cargar accion de los botones (es necesario que sean anónimas)
             btnPublish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Sound.playClick();
                     restaurantList.get(position).setPublic(true);
                     publishRestaurant(restaurantList.get(position));
                 }
@@ -90,6 +100,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Sound.playClick();
                     deleteRestaurante(restaurantList.get(position));
                 }
             });
@@ -97,12 +108,14 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Sound.playClick();
                     RestaurantNavegation.showEditRestaurantView(context, restaurantList.get(position));
                 }
             });
             tvAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Sound.playClick();
                     MapNavegation.showSetLocationMapActivity(context, restaurantList.get(position));
                 }
             });
@@ -110,10 +123,10 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
             btnAuthor.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Sound.playClick();
                     RestaurantPublicOfActivity.loadAuthor(restaurantList.get(position).getAuthor());
                 }
             });
-
         }catch(Exception e){
             Log.e("Error: ", e.getMessage());
         }
@@ -166,6 +179,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         builder.setMessage(R.string.confirm_message_publish)
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Sound.playClick();
                         byte [] img = null;
                         RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
                         restaurantDatabase.upDate();
@@ -173,7 +187,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                        Sound.playClick();
                     }
                 });
         builder.show();
@@ -188,6 +202,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
         builder.setMessage(R.string.confirm_message_restaurant_delete)
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Sound.playThrow();
                         byte [] img = null;
                         RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
                         restaurantDatabase.delete();
@@ -195,7 +210,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant> {
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
+                        Sound.playClick();
                     }
                 });
         builder.show();

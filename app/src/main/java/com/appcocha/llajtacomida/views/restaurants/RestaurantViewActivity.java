@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
@@ -169,6 +171,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 PlateNavegation.showPlateView(RestaurantViewActivity.this, plateList.get(position));
             }
         });
@@ -239,6 +242,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnNext:
                 viewFlipper.setInAnimation(this, android.R.anim.slide_in_left); // slide_in_left agregado manualmente creando anim/slide_in_left.xml en res
@@ -300,6 +304,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconEdit:
                 RestaurantNavegation.showEditRestaurantView(this, restaurant);
@@ -332,18 +337,19 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         confirm.setCancelable(false);
         confirm.setPositiveButton(getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
-            // Antes de eliminar el plato, debemos eliminar todos sus archivos
-            GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
-            galeryDatabase.deleteAllData(); // es un metodo estatico
-            Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
-            restaurantManagerPresenter.delete(restaurant.getId());
-            stopRealtimeDatabase();
-            onBackPressed();
-
+                Sound.playThrow();
+                // Antes de eliminar el plato, debemos eliminar todos sus archivos
+                GaleryDatabase galeryDatabase = new GaleryDatabase(RestaurantViewActivity.this, "restaurants", restaurant.getId());
+                galeryDatabase.deleteAllData(); // es un metodo estatico
+                Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
+                restaurantManagerPresenter.delete(restaurant.getId());
+                stopRealtimeDatabase();
+                onBackPressed();
             }
         });
         confirm.setNegativeButton(getString(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Sound.playClick();
             }
         });
         confirm.show();
@@ -446,16 +452,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     @Override
     public void isSuccess(boolean isSuccess) {
-        if(isSuccess){
-            Toast.makeText(this, getString(R.string.message_delete_complete), Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, getString(R.string.message_delete_incomplete), Toast.LENGTH_SHORT).show();
-        }
+        Sound.playSuccess();
+        if(isSuccess)Toast.makeText(this, getString(R.string.message_delete_complete), Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, getString(R.string.message_delete_incomplete), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void report(ArrayList<Integer> errors) {
         // No se utiliza para esta vista
-//        Toast.makeText(this, report, Toast.LENGTH_SHORT).show();
     }
 }

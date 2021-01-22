@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
@@ -113,8 +115,9 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    public void onClick(View view) {
+        Sound.playClick();
+        switch (view.getId()){
             case R.id.btnSelectPhoto:
 //                imageSelect();
                 PlateNavegation.showCropImage(this);
@@ -168,7 +171,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
 
     private void updatePlate(){
-//        String name = etName.getText().toString();
         String name = etName.getText().toString();
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
@@ -177,7 +179,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         plate.setIngredients(ingredients);
         plate.setOrigin(origin);
         plateGestorPresenter.update(plate, thumb_byte);
-
     }
 
     /**
@@ -186,11 +187,13 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed(); // accion del boton atras del sistema operativo
+        Sound.playClick();
         return false;
     }
 
     @Override
     public void isSuccess(boolean isSuccess) {
+        Sound.playSuccess();
         if(isSuccess){
             progressDialog.dismiss();
             Toast.makeText(this, getString(R.string.message_update_complete), Toast.LENGTH_SHORT).show();
@@ -203,6 +206,7 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void report(ArrayList<Integer> errors) {
+        Sound.playError();
         progressDialog.dismiss();
         Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         textInputLayoutName.setError(null);

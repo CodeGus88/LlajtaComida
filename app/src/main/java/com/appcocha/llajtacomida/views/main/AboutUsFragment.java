@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.appcocha.llajtacomida.R;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 
 /**
@@ -32,6 +33,7 @@ public class AboutUsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Sound.playClick();
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_about_us, container, false);
         initComponents();
@@ -46,12 +48,12 @@ public class AboutUsFragment extends Fragment {
         tvEmail = (TextView) view.findViewById(R.id.tvEmail);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        int height = displayMetrics.heightPixels;
         int width = (int) (displayMetrics.widthPixels * 0.95);
         ivIconImage.setLayoutParams(new LinearLayout.LayoutParams(width, width));
         tvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Sound.playClick();
                 UserNavegation.openMail(getContext(), getString(R.string.mail).trim());
             }
         });

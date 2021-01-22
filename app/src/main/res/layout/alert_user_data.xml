@@ -114,6 +114,14 @@
                         android:justificationMode="inter_word"
                         android:text="@string/tv_undefined"/>
                 </LinearLayout>
+                <Switch
+                    android:id="@+id/switchSound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/switch_sound"
+                    android:textStyle="bold"
+                    android:textColor="#CB515151"
+                    android:layout_margin="3dp"/>
             </LinearLayout>
 
             <Space

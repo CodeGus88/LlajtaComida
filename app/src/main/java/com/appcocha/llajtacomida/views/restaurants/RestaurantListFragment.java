@@ -25,6 +25,7 @@ import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.restaurant.ArrayAdapterRestaurant;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantPresenter;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 
 import java.util.ArrayList;
@@ -57,15 +58,13 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Sound.playClick();
         setHasOptionsMenu(true); // para cargar los iconos del toolBar
         view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         // Inflate the layout for this fragment
-
         initComponents();
-
         restaurantPresenter = new RestaurantPresenter(this);
         restaurantPresenter.loadRestaurantList();
-//        isAnAdministrator = true;
         return view;
     }
 
@@ -101,6 +100,7 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 RestaurantNavegation.showRestaurantView(getContext(), restaurantList.get(position).getId());
             }
         });

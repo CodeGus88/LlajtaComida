@@ -21,6 +21,7 @@ import com.appcocha.llajtacomida.models.user.User;
 import com.appcocha.llajtacomida.presenters.rating.ArrayAdapterRating;
 import com.appcocha.llajtacomida.presenters.rating.RatingPresenter;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -84,21 +85,17 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 }
             }
         });
-
         lvUserExperiences = (ListView) view.findViewById(R.id.lvUserExperiences);
-
         // alert de rating para votar
         View viewAlert = getLayoutInflater().inflate(R.layout.alert_vote, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(viewAlert);
         alertDialog = builder.create();
-
         // botones del alert
         btnCancel = (Button) viewAlert.findViewById(R.id.btnCancel);
         btnSave = (Button) viewAlert.findViewById(R.id.btnSave);
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
-
         // campo de texto del dialog
         etExperience = (EditText) viewAlert.findViewById(R.id.etExperience);
 
@@ -113,6 +110,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnCancel:
                 rbStars.setRating(0);

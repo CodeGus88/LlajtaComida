@@ -67,7 +67,6 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(plateList.get(position).getName());
         tvResumeItem.setText(plateList.get(position).getOrigin());
-
         return view;
     }
 

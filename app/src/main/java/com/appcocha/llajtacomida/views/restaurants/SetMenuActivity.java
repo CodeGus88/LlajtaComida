@@ -21,6 +21,7 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.restaurant.ArrayAdapterSetMenu;
 import com.appcocha.llajtacomida.presenters.restaurant.SetMenuListPresenter;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 
 import java.util.ArrayList;
 
@@ -115,6 +116,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconSave:
                 setMenuListPresenter.saveMenuList(restaurant.getId(), arrayAdapterSetMenu.getMenu()); // this

@@ -19,6 +19,7 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.favorite.FavoritePresenter;
 import com.appcocha.llajtacomida.presenters.plate.ArrayAdapterPlate;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 
 import java.util.ArrayList;
 
@@ -52,6 +53,7 @@ public class FavoritPlatesListFragment extends Fragment implements FavoriteInter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Sound.playClick();
         view = inflater.inflate(R.layout.fragment_favorit_plates_list, container, false);
         plateList = new ArrayList<Plate>();
         favoritePresenter = new FavoritePresenter(this, "plates");

@@ -333,4 +333,6 @@
 
     <string name="id">ID:</string>
 
+    <string name="switch_sound">Sound</string>
+
 </resources>

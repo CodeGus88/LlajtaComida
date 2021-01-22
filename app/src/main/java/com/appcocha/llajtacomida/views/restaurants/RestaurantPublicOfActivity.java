@@ -3,8 +3,6 @@ package com.appcocha.llajtacomida.views.restaurants;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,13 +16,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.appcocha.llajtacomida.presenters.main.MainNavigation;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.UserNavegation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
-import com.appcocha.llajtacomida.interfaces.FavoriteInterface;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -82,7 +78,6 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     private void initComponents() {
         etSearch = (EditText) findViewById(R.id.etSearch);
         lvPublicOfRest = (ListView) findViewById(R.id.lvPublicOfRest);
-
         etSearch.addTextChangedListener(new TextWatcher() { // para buscar mientras se escribe
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -134,6 +129,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
 
     @Override
     public void onBackPressed() {
+        Sound.playClick();
         restPublicOfPresenter.stopRealTimeDatabase();
         super.onBackPressed();
     }
@@ -162,6 +158,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         iconSearch.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Sound.playClick();
                 if(etSearch.getVisibility() == View.GONE){
                     etSearch.setVisibility(View.VISIBLE);
                     etSearch.requestFocus();
@@ -176,6 +173,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnSave:
                 User user = new User(tvId.getText().toString());

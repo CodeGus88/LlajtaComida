@@ -10,7 +10,7 @@ import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantModel;
-
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import java.util.ArrayList;
 
 /**
@@ -72,6 +72,7 @@ public class RestaurantPresenter implements RestaurantInterface.PresenterRestaur
         builder.setMessage(message)
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        Sound.playClick();
                         RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant);
                         restaurant.setPublic(!restaurant.isPublic());
                         restaurantDatabase.upDate();
@@ -79,7 +80,7 @@ public class RestaurantPresenter implements RestaurantInterface.PresenterRestaur
                 })
                 .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
+                        Sound.playClick();
                     }
                 });
         builder.show();

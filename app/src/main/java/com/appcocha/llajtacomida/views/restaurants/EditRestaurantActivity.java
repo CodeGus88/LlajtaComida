@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -163,13 +164,11 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         int y = (int) (x*0.6666667);
         ivPhoto.getLayoutParams().width = x;
         ivPhoto.getLayoutParams().height = y;
-
         btnSetLocate.setOnClickListener(this);
         btnSelectPhoto.setOnClickListener(this);
         btnResetPhoto.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         btnUpdate.setOnClickListener(this);
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.message_updating));
         progressDialog.setCancelable(false);
@@ -188,8 +187,9 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    public void onClick(View view) {
+        Sound.playClick();
+        switch (view.getId()){
             case R.id.btnSetLocate:
                 whriteRestaurant();
                 String path = "";
@@ -259,12 +259,14 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
      */
     @Override
     public boolean onSupportNavigateUp() {
+        Sound.playClick();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void isSuccess(boolean isSuccess) {
+        Sound.playSuccess();
         if(isSuccess){
             progressDialog.dismiss();
             Toast.makeText(this, getString(R.string.message_update_complete), Toast.LENGTH_SHORT).show();
@@ -277,6 +279,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
 
     @Override
     public void report(ArrayList<Integer> errors) {
+        Sound.playError();
         progressDialog.dismiss();
         tilName.setError(null);
         tilOwnerName.setError(null);

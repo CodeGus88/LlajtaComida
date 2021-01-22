@@ -26,6 +26,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.tools.RandomColor;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
 /**
  * Vista, Ubica los restaurantes que contienen un determinado plato en sus menús en un mapa
  */
-public class SetAllLocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class SetAllLocationMapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     private ArrayList<Restaurant> restaurantList;
@@ -82,6 +83,7 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         initComponents();
+        Sound.playLocation();
     }
 
     /**
@@ -129,20 +131,8 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         tvRestaurantsFound.setText(restaurantList.size() + " " + getString(R.string.tv_restaurants_found) );
         Glide.with(this).load(plate.getUrl()).into(ivPlateImage);
         spTypesOfMaps.setSelection(1);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        llData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cvImage.getVisibility() == View.VISIBLE){
-                    cvImage.setVisibility(View.GONE);
-                }else cvImage.setVisibility(View.VISIBLE);
-            }
-        });
+        btnBack.setOnClickListener(this);
+        llData.setOnClickListener(this);
     }
 
     /**
@@ -248,6 +238,23 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f));
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnBack:
+                Sound.playClick();
+                onBackPressed();
+                break;
+            case R.id.llData:
+                Sound.playClick();
+                if(cvImage.getVisibility() == View.VISIBLE) cvImage.setVisibility(View.GONE);
+                else cvImage.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
         }
     }
 }

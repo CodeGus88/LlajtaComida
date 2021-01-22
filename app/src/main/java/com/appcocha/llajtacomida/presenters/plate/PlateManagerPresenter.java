@@ -4,6 +4,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.plate.PlateManagerModel;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import java.util.ArrayList;
 
@@ -41,6 +42,7 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
             !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
             !plate.getIngredients().isEmpty() && thumb_byte != null
         ){
+            Sound.playLoad();
             modelPlateManager.store(plate, thumb_byte);
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
@@ -59,6 +61,7 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
         if(!Validation.existPlateNameExcludePlateId(plate.getId(), plate.getName()) &&
                 !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
                 !plate.getIngredients().isEmpty()){
+            Sound.playLoad();
             modelPlateManager.update(plate, thumb_byte);
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();

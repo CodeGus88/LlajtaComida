@@ -25,6 +25,7 @@ import com.appcocha.llajtacomida.presenters.map.MapNavegation;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantManagerPresenter;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.google.android.material.textfield.TextInputLayout;
@@ -180,8 +181,9 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
+    public void onClick(View view) {
+        Sound.playClick();
+        switch (view.getId()){
             case R.id.btnSetLocate:
                 whriteRestaurant();
                 String path = "";
@@ -293,12 +295,14 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
      */
     @Override
     public boolean onSupportNavigateUp() {
+        Sound.playClick();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void isSuccess(boolean isSuccess) {
+        Sound.playSuccess();
         if(isSuccess){
             Toast.makeText(this, getString(R.string.message_store_complete), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
@@ -311,6 +315,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
 
     @Override
     public void report(ArrayList<Integer> errors) {
+        Sound.playError();
         progressDialog.dismiss();
         tilName.setError(null);
         tilOwnerName.setError(null);

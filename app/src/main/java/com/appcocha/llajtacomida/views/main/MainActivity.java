@@ -8,8 +8,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.appcocha.llajtacomida.presenters.tools.Serializer;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private String rol; // Para reiniciar la aplicación  si cambia el rol
     private AuthUser authUser;
 
-    // Alert COMPONENTS
+    // Alert componentes
     private AlertDialog alertDialog;
     private ImageView ivAvatar;
     private TextView tvId;
@@ -66,7 +70,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView tvEmail;
     private TextView tvRole;
     private TextView btnSignOut, btnOk;
+    private Switch switchSound;
 
+    // Efectos de sonido
+    private Sound sound;
+    private final String SOUND_STATE_NAME = "SOUND_STATE"; // nombre del archivo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,10 +114,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         // Solo si es administrador mostrará la lista de usuarios
-
         navigationView.getMenu().findItem(R.id.nav_users).setVisible(false); // de inicio debe estar oculto
 
         initComponents();
+
+        // Efectos de sonido
+        sound = new Sound(this);
+        Sound.setVolumeOff( Serializer.readData(this, SOUND_STATE_NAME));
+        Sound.playStart();
     } // End onCreate
 
     /**
@@ -122,12 +134,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         tvFulName = (TextView) viewAlert.findViewById(R.id.tvFulName);
         tvEmail = (TextView) viewAlert.findViewById(R.id.tvEmail);
         tvRole = (TextView) viewAlert.findViewById(R.id.tvRole);
+        switchSound = (Switch) viewAlert.findViewById(R.id.switchSound);
         btnSignOut = (TextView) viewAlert.findViewById(R.id.tvSignOut);
         btnOk = (TextView) viewAlert.findViewById(R.id.tvOk);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewAlert);
         alertDialog = builder.create();
+
+        switchSound.setChecked(Serializer.readData(this, SOUND_STATE_NAME));
+        switchSound.setOnClickListener(this);
 
         ivAvatar.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
@@ -143,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Sound.playClick();
         return super.onOptionsItemSelected(item);
     }
 
@@ -157,7 +174,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getBaseContext(), getString(R.string.message_error), Toast.LENGTH_SHORT).show();
     }
-
     // Para guardar la sesion
     @Override
     protected void onStart() {
@@ -225,6 +241,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onClick(View v) {
+        if(v.getId() == R.id.tvSignOut) Sound.playLoad();
+        else Sound.playClick();
         switch (v.getId()){
             case R.id.ivAvatar:
                 Glide.with(MainActivity.this).load(user.getAvatarUrl()).into(ivAvatar);
@@ -239,6 +257,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
             case R.id.tvOk:
                 alertDialog.dismiss();
+                break;
+            case R.id.switchSound:
+                if(switchSound.isChecked()) {
+                    sound.setVolumeOff(true);
+                    Serializer.saveData(this, SOUND_STATE_NAME, true); // guarda el estado
+                }else{
+                    sound.setVolumeOff(false);
+                    Serializer.saveData(this, SOUND_STATE_NAME, false); //guarda el estado
+                }
                 break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
@@ -380,5 +407,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void stopRealtimeDatabase(){
         userPresenter.stopRealtimeDatabase();
         userRealTimePresenter.stopRealtimeDatabase();
+    }
+
+    public void sss(View view){
+        Toast.makeText(this, "Lona...............", Toast.LENGTH_SHORT).show();
     }
 }

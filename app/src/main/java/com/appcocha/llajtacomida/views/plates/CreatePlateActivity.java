@@ -20,6 +20,7 @@ import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.ByteArrayOutputStream;
@@ -57,7 +58,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_creat_plate);
         // Configuración del boton atrás
         getSupportActionBar().setTitle(R.string.plates_title);
-//        getSupportActionBar().setTitle(getSupportActionBar().getTitle().toString().toUpperCase());
         getSupportActionBar().setSubtitle(getString(R.string.title_creat_plate));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -69,10 +69,9 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View view) {
-
+        Sound.playClick();
         switch (view.getId()){
             case R.id.btnSelectPhoto:
-//                imageSelect();
                 PlateNavegation.showCropImage(this);
                 break;
             case R.id.btnStore:
@@ -87,7 +86,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                 break;
         }
     }
-
 
     /**
      * Solicita almacenar en la base de datos
@@ -109,7 +107,6 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { // Cargar y comprimir el archivo
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
@@ -183,12 +180,14 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
      */
     @Override
     public boolean onSupportNavigateUp() {
+        Sound.playClick();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void isSuccess(boolean isSuccess) {
+        Sound.playSuccess();
         if(isSuccess){
             Toast.makeText(this, getString(R.string.message_store_complete), Toast.LENGTH_SHORT).show();
             progressDialog.dismiss();
@@ -201,6 +200,7 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void report(ArrayList<Integer> errors) {
+        Sound.playError();
         progressDialog.dismiss();
         Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         textInputLayoutName.setError(null);

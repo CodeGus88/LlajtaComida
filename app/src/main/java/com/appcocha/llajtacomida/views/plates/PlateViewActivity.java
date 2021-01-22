@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 import com.appcocha.llajtacomida.presenters.map.MapNavegation;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
@@ -176,6 +177,7 @@ import java.util.ArrayList;
         lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 RestaurantNavegation.showRestaurantView(PlateViewActivity.this, restaurantList.get(position).getId());
             }
         });
@@ -201,6 +203,7 @@ import java.util.ArrayList;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconEdit:
                 PlateNavegation.showEditPlateView(this, plate);
@@ -221,6 +224,7 @@ import java.util.ArrayList;
         confirm.setCancelable(false);
         confirm.setPositiveButton(getString(R.string.btn_continue), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Sound.playThrow();
                 Toast.makeText(PlateViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
                 // Antes de eliminar el plato, debemos eliminar todos sus archivos
                 GaleryDatabase galeryDatabase = new GaleryDatabase(PlateViewActivity.this, "plates", plate.getId());
@@ -232,6 +236,7 @@ import java.util.ArrayList;
         });
         confirm.setNegativeButton(getText(R.string.btn_cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogo1, int id) {
+                Sound.playClick();
             }
         });
         confirm.show();
@@ -254,6 +259,7 @@ import java.util.ArrayList;
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnNext:
                 viewFlipper.setInAnimation(this, android.R.anim.slide_in_left); // slide_in_left agregado manualmente creando anim/slide_in_left.xml en res
@@ -401,11 +407,9 @@ import java.util.ArrayList;
 
     @Override
     public void isSuccess(boolean isSuccess) {
-        if(isSuccess){
-            Toast.makeText(this, getString(R.string.message_delete_complete), Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, getString(R.string.message_delete_incomplete), Toast.LENGTH_SHORT).show();
-        }
+        Sound.playSuccess();
+        if(isSuccess)Toast.makeText(this, getString(R.string.message_delete_complete), Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, getString(R.string.message_delete_incomplete), Toast.LENGTH_SHORT).show();
     }
 
     @Override

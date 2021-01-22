@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -76,7 +77,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         //Definir estados
         zoom = 15.5F;
         initComponents();
-
+        Sound.playLocationEditor();
     }
 
     /**
@@ -239,6 +240,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
     @Override
     public void onClick(View v) {
+        Sound.playClick();
         switch (v.getId()){
             case R.id.btnSet:
                 restaurant.setLatitude(String.valueOf(marker.getPosition().latitude));

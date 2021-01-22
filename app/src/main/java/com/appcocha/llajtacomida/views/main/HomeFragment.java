@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.models.user.User;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.appcocha.llajtacomida.presenters.user.UserPresenter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +38,7 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        Sound.playClick();
         root = inflater.inflate(R.layout.fragment_home, container, false);
         userPresenter = new UserPresenter(this);
         if(FirebaseAuth.getInstance().getUid() != null){

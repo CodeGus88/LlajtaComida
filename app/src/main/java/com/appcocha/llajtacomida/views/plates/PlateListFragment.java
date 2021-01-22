@@ -3,7 +3,6 @@ package com.appcocha.llajtacomida.views.plates;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -27,6 +26,7 @@ import com.appcocha.llajtacomida.presenters.plate.ArrayAdapterPlate;
 import com.appcocha.llajtacomida.presenters.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenters.plate.PlatePresenter;
 import com.appcocha.llajtacomida.presenters.plate.PlateList;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 
 import java.util.ArrayList;
@@ -63,22 +63,38 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
     }
 
     /**
+     * Inicializa la actividad a la que corresponde
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Sound.playClick();
+        setHasOptionsMenu(true); // para el funcionamiento de los iconos
+        view = inflater.inflate(R.layout.fragment_plate_list, container, false);
+        initComponents();
+        presenterPlate = new PlatePresenter(this);
+        presenterPlate.loadPlatesList();
+        return view;
+    }
+
+    /**
      * Inicializa los componentes
      */
     private void initComponents() {
-
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
-
         plateList = new ArrayList<Plate>();
-
         lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
                 PlateNavegation.showPlateView(getContext(), plateList.get(position));
             }
         });
-
         etSearch.addTextChangedListener(new TextWatcher() { // para buscar mientras se escribe
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -93,26 +109,6 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-    }
-
-    /**
-     * Inicializa la actividad a la que corresponde
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        setHasOptionsMenu(true); // para el funcionamiento de los iconos
-        view = inflater.inflate(R.layout.fragment_plate_list, container, false);
-
-        initComponents();
-        presenterPlate = new PlatePresenter(this);
-        presenterPlate.loadPlatesList();
-        return view;
     }
 
     /**
@@ -149,7 +145,6 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
             Log.e("Error", "-------------------------------------------------> " + e.getMessage());
         }
-
     }
 
     /**

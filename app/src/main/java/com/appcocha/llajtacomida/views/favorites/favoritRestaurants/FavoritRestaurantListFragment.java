@@ -20,6 +20,7 @@ import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.favorite.FavoritePresenter;
 import com.appcocha.llajtacomida.presenters.restaurant.ArrayAdapterRestaurant;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,7 @@ public class FavoritRestaurantListFragment extends Fragment implements FavoriteI
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Sound.playClick();
         // Inflate the layout for this fragment
         view= inflater.inflate(R.layout.fragment_favorit_restaurants_list, container, false);
         restaurantList = new ArrayList<Restaurant>();

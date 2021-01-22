@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.tools.RandomColor;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,7 +44,7 @@ import java.text.DecimalFormat;
 /**
  * Vista, establece la ubicación de un restaurante en el mapa
  */
-public class SetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback{
+public class SetLocationMapActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
 
@@ -81,7 +82,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         initComponents();
-
+        Sound.playLocation();
     }
 
     /**
@@ -107,6 +108,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
         spTypesOfMaps.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Sound.playClick();
                 if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_normal))) {
                     mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 } else if (adapterView.getItemAtPosition(i).equals(getString(R.string.item_hibrid))) {
@@ -120,9 +122,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                 }
             }
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
         DecimalFormat decimalFormat = new DecimalFormat("0.0");
         tvRating.setText(getString(R.string.tv_rating)+": "+String.valueOf(decimalFormat.format(restaurant.getPunctuation()) + "✭"));
@@ -136,20 +136,8 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                 .replace(":", " - "));
         Glide.with(this).load(restaurant.getUrl()).into(ivRestaurantImage);
         spTypesOfMaps.setSelection(1);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        llData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(cvImage.getVisibility() == View.VISIBLE){
-                    cvImage.setVisibility(View.GONE);
-                }else cvImage.setVisibility(View.VISIBLE);
-            }
-        });
+        btnBack.setOnClickListener(this);
+        llData.setOnClickListener(this);
     }
 
     /**
@@ -171,7 +159,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
     }
 
     /**
-     * Carga lalocalización del restaurante
+     * Carga la localización del restaurante
      */
     private void loadLocations() {
         latLngDestination = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
@@ -254,5 +242,20 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 }).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Sound.playClick();
+        switch (v.getId()){
+            case R.id.btnBack:
+                onBackPressed();
+                break;
+            case R.id.llData:
+                if(cvImage.getVisibility() == View.VISIBLE){
+                    cvImage.setVisibility(View.GONE);
+                }else cvImage.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }

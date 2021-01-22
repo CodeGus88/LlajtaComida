@@ -4,6 +4,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantManagerModel;
+import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.tools.Validation;
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
                 && !restaurant.getAddress().isEmpty() && !restaurant.getOriginAndDescription().isEmpty()
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())
                 && thumb_byte != null){
+            Sound.playLoad();
             modelRestaurantManager.store(restaurant, thumb_byte);
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
@@ -68,6 +70,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
                 && !restaurant.getPhone().isEmpty() && Validation.isPhone(restaurant.getPhone())
                 && !restaurant.getAddress().isEmpty() && !restaurant.getOriginAndDescription().isEmpty()
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())){
+            Sound.playLoad();
             modelRestaurantManager.update(restaurant, thumb_byte);
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
