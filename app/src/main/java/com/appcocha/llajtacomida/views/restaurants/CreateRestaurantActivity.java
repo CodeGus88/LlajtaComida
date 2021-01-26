@@ -106,6 +106,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
             } else thumb_bitmap = null;
         }else{
             restaurant = new Restaurant();
+            try{ if(AuthUser.getUser() != null) restaurant.setOwnerName(AuthUser.getUser().getFulName());}catch(Exception e){ e.printStackTrace();}
         }
     }
 
@@ -117,7 +118,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         etOwnerName = (EditText) findViewById(R.id.etOwnerName);
         etAddress = (EditText) findViewById(R.id.etAddress);
         etPhone = (EditText) findViewById(R.id.etPhone);
-        etOriginAndDescription = (EditText) findViewById(R.id.etOriginAndDescriptiono);
+        etOriginAndDescription = (EditText) findViewById(R.id.etOriginAndDescription);
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         btnSetLocate = (ImageButton) findViewById(R.id.btnSetLocate);
@@ -161,7 +162,6 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.message_uploading));
         progressDialog.setCancelable(false);
@@ -223,7 +223,6 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
      * Este método escribe el formulario en el objeto
      */
     private void whriteRestaurant() {
-//        restaurant.setName(etName.getText().toString());
         restaurant.setName(etName.getText().toString());
         restaurant.setOwnerName(etOwnerName.getText().toString());
         restaurant.setAddress(etAddress.getText().toString());

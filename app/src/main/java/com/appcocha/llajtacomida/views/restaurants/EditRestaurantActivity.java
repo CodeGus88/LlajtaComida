@@ -149,7 +149,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         etOwnerName = (EditText) findViewById(R.id.etOwnerName);
         etAddress = (EditText) findViewById(R.id.etAddress);
         etPhone = (EditText) findViewById(R.id.etPhone);
-        etOriginAndDescription = (EditText) findViewById(R.id.etOriginAndDescriptiono);
+        etOriginAndDescription = (EditText) findViewById(R.id.etOriginAndDescription);
         tvLatitude = (TextView) findViewById(R.id.tvLatitude);
         tvLongitude = (TextView) findViewById(R.id.tvLongitude);
         btnSetLocate = (ImageButton) findViewById(R.id.btnSetLocate);

@@ -17,7 +17,8 @@
         android:drawableEnd="@drawable/icon_search_black"
         android:inputType="textWebEditText"
         android:hint="@string/et_search_user"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:selectAllOnFocus="true"/>
 
     <ListView
         android:id="@+id/lvUserList"

@@ -25,7 +25,9 @@
            android:hint="@string/et_search_plates"
            android:padding="5dp"
            android:drawableEnd="@drawable/icon_search_black"
-           android:background="@drawable/edit_text"/>
+           android:background="@drawable/edit_text"
+           android:inputType="textWebEditText"
+           android:selectAllOnFocus="true" />
        <Space
            android:layout_width="match_parent"
            android:layout_height="1dp"/>

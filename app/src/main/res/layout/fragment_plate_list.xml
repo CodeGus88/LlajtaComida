@@ -29,7 +29,8 @@
                 android:drawableEnd="@drawable/icon_search_black"
                 android:inputType="textWebEditText"
                 android:hint="@string/et_search_plates"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:selectAllOnFocus="true" />
 
             <ListView
                 android:id="@+id/lvPlates"

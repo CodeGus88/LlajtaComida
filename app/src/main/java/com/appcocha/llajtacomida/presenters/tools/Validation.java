@@ -1,4 +1,6 @@
 package com.appcocha.llajtacomida.presenters.tools;
+import android.util.Log;
+
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.presenters.plate.PlateList;
 
@@ -158,28 +160,31 @@ public class Validation {
      * @return
      */
     public static boolean isPersonName(String name){
-        boolean isName=  true;
+        boolean isName = false;
         name = name.toLowerCase();
         for(int i = 0; i < name.length(); i ++){
-
-            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
-                    || name.charAt(i) == 164 || name.charAt(i) == 160 || name.charAt(i) == 130 || name.charAt(i) == 161 || name.charAt(i) == 162
-                    || name.charAt(i) == 163 || name.charAt(i) == 32) || name.charAt(i) == 129){
-//            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
-//                    || name.charAt(i) == 'ñ' || name.charAt(i) == 'á' || name.charAt(i) == 'é' || name.charAt(i) == 'í' || name.charAt(i) == 'ó'
-//                    || name.charAt(i) == 'ú' || name.charAt(i) == ' ') || name.charAt(i) == 'ü'){
-//                if(!((Character.getNumericValue(name.charAt(i)) >= 97 && Character.getNumericValue(name.charAt(i)) <= 122)
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ñ')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('á')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('é')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('í')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ó')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue('ú')
-//                        || Character.getNumericValue(name.charAt(i)) == Character.getNumericValue(' ')) ){
+            if((name.charAt(i) >= 97 && name.charAt(i) <= 122)
+                    || name.charAt(i) == 225 || name.charAt(i) == 233 || name.charAt(i) == 237 || name.charAt(i) == 243 || name.charAt(i) == 250
+                    || name.charAt(i) == 32 || name.charAt(i) == 241 || name.charAt(i) == 252){
+                isName = true;
+            }else{
                 isName = false;
                 break;
             }
         }
         return isName;
     }
+
+//    public static boolean isPersonName(String name){
+//        boolean isName = true;
+//        name = name.toLowerCase();
+//        for(int i = 0; i < name.length(); i ++){
+//            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
+//                    || name.charAt(i) == 164 || name.charAt(i) == 160 || name.charAt(i) == 130 || name.charAt(i) == 161 || name.charAt(i) == 162
+//                    || name.charAt(i) == 163 || name.charAt(i) == 32) || name.charAt(i) == 129){
+//                isName = false;
+//            }
+//        }
+//        return isName;
+//    }
 }

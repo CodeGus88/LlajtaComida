@@ -40,7 +40,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
         restaurant.setName(Validation.correctText(restaurant.getName()));
         restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
-                && (restaurant.getOwnerName().isEmpty() || (!restaurant.getAuthor().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())))
+                && (restaurant.getOwnerName().isEmpty() || (!restaurant.getOwnerName().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())))
                 && !restaurant.getPhone().isEmpty() && Validation.isPhone(restaurant.getPhone())
                 && !restaurant.getAddress().isEmpty() && !restaurant.getOriginAndDescription().isEmpty()
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())
@@ -66,7 +66,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
         restaurant.setName(Validation.correctText(restaurant.getName()));
         restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
-                && (restaurant.getOwnerName().isEmpty() || (!restaurant.getAuthor().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())) )
+                && (restaurant.getOwnerName().isEmpty() || (!restaurant.getOwnerName().isEmpty() && Validation.isPersonName(restaurant.getOwnerName())) )
                 && !restaurant.getPhone().isEmpty() && Validation.isPhone(restaurant.getPhone())
                 && !restaurant.getAddress().isEmpty() && !restaurant.getOriginAndDescription().isEmpty()
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())){

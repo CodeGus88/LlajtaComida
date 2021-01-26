@@ -48,7 +48,8 @@
                         android:layout_height="50dp"
                         android:hint="@string/et_plate_name"
                         app:counterEnabled="true"
-                        app:counterMaxLength="50"/>
+                        app:counterMaxLength="50"
+                        android:selectAllOnFocus="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,7 +69,8 @@
                         android:elegantTextHeight="true"
                         android:hint="@string/et_plate_ingredients"
                         android:gravity="left"
-                        android:maxLength="1500"/>
+                        android:maxLength="1500"
+                        android:selectAllOnFocus="true" />
 <!--                    android:layout_height="150dp"-->
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -89,7 +91,8 @@
                         android:hint="@string/et_plate_origin"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
-                        android:maxLength="1500"/>
+                        android:maxLength="1500"
+                        android:selectAllOnFocus="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

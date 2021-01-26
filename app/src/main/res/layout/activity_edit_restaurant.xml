@@ -45,7 +45,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/et_restaurant_name"
                         android:inputType="textWebEditText"
-                        android:maxLength="50"/>
+                        android:maxLength="50"
+                        android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -63,7 +64,8 @@
                         android:hint="@string/et_owner_name"
                         android:gravity="left"
                         android:inputType="textPersonName"
-                        android:maxLength="50"/>
+                        android:maxLength="50"
+                        android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -84,7 +86,8 @@
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="phone"
-                        android:maxLength="36"/>
+                        android:maxLength="36"
+                        android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -107,7 +110,8 @@
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="textWebEditText"
-                        android:maxLength="200"/>
+                        android:maxLength="200"
+                        android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <Space
                     android:layout_width="match_parent"
@@ -211,14 +215,15 @@
                     app:counterEnabled="true"
                     app:counterMaxLength="1500">
                     <EditText
-                        android:id="@+id/etOriginAndDescriptiono"
+                        android:id="@+id/etOriginAndDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/et_origin_desc"
                         android:layout_marginTop="10dp"
                         android:gravity="left"
                         android:inputType="textMultiLine"
-                        android:maxLength="1500"/>
+                        android:maxLength="1500"
+                        android:selectAllOnFocus="true" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
