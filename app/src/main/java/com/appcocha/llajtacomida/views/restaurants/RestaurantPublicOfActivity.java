@@ -96,6 +96,26 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     }
 
     /**
+     * Traduce los roles
+     * @param role (en inglés)
+     * @return role (idioma del dispositivo)
+     */
+    private String getTraslateRole(String role){
+        if(role.equalsIgnoreCase("admin")){
+            role = getString(R.string.role_admin);
+        }else if(role.equalsIgnoreCase("collaborator")){
+            role = getString(R.string.role_collaborator);
+        }else if(role.equalsIgnoreCase("voter")){
+            role = getString(R.string.role_voter);
+        }else if(role.equalsIgnoreCase("reader")){
+            role = getString(R.string.role_reader);
+        }else if(role.equalsIgnoreCase("none")){
+            role = getString(R.string.role_none);
+        }
+        return role;
+    }
+
+    /**
      * Iniciliza el alert de opciones del autor del autor n de un restaurante
      */
     private void initAlertDialog() {
@@ -230,7 +250,8 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
             tvId.setText(user.getId());
             tvFulName.setText(user.getFulName());
             tvEmail.setText(user.getEmail());
-            tvRole.setText(user.getRole());
+//            tvRole.setText(user.getRole());
+            tvRole.setText(getTraslateRole(user.getRole()));
             if(user.getRole().equals("admin")){
                 rbIsAdmin.setChecked(true);
             }else if(user.getRole().equals("collaborator")){

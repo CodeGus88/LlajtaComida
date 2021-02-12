@@ -50,6 +50,7 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
     private GoogleMap mMap;
     private ArrayList<Restaurant> restaurantList;
     private final int REQUEST_ACCESS = 0;
+    private boolean requestPermission;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     // Components
@@ -70,7 +71,7 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        requestPermission = false;
         if (getIntent().hasExtra("restaurantList")) {
             restaurantList = (ArrayList<Restaurant>) getIntent().getSerializableExtra("restaurantList");
         } else {
@@ -150,31 +151,35 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         // Add a marker in Sydney and move the camera
-        loadLocations();
         getPermission();
+        loadLocations();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_ACCESS) {
+            requestPermission  = true;
             getPermission();
         }
     }
 
     /**
-     * Optiene los permisos de uso de GPS
+     * Optiene los permisos de uso de GPS para acceder a la ubicación actual
      */
     private void getPermission(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS);
-            return;
+        if(!requestPermission) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS);
+                return;
+            }
         }
         try {
             mMap.setMyLocationEnabled(true);
         }catch (Exception e){
-            Toast.makeText(this, "Error...", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Error...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.message_no_location) + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() { // Centrar en la ubicación actual
             @Override
@@ -189,7 +194,6 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
             }
             }
         });
-
         // Activar GPS
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){

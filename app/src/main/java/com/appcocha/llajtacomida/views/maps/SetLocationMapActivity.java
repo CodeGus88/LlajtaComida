@@ -62,6 +62,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
 
     // GPS
     private final int REQUEST_ACCESS = 1;
+    private boolean requestPermission;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
@@ -72,7 +73,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        requestPermission = false;
         Intent intent = getIntent();
         if(intent.hasExtra("restaurant")){
             restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
@@ -154,8 +155,8 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
         mMap = googleMap;
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        loadLocations();
         getPermission();
+        loadLocations();
     }
 
     /**
@@ -181,6 +182,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_ACCESS) {
+            requestPermission = true;
             getPermission();
         }
     }
@@ -189,39 +191,42 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
      * Solicita permiso para el uso de GPS, en caso de no contar con este
      */
     private void getPermission(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS);
-            return;
+        if(!requestPermission) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                    && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_ACCESS);
+                return;
+            }
         }
-        try {
-            mMap.setMyLocationEnabled(true);
-        }catch (Exception e){
-            Toast.makeText(this, getString(R.string.message_gps_disconected), Toast.LENGTH_SHORT).show();
-        }
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() { // Centrar en la ubicación actual
-            @Override
-            public void onSuccess(Location location) {
             try {
-                if(location != null){
-//                        LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
-                    latLngOrigin = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 9f));
-                    latLngOrigin = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 12f));
-                }
+                mMap.setMyLocationEnabled(true);
             }catch (Exception e){
-                Log.e("Error GPS", e.getMessage());
-                Toast.makeText(SetLocationMapActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Error...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.message_no_location) + "\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
+            fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() { // Centrar en la ubicación actual
+                @Override
+                public void onSuccess(Location location) {
+                try {
+                    if(location != null){
+                        latLngOrigin = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 9f));
+                        latLngOrigin = new LatLng(Double.parseDouble(restaurant.getLatitude()), Double.parseDouble(restaurant.getLongitude()));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLngOrigin, 12f));
+                    }
+                }catch (Exception e){
+                    Log.e("Error GPS", e.getMessage());
+                    Toast.makeText(SetLocationMapActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                }
+            });
+            // Activar GPS
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                startGPS();
             }
-        });
-        // Activar GPS
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            startGPS();
-        }
     }
+
 
     /**
      * Solicita activar el GPS

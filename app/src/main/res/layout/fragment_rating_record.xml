@@ -4,9 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".views.rating.RatingRecordFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/panel_gray"
+    android:gravity="center"
+    android:layout_marginHorizontal="1dp">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/CodeFontContentTitle"
+        android:text="@string/tv_title_ratings_and_opinions"/>
 
     <RatingBar
         android:id="@+id/rbStars"

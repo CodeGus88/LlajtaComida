@@ -52,8 +52,8 @@
     <string name="title_creat_plate">Create plate</string>
     <string name="title_edit_plate">Edit plate</string>
     <string name="et_plate_name">Name of the dish</string>
-    <string name="et_plate_ingredients">Ingredients</string>
-    <string name="et_plate_origin">Origin</string>
+    <string name="et_plate_ingredients">Ingredients and preparation</string>
+    <string name="et_plate_origin">Origin and history</string>
     <string name="btn_photo_plate">Load an image for the dish</string>
 
     <!--  RESTAURANTS  -->
@@ -151,6 +151,7 @@
 
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
+    <string name="tv_title_ratings_and_opinions">Ratings and opinions</string>
     <string name="et_optional_experience">Tell us about your experience (optional)...</string>
     <string name="tv_rating">Punctuation</string>
 
@@ -165,7 +166,7 @@
     <string name="title_confirm_message">Note</string>
     <string name="confirm_message">thanks for trusting us!
         \n\nAdministrators will verify the information entered.
-        \n\nyou should be vigilant, they may contact you</string>
+        \n\nYou should be vigilant, they may contact you</string>
     <string name="message_store_complete">It was stored correctly</string>
     <string name="message_store_incomplete">Could not store properly</string>
     <string name="message_update_complete">It was updated correctly</string>
@@ -204,6 +205,7 @@
     <string name="message_image_error">An error occurred while uploading the image</string>
     <string name="message_image_null">No image was detected</string>
     <string name="message_image_was_removed">The image was removed</string>
+    <string name="message_no_location">Could not access current location</string>
     <string name="something_went_wrong">Oh no, something went wrong</string>
     <string name="menu_size">Items in list:</string>
 
@@ -296,9 +298,9 @@
 
     <string name="tv_resume_title">Summary</string>
     <string name="tv_resume">
-        Our goal with the \"Llajta Comida \" application is to enhance one of the most important qualities of Cochabamba, such as gastronomy,
-        providing the local and visitor population with a tool for their mobile devices so that through it, they have the necessary information
-        so they can learn about food options and the places where they can be found.
+        Our objective is to enhance one of the most important qualities of Cochabamba, such as gastronomy, to offer the local
+        population and visitors a tool for their mobile devices so that through this, they have the necessary information and
+        thus be able to learn about the options in food and the places where they can be found.
     </string>
     <string name="tv_credits">Univervidad Mayor de San Simón
         \nFacultad de Ciencias y Tecnología

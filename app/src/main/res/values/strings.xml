@@ -51,8 +51,8 @@
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
     <string name="et_plate_name">Nombre del plato</string>
-    <string name="et_plate_ingredients">Ingredientes</string>
-    <string name="et_plate_origin">Origen</string>
+    <string name="et_plate_ingredients">Ingredientes y  preparación</string>
+    <string name="et_plate_origin">Origen e historia</string>
     <string name="btn_photo_plate">Cargar una imagen del plato</string>
 
     <!--  RESTAURANTS  -->
@@ -150,6 +150,7 @@
 
     <!--  Rating  -->
     <!--    <string name="tvExperienceTitle">Describe tu experiencia</string>-->
+    <string name="tv_title_ratings_and_opinions">Calificaciones y opiniones</string>
     <string name="et_optional_experience">Cuentanos tu experiencia (opcional)...</string>
     <string name="tv_rating">Puntuación</string>
 
@@ -164,7 +165,7 @@
     <string name="title_confirm_message">Nota</string>
     <string name="confirm_message">gracias por confiar en nosotros!
         \n\nLos administradores verificarán la información ingresada.
-        \n\ndebes estar atento, es posible que se pongan en contacto contigo</string>
+        \n\nDebes estar atento, es posible que se pongan en contacto contigo.</string>
     <string name="message_store_complete">Se almacenó correctamete</string>
     <string name="message_store_incomplete">No se pudo almacenar correctamente</string>
     <string name="message_update_complete">Se actualizó correctamete</string>
@@ -199,11 +200,11 @@
     <string name="message_image_player_paused">Reproducción de imágenes pausada</string>
     <string name="message_image_player_resumed">Reproducción de imágenes reanudada</string>
     <string name="message_not_contain_images">No contiene imágenes en presentación...</string>
-<!--    <string name="message_processed_correct">Se procesó correctamente</string>-->
     <string name="message_processed_correct">Se procesó correctamente</string>
     <string name="message_image_error">Ocurrió un error al subir la imagen</string>
     <string name="message_image_null">No se detectó ninguna imagen</string>
     <string name="message_image_was_removed">Se quitó la imagen</string>
+    <string name="message_no_location">No se pudo acceder a la ubicación actual</string>
     <string name="something_went_wrong">Oh no, algo salió mal</string>
     <string name="menu_size">Elementos en lista:</string>
 
@@ -297,9 +298,9 @@
 
     <string name="tv_resume_title">Resumen</string>
     <string name="tv_resume">
-        Nuestro objetivo con la aplicación \"Llajta Comida\" es el de realzar una de las cualidades más importantes de Cochabamba como es la gastronomía,
+        Nuestro objetivo es el de realzar una de las cualidades más importantes de Cochabamba como es la gastronomía,
         proporcionando a la población local y visitante de una herramienta para sus dispositivos móviles para que a través de esta, cuenten con la información necesaria
-        para que puedan conocer sobre las opciones en comida y los lugares donde pueden ser encontradas.
+        y así puedan conocer sobre las opciones en comida y los lugares donde pueden ser encontradas.
     </string>
     <string name="tv_credits">Univervidad Mayor de San Simón
         \nFacultad de Ciencias y Tecnología
