@@ -53,9 +53,8 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
             TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
             TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
             TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
-            DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenda solo un decimal
+            DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
             tvRating.setText(String.valueOf(decimalFormat.format(restaurantList.get(position).getPunctuation())));
-//            tvRating.setText(String.valueOf(restaurantList.get(position).getPunctuation()));
             Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivPhotoItem);
             tvTitleItem.setText(restaurantList.get(position).getName());
             tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription());

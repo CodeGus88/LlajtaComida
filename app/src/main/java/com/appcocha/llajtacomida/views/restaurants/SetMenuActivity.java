@@ -1,5 +1,6 @@
 package com.appcocha.llajtacomida.views.restaurants;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,11 +8,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,28 +31,34 @@ import java.util.ArrayList;
 /**
  * Vista, gestor de menú de platos de un restaurante
  */
-public class SetMenuActivity extends AppCompatActivity implements RestaurantInterface.ViewSetMenuList {
+public class SetMenuActivity extends AppCompatActivity implements RestaurantInterface.ViewSetMenuList, View.OnClickListener {
 
     // Componentes
     private TextView tvTitle;
-    private  ListView lvPlates;
+    private ListView lvPlates;
     private EditText etSearch;
     private MenuItem iconSave;
     private Restaurant restaurant;
+    private ArrayList<Plate> plateList;
+    private AlertDialog alertDialog;
+    private TextView tvAlertTitlePrice;
+    private EditText etAlertPrice;
+    private Button btnAlertCancel, btnAlertAdd;
+    private int position;
     // Permisos
     private boolean isAdministrator, isAuthor;
     private ArrayAdapterSetMenu arrayAdapterSetMenu;
 
     // presentador
     private SetMenuListPresenter setMenuListPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         // Configuración del boton atrás
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        plateList = new ArrayList<Plate>();
         // Premisos
         isAdministrator = true;
         isAuthor = true;
@@ -78,6 +87,35 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         etSearch = (EditText) findViewById(R.id.etSearch);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         lvPlates = (ListView) findViewById(R.id.lvPlates);
+
+        View viewAlert = getLayoutInflater().inflate(R.layout.alert_price, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(viewAlert);
+        tvAlertTitlePrice = (TextView) viewAlert.findViewById(R.id.tvAlertTitle);
+        etAlertPrice = (EditText) viewAlert.findViewById(R.id.etAlertPrice);
+        btnAlertCancel = (Button) viewAlert.findViewById(R.id.btnAlertCancel);
+        btnAlertAdd = (Button) viewAlert.findViewById(R.id.btnAlertAdd);
+
+        alertDialog = builder.create();
+        lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Sound.playClick();
+            SetMenuActivity.this.position = position;
+            if(!arrayAdapterSetMenu.existInMenu(plateList.get(position).getId())){
+                alertDialog.show();
+                tvAlertTitlePrice.setText(plateList.get(position).getName());
+            }else{
+                arrayAdapterSetMenu.removePlate(plateList.get(position).getId());
+                try {
+                    Sound.playThrow();
+                }catch (Exception e){
+                    Log.e("Error", e.getMessage());
+                }
+            }
+            }
+        });
+
         etSearch.requestFocus();
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,6 +132,8 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
             public void afterTextChanged(Editable s) {}
         });
 
+        btnAlertCancel.setOnClickListener(this);
+        btnAlertAdd.setOnClickListener(this);
     }
 
     @Override
@@ -131,7 +171,9 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
 
     @Override
     public void showSetMenuList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.models.restaurant.menu.Menu menu) {
-        arrayAdapterSetMenu = new ArrayAdapterSetMenu(this, R.layout.adapter_element_restaurant_menu, plateList, menu);
+        this.plateList.clear();
+        this.plateList.addAll(plateList);
+        arrayAdapterSetMenu = new ArrayAdapterSetMenu(this, R.layout.adapter_element_restaurant_menu, this.plateList, menu);
         lvPlates.setAdapter(arrayAdapterSetMenu);
     }
 
@@ -149,5 +191,16 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
     public void onBackPressed() {
         setMenuListPresenter.stopRealTimeDatabase();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onClick(View v) {
+        Sound.playClick();
+        if(v.getId() == R.id.btnAlertAdd){
+            arrayAdapterSetMenu.addPrice(plateList.get(position).getId(), etAlertPrice.getText().toString());
+            alertDialog.dismiss();
+        }else if(v.getId() == R.id.btnAlertCancel){
+            alertDialog.dismiss();
+        }
     }
 }

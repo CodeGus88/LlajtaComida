@@ -29,6 +29,7 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceM = FirebaseDatabase.getInstance().getReference();
         plateList = new ArrayList<Plate>();
+        menu = new Menu();
     }
 
     /**
@@ -61,6 +62,7 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
+//        https://llajtacomida-f137b.firebaseio.com/
         if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/plates")){
             plateList.clear();
             for (DataSnapshot plate: snapshot.getChildren()) {

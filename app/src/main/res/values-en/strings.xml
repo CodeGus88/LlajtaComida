@@ -334,7 +334,10 @@
     <string name="btn_back">Back</string>
 
     <string name="id">ID:</string>
-
     <string name="switch_sound">Sound</string>
 
+    // Prices
+    <string name="default_price">15</string>
+    <string name="type_currency">Bo</string>
+    <string name="price">Price</string>
 </resources>

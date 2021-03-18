@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.menu.Menu;
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,12 +19,14 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
     private RestaurantInterface.PresenterPlateList presenterPlateList;
     private DatabaseReference databaseReference, databaseReferenceM;
     private ArrayList<Plate> plateListMenu, plateList;
+    private ArrayList<String> menuList;
     private Menu menu;
 
     public RestaurantPlateListModel(RestaurantInterface.PresenterPlateList presenterPlateList){
         this.presenterPlateList = presenterPlateList;
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceM = FirebaseDatabase.getInstance().getReference();
+        menuList = new ArrayList<String>();
         plateListMenu = new ArrayList<Plate>();
         plateList = new ArrayList<Plate>();
     }
@@ -56,6 +59,13 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
                 }
         }else{
             menu = snapshot.getValue(Menu.class);
+
+            // Agregado para los precios
+            if(menuList.size()>0)menuList.clear();
+            menuList.addAll(menu.getMenuList());
+            for (int i = 0; i<menu.getMenuList().size(); i++) {
+                menu.getMenuList().set(i, Validation.getFirstWord(menu.getMenuList().get(i)));
+            }
         }
         // Cargar menu
         if(menu != null){
@@ -65,7 +75,7 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
                 }
             }
         }
-        presenterPlateList.showPlateList(plateListMenu);
+        presenterPlateList.showPlateList(plateListMenu, menuList);
     }
 
     @Override

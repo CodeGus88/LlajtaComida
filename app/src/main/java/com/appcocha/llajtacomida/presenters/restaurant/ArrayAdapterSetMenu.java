@@ -1,4 +1,4 @@
-package com.appcocha.llajtacomida.presenters.restaurant;
+ package com.appcocha.llajtacomida.presenters.restaurant;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.menu.Menu;
@@ -64,23 +66,47 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
-        final CheckBox cbSelectedItem = (CheckBox) view.findViewById(R.id.cbSelectItem);
+        CardView cvPrice = (CardView) view.findViewById(R.id.cvPrice);
+        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlatePrice);
 
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(plateList.get(position).getName());
         tvResumeItem.setText(plateList.get(position).getOrigin());
-        cbSelectedItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(cbSelectedItem.isChecked()){
-                    addPlate(plateList.get(position).getId());
-                }else{
-                    removePlate(plateList.get(position).getId());
-                }
-            }
-        });
-        cbSelectedItem.setChecked(existInList(plateList.get(position).getId(), menu.getMenuList()));
+        if(existInList(plateList.get(position).getId(), menu.getMenuList())) cvPrice.setVisibility(View.VISIBLE);
+        else cvPrice.setVisibility(View.GONE);
+        String price = Validation.getXWord(getText(plateList.get(position).getId() ), 2 );
+        if(!price.equals("")) tvPlatePrice.setText(price + " " + context.getString(R.string.type_currency));
+        else tvPlatePrice.setText(context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
         return view;
+    }
+
+    public boolean existInMenu(String id){
+        if(existInList(id, menu.getMenuList())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public void addPrice(String id, String price){
+        String addPrice = id + " " + price;
+        addPlate(addPrice);
+        notifyDataSetChanged();
+    }
+
+    /**
+     * optiene el texto que contiene el id
+     * @param id
+     * @return
+     */
+    private String getText(String id){
+        String text = "";
+        for (String textAux: menu.getMenuList()) {
+            if(textAux.contains(id)){
+                text = textAux;
+                break;
+            }
+        }
+        return text;
     }
 
     /** Filtra los datos del adaptador */
@@ -124,8 +150,8 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
      */
     private boolean existInList(String id, ArrayList<String> lista){
         boolean exist = false;
-        for (String plateId: lista) {
-            if(plateId.equals(id)){
+        for (int i = 0; i < lista.size(); i++) {
+            if(Validation.getXWord(lista.get(i), 1).equals(id)){
                 exist = true;
                 break;
             }
@@ -147,12 +173,13 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
      * Elimina el plato de la lista del restaurante
      * @param plateId
      */
-    private void removePlate(String plateId){
+    public void removePlate(String plateId){
         for(int i = 0; i < menu.getMenuList().size(); i ++){
-            if(menu.getMenuList().get(i).equals(plateId)){
+            if(Validation.getXWord(menu.getMenuList().get(i), 1).equals(plateId)){
                 menu.getMenuList().remove(i);
             }
         }
+        notifyDataSetChanged();
     }
 
     /**
@@ -165,9 +192,15 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         }
         int i = 0;
         while(i < menu.getMenuList().size()){
-            String idPlateInMenu = menu.getMenuList().get(i);
+            String idPlateInMenu = Validation.getXWord(menu.getMenuList().get(i), 1);
             if(!platesListIdExistents.contains(idPlateInMenu)){ // Ojo genera un error posiblemente cuando el internet está lento
-                menu.getMenuList().remove(idPlateInMenu);
+//                menu.getMenuList().remove(idPlateInMenu);
+                for(int j = 0; i< menu.getMenuList().size(); i++){
+                    if(menu.getMenuList().get(j) == idPlateInMenu){
+                        menu.getMenuList().remove(j);
+                        break;
+                    }
+                }
             }else{
                 i++;
             }

@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.plate.Plate;
@@ -19,13 +21,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
- * Este es un adaptador para la lista de platos
+ * Este es un adaptador para la lista de platos con sus precios
  * Carga todos los platos
  */
-public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
+public class ArrayAdapterPlatePrice extends ArrayAdapter<Plate> {
 
     private ArrayList<Plate> plateList;
     private ArrayList<Plate> plateListCopy;
+    private ArrayList<String> priceList;
     private Context context;
     private int resource;
 
@@ -35,13 +38,14 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
      * @param resource, es el item (xml)
      * @param objects, lista de objetos plato
      */
-    public ArrayAdapterPlate(@NonNull Context context, int resource, @NonNull ArrayList <Plate> objects) {
-            super(context, resource, objects);
-            this.resource = resource;
-            this.context = context;
-            this.plateListCopy = new ArrayList<Plate>();
-            this.plateList = objects;
-            this.plateListCopy.addAll(objects);
+    public ArrayAdapterPlatePrice(@NonNull Context context, int resource, @NonNull ArrayList <Plate> objects,@NonNull ArrayList<String> priceList) {
+        super(context, resource, objects);
+        this.resource = resource;
+        this.context = context;
+        this.plateListCopy = new ArrayList<Plate>();
+        this.plateList = objects;
+        this.plateListCopy.addAll(objects);
+        this.priceList = priceList;
     }
 
     /**
@@ -59,6 +63,7 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
             view = LayoutInflater.from(context).inflate(resource, null);
         }
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
+        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlatePrice);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
         TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
         TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
@@ -67,43 +72,28 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(plateList.get(position).getName());
         tvResumeItem.setText(plateList.get(position).getOrigin());
+        String text = getText(plateList.get(position).getId());
+
+        if(!text.equals("")) {
+            String price = Validation.getXWord(text,2);
+            if(!price.equals("")){
+                tvPlatePrice.setText(price + " " + context.getString(R.string.type_currency));
+            }else{
+                tvPlatePrice.setText(context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
+            }
+        }
         return view;
     }
 
-    /**
-     * Este método sirve para realizar búsquedas
-     *  Filtra los datos del adaptador
-     */
-    public void filter(String texto, int previousLentg) {
-        texto = texto.toLowerCase();
-        if(!texto.isEmpty()) {
-            if(texto.length() == previousLentg){ // Si se presionó borrar
-                plateList.clear();
-                plateList.addAll(plateListCopy);
-            }
-            search(texto);
-        }else if(plateList.size() != plateListCopy.size()){
-            if(plateList.size() > 0){
-                plateList.clear();
-            }
-            plateList.addAll(plateListCopy);
-        }
-        notifyDataSetChanged();
-    }
-
-    /**
-     * Busca
-     * @param texto, elemento buscado
-     */
-    public  void search(String texto){
-        int i = 0;
-        while (i < plateList.size()) {
-            String string = plateList.get(i).toString().toLowerCase();
-            if (!string.contains(texto)) {
-                plateList.remove(i);
-            } else {
-                i++;
+    private String getText(String id){
+        String text = "";
+        for (String textAux: priceList) {
+            if(textAux.contains(id)){
+                text = textAux;
+                break;
             }
         }
+        return text;
     }
 }
+

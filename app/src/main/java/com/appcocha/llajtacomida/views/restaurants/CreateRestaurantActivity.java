@@ -150,7 +150,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
 
         builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.title_confirm_message);
-        builder.setMessage(Validation.getFirstName(AuthUser.getUser().getFulName()) + ", " + getString(R.string.confirm_message));
+        builder.setMessage(Validation.getFirstWord(AuthUser.getUser().getFulName()) + ", " + getString(R.string.confirm_message));
         builder.setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

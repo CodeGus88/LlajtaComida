@@ -75,10 +75,10 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
         try{
             String title;
             if(user.getFulName() != null){
-                title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(user.getFulName()) +
+                title = getString(R.string.tv_welcome) + " " + Validation.getFirstWord(user.getFulName()) +
                         getString(R.string.tv_welcome_continue);
             }else{
-                title = getString(R.string.tv_welcome) + " " + Validation.getFirstName(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()) +
+                title = getString(R.string.tv_welcome) + " " + Validation.getFirstWord(FirebaseAuth.getInstance().getCurrentUser().getDisplayName()) +
                         getString(R.string.tv_welcome_continue);
             }
             tvWelcome.setText(title);

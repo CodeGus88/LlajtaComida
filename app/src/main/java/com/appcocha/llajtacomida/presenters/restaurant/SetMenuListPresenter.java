@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.presenters.restaurant;
 
+import android.util.Log;
+
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.menu.Menu;
 import com.appcocha.llajtacomida.models.plate.Plate;

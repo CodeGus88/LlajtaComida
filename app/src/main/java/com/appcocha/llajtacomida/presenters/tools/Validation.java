@@ -107,19 +107,42 @@ public class Validation {
     }
 
     /**
-     * Obtiene la primera palabra del campo fulName
-     * @param fulName
+     * Obtiene la primera palabra de la cadena
+     * @param fulText
      * @return firstName
      */
-    public static String getFirstName(String fulName){
+    public static String getFirstWord(String fulText){
         String firstName = "";
-        for(int i = 0; i<fulName.length(); i++){
-            if(fulName.charAt(i) == ' '){
+        for(int i = 0; i<fulText.length(); i++){
+            if(fulText.charAt(i) == ' '){
                 break;
             }
-            firstName += fulName.charAt(i);
+            firstName += fulText.charAt(i);
         }
         return firstName;
+    }
+
+
+    /**
+     * Obtiene la palabra x del texto
+     * @param fulText, x
+     * @return x word
+     */
+    public static String getXWord(String fulText, int x){
+        fulText = correctText(fulText);
+        ArrayList<String> wordList = new ArrayList<String>();
+        String temporaryWord = "";
+        for(int i = 0; i<fulText.length(); i++){
+            if(fulText.charAt(i) != ' '){
+                temporaryWord += fulText.charAt(i);
+            }
+            if(fulText.charAt(i) == ' ' || (i==fulText.length()-1)){
+                wordList.add(temporaryWord);
+                temporaryWord = "";
+            }
+        }
+        if(x <= wordList.size() && x-1 >= 0) return wordList.get(x-1);
+        else return "";
     }
 
     /**
@@ -174,17 +197,4 @@ public class Validation {
         }
         return isName;
     }
-
-//    public static boolean isPersonName(String name){
-//        boolean isName = true;
-//        name = name.toLowerCase();
-//        for(int i = 0; i < name.length(); i ++){
-//            if(!((name.charAt(i) >= 97 && name.charAt(i) <= 122)
-//                    || name.charAt(i) == 164 || name.charAt(i) == 160 || name.charAt(i) == 130 || name.charAt(i) == 161 || name.charAt(i) == 162
-//                    || name.charAt(i) == 163 || name.charAt(i) == 32) || name.charAt(i) == 129){
-//                isName = false;
-//            }
-//        }
-//        return isName;
-//    }
 }

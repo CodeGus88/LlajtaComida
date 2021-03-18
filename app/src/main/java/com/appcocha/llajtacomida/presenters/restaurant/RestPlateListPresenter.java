@@ -3,6 +3,8 @@ package com.appcocha.llajtacomida.presenters.restaurant;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.plate.Plate;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantPlateListModel;
+import com.appcocha.llajtacomida.presenters.tools.Validation;
+
 import java.util.ArrayList;
 
 /**
@@ -23,8 +25,8 @@ public class RestPlateListPresenter implements RestaurantInterface.PresenterPlat
     }
 
     @Override
-    public void showPlateList(ArrayList<Plate> list) {
-        viewPlateList.showPlateList(list);
+    public void showPlateList(ArrayList<Plate> list, ArrayList<String> priceList) {
+        viewPlateList.showPlateList(list, priceList);
     }
 
     @Override

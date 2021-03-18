@@ -98,7 +98,7 @@ public interface RestaurantInterface {
          * Muestra la lista de platos en el menú de un restaurante
          * @param list
          */
-        void showPlateList(ArrayList<Plate> list);
+        void showPlateList(ArrayList<Plate> list, ArrayList<String> menuPrice);
     }
 
     /**
@@ -110,7 +110,7 @@ public interface RestaurantInterface {
          * Determina mostrar la lista de platos
          * @param list
          */
-        void showPlateList(ArrayList<Plate> list);
+        void showPlateList(ArrayList<Plate> list, ArrayList<String> priceList);
 
         /**
          * Determina filtrar la lista de platos según el menu de un restaurante

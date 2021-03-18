@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.appcocha.llajtacomida.presenters.plate.ArrayAdapterPlatePrice;
 import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -74,7 +75,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
     private LinearLayout llOwnerName;
-    private ArrayAdapterPlate arrayAdapterPlate;
+    private ArrayAdapterPlatePrice arrayAdapterPlatePrice;
     private ArrayList<Plate> plateList;
 
     // Presenters
@@ -360,12 +361,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      * @param list
      */
     @Override
-    public void showPlateList(ArrayList<Plate> list) {
+    public void showPlateList(ArrayList<Plate> list, ArrayList<String> menuPrice) {
        try {
            plateList.clear();
            plateList.addAll(list);
-           arrayAdapterPlate = new ArrayAdapterPlate(this, R.layout.adapter_element_list, list);
-           menuList.setAdapter(arrayAdapterPlate);
+           arrayAdapterPlatePrice = new ArrayAdapterPlatePrice(this, R.layout.adapter_plates_price_list, list, menuPrice);
+           menuList.setAdapter(arrayAdapterPlatePrice);
            ScreenSize.setListViewHeightBasedOnChildren(menuList);
        }catch (Exception e){
             Log.e("Error", e.getMessage());
