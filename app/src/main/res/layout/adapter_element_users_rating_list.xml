@@ -30,7 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/cvAvatar"
         android:hint="@string/tv_undefined"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:layout_toLeftOf="@+id/tvDate"
+        android:maxLines="1"/>
 
         <RatingBar
             android:id="@+id/rvUserVote"
@@ -50,7 +52,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/tv_undefined"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:textSize="9sp"
+            android:padding="5dp"/>
 
     <TextView
         android:id="@+id/tvExperience"
@@ -59,11 +63,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/cvAvatar"
         android:padding="4dp"
-        android:justificationMode="inter_word"
         android:textSize="11dp"
         android:hint="@string/tv_text_lorem"
-        android:maxLines="2"
-        android:ellipsize="end"/>
+        android:maxLines="2" />
 
     <ImageButton
         android:id="@+id/btnDelete"
@@ -76,7 +78,4 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:visibility="gone"/>
-
-
-
 </RelativeLayout>

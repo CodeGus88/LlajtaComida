@@ -41,7 +41,6 @@ import com.appcocha.llajtacomida.presenters.restaurant.RestaurantManagerPresente
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.appcocha.llajtacomida.presenters.tools.ScreenSize;
-import com.appcocha.llajtacomida.presenters.plate.ArrayAdapterPlate;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.appcocha.llajtacomida.views.favorites.FavoriteObjectFragment;
 import com.appcocha.llajtacomida.views.rating.RatingRecordFragment;
@@ -55,6 +54,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage,
         RestaurantInterface.ViewRestaurantManager{
     public String id;
+    public final int MAX_LINES = 2;
     private static final int TIME_ANIMATION = 2000;
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
@@ -64,7 +64,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ImageButton btnNext;
     private ImageButton btnPrevious;
     private ImageButton btnMenuEdit;
-    private Button btnVisit;
+    private ImageButton btnMarkersView;
+//    private Button btnVisit;
     private ListView menuList;
     private TextView tvRating;
     // Favoritos
@@ -73,8 +74,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ViewFlipper viewFlipper;
     private int height, width;
     private ZoomInImageView ivPhoto;
-    private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription;
-    private LinearLayout llOwnerName;
+    private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription, tvReadMoreLessDescription;
+    private LinearLayout llOwnerName, llDescription;
     private ArrayAdapterPlatePrice arrayAdapterPlatePrice;
     private ArrayList<Plate> plateList;
 
@@ -160,14 +161,17 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         tvOwnerName = (TextView) findViewById(R.id.tvOwner);
         tvPhone = (TextView) findViewById(R.id.tvPhone);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
+        llDescription = (LinearLayout) findViewById(R.id.llDescription);
         tvOriginAndDescription = (TextView) findViewById(R.id.tvOriginAndDescription);
+        tvReadMoreLessDescription = (TextView) findViewById(R.id.tvReadMoreDescription);
         llOwnerName = (LinearLayout) findViewById(R.id.llOwner);
         ivPhoto.getLayoutParams().height = (int) (height*0.984); //por el espacio para los botones next previous
         ivPhoto.getLayoutParams().width = (int) (width * 0.984); //(int) (width*0.89);//width;
         btnPrevious = (ImageButton) findViewById(R.id.btnPrevious);
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
-        btnVisit = (Button) findViewById(R.id.btnVisit);
+        btnMarkersView = (ImageButton) findViewById(R.id.btnMarkersView);
+//        btnVisit = (Button) findViewById(R.id.btnVisit);
         menuList = (ListView) findViewById(R.id.menuList);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -181,10 +185,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnPrevious.setOnClickListener(this);
         btnNext.setOnClickListener(this);
         btnMenuEdit.setOnClickListener(this);
-        btnVisit.setOnClickListener(this);
+        btnMarkersView.setOnClickListener(this);
+//        btnVisit.setOnClickListener(this);
         viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
         tvName.setOnClickListener(this);
         toast = new Toast(this);
+        llDescription.setOnClickListener(this);
+        tvOriginAndDescription.setMaxLines(MAX_LINES);
     }
 
 
@@ -243,7 +250,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View v) {
-        Sound.playClick();
+        if(v.getId() == R.id.llDescription) Sound.playDrop();
+        else Sound.playClick();
         switch (v.getId()){
             case R.id.btnNext:
                 viewFlipper.setInAnimation(this, android.R.anim.slide_in_left); // slide_in_left agregado manualmente creando anim/slide_in_left.xml en res
@@ -260,11 +268,21 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.btnMenuEdit:
                 RestaurantNavegation.showMenu(this, restaurant);
                 break;
-            case R.id.btnVisit:
+//            case R.id.btnVisit:
+            case R.id.btnMarkersView:
                 MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
             case R.id.tvName:
                 pauseResume();
+                break;
+            case R.id.llDescription:
+                if(tvOriginAndDescription.getMaxLines() == MAX_LINES){
+                    tvOriginAndDescription.setMaxLines(1500);
+                    tvReadMoreLessDescription.setText(getString(R.string.read_less));
+                }else{
+                    tvOriginAndDescription.setMaxLines(MAX_LINES);
+                    tvReadMoreLessDescription.setText(getString(R.string.read_more));
+                }
                 break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();

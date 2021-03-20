@@ -57,7 +57,7 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
             tvRating.setText(String.valueOf(decimalFormat.format(restaurantList.get(position).getPunctuation())));
             Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivPhotoItem);
             tvTitleItem.setText(restaurantList.get(position).getName());
-            tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription());
+            tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription().replace("\n", " "));
         }catch(Exception e){
             Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
         }

@@ -111,14 +111,31 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/llRating"
                     android:layout_alignRight="@+id/vfCarrucel"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"/>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="1dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignBottom="@+id/vfCarrucel"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp">
+                    <ImageButton
+                        android:id="@+id/btnMarkersViewAllMap"
+                        android:layout_width="55dp"
+                        android:layout_height="32dp"
+                        android:src="@mipmap/map_button_all_markers"
+                        android:scaleType="fitXY"
+                        android:background="#ffffff"
+                        android:clickable="true" />
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
 
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="8dp"/>
+                android:layout_height="5dp"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -152,13 +169,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"/>
 
-                <TextView
-                    android:id="@+id/tvIngredients"
+                <LinearLayout
+                    android:id="@+id/llIngredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/lorem_short"
-                    android:justificationMode="inter_word"
-                    style="@style/CodeFontContent"/>
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lorem_short"
+                        android:justificationMode="inter_word"
+                        style="@style/CodeFontContent"/>
+                    <TextView
+                        android:id="@+id/tvReadMoreLessIngredients"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:text="@string/read_more"
+                        android:textColor="#03A9F4"/>
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -184,13 +214,29 @@
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"/>
-                <TextView
-                    android:id="@+id/tvOrigin"
-                    style="@style/CodeFontContent"
+
+
+                <LinearLayout
+                    android:id="@+id/llOriginDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:justificationMode="inter_word"
-                    android:text="@string/lorem_long" />
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvOrigin"
+                        style="@style/CodeFontContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:justificationMode="inter_word"
+                        android:text="@string/lorem_long" />
+                    <TextView
+                        android:id="@+id/tvReadMoreLessOriginDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="10dp"
+                        android:text="@string/read_more"
+                        android:textColor="#03A9F4"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <Space
@@ -239,7 +285,7 @@
                         app:cardCornerRadius="5dp"
                         android:layout_marginRight="10dp">
                         <ImageButton
-                            android:id="@+id/btnMarkersView"
+                            android:id="@+id/btnMarkersViewAllIcon"
                             android:layout_width="35dp"
                             android:layout_height="28dp"
                             android:layout_weight="1"

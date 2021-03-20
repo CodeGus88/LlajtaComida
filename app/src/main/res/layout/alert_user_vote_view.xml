@@ -32,7 +32,9 @@
         android:layout_toRightOf="@+id/cvAvatar"
         android:hint="@string/tv_undefined"
         android:textStyle="bold"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:layout_toLeftOf="@+id/tvDate"
+        android:maxLines="1"/>
 
     <RatingBar
         android:id="@+id/rvUserVote"
@@ -53,7 +55,10 @@
         android:layout_height="wrap_content"
         android:hint="@string/tv_undefined"
         android:layout_alignParentRight="true"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:textSize="9sp"
+        android:gravity="center_vertical"
+        android:padding="5dp"/>
     <Button
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"

@@ -340,4 +340,10 @@
     <string name="default_price">15</string>
     <string name="type_currency">Bo</string>
     <string name="price">Price</string>
+
+
+    // Read more - less
+    <string name="read_more">Leer más...</string>
+    <string name="read_less">Leer menos...</string>
+
 </resources>

@@ -113,17 +113,35 @@
                     android:layout_alignRight="@+id/vfCarrucel"
                     android:layout_marginRight="10dp" />
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="1dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignBottom="@+id/vfCarrucel"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp">
+                    <ImageButton
+                        android:id="@+id/btnMarkersView"
+                        android:layout_width="55dp"
+                        android:layout_height="32dp"
+                        android:src="@mipmap/map_button_one_marker"
+                        android:scaleType="fitXY"
+                        android:background="#ffffff"
+                        android:clickable="true"/>
+                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="8dp"/>
+                android:layout_height="5dp"/>
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:gravity="center"
                 android:hint="@string/tv_undefined"
                 style="@style/CodeFontContentTitle"
@@ -141,87 +159,81 @@
                 android:background="@drawable/panel_gray"
                 android:layout_marginHorizontal="1dp"
                 android:padding="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+
                     <LinearLayout
                         android:id="@+id/llOwner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:layout_marginRight="2dp">
+                        android:orientation="horizontal"
+                        android:layout_weight="2"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginVertical="5dp">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/tv_owner"
                             style="@style/CodeFontContentTitle"/>
-                        <com.firebase.ui.auth.ui.phone.SpacedEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp"/>
                         <TextView
                             android:id="@+id/tvOwner"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/tv_undefined"
                             style="@style/CodeFontContent"
-                            android:textIsSelectable="true"/>
+                            android:textIsSelectable="true"
+                            android:layout_weight="1"
+                            android:layout_marginLeft="3dp"/>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:orientation="horizontal"
                         android:layout_marginLeft="2dp"
-                        android:layout_weight="1">
+                        android:layout_weight="2"
+                        android:layout_marginVertical="5dp">
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/tv_phone"
                             style="@style/CodeFontContentTitle"/>
-                        <com.firebase.ui.auth.ui.phone.SpacedEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="5dp"/>
                         <TextView
                             android:id="@+id/tvPhone"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:hint="@string/tv_undefined"
                             style="@style/CodeFontContent"
-                            android:textIsSelectable="true"/>
+                            android:textIsSelectable="true"
+                            android:layout_marginLeft="3dp"/>
                     </LinearLayout>
-
-                </LinearLayout>
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="2dp"
+                    android:layout_weight="2"
+                    android:layout_marginVertical="5dp">
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tv_address"
                         style="@style/CodeFontContentTitle"/>
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="5dp"/>
+
                     <TextView
                         android:id="@+id/tvAddress"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/tv_undefined"
                         style="@style/CodeFontContent"
-                        android:textIsSelectable="true"/>
+                        android:textIsSelectable="true"
+                        android:layout_marginLeft="3dp"
+                        android:justificationMode="inter_word"/>
                 </LinearLayout>
 
             </LinearLayout>
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -229,7 +241,6 @@
                 android:background="@drawable/panel_gray"
                 android:layout_marginHorizontal="1dp"
                 android:padding="10dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,15 +253,31 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="5dp"/>
-                    <TextView
-                        android:id="@+id/tvOriginAndDescription"
+
+                    <LinearLayout
+                        android:id="@+id/llDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/tv_undefined"
-                        style="@style/CodeFontContent"
-                        android:justificationMode="inter_word"/>
-                </LinearLayout>
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvOriginAndDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/tv_undefined"
+                            style="@style/CodeFontContent"
+                            android:justificationMode="inter_word">
+                        </TextView>
+                        <TextView
+                            android:id="@+id/tvReadMoreDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:text="@string/read_more"
+                            android:textColor="#03A9F4"/>
+                    </LinearLayout>
 
+
+                </LinearLayout>
             </LinearLayout>
 
             <Space
@@ -278,7 +305,6 @@
                         android:layout_marginLeft="10dp"
                         android:text="@string/tv_menu"
                         style="@style/CodeFontContentTitle"/>
-                    <!--                    android:layout_toLeftOf="@+id/btnMenuEdit"-->
 
                     <ImageButton
                         android:id="@+id/btnMenuEdit"
@@ -294,29 +320,28 @@
                     android:id="@+id/menuList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
 
-            <Button
-                android:id="@+id/btnVisit"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="10dp"
-                android:text="@string/btn_visit"
-                android:background="@drawable/btn_continue"
-                android:textColor="#fff"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:drawablePadding="-50sp"
-                android:drawableEnd="@drawable/icon_location"/>
+<!--            <Button-->
+<!--                android:id="@+id/btnVisit"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:text="@string/btn_visit"-->
+<!--                android:background="@drawable/btn_continue"-->
+<!--                android:textColor="#fff"-->
+<!--                android:paddingLeft="15dp"-->
+<!--                android:paddingRight="15dp"-->
+<!--                android:drawablePadding="-50sp"-->
+<!--                android:drawableEnd="@drawable/icon_location"/>-->
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+<!--            <Space-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="10dp"/>-->
 
             <FrameLayout
                 android:id="@+id/flRating"
@@ -327,20 +352,20 @@
         </LinearLayout>
 
     </ScrollView>
-    <!--        <ImageView-->
-    <!--            android:layout_width="20dp"-->
-    <!--            android:layout_height="20dp"-->
-    <!--            app:srcCompat="@mipmap/sabores"-->
-    <!--            android:layout_marginTop="0dp"-->
-    <!--            android:layout_marginLeft="0dp"/>-->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@mipmap/image_design"
+                android:layout_marginTop="0dp"
+                android:layout_marginLeft="0dp"/>
 
-    <!--        <ImageView-->
-    <!--            android:layout_width="20dp"-->
-    <!--            android:layout_height="20dp"-->
-    <!--            app:srcCompat="@mipmap/sabores"-->
-    <!--            android:layout_alignParentRight="true"-->
-    <!--            android:layout_alignParentBottom="true"-->
-    <!--            android:rotationY="180"-->
-    <!--            android:rotationX="180"/>-->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:srcCompat="@mipmap/image_design"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:rotationY="180"
+                android:rotationX="180"/>
 
 </RelativeLayout>

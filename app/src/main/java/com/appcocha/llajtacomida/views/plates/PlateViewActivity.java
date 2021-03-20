@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import com.appcocha.llajtacomida.presenters.user.AuthUser;
 import com.appcocha.llajtacomida.views.favorites.FavoriteObjectFragment;
 import com.appcocha.llajtacomida.views.rating.RatingRecordFragment;
 import com.zolad.zoominimageview.ZoomInImageView;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -52,8 +54,8 @@ import java.util.ArrayList;
         PlateInterface.ViewRestlist, PlateInterface.ViewPlateManager {
 
     private ZoomInImageView ivPhoto;
-    private TextView tvName, tvIngredients, tvOrigin, tvTitleRestaurants, tvRestaurantsFound;
-
+    private TextView tvName, tvIngredients, tvOrigin, tvTitleRestaurants, tvRestaurantsFound, tvReadMoreLessIngredients, tvReadMoreLessOriginDescription;
+    private LinearLayout llIngredients, llOriginDescription;
 
     public static String id;
     private MenuItem iconEdit, iconDelete, iconGalery;
@@ -61,6 +63,7 @@ import java.util.ArrayList;
     private Plate plate;
 
     private static final int TIME_ANIMATION = 2000;
+    private final int MAX_LINES = 3;
 
     // bootones
     private ImageButton btnNext;
@@ -75,7 +78,7 @@ import java.util.ArrayList;
     private ListView lvRestaurants;
     private ArrayList<Restaurant> restaurantList;
     private TextView tvRating;
-    private ImageButton btnMarkersView;
+    private ImageButton btnMarkersViewIcon, btnMarquersViewMap;
 
     //  Presentadores del plato y de la lista de restaurantes
     private PlateInterface.presenterRestList restListPresenter;
@@ -158,7 +161,14 @@ import java.util.ArrayList;
         tvIngredients = (TextView) findViewById(R.id.tvIngredients);
         tvOrigin = (TextView) findViewById(R.id.tvOrigin);
         tvRating = (TextView) findViewById(R.id.tvRating);
-        btnMarkersView = (ImageButton) findViewById(R.id.btnMarkersView);
+        btnMarkersViewIcon = (ImageButton) findViewById(R.id.btnMarkersViewAllIcon);
+        btnMarquersViewMap = (ImageButton) findViewById(R.id.btnMarkersViewAllMap);
+
+        // Leer más...
+        tvReadMoreLessIngredients = (TextView) findViewById(R.id.tvReadMoreLessIngredients);
+        tvReadMoreLessOriginDescription = (TextView) findViewById(R.id.tvReadMoreLessOriginDescription);
+        llIngredients = (LinearLayout) findViewById(R.id.llIngredients);
+        llOriginDescription = (LinearLayout) findViewById(R.id.llOriginDescription);
 
         tvTitleRestaurants = (TextView) findViewById(R.id.tvTitleRestaurants);
         tvRestaurantsFound = (TextView) findViewById(R.id.tvRestaurantsFound);
@@ -181,11 +191,16 @@ import java.util.ArrayList;
                 RestaurantNavegation.showRestaurantView(PlateViewActivity.this, restaurantList.get(position).getId());
             }
         });
-        btnMarkersView.setOnClickListener(this);
+        btnMarkersViewIcon.setOnClickListener(this);
+        btnMarquersViewMap.setOnClickListener(this);
         tvName.setOnClickListener(this);
 
         toast = new Toast(this);
 
+        tvIngredients.setMaxLines(MAX_LINES);
+        tvOrigin.setMaxLines(MAX_LINES);
+        llIngredients.setOnClickListener(this);
+        llOriginDescription.setOnClickListener(this);
     }
 
     private void initAnimation(){
@@ -259,7 +274,8 @@ import java.util.ArrayList;
 
     @Override
     public void onClick(View v) {
-        Sound.playClick();
+        if(v.getId() == R.id.llIngredients || v.getId() == R.id.llOriginDescription) Sound.playDrop();
+        else Sound.playClick();
         switch (v.getId()){
             case R.id.btnNext:
                 viewFlipper.setInAnimation(this, android.R.anim.slide_in_left); // slide_in_left agregado manualmente creando anim/slide_in_left.xml en res
@@ -273,12 +289,31 @@ import java.util.ArrayList;
                 viewFlipper.setFlipInterval(TIME_ANIMATION); // Para reiniciar tiempo
                 viewFlipper.showPrevious();
                 break;
-            case R.id.btnMarkersView:
+            case R.id.btnMarkersViewAllIcon:
+            case R.id.btnMarkersViewAllMap: // Hace lo mismo que btnMarkersViewAllIcon
                 if(restaurantList.size() > 0) MapNavegation.showSetAllLocationMapActivity(this, plate,restaurantList);
                 else Toast.makeText(this, getString(R.string.message_not_found_restaurants), Toast.LENGTH_LONG).show();
                 break;
             case R.id.tvName:
                 pauseResume();
+                break;
+            case R.id.llIngredients:
+                if(tvIngredients.getMaxLines() == MAX_LINES){
+                   tvIngredients.setMaxLines(1500);
+                   tvReadMoreLessIngredients.setText(getString(R.string.read_less));
+                }else{
+                    tvIngredients.setMaxLines(MAX_LINES);
+                    tvReadMoreLessIngredients.setText(getString(R.string.read_more));
+                }
+                break;
+            case R.id.llOriginDescription:
+                if(tvOrigin.getMaxLines() == MAX_LINES){
+                    tvOrigin.setMaxLines(1500);
+                    tvReadMoreLessOriginDescription.setText(getString(R.string.read_less));
+                }else{
+                    tvOrigin.setMaxLines(MAX_LINES);
+                    tvReadMoreLessOriginDescription.setText(getString(R.string.read_more));
+                }
                 break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();

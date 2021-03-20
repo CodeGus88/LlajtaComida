@@ -66,7 +66,7 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         tvRating.setText(String.valueOf(decimalFormat.format(plateList.get(position).getPunctuation())));
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(plateList.get(position).getName());
-        tvResumeItem.setText(plateList.get(position).getOrigin());
+        tvResumeItem.setText(plateList.get(position).getOrigin().replace("\n", " "));
         return view;
     }
 

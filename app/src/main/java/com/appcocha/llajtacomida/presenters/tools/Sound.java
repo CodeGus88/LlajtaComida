@@ -16,7 +16,7 @@ public class Sound implements Serializable {
     private static MediaPlayer mediaPlayerStart;
     private static MediaPlayer mediaPlayerClick;
     private static MediaPlayer mediaPlayerThrow;
-    private static MediaPlayer mediaPlayerAlert;
+//    private static MediaPlayer mediaPlayerAlert;
     private static MediaPlayer mediaPlayerLocation;
     private static MediaPlayer mediaPlayerLocationEditor;
     private static MediaPlayer mediaPlayerMagic;
@@ -24,6 +24,7 @@ public class Sound implements Serializable {
     private static MediaPlayer mediaPlayerError;
     private static MediaPlayer mediaPlayerGPS;
     private static MediaPlayer mediaPlayerSuccess;
+    private static MediaPlayer mediaPlayerDrop;
 
     /**
      * Contructor, inicializa todos los efectos de sonido
@@ -33,7 +34,7 @@ public class Sound implements Serializable {
         volume = 0.08F;
         mediaPlayerStart = MediaPlayer.create(context, R.raw.start_3);
         mediaPlayerClick = MediaPlayer.create(context, R.raw.click_2);
-        mediaPlayerAlert = MediaPlayer.create(context, R.raw.alert);
+//        mediaPlayerAlert = MediaPlayer.create(context, R.raw.alert);
         mediaPlayerThrow = MediaPlayer.create(context, R.raw.sound_1);
         mediaPlayerLocation = MediaPlayer.create(context, R.raw.flash_camera); //digital
         mediaPlayerLocationEditor = MediaPlayer.create(context, R.raw.alien_1);
@@ -42,6 +43,7 @@ public class Sound implements Serializable {
         mediaPlayerError = MediaPlayer.create(context, R.raw.error_1);
         mediaPlayerGPS = MediaPlayer.create(context, R.raw.gps);
         mediaPlayerSuccess = MediaPlayer.create(context, R.raw.success);
+        mediaPlayerDrop = MediaPlayer.create(context, R.raw.drop);
         volume(volume);
     }
 
@@ -64,12 +66,13 @@ public class Sound implements Serializable {
         mediaPlayerMagic.setVolume(VOLUME, VOLUME);
         mediaPlayerLoad.setVolume(VOLUME, VOLUME);
         mediaPlayerThrow.setVolume(VOLUME, VOLUME);
-        mediaPlayerAlert.setVolume(VOLUME, VOLUME);
+//        mediaPlayerAlert.setVolume(VOLUME, VOLUME);
         mediaPlayerLocation.setVolume(VOLUME, VOLUME);
         mediaPlayerLocationEditor.setVolume(VOLUME, VOLUME);
         mediaPlayerGPS.setVolume(VOLUME, VOLUME);
         mediaPlayerError.setVolume(VOLUME, VOLUME);
         mediaPlayerSuccess.setVolume(VOLUME, VOLUME);
+        mediaPlayerDrop.setVolume(VOLUME, VOLUME);
     }
 
     /**
@@ -96,13 +99,13 @@ public class Sound implements Serializable {
         if(volume > 0) mediaPlayerMagic.start();
     }
 
-    /**
-     * Si el sonido está activado
-     * reproduce sonido alert
-     */
-    public static void playAlert(){
-        if(volume > 0) mediaPlayerAlert.start();
-    }
+//    /**
+//     * Si el sonido está activado
+//     * reproduce sonido alert
+//     */
+//    public static void playAlert(){
+//        if(volume > 0) mediaPlayerAlert.start();
+//    }
 
     /**
      * Si el sonido está activado
@@ -152,4 +155,13 @@ public class Sound implements Serializable {
         if(volume > 0) mediaPlayerSuccess.start();
     }
 
+    /**
+     * Si el sonido está asctivado
+     * reproduce sonido drop
+     */
+    public static void playDrop(){
+        if(volume > 0){
+            mediaPlayerDrop.start();
+        }
+    }
 }

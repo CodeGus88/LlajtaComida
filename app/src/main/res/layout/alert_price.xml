@@ -26,7 +26,7 @@
             android:id="@+id/etAlertPrice"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:hint="@string/price"
+            android:hint="@string/default_price"
             android:textSize="20sp"
             app:counterEnabled="true"
             android:maxLength="4"

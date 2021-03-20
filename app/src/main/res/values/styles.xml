@@ -3,9 +3,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
 <!--        <item name="colorPrimary">#2196F3</item>-->
-        <item name="colorPrimaryDark">#E203A9F4</item>
-        <item name="colorPrimary">#C303A9F4</item>
-        <item name="colorAccent">#03A9F4</item>
+        <item name="colorPrimaryDark">#CB03A9F4</item>
+        <item name="colorPrimary">#CB03A9F4</item>
+        <item name="colorAccent">#CB03A9F4</item>
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="android:navigationBarColor">#143F51B5</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
