@@ -61,10 +61,12 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
             menu = snapshot.getValue(Menu.class);
 
             // Agregado para los precios
-            if(menuList.size()>0)menuList.clear();
-            menuList.addAll(menu.getMenuList());
-            for (int i = 0; i<menu.getMenuList().size(); i++) {
-                menu.getMenuList().set(i, Validation.getFirstWord(menu.getMenuList().get(i)));
+            if(menuList.size()>0) menuList.clear();
+            if (menu != null) {
+                menuList.addAll(menu.getMenuList());
+                for (int i = 0; i < menu.getMenuList().size(); i++) {
+                    menu.getMenuList().set(i, Validation.getFirstWord(menu.getMenuList().get(i)));
+                }
             }
         }
         // Cargar menu

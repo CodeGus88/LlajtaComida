@@ -29,7 +29,6 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceM = FirebaseDatabase.getInstance().getReference();
         plateList = new ArrayList<Plate>();
-        menu = new Menu();
     }
 
     /**
