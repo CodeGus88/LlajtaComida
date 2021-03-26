@@ -32,7 +32,6 @@
             android:icon="@drawable/icon_users"
             android:title="@string/tv_user_option_list" />
 
-<!--        Falta implementar el fragmento de sobre nosotros-->
         <item
             android:id="@+id/nav_about_us"
             android:icon="@drawable/ic_baseline_tablet_android_24"

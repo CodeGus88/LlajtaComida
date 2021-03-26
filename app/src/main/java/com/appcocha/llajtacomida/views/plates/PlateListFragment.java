@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.Space;
 import android.widget.Toast;
 
 import com.appcocha.llajtacomida.R;
@@ -34,17 +36,19 @@ import java.util.ArrayList;
 /**
  * Vista, Este fragmento muestra la lista de platos
  */
-public class PlateListFragment extends Fragment implements PlateInterface.ViewPlate{
+public class PlateListFragment extends Fragment implements PlateInterface.ViewPlate, PopupMenu.OnMenuItemClickListener {
 
     // view que hará referencia a la actividad contenedora de este fragmento
     private View view;
 
     // Iconos
-    private MenuItem iconAdd, iconSearch;
+    private MenuItem iconAdd, iconSearch, iconReorder;
 
     // Components
     private EditText etSearch;
     private ListView lvPlates;
+    private Space space;
+    private PopupMenu popupMenu;
 
     // Para listar platos
     private ArrayList<Plate> plateList;
@@ -53,7 +57,7 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
     /**
      * Muestra la lista de platos
      */
-    private PlateInterface.PresenterPlate presenterPlate;
+    private PlateInterface.PresenterPlate platePresenter;
 
     /**
      * Requiere de un constructor vacío
@@ -76,8 +80,8 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         setHasOptionsMenu(true); // para el funcionamiento de los iconos
         view = inflater.inflate(R.layout.fragment_plate_list, container, false);
         initComponents();
-        presenterPlate = new PlatePresenter(this);
-        presenterPlate.loadPlatesList();
+        platePresenter = new PlatePresenter(this);
+        platePresenter.loadPlatesList();
         return view;
     }
 
@@ -85,6 +89,10 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
      * Inicializa los componentes
      */
     private void initComponents() {
+        space = (Space) view.findViewById(R.id.spaceForPopPup);
+        popupMenu = new PopupMenu(getContext(), space);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu_order_list);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvPlates = (ListView) view.findViewById(R.id.lvPlates);
         plateList = new ArrayList<Plate>();
@@ -128,10 +136,12 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
      * @param menu hace referenccia al menú de la actividad contenedora
      */
     private void initIconsMenu(Menu menu) {
+        iconReorder = (MenuItem) menu.findItem(R.id.iconReorder);
         iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
         for(int i = 0; i < menu.size(); i++){ // Ocultamos todo
             menu.getItem(i).setVisible(false);
         }
+        iconReorder.setVisible(true);
         iconSearch.setVisible(true);
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
 
@@ -170,6 +180,9 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             case R.id.iconAdd:
                 PlateNavegation.showCreatedPlateView(getContext());
                 break;
+            case R.id.iconReorder:
+                popupMenu.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -194,6 +207,20 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             }
         }catch (Exception e){
             Log.e("Error", e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_name_order:
+                if(arrayAdapterPlate.reorderByName()) platePresenter.loadPlatesList();
+                return true;
+            case R.id.item_punctuation_order:
+                if(arrayAdapterPlate.reorderByPunctuation()) platePresenter.loadPlatesList();
+                return true;
+            default:
+                return false;
         }
     }
 }

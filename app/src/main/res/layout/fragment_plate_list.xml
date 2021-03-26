@@ -7,17 +7,12 @@
     android:orientation="vertical"
     android:background="@drawable/panel_list_white_gradient">
 
-
-<!--        <TextView-->
-<!--            android:layout_marginVertical="5dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/title_plates_list"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textColor="#353535"-->
-<!--            android:gravity="center"-->
-<!--            android:fontFamily="serif"/>-->
-
+    <!--        Este espacio sirve como piunto de referencia para abrir el menu popupmenu-->
+    <Space
+        android:id="@+id/spaceForPopPup"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="end"/>
 
             <EditText
                 android:id="@+id/etSearch"
@@ -28,7 +23,7 @@
                 android:paddingHorizontal="10dp"
                 android:drawableEnd="@drawable/icon_search_black"
                 android:inputType="textWebEditText"
-                android:hint="@string/et_search_plates"
+                android:hint="@string/et_search"
                 android:visibility="gone"
                 android:selectAllOnFocus="true" />
 

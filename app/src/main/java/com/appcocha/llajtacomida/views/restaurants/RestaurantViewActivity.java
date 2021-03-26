@@ -24,6 +24,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.appcocha.llajtacomida.presenters.plate.ArrayAdapterPlatePrice;
+import com.appcocha.llajtacomida.presenters.tools.Serializer;
 import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -56,6 +57,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     public String id;
     public final int MAX_LINES = 2;
     private static final int TIME_ANIMATION = 2000;
+    private final String IMAGES_ANIMATION_FILE = "IMAGES_ANIMATION_FILE";
+
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
 
@@ -219,6 +222,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         }
         if(AuthUser.getUser().getRole().equals("admin")) iconPublish.setVisible(true);
         else iconPublish.setVisible(false);
+        try {
+            if(restaurant.isPublic()) iconPublish.setTitle(getString(R.string.icon_public_of));
+            else  iconPublish.setTitle(getString(R.string.icon_public_on));
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
     /**
@@ -273,6 +282,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
             case R.id.tvName:
+                if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE))
+                    Serializer.saveBooleanData(this, IMAGES_ANIMATION_FILE, false);
+                else Serializer.saveBooleanData(this, IMAGES_ANIMATION_FILE, true);
                 pauseResume();
                 break;
             case R.id.llDescription:
@@ -293,7 +305,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      * Pausa o reanuda la presentación de las imágenes del restaurante
      */
     private void pauseResume(){
-        if(viewFlipper.isFlipping()){
+//        if(viewFlipper.isFlipping()){
+        if(!Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)){
             viewFlipper.stopFlipping();
             ImageView imageView = new ImageView(this);
             imageView.setImageResource(R.mipmap.pause);
@@ -413,6 +426,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             tvRating.setText(String.valueOf(decimalFormat.format(restaurant.getPunctuation())));
             getSupportActionBar().setSubtitle(restaurant.getName());  // subtitulo del toolbar
             changeIcon();
+            if(restaurant.isPublic()) iconPublish.setTitle(getString(R.string.icon_public_of));
+            else  iconPublish.setTitle(getString(R.string.icon_public_on));
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());
         }
@@ -448,7 +463,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                             new ViewGroup.LayoutParams((int) (width * 0.984), (int) (height * 0.984))
                     );
                     viewFlipper.addView(cv);
-                    initAnimation();
+                    if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)) initAnimation();
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());
                 }

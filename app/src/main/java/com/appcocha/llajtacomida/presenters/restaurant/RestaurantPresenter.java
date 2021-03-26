@@ -10,6 +10,7 @@ import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantGestorDB;
 import com.appcocha.llajtacomida.models.restaurant.RestaurantModel;
+import com.appcocha.llajtacomida.presenters.tools.Serializer;
 import com.appcocha.llajtacomida.presenters.tools.Sound;
 import java.util.ArrayList;
 

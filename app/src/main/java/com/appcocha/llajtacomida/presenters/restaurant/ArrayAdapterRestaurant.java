@@ -8,8 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.appcocha.llajtacomida.presenters.tools.Serializer;
+import com.appcocha.llajtacomida.presenters.tools.Validation;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.models.restaurant.Restaurant;
@@ -21,24 +26,32 @@ import java.util.ArrayList;
  */
 public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
 
-    private ArrayList<Restaurant> restaurantList;
-    private ArrayList<Restaurant> restaurantListCopy;
+    private ArrayList<Restaurant> restaurantList, restaurantListCopy;
     private Context context;
     private int resource;
+    private String orderBy;
 
     /**
      * Constructor, inicializa context, resource, objects
      * @param context
      * @param resource
-     * @param objects
+     * @param restaurantList
      */
-    public ArrayAdapterRestaurant(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> objects) {
-        super(context, resource, objects);
+    public ArrayAdapterRestaurant(@NonNull Context context, int resource, @NonNull ArrayList <Restaurant> restaurantList) {
+        super(context, resource, restaurantList);
         this.resource = resource;
         this.context = context;
-        this.restaurantListCopy = new ArrayList<Restaurant>();
-        this.restaurantList = objects;
-        this.restaurantListCopy.addAll(objects);
+        this.orderBy = Serializer.readStringData(context, "ORDER_LIST_STATE"); // Para saber el orden actual
+        if(orderBy.equals("NAME")) {
+            this.restaurantList = restaurantList;
+            this.restaurantListCopy = new ArrayList<Restaurant>();
+            this.restaurantListCopy.addAll(restaurantList);
+        }else if(orderBy.equals("PUNCTUATION")){
+            this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+            this.restaurantListCopy = new ArrayList<Restaurant>();
+//            this.restaurantListCopy.addAll(Validation.getRestaurantsOrderByPunctuation(restaurantList));
+            this.restaurantListCopy.addAll(restaurantList);
+        }
     }
 
     @NonNull
@@ -67,10 +80,10 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
     /**
      *  Filtra los datos del adaptador
      */
-    public void filter(String texto, int previousLentg) {
+    public void filter(String texto, int previousLength) {
         texto = texto.toLowerCase();
         if(!texto.isEmpty()) {
-            if(texto.length() == previousLentg){ // Si se presionó borrar
+            if(texto.length() == previousLength){ // Si se presionó borrar
                 restaurantList.clear();
                 restaurantList.addAll(restaurantListCopy);
             }
@@ -99,4 +112,43 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
             }
         }
     }
+
+//    public void reorderByName(){
+//        if(orderBy.equalsIgnoreCase("NAME")){
+//            Serializer.saveOrderBy(context, "ORDER_LIST_STATE", "PUNCTUATION");
+//            Toast.makeText(context, context.getString(R.string.order_by_punctuation), Toast.LENGTH_SHORT).show();
+//        }else if(orderBy.equalsIgnoreCase("PUNCTUATION")){
+//            Serializer.saveOrderBy(context, "ORDER_LIST_STATE", "NAME");
+//            Toast.makeText(context, context.getString(R.string.order_by_name), Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+    /**
+     * Guarda el estado de oeden de la lista (name)
+     * @return success
+     */
+    public boolean  reorderByName(){
+        if(!orderBy.equalsIgnoreCase("NAME")){
+            Serializer.saveStringData(context, "ORDER_LIST_STATE", "NAME");
+            return true;
+        }else{
+            Toast.makeText(context, context.getString(R.string.already_by_name), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    /**
+     * Guarda el estado de oeden de la lista (punctuation)
+     * @return success
+     */
+    public boolean  reorderByPunctuation(){
+        if(!orderBy.equalsIgnoreCase("PUNCTUATION")){
+            Serializer.saveStringData(context, "ORDER_LIST_STATE", "PUNCTUATION");
+            return true;
+        }else{
+            Toast.makeText(context, context.getString(R.string.already_by_punctuation), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
 }

@@ -36,6 +36,7 @@
 
 
     <!--    ICONOS DEL MENU ACTIONBAR -->
+    <string name="reorder_icon">Reordenar lista</string>
     <string name="add_icon">Agregar</string>
     <string name="edit_icon">Editar</string>
     <string name="delete_icon">Eliminar</string>
@@ -47,7 +48,6 @@
 
     <!--    PLATES-->
     <string name="title_plates_list">Lista de platos</string>
-    <string name="et_search_plates">Buscar platos...</string>
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
     <string name="et_plate_name">Nombre del plato</string>
@@ -55,9 +55,10 @@
     <string name="et_plate_origin">Origen e historia</string>
     <string name="btn_photo_plate">Cargar una imagen del plato</string>
 
+    <string name="et_search">Buscar...</string>
     <!--  RESTAURANTS  -->
     <string name="title_restaurants_list">Lista de restaurantes</string>
-    <string name="search_restaurants">Buscar restaurantes...</string>
+<!--    <string name="search_restaurants">Buscar restaurantes...</string>-->
     <string name="title_creat_restaurant">Crear restaurante</string>
     <string name="title_edit_restaurant">Editar restaurante</string>
     <string name="et_restaurant_name">Nombre del restaurante</string>
@@ -82,6 +83,8 @@
     <!--  public of  -->
     <string name="tv_publish_of_list_title">Restaurantes no publicados</string>
     <string name="btn_publish">Publicar</string>
+    <string name="icon_public_on">Publicar restaurante</string>
+    <string name="icon_public_of">Dejar de publicar restaurante</string>
     <string name="confirm_message_publish">Se publicará este restaurante, ¿Quieres continuar?</string>
     <string name="confirm_message_publish_of">Se dejará de publicar este restaurante, ¿Quieres continuar?</string>
     <string name="confirm_message_restaurant_delete">Se eliminará este restaurante, ¿Quieres continuar?</string>
@@ -345,5 +348,11 @@
     // Read more - less
     <string name="read_more">Leer más...</string>
     <string name="read_less">Leer menos...</string>
+
+    // Order by
+    <string name="order_by_name">Ordenar por nombre</string>
+    <string name="order_by_punctuation">Ordenar por puntuación</string>
+    <string name="already_by_name">¡Ya está ordenado por nombre!</string>
+    <string name="already_by_punctuation">¡Ya está ordenado por puntuación!</string>
 
 </resources>

@@ -2,9 +2,11 @@ package com.appcocha.llajtacomida.presenters.tools;
 import android.util.Log;
 
 import com.appcocha.llajtacomida.models.plate.Plate;
+import com.appcocha.llajtacomida.models.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenters.plate.PlateList;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 /**
  * Validaciones de registros y actualizaciones
@@ -196,5 +198,39 @@ public class Validation {
             }
         }
         return isName;
+    }
+
+    /**
+     * Ordena la lista de objetos (restaurantes)  según su puntuación
+     * Algoritno de ordenamiento por inserción
+     */
+    public static ArrayList<Restaurant> getRestaurantsOrderByPunctuation(ArrayList<Restaurant> restaurantList){
+        int pos;
+        Restaurant restaurant;
+        for(int i = 0 ; i < restaurantList.size() ; i++){
+            pos = i;
+            restaurant = restaurantList.get(i);
+            while (pos > 0 && restaurantList.get(pos-1).getPunctuation() < restaurant.getPunctuation()){
+                restaurantList.set(pos, restaurantList.get(pos-1));
+                pos--;
+            }
+            restaurantList.set(pos, restaurant);
+        }
+        return restaurantList;
+    }
+
+    public static ArrayList<Plate> getPlatesOrderByPunctuation(ArrayList<Plate> plateList) {
+        int pos;
+        Plate plate;
+        for(int i = 0 ; i < plateList.size() ; i++){
+            pos = i;
+            plate = plateList.get(i);
+            while (pos > 0 && plateList.get(pos-1).getPunctuation() < plate.getPunctuation()){
+                plateList.set(pos, plateList.get(pos-1));
+                pos--;
+            }
+            plateList.set(pos, plate);
+        }
+        return plateList;
     }
 }

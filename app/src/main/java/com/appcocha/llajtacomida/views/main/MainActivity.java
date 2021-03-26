@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         // Efectos de sonido
         sound = new Sound(this);
-        Sound.setVolumeOff( Serializer.readData(this, SOUND_STATE_NAME));
+        Sound.setVolumeOff( Serializer.readBooleanData(this, SOUND_STATE_NAME));
         Sound.playStart();
     } // End onCreate
 
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         builder.setView(viewAlert);
         alertDialog = builder.create();
 
-        switchSound.setChecked(Serializer.readData(this, SOUND_STATE_NAME));
+        switchSound.setChecked(Serializer.readBooleanData(this, SOUND_STATE_NAME));
         switchSound.setOnClickListener(this);
 
         ivAvatar.setOnClickListener(this);
@@ -261,10 +261,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.switchSound:
                 if(switchSound.isChecked()) {
                     sound.setVolumeOff(true);
-                    Serializer.saveData(this, SOUND_STATE_NAME, true); // guarda el estado
+                    Serializer.saveBooleanData(this, SOUND_STATE_NAME, true); // guarda el estado
                 }else{
                     sound.setVolumeOff(false);
-                    Serializer.saveData(this, SOUND_STATE_NAME, false); //guarda el estado
+                    Serializer.saveBooleanData(this, SOUND_STATE_NAME, false); //guarda el estado
                 }
                 break;
             default:
@@ -313,7 +313,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         System.exit(0);
                     }
                 }, 2000);
-
             }else{
                 Toast.makeText(MainActivity.this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
             }

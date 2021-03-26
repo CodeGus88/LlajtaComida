@@ -31,7 +31,6 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
         plateList = new ArrayList<Plate>();
     }
 
-
     @Override
     public void filterPlateListInMenu(String restaurantId) {
         databaseReference

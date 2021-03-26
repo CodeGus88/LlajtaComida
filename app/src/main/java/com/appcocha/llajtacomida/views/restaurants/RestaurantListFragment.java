@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.Space;
 import android.widget.Toast;
 
 import com.appcocha.llajtacomida.R;
@@ -27,28 +29,28 @@ import com.appcocha.llajtacomida.presenters.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenters.restaurant.RestaurantPresenter;
 import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.appcocha.llajtacomida.presenters.user.AuthUser;
+import com.appcocha.llajtacomida.views.plates.PlateListFragment;
 
 import java.util.ArrayList;
 
 /**
  * Vista, muestra la lista de restaurantes
  */
-public class RestaurantListFragment extends Fragment implements RestaurantInterface.ViewRestaurant {
+public class RestaurantListFragment extends Fragment implements RestaurantInterface.ViewRestaurant , PopupMenu.OnMenuItemClickListener {
 
     private ArrayList<Restaurant> restaurantList;
     private ArrayAdapterRestaurant arrayAdapterRestaurant;
 
     // componentes
     private View view;
-    private MenuItem iconSearch, iconAdd, iconRestPublicOf;
+    private MenuItem iconSearch, iconAdd, iconRestPublicOf, iconReorder;
     private ListView lvRestaurants;
     private EditText etSearch;
+    private Space space;
+    private PopupMenu popupMenu;
 
     // Presentador
     private RestaurantPresenter restaurantPresenter;
-
-    // Permisos
-//    private boolean isAnAdministrator;// , isAuthor;;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -77,9 +79,10 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     }
 
     private void initIconsMenu(Menu menu) {
+        iconReorder = (MenuItem) menu.findItem(R.id.iconReorder);
         iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
         iconSearch.setVisible(true);
-
+        iconReorder.setVisible(true);
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
         iconRestPublicOf = (MenuItem) menu.findItem(R.id.iconListPublicOf);
         try{
@@ -94,6 +97,10 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     }
 
     private void initComponents() {
+        space = (Space) view.findViewById(R.id.spaceForPopPup);
+        popupMenu = new PopupMenu(getContext(), space);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.popup_menu_order_list);
         etSearch = (EditText) view.findViewById(R.id.etSearch);
         lvRestaurants = (ListView) view.findViewById(R.id.lvRestaurants);
         restaurantList = new ArrayList<Restaurant>();
@@ -141,6 +148,9 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
             case R.id.iconListPublicOf:
                 RestaurantNavegation.showRestPublicOf(getContext());
                 break;
+            case R.id.iconReorder:
+                popupMenu.show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -167,5 +177,19 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     public void onPause() {
         super.onPause();
         restaurantPresenter.stopRealtimeDatabse();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_name_order:
+                if(arrayAdapterRestaurant.reorderByName()) restaurantPresenter.loadRestaurantList();
+                return true;
+            case R.id.item_punctuation_order:
+                if(arrayAdapterRestaurant.reorderByPunctuation()) restaurantPresenter.loadRestaurantList();
+                return true;
+            default:
+                return false;
+        }
     }
 }

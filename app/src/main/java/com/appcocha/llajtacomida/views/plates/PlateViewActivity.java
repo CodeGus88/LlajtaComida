@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 import com.appcocha.llajtacomida.presenters.map.MapNavegation;
+import com.appcocha.llajtacomida.presenters.tools.Serializer;
 import com.appcocha.llajtacomida.presenters.tools.Sound;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
@@ -64,6 +65,7 @@ import java.util.ArrayList;
 
     private static final int TIME_ANIMATION = 2000;
     private final int MAX_LINES = 3;
+     private final String IMAGES_ANIMATION_FILE = "IMAGES_ANIMATION_FILE";
 
     // bootones
     private ImageButton btnNext;
@@ -92,7 +94,6 @@ import java.util.ArrayList;
 
     // Toast personalizado (pause resume)
     private Toast toast;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -295,6 +296,9 @@ import java.util.ArrayList;
                 else Toast.makeText(this, getString(R.string.message_not_found_restaurants), Toast.LENGTH_LONG).show();
                 break;
             case R.id.tvName:
+                if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE))
+                    Serializer.saveBooleanData(this, IMAGES_ANIMATION_FILE, false);
+                else Serializer.saveBooleanData(this, IMAGES_ANIMATION_FILE, true);
                 pauseResume();
                 break;
             case R.id.llIngredients:
@@ -324,7 +328,7 @@ import java.util.ArrayList;
       * Pausa, reanuda la reproducción de las imágenes del plato
       */
     private void pauseResume(){
-        if(viewFlipper.isFlipping()){
+        if(!Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)){
             viewFlipper.stopFlipping();
                 ImageView imageView = new ImageView(this);
                 imageView.setImageResource(R.mipmap.pause);
@@ -419,7 +423,7 @@ import java.util.ArrayList;
                             new ViewGroup.LayoutParams((int) (width*0.984), (int) (height*0.984))
                     );
                     viewFlipper.addView(cv);
-                    initAnimation();
+                    if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)) initAnimation();
                 }catch (Exception e){
                     Log.e("Error:", e.getMessage() );
                 }

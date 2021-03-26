@@ -37,6 +37,7 @@
 
 
     <!--    ICONOS DEL MENU ACTIONBAR -->
+    <string name="reorder_icon">Reorder list</string>
     <string name="add_icon">Add</string>
     <string name="edit_icon">Edit</string>
     <string name="delete_icon">Remove</string>
@@ -48,7 +49,6 @@
 
     <!--    PLATES-->
     <string name="title_plates_list">Plate list</string>
-    <string name="et_search_plates">Search dishes...</string>
     <string name="title_creat_plate">Create plate</string>
     <string name="title_edit_plate">Edit plate</string>
     <string name="et_plate_name">Name of the dish</string>
@@ -56,9 +56,10 @@
     <string name="et_plate_origin">Origin and history</string>
     <string name="btn_photo_plate">Load an image for the dish</string>
 
+    <string name="et_search">Buscar...</string>
     <!--  RESTAURANTS  -->
     <string name="title_restaurants_list">Restaurants list</string>
-    <string name="search_restaurants">Find restaurants...</string>
+<!--    <string name="search_restaurants">Find restaurants...</string>-->
     <string name="title_creat_restaurant">Create restaurant</string>
     <string name="title_edit_restaurant">Edit restaurant</string>
     <string name="et_restaurant_name">Name of the restaurant</string>
@@ -83,6 +84,8 @@
     <!--  public of  -->
     <string name="tv_publish_of_list_title">Unpublished restaurants</string>
     <string name="btn_publish">Publicate</string>
+    <string name="icon_public_on">Publish restaurant</string>
+    <string name="icon_public_of">Stop publishing restore</string>
     <string name="confirm_message_publish">This restaurant will be published, do you want to continue?</string>
     <string name="confirm_message_publish_of">This restaurant will stop publishing, do you want to continue?</string>
     <string name="confirm_message_restaurant_delete">This restaurant will be removed, do you want to continue?</string>
@@ -345,5 +348,11 @@
     // Read more - less
     <string name="read_more">Leer más...</string>
     <string name="read_less">Leer menos...</string>
+
+    // Order by
+    <string name="order_by_name">Order by name</string>
+    <string name="order_by_punctuation">Order by punctuation</string>
+    <string name="already_by_name">It is already ordered by name!</string>
+    <string name="already_by_punctuation">It is already ordered by punctuation!</string>
 
 </resources>

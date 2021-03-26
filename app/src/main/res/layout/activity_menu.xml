@@ -22,7 +22,7 @@
            android:id="@+id/etSearch"
            android:layout_width="match_parent"
            android:layout_height="50dp"
-           android:hint="@string/et_search_plates"
+           android:hint="@string/et_search"
            android:padding="5dp"
            android:drawableEnd="@drawable/icon_search_black"
            android:background="@drawable/edit_text"

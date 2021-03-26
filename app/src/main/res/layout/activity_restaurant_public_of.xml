@@ -16,7 +16,7 @@
         android:paddingHorizontal="10dp"
         android:drawableEnd="@drawable/icon_search_black"
         android:inputType="textWebEditText"
-        android:hint="@string/search_restaurants"
+        android:hint="@string/et_search"
         android:visibility="gone"/>
    <ListView
        android:id="@+id/lvPublicOfRest"
