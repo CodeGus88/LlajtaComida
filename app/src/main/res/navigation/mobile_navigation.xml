@@ -7,44 +7,44 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.appcocha.llajtacomida.views.main.HomeFragment"
+        android:name="com.appcocha.llajtacomida.view.main.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home"/>
 
     <fragment
         android:id="@+id/nav_plates"
-        android:name="com.appcocha.llajtacomida.views.plates.PlateListFragment"
+        android:name="com.appcocha.llajtacomida.view.plates.PlateListFragment"
         android:label="@string/menu_plates"
         tools:layout="@layout/fragment_plate_list" />
 
     <fragment
         android:id="@+id/nav_restaurants"
-        android:name="com.appcocha.llajtacomida.views.restaurants.RestaurantListFragment"
+        android:name="com.appcocha.llajtacomida.view.restaurants.RestaurantListFragment"
         android:label="@string/menu_restaurants"
         tools:layout="@layout/fragment_restaurant_list" />
 
     <fragment
         android:id="@+id/nav_favorit_plates"
-        android:name="com.appcocha.llajtacomida.views.favorites.favoritPlates.FavoritPlatesListFragment"
+        android:name="com.appcocha.llajtacomida.view.favorites.favoritPlates.FavoritPlatesListFragment"
         android:label="@string/menu_favorit_plates"
         tools:layout="@layout/fragment_favorit_plates_list" />
 
     <fragment
         android:id="@+id/nav_favorit_restaurants"
-        android:name="com.appcocha.llajtacomida.views.favorites.favoritRestaurants.FavoritRestaurantListFragment"
+        android:name="com.appcocha.llajtacomida.view.favorites.favoritRestaurants.FavoritRestaurantListFragment"
         android:label="@string/menu_favorit_restaurants"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
 
 <!--    Solo para el adminitardor-->
     <fragment
         android:id="@+id/nav_users"
-        android:name="com.appcocha.llajtacomida.views.users.UserListFragment"
+        android:name="com.appcocha.llajtacomida.view.users.UserListFragment"
         android:label="@string/tv_user_option_list"
         tools:layout="@layout/fragment_favorit_restaurants_list" />
 
     <fragment
         android:id="@+id/nav_about_us"
-        android:name="com.appcocha.llajtacomida.views.main.AboutUsFragment"
+        android:name="com.appcocha.llajtacomida.view.main.AboutUsFragment"
         android:label="@string/menu_about_us"
         tools:layout="@layout/fragment_about_us" />
 

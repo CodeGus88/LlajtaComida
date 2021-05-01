@@ -1,9 +1,10 @@
 package com.appcocha.llajtacomida.interfaces;
 
-import com.appcocha.llajtacomida.models.plate.Plate;
-import com.appcocha.llajtacomida.models.restaurant.Restaurant;
+import com.appcocha.llajtacomida.model.plate.Plate;
+import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * @Author: Gustavo Abasto Argote
@@ -100,7 +101,8 @@ public interface PlateInterface {
          * Muestra la lista de restaurantes con un determindo plato en sus menús
          * @param list
          */
-        void showRestList(ArrayList<Restaurant> list);
+//        void showRestList(ArrayList<Restaurant> list);
+        void showRestList(ArrayList<Restaurant> list, Hashtable priceInRestaurantsList);
     }
 
     /**
@@ -112,7 +114,7 @@ public interface PlateInterface {
          * Determina mostrar la lista de restaurantes filtrada
          * @param list
          */
-        void showRestList(ArrayList<Restaurant> list);
+        void showRestList(ArrayList<Restaurant> list, Hashtable priceInRestaurantsList);
 
         /**
          * Determinda filtrar la lista de restaurantes con un determinado plato en sus menús

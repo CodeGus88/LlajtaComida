@@ -1,6 +1,6 @@
 package com.appcocha.llajtacomida.interfaces;
 
-import com.appcocha.llajtacomida.models.image.Image;
+import com.appcocha.llajtacomida.model.image.Image;
 
 import java.util.ArrayList;
 

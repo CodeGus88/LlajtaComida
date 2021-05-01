@@ -35,32 +35,32 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".views.maps.SetAllLocationMapActivity"
+            android:name=".view.maps.SetAllLocationMapActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_set_all_location_map"></activity>
-        <activity android:name=".views.restaurants.RestaurantPublicOfActivity" />
+        <activity android:name=".view.restaurants.RestaurantPublicOfActivity" />
         <activity
-            android:name=".views.maps.SetLocationMapActivity"
+            android:name=".view.maps.SetLocationMapActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_set_location_map" />
-        <activity android:name=".views.restaurants.SetMenuActivity" />
-        <activity android:name=".views.restaurants.EditRestaurantActivity" />
-        <activity android:name=".views.restaurants.CreateRestaurantActivity" />
-        <activity android:name=".views.images.ImagesActivity" />
-        <activity android:name=".views.plates.EditPlateActivity" />
-        <activity android:name=".views.restaurants.RestaurantViewActivity"/>
-        <activity android:name=".views.plates.PlateViewActivity"/>
+        <activity android:name=".view.restaurants.SetMenuActivity" />
+        <activity android:name=".view.restaurants.EditRestaurantActivity" />
+        <activity android:name=".view.restaurants.CreateRestaurantActivity" />
+        <activity android:name=".view.images.ImagesActivity" />
+        <activity android:name=".view.plates.EditPlateActivity" />
+        <activity android:name=".view.restaurants.RestaurantViewActivity"/>
+        <activity android:name=".view.plates.PlateViewActivity"/>
         <activity
-            android:name=".views.plates.CreatePlateActivity"
+            android:name=".view.plates.CreatePlateActivity"
             android:configChanges="screenSize|orientation"/> <!-- "screenSize|orientation"    sirve para que no se pierdan datos al volterar la pantalla -->
-        <activity android:name=".views.main.LoginActivity"/>
+        <activity android:name=".view.users.LoginActivity"/>
         <activity
-            android:name=".views.maps.GetLocationMapActivity"
+            android:name=".view.maps.GetLocationMapActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/title_activity_get_location_maps"/>
 
         <activity
-            android:name=".views.main.MainActivity"
+            android:name=".view.main.MainActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">

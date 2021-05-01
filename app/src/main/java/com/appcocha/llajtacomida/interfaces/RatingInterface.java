@@ -1,7 +1,7 @@
 package com.appcocha.llajtacomida.interfaces;
 
-import com.appcocha.llajtacomida.models.rating.Rating;
-import com.appcocha.llajtacomida.models.user.User;
+import com.appcocha.llajtacomida.model.rating.Rating;
+import com.appcocha.llajtacomida.model.user.User;
 import java.util.ArrayList;
 
 /**

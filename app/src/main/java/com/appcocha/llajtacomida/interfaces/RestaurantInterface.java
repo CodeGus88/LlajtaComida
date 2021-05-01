@@ -1,8 +1,8 @@
 package com.appcocha.llajtacomida.interfaces;
 
-import com.appcocha.llajtacomida.models.restaurant.menu.Menu;
-import com.appcocha.llajtacomida.models.plate.Plate;
-import com.appcocha.llajtacomida.models.restaurant.Restaurant;
+import com.appcocha.llajtacomida.model.restaurant.menu.Menu;
+import com.appcocha.llajtacomida.model.plate.Plate;
+import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import java.util.ArrayList;
 
 /**
