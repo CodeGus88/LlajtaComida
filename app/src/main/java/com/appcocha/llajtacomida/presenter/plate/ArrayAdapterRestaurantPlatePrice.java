@@ -49,9 +49,9 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
         this.context = context;
         this.orderBy = Serializer.readStringData(context, "ORDER_LIST_STATE"); // Para saber el orden actual
         if(orderBy.equals("NAME")) {
-            this.restaurantList = restaurantList;
+            this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
             this.restaurantListCopy = new ArrayList<Restaurant>();
-            this.restaurantListCopy.addAll(restaurantList);
+            this.restaurantListCopy.addAll(Validation.getRestaurantsOrderByPunctuation(restaurantList));
         }else if(orderBy.equals("PUNCTUATION")){
             this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
             this.restaurantListCopy = new ArrayList<Restaurant>();
