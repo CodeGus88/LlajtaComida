@@ -19,8 +19,6 @@ import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;

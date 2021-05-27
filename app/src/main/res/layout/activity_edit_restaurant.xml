@@ -144,11 +144,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="100dp"
                                 android:scaleType="fitXY"
-                                android:src="@mipmap/map_image"
+                                app:srcCompat="@mipmap/map_image"
                                 android:layout_marginHorizontal="50dp"
                                 android:background="@drawable/panel_gray"
                                 android:padding="1dp"
-                                android:foreground="?android:attr/selectableItemBackground"/>
+                                android:foreground="?attr/selectableItemBackground"/>
                         </androidx.cardview.widget.CardView>
 
                         <!--                Botones de latitud y longitud-->
@@ -259,7 +259,7 @@
                             android:textAllCaps="false"
                             android:drawablePadding="5dp"
                             android:textStyle="italic"
-                            android:src="@drawable/restart_icon"
+                            app:srcCompat="@drawable/restart_icon"
                             android:layout_gravity="center"
                             android:layout_weight="1"/>
                     </LinearLayout>

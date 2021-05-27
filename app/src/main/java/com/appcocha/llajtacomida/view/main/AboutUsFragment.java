@@ -1,10 +1,6 @@
 package com.appcocha.llajtacomida.view.main;
 
-import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
@@ -47,7 +46,7 @@ public class AboutUsFragment extends Fragment {
         ivIconImage = (ImageView) view.findViewById(R.id.ivIconImage);
         tvEmail = (TextView) view.findViewById(R.id.tvEmail);
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        ((AppCompatActivity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int width = (int) (displayMetrics.widthPixels * 0.95);
         ivIconImage.setLayoutParams(new LinearLayout.LayoutParams(width, width));
         tvEmail.setOnClickListener(new View.OnClickListener() {

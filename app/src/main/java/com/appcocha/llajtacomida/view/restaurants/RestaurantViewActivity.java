@@ -22,11 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterPlatePrice;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.bumptech.glide.Glide;
-import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.image.Image;
@@ -50,6 +50,9 @@ import com.zolad.zoominimageview.ZoomInImageView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Vista, muestra un restaurante
+ */
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
         RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage,
         RestaurantInterface.ViewRestaurantManager{
@@ -230,7 +233,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * Sirve para alternar el ícono de publicar o dejar de publicaar
+     * Sirve para alternar el ícono de publicar o dejar de publicar
      */
     private void changeIcon() {
         if(restaurant.isPublic()){
@@ -241,7 +244,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * Captura de accion del boton atras <- de la barra superior
+     * Captura de acción del boton atras <- de la barra superior
      */
     @Override
     public boolean onSupportNavigateUp() {

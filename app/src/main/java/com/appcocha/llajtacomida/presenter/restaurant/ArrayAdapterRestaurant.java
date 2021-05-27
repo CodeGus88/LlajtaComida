@@ -13,10 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.bumptech.glide.Glide;
-import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import java.text.DecimalFormat;
 import java.util.ArrayList;

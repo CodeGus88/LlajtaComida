@@ -17,10 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.bumptech.glide.Glide;
-import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.map.MapNavegation;

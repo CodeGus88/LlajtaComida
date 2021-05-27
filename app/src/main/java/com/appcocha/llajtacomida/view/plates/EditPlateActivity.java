@@ -15,9 +15,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.bumptech.glide.Glide;
-import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.presenter.plate.PlateManagerPresenter;

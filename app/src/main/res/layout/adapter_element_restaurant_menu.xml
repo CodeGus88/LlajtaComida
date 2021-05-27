@@ -18,7 +18,7 @@
             android:id="@+id/ivPhotoItem"
             android:layout_width="80dp"
             android:layout_height="54dp"
-            android:src="@mipmap/image_icon"
+            app:srcCompat="@mipmap/image_icon"
             android:scaleType="centerCrop"/>
     </androidx.cardview.widget.CardView>
 

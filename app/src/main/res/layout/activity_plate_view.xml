@@ -58,7 +58,7 @@
                     android:layout_height="100dp"
                     android:background="@android:color/transparent"
                     android:layout_marginTop="50dp"
-                    android:src="@drawable/icon_next"
+                    app:srcCompat="@drawable/icon_next"
                     android:scaleX="-1"
                     android:visibility="visible"
                     android:layout_alignParentLeft="true"/>
@@ -70,7 +70,7 @@
                     android:layout_marginLeft="2dp"
                     android:layout_marginTop="50dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/icon_next"
+                    app:srcCompat="@drawable/icon_next"
                     android:padding="0dp"
                     android:visibility="visible"
                     android:layout_alignParentRight="true"/>
@@ -100,7 +100,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/icon_star_rate"
+                        app:srcCompat="@drawable/icon_star_rate"
                         android:layout_weight="1"
                         android:scaleType="centerCrop"/>
                 </LinearLayout>
@@ -125,7 +125,7 @@
                         android:id="@+id/btnMarkersViewAllMap"
                         android:layout_width="55dp"
                         android:layout_height="32dp"
-                        android:src="@mipmap/map_button_all_markers"
+                        app:srcCompat="@mipmap/map_button_all_markers"
                         android:scaleType="fitXY"
                         android:background="#ffffff"
                         android:clickable="true" />
@@ -289,7 +289,7 @@
                             android:layout_width="35dp"
                             android:layout_height="28dp"
                             android:layout_weight="1"
-                            android:src="@mipmap/btn_markers"
+                            app:srcCompat="@mipmap/btn_markers"
                             android:scaleType="fitXY"
                             android:background="#ffffff"
                             android:clickable="true"/>

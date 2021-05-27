@@ -11,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.bumptech.glide.Glide;
+
 import com.appcocha.llajtacomida.R;
+import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.model.user.User;
 import java.util.ArrayList;
 

@@ -136,7 +136,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="200dp"
                                     android:background="#B98EABC3"
-                                    android:src="@mipmap/image_icon"
+                                    app:srcCompat="@mipmap/image_icon"
                                     android:layout_gravity="center"
                                     android:scaleType="fitXY" />
 

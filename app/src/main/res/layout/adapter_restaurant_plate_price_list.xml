@@ -22,7 +22,7 @@
             android:id="@+id/ivPhotoItem"
             android:layout_width="105dp"
             android:layout_height="75.5dp"
-            android:src="@mipmap/image_icon"
+            app:srcCompat="@mipmap/image_icon"
             android:scaleType="centerCrop"/>
 
 <!--        <ImageView-->
@@ -117,7 +117,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_star_rate"
+            app:srcCompat="@drawable/icon_star_rate"
             android:layout_weight="1"
             android:scaleType="centerCrop"/>
     </LinearLayout>

@@ -20,12 +20,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.map.MapNavegation;
 import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterRestaurantPlatePrice;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.bumptech.glide.Glide;
-import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.model.image.Image;
@@ -37,7 +38,6 @@ import com.appcocha.llajtacomida.presenter.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenter.plate.PlatePresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateRestListPresenter;
-import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
@@ -122,6 +122,9 @@ import java.util.Hashtable;
         initFragments();
     }
 
+     /**
+      * Inicialza los fragmentos
+      */
     private void initFragments() {
         // Inicializamos rating
         Bundle bundle = new Bundle();
@@ -136,6 +139,9 @@ import java.util.Hashtable;
         getSupportFragmentManager().beginTransaction().add(R.id.flFavorite, favoriteObjectFragment).commit(); // Mmuestra el fragmento favorite
     }
 
+     /**
+      * Inicilaiza los presentadores
+      */
     private void initPresenters(){
         // iniciando presentadores
 //        restListPresenter = new PlateRestListPresenter(this);
@@ -161,6 +167,9 @@ import java.util.Hashtable;
         return false;
     }
 
+     /**
+      * Inicializa los componentes de la vista
+      */
     private void initComponents(){
         ivPhoto = (ZoomInImageView) findViewById(R.id.ziivPhoto);
         tvName = (TextView) findViewById(R.id.tvName);
@@ -209,6 +218,9 @@ import java.util.Hashtable;
         llOriginDescription.setOnClickListener(this);
     }
 
+     /**
+      * Iniciliza la presentación de las imágenes
+      */
     private void initAnimation(){
         viewFlipper.setDisplayedChild(0);
         viewFlipper.setFlipInterval(TIME_ANIMATION);
@@ -238,6 +250,9 @@ import java.util.Hashtable;
         return super.onOptionsItemSelected(item);
     }
 
+     /**
+      * Elimina el elemento actual
+      */
     private void delete() {
         AlertDialog.Builder confirm = new AlertDialog.Builder(this);
         confirm.setTitle(getString(R.string.confirm_title));
@@ -263,6 +278,10 @@ import java.util.Hashtable;
         confirm.show();
     }
 
+     /**
+      * Inicializa  los íconos de esta sección
+      * @param menu
+      */
     private void initIconMenu(Menu menu){
         iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
         iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);

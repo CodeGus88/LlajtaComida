@@ -1,8 +1,5 @@
 package com.appcocha.llajtacomida.view.restaurants;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,9 +14,9 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.appcocha.llajtacomida.presenter.tools.Sound;
-import com.appcocha.llajtacomida.presenter.user.UserNavegation;
-import com.bumptech.glide.Glide;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
@@ -27,12 +24,15 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestPublicOf;
 import com.appcocha.llajtacomida.presenter.restaurant.RestPublicOfPresenter;
+import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.UserNavegation;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 /**
- * Vista, muetra la lista de restaurantes lno publicados
+ * Vista, muetra la lista de restaurantes no publicados
  */
 public class RestaurantPublicOfActivity extends AppCompatActivity implements RestaurantInterface.ViewRestPublicOf, View.OnClickListener, UserInterface.ViewUser {
 

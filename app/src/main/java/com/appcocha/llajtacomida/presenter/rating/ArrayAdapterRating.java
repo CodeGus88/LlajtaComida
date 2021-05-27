@@ -12,15 +12,18 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import com.bumptech.glide.Glide;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.rating.RatingModel;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -92,8 +95,8 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
             // init alert
             if (!row.get("experience").isEmpty()) {
                 View viewAlert = LayoutInflater.from(context).inflate(R.layout.alert_user_vote_view, null);
-                final android.app.AlertDialog alertDialog;
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
+                final AlertDialog alertDialog;
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setView(viewAlert);
                 alertDialog = builder.create();
                 final ImageView ivAvatarAlert = (ImageView) viewAlert.findViewById(R.id.ivAvatar);

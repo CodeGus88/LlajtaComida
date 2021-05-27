@@ -1,6 +1,5 @@
 package com.appcocha.llajtacomida.presenter.restaurant;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
@@ -14,14 +13,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
-import com.appcocha.llajtacomida.presenter.tools.Sound;
-import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.restaurant.RestaurantGestorDB;
 import com.appcocha.llajtacomida.presenter.map.MapNavegation;
+import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantPublicOfActivity;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 

@@ -1,16 +1,18 @@
 package com.appcocha.llajtacomida.presenter.plate;
 
-    import android.app.Activity;
-    import android.content.Context;
-    import android.content.Intent;
-    import com.appcocha.llajtacomida.R;
-    import com.appcocha.llajtacomida.model.plate.Plate;
-    import com.appcocha.llajtacomida.view.images.ImagesActivity;
-    import com.appcocha.llajtacomida.view.plates.CreatePlateActivity;
-    import com.appcocha.llajtacomida.view.plates.EditPlateActivity;
-    import com.appcocha.llajtacomida.view.plates.PlateViewActivity;
-    import com.theartofdev.edmodo.cropper.CropImage;
-    import com.theartofdev.edmodo.cropper.CropImageView;
+import android.content.Context;
+import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.appcocha.llajtacomida.R;
+import com.appcocha.llajtacomida.model.plate.Plate;
+import com.appcocha.llajtacomida.view.images.ImagesActivity;
+import com.appcocha.llajtacomida.view.plates.CreatePlateActivity;
+import com.appcocha.llajtacomida.view.plates.EditPlateActivity;
+import com.appcocha.llajtacomida.view.plates.PlateViewActivity;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 /**
  * Navegación de los platos
@@ -52,7 +54,7 @@ public class PlateNavegation {
      * Muestra el selecctor y recortador de imágenes
      * @param context
      */
-    public static void showCropImage(Activity context) {
+    public static void showCropImage(AppCompatActivity context) {
         CropImage.activity()
                 .setActivityTitle(context.getString(R.string.plate_image_crop_title))
                 .setGuidelines(CropImageView.Guidelines.ON)

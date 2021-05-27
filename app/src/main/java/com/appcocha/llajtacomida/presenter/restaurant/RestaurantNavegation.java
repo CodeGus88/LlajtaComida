@@ -1,16 +1,18 @@
 package com.appcocha.llajtacomida.presenter.restaurant;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.view.images.ImagesActivity;
 import com.appcocha.llajtacomida.view.restaurants.CreateRestaurantActivity;
 import com.appcocha.llajtacomida.view.restaurants.EditRestaurantActivity;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantPublicOfActivity;
-import com.appcocha.llajtacomida.view.restaurants.SetMenuActivity;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantViewActivity;
+import com.appcocha.llajtacomida.view.restaurants.SetMenuActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -45,7 +47,7 @@ public class RestaurantNavegation {
      * Muestra el selector y recortador de imágenes
      * @param context
      */
-    public static void showCropImage(Activity context) {
+    public static void showCropImage(AppCompatActivity context) {
         CropImage.activity()
             .setActivityTitle(context.getString(R.string.restaurant_image_crop_title))
             .setGuidelines(CropImageView.Guidelines.ON)

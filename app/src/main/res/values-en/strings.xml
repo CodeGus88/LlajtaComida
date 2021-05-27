@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Llajta Comida</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
 
     <!--    MENU DRAWER OPTIONS -->
@@ -19,13 +16,10 @@
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_get_location_maps">Map</string>
 
     <!--    Login   -->
-    <string name="title">Log in</string>
     <string name="btn_start">To access</string>
-    <string name="title_activity_main">MainActivity</string>
     <string name="content">Welcome to Llajta Comida, sign in with your Google account</string>
     <string name="access_denied_message">Access denied...</string>
     <string name="restart_app_message">Restart application...</string>
@@ -41,14 +35,12 @@
     <string name="add_icon">Add</string>
     <string name="edit_icon">Edit</string>
     <string name="delete_icon">Remove</string>
-    <string name="search_icon">Search</string>
     <string name="galery_icon">Gallery</string>
     <string name="save_icon">Save</string>
     <string name="menu_restaurant_icon">Menu</string>
     <string name="rest_public_of_icon">Unpublished restaurants</string>
 
     <!--    PLATES-->
-    <string name="title_plates_list">Plate list</string>
     <string name="title_creat_plate">Create plate</string>
     <string name="title_edit_plate">Edit plate</string>
     <string name="et_plate_name">Name of the dish</string>
@@ -58,8 +50,7 @@
 
     <string name="et_search">Buscar...</string>
     <!--  RESTAURANTS  -->
-    <string name="title_restaurants_list">Restaurants list</string>
-<!--    <string name="search_restaurants">Find restaurants...</string>-->
+    <!--    <string name="search_restaurants">Find restaurants...</string>-->
     <string name="title_creat_restaurant">Create restaurant</string>
     <string name="title_edit_restaurant">Edit restaurant</string>
     <string name="et_restaurant_name">Name of the restaurant</string>
@@ -82,7 +73,6 @@
     <string name="tv_restaurants_found">found</string>
     <string name="tv_rest_with_title">Restaurants with:</string>
     <!--  public of  -->
-    <string name="tv_publish_of_list_title">Unpublished restaurants</string>
     <string name="btn_publish">Publicate</string>
     <string name="icon_public_on">Publish restaurant</string>
     <string name="icon_public_of">Stop publishing restore</string>
@@ -90,7 +80,6 @@
     <string name="confirm_message_publish_of">This restaurant will stop publishing, do you want to continue?</string>
     <string name="confirm_message_restaurant_delete">This restaurant will be removed, do you want to continue?</string>
     <string name="btn_continue">Continue</string>
-    <string name="btn_visit">Visit</string>
     <string name="btn_author">Author</string>
     <string name="tv_author_id">Author: </string>
     <string name="cb_public">Public</string>
@@ -181,7 +170,6 @@
     <string name="message_updating">Updating...</string>
     <string name="message_delete_question">It will be permanently deleted \ nDo you want to continue?</string>
     <string name="confirm_title">Confirm</string>
-    <string name="message_check_the_fields">Error: Verify the fields</string>
     <string name="message_record_already_exists">A record with the same name already exists</string>
     <string name="message_name_required">The name is required</string>
     <string name="message_description_required">Origin is required</string>
@@ -198,11 +186,8 @@
     <string name="message_check_the_fileds">Check the fields...</string>
     <string name="message_remove">Remove...</string>
     <string name="message_clossing">Closing...</string>
-    <string name="message_gps_disconected">GPS disconnected...</string>
     <string name="message_gps_activate">GPS is disabled\nDo you want to enable it?</string>
     <string name="message_not_found_restaurants">There are no restaurants with this dish on their menu</string>
-    <string name="message_image_player_paused">Image Playback Paused</string>
-    <string name="message_image_player_resumed">Image Playback Resumed</string>
     <string name="message_not_contain_images">Does not contain images in presentation...</string>
     <string name="message_processed_correct" translatable="false">Was processed successfully</string>
     <string name="message_image_error">An error occurred while uploading the image</string>
@@ -216,20 +201,14 @@
     <string name="title_confirmation">Confirmation</string>
 
     <!--  favorits  -->
-    <string name="tv_title_plate_favorit_list">List of favorite dishes</string>
-    <string name="tv_title_rest_favorit_list">List of favorite restaurants</string>
 
     <!--  USERS  -->
     <string name="et_search_user">Search users</string>
     <string name="tv_user_option_list">Users</string>
     <string name="tv_user_name">User:</string>
-    <string name="tv_user_fast_name">Surnames:</string>
     <string name="tv_user_title">USER</string>
     <string name="tv_email">E-mail:</string>
-    <string name="tv_state">State:</string>
     <string name="tv_role">Role:</string>
-    <string name="user_information">USER INFORMATION</string>
-    <string name="state">Connected</string>
     <string name="usersTitle">Users</string>
     <!--    Roles -->
     <string name="role_admin">Administrator</string>
@@ -342,7 +321,6 @@
     // Prices
     <string name="default_price">10</string>
     <string name="type_currency">Bo</string>
-    <string name="price">Price</string>
 
 
     // Read more - less

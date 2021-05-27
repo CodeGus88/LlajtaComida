@@ -1,10 +1,6 @@
 package com.appcocha.llajtacomida.view.users;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -19,14 +15,17 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.appcocha.llajtacomida.presenter.tools.Sound;
-import com.appcocha.llajtacomida.presenter.user.UserNavegation;
-import com.bumptech.glide.Glide;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.model.user.User;
+import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.ArrayAdapterUser;
+import com.appcocha.llajtacomida.presenter.user.UserNavegation;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 

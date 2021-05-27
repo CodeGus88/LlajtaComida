@@ -133,7 +133,7 @@
                             android:textAllCaps="false"
                             android:drawablePadding="5dp"
                             android:textStyle="italic"
-                            android:src="@drawable/restart_icon"
+                            app:srcCompat="@drawable/restart_icon"
                             android:layout_gravity="center"
                             android:layout_weight="1"/>
 
@@ -154,7 +154,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:background="#B98EABC3"
-                            android:src="@mipmap/image_icon"
+                            app:srcCompat="@mipmap/image_icon"
                             android:layout_gravity="center"
                             android:scaleType="fitXY"/>
 
