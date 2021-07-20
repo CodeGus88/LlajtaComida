@@ -29,7 +29,6 @@
     <string name="btn_sign_out">Sign off</string>
     <string name="btn_ok">Ok</string>
 
-
     <!--    ICONOS DEL MENU ACTIONBAR -->
     <string name="reorder_icon">Reorder list</string>
     <string name="add_icon">Add</string>
@@ -39,6 +38,10 @@
     <string name="save_icon">Save</string>
     <string name="menu_restaurant_icon">Menu</string>
     <string name="rest_public_of_icon">Unpublished restaurants</string>
+
+    <!--        OFERTAS -->
+    <string name="promotions_restaurant_icon">Promotions</string>
+    <string name="switch_show_all_plates">Show all dishes</string>
 
     <!--    PLATES-->
     <string name="title_creat_plate">Create plate</string>
@@ -72,6 +75,9 @@
     <string name="tv_rest_with_plate_title">Restaurants with</string>
     <string name="tv_restaurants_found">found</string>
     <string name="tv_rest_with_title">Restaurants with:</string>
+    <!-- promotions -->
+    <string name="tv_title_promotions">Restaurant promotions</string>
+
     <!--  public of  -->
     <string name="btn_publish">Publicate</string>
     <string name="icon_public_on">Publish restaurant</string>
@@ -290,7 +296,7 @@
     <string name="tv_mail">E-mail: llajta.comida.app@gmail.com</string>
     <string name="mail">llajta.comida.app@gmail.com</string>
     <!--    Usuario administrador por defecto (ID google) -->
-    <string name="user_id_admin_default">105708453298523886510</string>
+<!--    <string name="user_id_admin_default">105708453298523886510</string>-->
 
     <string name="sub_title">Content</string>
     <string name="sub_title_images">Images</string>
@@ -309,6 +315,12 @@
     <string name="not_found">Required information not found</string>
     <string name="title_activity_set_all_location_map">Map</string>
 
+    <!--    Promociones     -->
+    <string name="et_promotion_title">Promotion title</string>
+    <string name="promotion">Promotión</string>
+    <string name="promotion_title">Promotion for</string>
+    <string name="promotion_description">Promotion description</string>
+    <string name="incomplete_fields">Incomplete fields</string>
 
     <!--    buttons   -->
     <string name="btn_yes">Yes</string>

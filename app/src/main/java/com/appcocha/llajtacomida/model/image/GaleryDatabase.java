@@ -1,4 +1,4 @@
-package com.appcocha.llajtacomida.presenter.image;
+package com.appcocha.llajtacomida.model.image;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,7 +7,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.R;
-import com.appcocha.llajtacomida.model.image.Image;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +38,7 @@ public class GaleryDatabase {
     private Uri url;
     private String objectParentType;
     private String parentId;
-    private String dir;
+//    private String dir;
 
     /**
      * Establece context, objectParentType, parentId, resurceDestination, image y thumb_byte

@@ -13,6 +13,7 @@ import com.appcocha.llajtacomida.view.restaurants.EditRestaurantActivity;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantPublicOfActivity;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantViewActivity;
 import com.appcocha.llajtacomida.view.restaurants.SetMenuActivity;
+import com.appcocha.llajtacomida.view.restaurants.SetPromotionsActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -126,6 +127,17 @@ public class RestaurantNavegation {
      */
     public static void showMenu(Context context, Restaurant restaurant){
         Intent intent = new Intent(context, SetMenuActivity.class);
+        intent.putExtra("restaurant", restaurant);
+        context.startActivity(intent);
+    }
+
+    /**
+     * Muestra el gestor de promociones de un restaurante
+     * @param context
+     * @param restaurant
+     */
+    public static void showPromotion(Context context, Restaurant restaurant){
+        Intent intent = new Intent(context, SetPromotionsActivity.class);
         intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
     }

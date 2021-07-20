@@ -34,7 +34,7 @@
         android:layout_alignRight="@+id/cvPhoto"
         app:cardCornerRadius="5dp">
         <TextView
-            android:id="@+id/tvPlatePrice"
+            android:id="@+id/tvPlateNewPrice"
             android:padding="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
         android:ellipsize="end"/>
 
     <TextView
-        android:id="@+id/tvResumeItem"
+        android:id="@+id/tvPromotionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitleItem"

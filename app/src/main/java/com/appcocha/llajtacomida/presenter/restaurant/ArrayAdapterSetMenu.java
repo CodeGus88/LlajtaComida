@@ -63,9 +63,9 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         }
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
+        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
         CardView cvPrice = (CardView) view.findViewById(R.id.cvPrice);
-        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlatePrice);
+        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
 
         Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
         tvTitleItem.setText(plateList.get(position).getName());

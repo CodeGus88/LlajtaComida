@@ -71,7 +71,7 @@ public class ArrayAdapterPlate extends ArrayAdapter<Plate> {
         }
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
+        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
         TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
         DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
         tvRating.setText(String.valueOf(decimalFormat.format(plateList.get(position).getPunctuation())));

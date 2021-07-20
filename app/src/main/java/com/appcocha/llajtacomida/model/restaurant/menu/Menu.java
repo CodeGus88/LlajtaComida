@@ -62,8 +62,8 @@ public class Menu {
     }
 
     /**
-     * Obbtiene la lista de platos en el menú
-     * @return
+     * Obtiene la lista de platos en el menú
+     * @return menuList
      */
     public ArrayList<String> getMenuList() {
         return menuList;

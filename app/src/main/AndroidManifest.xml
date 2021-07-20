@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.appcocha.llajtacomida"
-    xmlns:dist="http://schemas.android.com/apk/distribution">
-
+    package="com.appcocha.llajtacomida">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -17,7 +16,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".view.restaurants.SetPromotionsActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,7 +39,7 @@
         <activity
             android:name=".view.maps.SetAllLocationMapActivity"
             android:configChanges="screenSize|orientation"
-            android:label="@string/title_activity_set_all_location_map"></activity>
+            android:label="@string/title_activity_set_all_location_map" />
         <activity android:name=".view.restaurants.RestaurantPublicOfActivity" />
         <activity
             android:name=".view.maps.SetLocationMapActivity"
@@ -51,17 +50,16 @@
         <activity android:name=".view.restaurants.CreateRestaurantActivity" />
         <activity android:name=".view.images.ImagesActivity" />
         <activity android:name=".view.plates.EditPlateActivity" />
-        <activity android:name=".view.restaurants.RestaurantViewActivity"/>
-        <activity android:name=".view.plates.PlateViewActivity"/>
+        <activity android:name=".view.restaurants.RestaurantViewActivity" />
+        <activity android:name=".view.plates.PlateViewActivity" />
         <activity
             android:name=".view.plates.CreatePlateActivity"
-            android:configChanges="screenSize|orientation"/> <!-- "screenSize|orientation"    sirve para que no se pierdan datos al volterar la pantalla -->
-        <activity android:name=".view.users.LoginActivity"/>
+            android:configChanges="screenSize|orientation" /> <!-- "screenSize|orientation"    sirve para que no se pierdan datos al volterar la pantalla -->
+        <activity android:name=".view.users.LoginActivity" />
         <activity
             android:name=".view.maps.GetLocationMapActivity"
             android:configChanges="screenSize|orientation"
-            android:label="@string/title_activity_get_location_maps"/>
-
+            android:label="@string/title_activity_get_location_maps" />
         <activity
             android:name=".view.main.MainActivity"
             android:configChanges="screenSize|orientation"

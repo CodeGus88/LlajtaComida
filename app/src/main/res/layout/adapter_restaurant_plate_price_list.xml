@@ -48,7 +48,7 @@
         android:ellipsize="end"/>
 
     <TextView
-        android:id="@+id/tvResumeItem"
+        android:id="@+id/tvPromotionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitleItem"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvResumeItem"
+        android:layout_below="@id/tvPromotionDescription"
         android:layout_toRightOf="@id/cvPhoto"
         android:gravity="center"
         android:layout_marginTop="2dp"
@@ -77,7 +77,7 @@
             android:layout_alignRight="@+id/cvPhoto"
             app:cardCornerRadius="20dp">
             <TextView
-                android:id="@+id/tvPlatePrice"
+                android:id="@+id/tvPlateNewPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/tv_undefined"

@@ -26,13 +26,14 @@ import com.appcocha.llajtacomida.presenter.map.MapNavegation;
 import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterRestaurantPlatePrice;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.model.image.Image;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
-import com.appcocha.llajtacomida.presenter.image.GaleryDatabase;
+import com.appcocha.llajtacomida.model.image.GaleryDatabase;
 import com.appcocha.llajtacomida.presenter.image.ImagePresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
@@ -65,7 +66,7 @@ import java.util.Hashtable;
 
     private Plate plate;
 
-    private static final int TIME_ANIMATION = 2000;
+    private static final int TIME_ANIMATION = Integer.parseInt(StringValues.getPresentationTime());
     private final int MAX_LINES = 3;
      private final String IMAGES_ANIMATION_FILE = "IMAGES_ANIMATION_FILE";
 

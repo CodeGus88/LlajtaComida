@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.restaurants.SetMenuActivity"
+    android:orientation="vertical"
+    android:background="#03A9F4">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_title_promotions"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:layout_marginVertical="5dp"
+        android:textColor="#fff"/>
+
+    <Switch
+        android:id="@+id/switchShowAll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/switch_show_all_plates"
+        android:textStyle="bold"
+        android:textColor="#CBFFFFFF"
+        android:layout_margin="3dp"/>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="@string/et_search"
+        android:padding="5dp"
+        android:drawableEnd="@drawable/icon_search_black"
+        android:background="@drawable/edit_text"
+        android:inputType="textWebEditText"
+        android:selectAllOnFocus="true" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <ListView
+        android:id="@+id/lvPlates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/panel_list_white_gradient"/>
+</LinearLayout>

@@ -62,9 +62,9 @@ public class ArrayAdapterPlatePrice extends ArrayAdapter<Plate> {
             view = LayoutInflater.from(context).inflate(resource, null);
         }
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
-        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlatePrice);
+        TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
+        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
         TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
         DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
         tvRating.setText(String.valueOf(decimalFormat.format(plateList.get(position).getPunctuation())));
@@ -84,6 +84,11 @@ public class ArrayAdapterPlatePrice extends ArrayAdapter<Plate> {
         return view;
     }
 
+    /**
+     *
+     * @param id
+     * @return text
+     */
     private String getText(String id){
         String text = "";
         for (String textAux: priceList) {

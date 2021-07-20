@@ -46,7 +46,6 @@ public class RestaurantModel implements RestaurantInterface.ModelRestaurant, Val
      */
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-//        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/restaurants")){
         if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/restaurants")){
             ArrayList<Restaurant> restaurantList = new ArrayList<Restaurant>();
             for (DataSnapshot restaurant: snapshot.getChildren()) {

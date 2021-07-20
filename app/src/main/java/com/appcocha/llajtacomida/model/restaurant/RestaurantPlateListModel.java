@@ -52,7 +52,6 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
         plateListMenu.clear();
-//        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/plates")){
         if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/plates")){
             plateList.clear();
                 for (DataSnapshot plate: snapshot.getChildren()) {
@@ -60,7 +59,6 @@ public class RestaurantPlateListModel implements RestaurantInterface.ModelPlateL
                 }
         }else{
             menu = snapshot.getValue(Menu.class);
-
             // Agregado para los precios
             if(menuList.size()>0) menuList.clear();
             if (menu != null) {

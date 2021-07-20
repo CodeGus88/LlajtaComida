@@ -1,5 +1,9 @@
 package com.appcocha.llajtacomida.view.restaurants;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,30 +16,26 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
-import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterSetMenu;
-import com.appcocha.llajtacomida.presenter.restaurant.SetMenuListPresenter;
+import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
+import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterSetPromotions;
+import com.appcocha.llajtacomida.presenter.restaurant.SetPromotionListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 
 import java.util.ArrayList;
 
-/**
- * Vista, gestor de menú de platos de un restaurante
- */
-public class SetMenuActivity extends AppCompatActivity implements RestaurantInterface.ViewSetMenuList, View.OnClickListener {
+public class SetPromotionsActivity extends AppCompatActivity implements RestaurantInterface.ViewSetPromotionList, View.OnClickListener {
 
     // Componentes
     private TextView tvTitle;
+    private Switch switchShowAll;
     private ListView lvPlates;
     private EditText etSearch;
     private MenuItem iconSave;
@@ -43,20 +43,20 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
     private ArrayList<Plate> plateList;
     private AlertDialog alertDialog;
     private TextView tvAlertTitlePrice;
-    private EditText etAlertPrice;
+    private EditText etAlertTitle, etAlertDescription, etAlertPrice;
     private Button btnAlertCancel, btnAlertAdd;
     private int position;
     // Permisos
     private boolean isAdministrator, isAuthor;
-    private ArrayAdapterSetMenu arrayAdapterSetMenu;
+    private ArrayAdapterSetPromotions arrayAdapterSetPromotions;
 
     // presentador
-    private SetMenuListPresenter setMenuListPresenter;
+    private SetPromotionListPresenter setPromotionListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.activity_promotions);
         // Configuración del boton atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         plateList = new ArrayList<Plate>();
@@ -68,31 +68,34 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         if(intent.hasExtra("restaurant")){
             restaurant = (Restaurant) intent.getSerializableExtra("restaurant");
             getSupportActionBar().setTitle(restaurant.getName());
-            getSupportActionBar().setSubtitle(R.string.menu);
+            getSupportActionBar().setSubtitle(R.string.promotion);
         }else{
             Toast.makeText(this, getString(R.string.not_found), Toast.LENGTH_SHORT).show();
         }
 
         initComponents();
-        tvTitle.setText(getString(R.string.menu_title) + " " + restaurant.getName());
+        tvTitle.setText(getString(R.string.promotion_title) + " " + restaurant.getName());
 
         // Inicializar el presentador
-        setMenuListPresenter = new SetMenuListPresenter(this);
-        setMenuListPresenter.searchSetMenuList(restaurant.getId());
+        setPromotionListPresenter = new SetPromotionListPresenter(this);
+        setPromotionListPresenter.searchSetPromotionList(restaurant.getId());
     }
 
     /**
      * Inicializa los componentes
      */
     private void initComponents(){
+        switchShowAll = (Switch) findViewById(R.id.switchShowAll);
         etSearch = (EditText) findViewById(R.id.etSearch);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         lvPlates = (ListView) findViewById(R.id.lvPlates);
 
-        View viewAlert = getLayoutInflater().inflate(R.layout.alert_price, null);
+        View viewAlert = getLayoutInflater().inflate(R.layout.alert_set_promotion, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewAlert);
         tvAlertTitlePrice = (TextView) viewAlert.findViewById(R.id.tvAlertTitle);
+        etAlertTitle = (EditText) viewAlert.findViewById(R.id.etAlertTitle);
+        etAlertDescription = (EditText) viewAlert.findViewById(R.id.etAlertDescription);
         etAlertPrice = (EditText) viewAlert.findViewById(R.id.etAlertPrice);
         btnAlertCancel = (Button) viewAlert.findViewById(R.id.btnAlertCancel);
         btnAlertAdd = (Button) viewAlert.findViewById(R.id.btnAlertAdd);
@@ -102,16 +105,16 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Sound.playClick();
-                SetMenuActivity.this.position = position;
-                if(!arrayAdapterSetMenu.existInMenu(plateList.get(position).getId())){
+                SetPromotionsActivity.this.position = position;
+                if(!arrayAdapterSetPromotions.existInPromotion(plateList.get(position).getId())){
                     alertDialog.show();
                     tvAlertTitlePrice.setText(plateList.get(position).getName());
                 }else{
-                    arrayAdapterSetMenu.removePlate(plateList.get(position).getId());
+                    arrayAdapterSetPromotions.removePlate(plateList.get(position).getId());
                     try {
                         Sound.playThrow();
                     }catch (Exception e){
-                        Log.e("Error", e.getMessage());
+                        Log.e("Error: ", e.getMessage());
                     }
                 }
             }
@@ -124,7 +127,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
             @Override
             public void onTextChanged(CharSequence ss, int start, int before, int count) {
                 try {
-                    arrayAdapterSetMenu.filter(ss.toString(), start);
+                    arrayAdapterSetPromotions.filter(ss.toString(), start);
                 }catch (Exception e){
                     Log.e("Error: ", e.getMessage());
                 }
@@ -160,8 +163,8 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconSave:
-                setMenuListPresenter.saveMenuList(restaurant.getId(), arrayAdapterSetMenu.getMenu()); // this
-                setMenuListPresenter.stopRealTimeDatabase();
+                setPromotionListPresenter.savePromotionList(restaurant.getId(), arrayAdapterSetPromotions.getPromotion()); // this
+                setPromotionListPresenter.stopRealTimeDatabase();
                 onBackPressed();
                 break;
             default:
@@ -171,26 +174,26 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
     }
 
     @Override
-    public void showSetMenuList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.model.restaurant.menu.Menu menu) {
+    public void showSetPromotionList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.model.restaurant.menu.Menu menu, Promotion promotion) {
         this.plateList.clear();
         this.plateList.addAll(plateList);
-        arrayAdapterSetMenu = new ArrayAdapterSetMenu(this, R.layout.adapter_element_restaurant_menu, this.plateList, menu);
-        lvPlates.setAdapter(arrayAdapterSetMenu);
+        arrayAdapterSetPromotions = new ArrayAdapterSetPromotions(this, R.layout.adapter_element_restaurant_promotion, this.plateList, menu, promotion);
+        lvPlates.setAdapter(arrayAdapterSetPromotions);
     }
 
     /**
-     * Captura de accion del boton atras <- de la barra superior
+     * Captura de acción del botón atrás <- de la barra superior
      */
     @Override
     public boolean onSupportNavigateUp() {
-        setMenuListPresenter.stopRealTimeDatabase();
+        setPromotionListPresenter.stopRealTimeDatabase();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-        setMenuListPresenter.stopRealTimeDatabase();
+        setPromotionListPresenter.stopRealTimeDatabase();
         super.onBackPressed();
     }
 
@@ -198,8 +201,13 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
     public void onClick(View v) {
         Sound.playClick();
         if(v.getId() == R.id.btnAlertAdd){
-            arrayAdapterSetMenu.addPrice(plateList.get(position).getId(), etAlertPrice.getText().toString());
-            alertDialog.dismiss();
+            if(!etAlertTitle.equals("") && (!etAlertDescription.equals("") || !etAlertPrice.equals(""))){
+                arrayAdapterSetPromotions.addPrice(plateList.get(position).getId(), etAlertTitle.getText().toString(), etAlertDescription.getText().toString(), etAlertPrice.getText().toString());
+                alertDialog.dismiss();
+            }else{
+                Toast.makeText(this, getString(R.string.incomplete_fields), Toast.LENGTH_SHORT).show();
+            }
+
         }else if(v.getId() == R.id.btnAlertCancel){
             alertDialog.dismiss();
         }

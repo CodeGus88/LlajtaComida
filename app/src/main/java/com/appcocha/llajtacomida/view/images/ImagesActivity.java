@@ -24,7 +24,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.model.image.Image;
 import com.appcocha.llajtacomida.presenter.image.ArrayAdapterImagesGalery;
-import com.appcocha.llajtacomida.presenter.image.GaleryDatabase;
+import com.appcocha.llajtacomida.model.image.GaleryDatabase;
 import com.appcocha.llajtacomida.presenter.image.ImagePresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;

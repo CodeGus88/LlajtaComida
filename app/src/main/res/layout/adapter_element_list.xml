@@ -41,7 +41,7 @@
         android:ellipsize="end"/>
 
     <TextView
-        android:id="@+id/tvResumeItem"
+        android:id="@+id/tvPromotionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitleItem"

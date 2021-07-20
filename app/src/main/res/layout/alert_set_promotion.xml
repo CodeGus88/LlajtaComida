@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="15dp"
+    android:orientation="vertical"
+    android:background="#E4FFFFFF">
+
+    <TextView
+        android:id="@+id/tvAlertTitle"
+        android:text="@string/tv_undefined"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAlignment="center"/>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        app:counterEnabled="true"
+        app:counterMaxLength="12">
+        <EditText
+            android:id="@+id/etAlertTitle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/et_promotion_title"
+            app:counterEnabled="true"
+            android:maxLength="15"
+            android:selectAllOnFocus="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            tools:ignore="RtlCompat"
+            android:focusable="true"
+            android:maxLines="1"
+            android:inputType="textWebEditText"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text"
+        app:counterEnabled="true"
+        app:counterMaxLength="1000">
+        <EditText
+            android:id="@+id/etAlertDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/promotion_description"
+            app:counterEnabled="true"
+            android:selectAllOnFocus="true"
+            tools:ignore="RtlCompat"
+            android:focusable="true"
+            android:inputType="textMultiLine"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center">
+        
+
+        <EditText
+            android:id="@+id/etAlertPrice"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="@string/default_price"
+            android:textSize="20sp"
+            app:counterEnabled="true"
+            android:maxLength="4"
+            android:selectAllOnFocus="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            tools:ignore="RtlCompat"
+            android:focusable="true"
+            android:background="#ffffff"
+            android:maxLines="1"
+            android:inputType="number"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:textAlignment="textStart"
+            android:gravity="center"
+            android:text="@string/type_currency"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnAlertCancel"
+            android:text="@string/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_cancel"
+            android:textColor="#ffffff"
+            android:layout_marginRight="2dp"/>
+        <Button
+            android:id="@+id/btnAlertAdd"
+            android:text="@string/add_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_continue"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="2dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

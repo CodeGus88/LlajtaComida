@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.interfaces.UserInterface;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,8 +43,12 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
     @Override
     public void storeUser(User user) {
         try{
-            this.user = user;
-            databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
+            if(!user.getId().equals("")){
+                this.user = user;
+                databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
+            }else{
+                Log.e("Error", "Not found user id");
+            }
         }catch(Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -61,7 +66,8 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users")){
+//        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users")){
+        if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/users")){
             userList.clear();
             for(DataSnapshot data : snapshot.getChildren()){
                 userList.add(data.getValue(User.class));

@@ -39,6 +39,11 @@
     <string name="menu_restaurant_icon">Menú</string>
     <string name="rest_public_of_icon">Restaurantes no publicados</string>
 
+    <!--        OFERTAS -->
+    <string name="promotions_restaurant_icon">Promociones</string>
+    <string name="switch_show_all_plates">Mostrar todos los platos</string>
+
+
     <!--    PLATES-->
     <string name="title_creat_plate">Crear plato</string>
     <string name="title_edit_plate">Editar plato</string>
@@ -71,6 +76,9 @@
     <string name="tv_rest_with_plate_title">Restaurantes con</string>
     <string name="tv_restaurants_found">encontrados</string>
     <string name="tv_rest_with_title">Restaurantes con:</string>
+    <!-- promotions -->
+    <string name="tv_title_promotions">Promociones del restaurante</string>
+
     <!--  public of  -->
     <string name="btn_publish">Publicar</string>
     <string name="icon_public_on">Publicar restaurante</string>
@@ -247,7 +255,7 @@
         \nEn este contexto alimentario, se comenzó a consumir frituras, encurtidos, la combinación de sabor salado y dulce en un solo preparado, como también el consumo de pan de trigo y de una variedad de productos de la repostería española.
         \n
         \nLos requerimientos para contar con productos apropiados para preparar las recetas de la gastronomía de los migrantes llegados a estas tierras, modificó la producción agrícola practicada por los nativos, quienes tuvieron que cultivar nuevas especies y variedades de productos alimenticios.
-        
+
     </string>
 
     <string name="tv_republicana_content">
@@ -290,7 +298,7 @@
     <string name="tv_mail">Email: llajta.comida.app@gmail.com</string>
     <string name="mail">llajta.comida.app@gmail.com</string>
     <!--    Usuario administrador por defecto (ID google) -->
-    <string name="user_id_admin_default">105708453298523886510</string>
+    <!--    <string name="user_id_admin_default">105708453298523886510</string>-->
 
     <string name="sub_title">Contenido</string>
     <string name="sub_title_images">Imágenes</string>
@@ -309,8 +317,15 @@
     <string name="not_found">No se encontró la información necesaria</string>
     <string name="title_activity_set_all_location_map">Map</string>
 
+    <!--    Promociones     -->
+    <string name="et_promotion_title">Título de la promoción</string>
+    <string name="promotion">Promoción</string>
+    <string name="promotion_title">Promoción de</string>
+    <string name="promotion_description">Descripción de la promoción</string>
+    <string name="incomplete_fields">Campos incompletos</string>
 
-<!--    buttons   -->
+
+    <!--    buttons   -->
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
     <string name="btn_back">Volver</string>

@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.bumptech.glide.Glide;
 
@@ -46,15 +47,18 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
         this.resource = resource;
         this.context = context;
         this.orderBy = Serializer.readStringData(context, "ORDER_LIST_STATE"); // Para saber el orden actual
+        ArrayList<Restaurant> restaurantListAux = Validation.getRestaurantsOrderByPunctuation(restaurantList); // ordena por puntuación
+        this.restaurantList = new ArrayList<Restaurant>();
         if(orderBy.equals("NAME")) {
-            this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+            this.restaurantList.addAll(Validation.getRestaurantListOrderByPrice(restaurantListAux, priceInRestaurantsList)); // ordena por puntuación
             this.restaurantListCopy = new ArrayList<Restaurant>();
-            this.restaurantListCopy.addAll(Validation.getRestaurantsOrderByPunctuation(restaurantList));
+            this.restaurantListCopy.addAll(this.restaurantList); // ordena según la puntuación
         }else if(orderBy.equals("PUNCTUATION")){
-            this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+//            this.restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+//            this.restaurantList = Validation.getRestaurantListOrderByPrice(this.restaurantList, priceInRestaurantsList); // ordena por puntuación
+            this.restaurantList.addAll(Validation.getRestaurantListOrderByPrice(restaurantListAux, priceInRestaurantsList));
             this.restaurantListCopy = new ArrayList<Restaurant>();
-//            this.restaurantListCopy.addAll(Validation.getRestaurantsOrderByPunctuation(restaurantList));
-            this.restaurantListCopy.addAll(restaurantList);
+            this.restaurantListCopy.addAll(this.restaurantList);
         }
         this.priceInRestaurantsList = priceInRestaurantsList;
         this.plateName = plateName;
@@ -70,19 +74,19 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
         try {
             ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
             TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvResumeItem);
-            TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlatePrice);
+            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
+            TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
             TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
             DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
             tvRating.setText(String.valueOf(decimalFormat.format(restaurantList.get(position).getPunctuation())));
             Glide.with(context).load(restaurantList.get(position).getUrl()).into(ivPhotoItem);
             tvTitleItem.setText(restaurantList.get(position).getName());
-//            tvResumeItem.setText(restaurantList.get(position).getAddress() + "\n"+restaurantList.get(position).getOriginAndDescription().replace("\n", " "));
             tvResumeItem.setText(restaurantList.get(position).getAddress() + " "+restaurantList.get(position).getOriginAndDescription().replace("\n", " "));
             if(!priceInRestaurantsList.get(restaurantList.get(position).getId()).isEmpty()){
                 tvPlatePrice.setText(plateName + ": " + priceInRestaurantsList.get(restaurantList.get(position).getId()) + " " + context.getString(R.string.type_currency));
             }else{
-                tvPlatePrice.setText(plateName + ": " + context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
+//                tvPlatePrice.setText(plateName + ": " + context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
+                tvPlatePrice.setText(plateName + ": " + StringValues.getDefaultPrice() + " " + context.getString(R.string.type_currency));
             }
         }catch(Exception e){
             Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
@@ -153,5 +157,27 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
             return false;
         }
     }
+
+//    /**
+//     * Ordena los restaurantes según el precio
+//     * @param restaurantList
+//     * @param priceList
+//     * @return restaurantList
+//     */
+//    public ArrayList<Restaurant> orderByPrice(ArrayList<Restaurant> restaurantList, ArrayList<String> priceList){
+//        ArrayList<Restaurant> rl = new ArrayList<Restaurant>();
+//        for(int i = 0; i<priceList.size(); i++){
+//            String id = Validation.getXWord(priceList.get(i), 1);
+//            for(int j = 0; i<restaurantList.size(); j++){
+//                if(restaurantList.get(j).getId().equals(id)){
+//                    rl.add(restaurantList.get(j));
+//                    restaurantList.remove(j);
+//                    break;
+//                }
+//            }
+//        }
+//        return rl;
+//    }
+
 
 }

@@ -1,10 +1,13 @@
 package com.appcocha.llajtacomida.presenter.tools;
 
+import android.util.Log;
+
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.plate.PlateList;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * Validaciones de registros y actualizaciones
@@ -14,7 +17,7 @@ public class Validation {
     /**
      * verifica si un texto está o no vacio (Sin tomar en cuenta los espacios)
      * @param text
-     * @return
+     * @return isEmpty
      */
     public static boolean isEmpty(String text){
         text = Validation.correctText(text);
@@ -29,7 +32,7 @@ public class Validation {
     /**
      * Quita los espacios demás
      * @param text
-     * @return
+     * @return resultText
      */
     public static String correctText(String text){
         byte continuousSpaces = 0;
@@ -201,6 +204,7 @@ public class Validation {
     /**
      * Ordena la lista de objetos (restaurantes)  según su puntuación
      * Algoritno de ordenamiento por inserción
+     * @return restaurantList
      */
     public static ArrayList<Restaurant> getRestaurantsOrderByPunctuation(ArrayList<Restaurant> restaurantList){
         int pos;
@@ -217,6 +221,12 @@ public class Validation {
         return restaurantList;
     }
 
+    /**
+     * Ordena la lista de objetos (platos)  según su puntuación
+     * Algoritno de ordenamiento por inserción
+     * @param plateList
+     * @return plateList
+     */
     public static ArrayList<Plate> getPlatesOrderByPunctuation(ArrayList<Plate> plateList) {
         int pos;
         Plate plate;
@@ -231,4 +241,45 @@ public class Validation {
         }
         return plateList;
     }
+
+
+    /**
+     * Ordenar la lista de restaurantes según su precio
+     * @param restaurantList
+     * @param priceInRestaurantsList
+     * @return restaurantList
+     */
+    public static ArrayList<Restaurant> getRestaurantListOrderByPrice(ArrayList<Restaurant> restaurantList, Hashtable priceInRestaurantsList){
+        try {
+            Hashtable<String, String> hastable = priceInRestaurantsList;
+            for (int i = 0; i < restaurantList.size(); i++) {
+
+                for (int j = i+1; j < restaurantList.size(); j++) {
+
+                    String stringPriceI = hastable.get(restaurantList.get(i).getId());
+                    float priceI = 0;
+                    if (!stringPriceI.equals("")) priceI = Float.parseFloat(stringPriceI.toString());
+                    else priceI = Float.parseFloat(StringValues.getDefaultPrice());
+
+                    String stringPriceJ = hastable.get(restaurantList.get(j).getId());
+                    float priceJ;
+                    if (!stringPriceJ.equals("")) priceJ = Float.parseFloat(stringPriceJ);
+                    else priceJ = Float.parseFloat(StringValues.getDefaultPrice());
+
+//                    Log.d("prueba", "i ->" + priceI);
+//                    Log.d("prueba", "j ->" + priceI);
+                    if (priceI > priceJ){
+                        Restaurant aux = restaurantList.get(i);
+                        restaurantList.set(i, restaurantList.get(j));
+                        restaurantList.set(j, aux);
+                    }
+                }
+            }
+
+        }catch (Exception e){
+            Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
+        }
+        return restaurantList;
+    }
+
 }

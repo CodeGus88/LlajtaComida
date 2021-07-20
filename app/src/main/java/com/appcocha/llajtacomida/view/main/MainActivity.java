@@ -27,6 +27,7 @@ import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.main.MainNavigation;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
 import com.appcocha.llajtacomida.presenter.user.UserRealTimePresenter;
@@ -225,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void loadDataUser(GoogleSignInAccount account){
         try {
             String role;
-            if(account.getId().equalsIgnoreCase(getString(R.string.user_id_admin_default))) role = "admin";
+            if(account.getId().equalsIgnoreCase(StringValues.getUserId())) role = "admin";
             else role =  "collaborator";
             user = new User(
                 FirebaseAuth.getInstance().getUid(),

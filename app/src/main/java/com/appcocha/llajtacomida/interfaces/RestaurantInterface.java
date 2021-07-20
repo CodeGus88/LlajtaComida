@@ -3,6 +3,8 @@ package com.appcocha.llajtacomida.interfaces;
 import com.appcocha.llajtacomida.model.restaurant.menu.Menu;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
+import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
+
 import java.util.ArrayList;
 
 /**
@@ -87,7 +89,7 @@ public interface RestaurantInterface {
 
 
     // Las siguientes interfaces
-    // para la lista de platos del menu de un restaurante
+    // Para la lista de platos del menu de un restaurante
 
     /**
      * Vista
@@ -212,6 +214,82 @@ public interface RestaurantInterface {
          */
         void stopRealTimeDatabase();
     }
+
+
+
+
+    // Las siguientes interfaces son para el set del promoción
+    // Para obtener la lista de todos los platos
+
+    /**
+     * Vista
+     */
+    interface ViewSetPromotionList{
+
+        /**
+         * Muestra la lista de platos (para modificar el menú de un restaurante)
+         * @param plateList
+         * @param promotion
+         */
+        void showSetPromotionList(ArrayList<Plate> plateList, Menu menu, Promotion promotion);
+    }
+
+    /**
+     * Presentador
+     */
+    interface PresenterSetPromotionList{
+
+        /**
+         * Determina mostrar la lista de platos (con los que exisen en el menú de un restaurate)
+         * @param plateList
+         * @param promotion
+         */
+        void showSetPromotionList(ArrayList<Plate> plateList, Menu menu, Promotion promotion);
+
+        /**
+         * Determina buscar la lista de platos en el menú de un restaurante
+         * @param restaurantId
+         */
+        void searchSetPromotionList(String restaurantId);
+
+        /**
+         * Determina guardar la lista de paltos del menú de un restaurante
+         * @param restaurantId
+         * @param promotion
+         */
+        void savePromotionList(String restaurantId, Promotion promotion); //Context context,
+
+        /**
+         * Determina detener la BD
+         */
+        void stopRealTimeDatabase();
+    }
+
+    /**
+     * Modelo
+     */
+    interface  ModelSetPromotionList{
+
+        /**
+         * Genera una lista de platos y una lista de id' de platos
+         * @param restaurantId
+         */
+        void searchSetPromotionList(String restaurantId);
+
+        /**
+         * Guarda el menú de platos de un restaurante
+         * @param restaurantId
+         * @param promotion
+         */
+        void savePromotionList(String restaurantId, Promotion promotion); //Context context,
+
+        /**
+         * Detiene la BD
+         */
+        void stopRealTimeDatabase();
+    }
+
+
 
 
      // Las siguinetes interfaces son para publicar o dejar de publicar un restaurante

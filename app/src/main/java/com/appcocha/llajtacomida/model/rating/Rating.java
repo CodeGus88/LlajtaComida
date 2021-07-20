@@ -54,7 +54,7 @@ public class Rating {
 
     /**
      * Obtiene la puntuación (rating) del objeto (plato o restaurante)
-     * @return Este método develve la puntuacion total
+     * @return Este método develve la puntuación total
      */
     public float getPunctuation() {
         return punctuation;
@@ -91,7 +91,7 @@ public class Rating {
 
     /**
      * Genera un mapa de datos del objeto (para editar)
-     * @return
+     * @return result
      */
     @Exclude
     public Map<String, Object> toMap(){

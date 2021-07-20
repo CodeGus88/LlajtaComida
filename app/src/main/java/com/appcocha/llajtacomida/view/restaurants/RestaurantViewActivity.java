@@ -26,6 +26,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterPlatePrice;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
@@ -33,7 +34,7 @@ import com.appcocha.llajtacomida.model.image.Image;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.presenter.restaurant.RestPlateListPresenter;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
-import com.appcocha.llajtacomida.presenter.image.GaleryDatabase;
+import com.appcocha.llajtacomida.model.image.GaleryDatabase;
 import com.appcocha.llajtacomida.presenter.image.ImagePresenter;
 import com.appcocha.llajtacomida.presenter.map.MapNavegation;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
@@ -58,11 +59,11 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         RestaurantInterface.ViewRestaurantManager{
     public String id;
     public final int MAX_LINES = 2;
-    private static final int TIME_ANIMATION = 2000;
+    private static final int TIME_ANIMATION = Integer.parseInt(StringValues.getPresentationTime());
     private final String IMAGES_ANIMATION_FILE = "IMAGES_ANIMATION_FILE";
 
     //iconos
-    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPublish;
+    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPromotionRestaurant, iconPublish;
 
     private Restaurant restaurant;
     // components
@@ -209,6 +210,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
             iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
             iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
+            iconPromotionRestaurant = (MenuItem) menu.findItem(R.id.iconPromotionsRestaurant);
             iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
             changeIcon();
         if(AuthUser.getUser().getRole().equals("admin") || restaurant.getAuthor().equals(FirebaseAuth.getInstance().getUid())){
@@ -216,11 +218,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             iconDelete.setVisible(true);
             iconGalery.setVisible(true);
             iconMenuRestaurant.setVisible(true);
+            iconPromotionRestaurant.setVisible(true);
         }else{
             iconEdit.setVisible(false);
             iconDelete.setVisible(false);
             iconGalery.setVisible(false);
             iconMenuRestaurant.setVisible(false);
+            iconPromotionRestaurant.setVisible(false);
         }
         if(AuthUser.getUser().getRole().equals("admin")) iconPublish.setVisible(true);
         else iconPublish.setVisible(false);
@@ -352,11 +356,14 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.iconMenuRestaurant:
                 RestaurantNavegation.showMenu(this, restaurant);
                 break;
+            case R.id.iconPromotionsRestaurant:
+                RestaurantNavegation.showPromotion(this, restaurant);
+                break;
             case R.id.iconPublish:
                 restaurantPresenter.update(this, restaurant); // publica o despublica
                 break;
             default:
-                Log.e("null", "Option invalid");
+                Log.e("null", "Invalid option");
         }
         return super.onOptionsItemSelected(item);
     }

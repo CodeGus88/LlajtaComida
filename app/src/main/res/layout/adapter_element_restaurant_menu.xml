@@ -39,7 +39,7 @@
 
 <!--    android:layout_toLeftOf="@+id/cbSelectItem"-->
     <TextView
-        android:id="@+id/tvResumeItem"
+        android:id="@+id/tvPromotionDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvTitleItem"
@@ -72,7 +72,7 @@
         android:visibility="visible"
         android:layout_marginVertical="4dp">
         <TextView
-            android:id="@+id/tvPlatePrice"
+            android:id="@+id/tvPlateNewPrice"
             android:padding="2dp"
             android:layout_width="wrap_content"
             android:layout_height="54dp"

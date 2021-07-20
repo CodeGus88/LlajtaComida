@@ -1,4 +1,4 @@
-package com.appcocha.llajtacomida.model.restaurant.menu;
+package com.appcocha.llajtacomida.model.restaurant.promotion;
 
 import android.util.Log;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
+import com.appcocha.llajtacomida.model.restaurant.menu.Menu;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,53 +16,51 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * Interactua la base de datos para el menú
- */
-public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, ValueEventListener {
+public class SetPromotionListModel implements RestaurantInterface.ModelSetPromotionList, ValueEventListener {
 
-    private RestaurantInterface.PresenterSetMenuList presenterSetMenuList;
-    private DatabaseReference databaseReference, databaseReferenceM;
+    private RestaurantInterface.PresenterSetPromotionList presenterSetPromotionList;
+    private DatabaseReference databaseReference, databaseReferenceM, databaseReferenceP;
+    private String restaurantId;
     private ArrayList<Plate> plateList;
     private Menu menu;
+    private Promotion promotion;
     private byte processCounter;
 
-    public SetMenuListModel(RestaurantInterface.PresenterSetMenuList presenterSetMenuList){
-        this.presenterSetMenuList = presenterSetMenuList;
+    public SetPromotionListModel(RestaurantInterface.PresenterSetPromotionList presenterSetPromotionList){
+        this.presenterSetPromotionList = presenterSetPromotionList;
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceM = FirebaseDatabase.getInstance().getReference();
+        databaseReferenceP = FirebaseDatabase.getInstance().getReference();
         plateList = new ArrayList<Plate>();
     }
 
-    /**
-     * Recupera la lista de platos
-     * Recupera la lista de id's del menú de los platos
-     * @param restaurantId
-     */
     @Override
-    public void searchSetMenuList(String restaurantId) {
+    public void searchSetPromotionList(String restaurantId){
         processCounter = 0;
+        this.restaurantId = restaurantId;
         databaseReference.child("App").child("plates").orderByChild("name").addValueEventListener(this);
         databaseReferenceM.child("App").child("restaurants").child(restaurantId)
                 .child("menus").child("local").addValueEventListener(this);
+        databaseReferenceP.child("App").child("restaurants").child(restaurantId)
+                .child("promotion").addValueEventListener(this);
+
     }
 
     @Override
-    public void saveMenuList(String restaurantId, Menu menu) { //Context context,
+    public void savePromotionList(String restaurantId, Promotion promotion) {
         // guardar en la base de datos
-//        MenuDB menuDB = new MenuDB(context, restaurantId);
-        MenuDB menuDB = new MenuDB(restaurantId);
-        menuDB.saveMenu(menu, "local");
+        PromotionDB promotionDB = new PromotionDB(restaurantId);
+        promotionDB.savePromotion(promotion);
     }
-
 
     @Override
     public void stopRealTimeDatabase() {
         databaseReference.removeEventListener(this);
         databaseReferenceM.removeEventListener(this);
+        databaseReferenceP.removeEventListener(this);
     }
 
-
+    // BASE DE DATOS
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
         if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/plates")){
@@ -69,16 +68,19 @@ public class SetMenuListModel implements RestaurantInterface.ModelSetMenuList, V
             for (DataSnapshot plate: snapshot.getChildren()) {
                 plateList.add(plate.getValue(Plate.class));
             }
-        }else{
+        }else if(snapshot.getRef().toString().equals(StringValues.getDBURL()+"/App/restaurants/"+restaurantId+"/menus/local")){
             menu = snapshot.getValue(Menu.class);
+        }else if(snapshot.getRef().toString().equals(StringValues.getDBURL()+"/App/restaurants/"+restaurantId+"/promotion")){
+            promotion = snapshot.getValue(Promotion.class);
         }
         processCounter++;
-        if(processCounter==2) presenterSetMenuList.showSetMenuList(plateList, menu);
+        if(processCounter == 3){
+            presenterSetPromotionList.showSetPromotionList(plateList, menu, promotion);
+        }
     }
 
     @Override
     public void onCancelled(@NonNull DatabaseError error) {
-        Log.e("Error", error.getMessage());
+        Log.e("ERROR onCancelled: ", error.getCode() + " " + error.getDetails() + " " + error.getMessage());
     }
-
 }

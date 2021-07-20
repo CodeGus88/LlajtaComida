@@ -8,11 +8,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SearchView;
+//import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.FragmentActivity;
 
 import com.appcocha.llajtacomida.R;

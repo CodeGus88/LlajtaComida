@@ -61,6 +61,13 @@
         android:visible="false"/>
 
     <item
+        android:id="@+id/iconPromotionsRestaurant"
+        android:icon="@drawable/icon_offers"
+        android:title="@string/promotions_restaurant_icon"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
+    <item
         android:id="@+id/iconListPublicOf"
         android:icon="@drawable/icon_list_public_of"
         android:title="@string/rest_public_of_icon"

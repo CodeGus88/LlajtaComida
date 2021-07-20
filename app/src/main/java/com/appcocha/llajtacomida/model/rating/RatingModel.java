@@ -6,6 +6,7 @@ import com.appcocha.llajtacomida.interfaces.RatingInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.user.User;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -109,16 +110,15 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/" + nodeCollectionName + "/" + objectId +"/rating" )){
+        if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/" + nodeCollectionName + "/" + objectId +"/rating" )){
             if(snapshot.getValue() != null) {
-                rating = snapshot.getValue(Rating.class); // getVotesList es escruido a momento de copiar el objeto (porque se tuvo probrlemas con el cast)
+                rating = snapshot.getValue(Rating.class); // getVotesList es excluido a momento de copiar el objeto (porque se tuvo probrlemas con el cast)
                 rating.setVotesList(getDataHashtable(snapshot));
-                // load userList
             }else{
                 rating = new Rating();
             }
             initSearchUsers();
-        }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users")){
+        }else if(snapshot.getRef().toString().equals(StringValues.getDBURL()+"/App/users")){
             userList.clear();
             for(DataSnapshot usr : snapshot.getChildren()){
                 User user = usr.getValue(User.class);
@@ -142,7 +142,7 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
     /**
      * Solucion alternativa al fallo de cast de una lista Hastable
      * @param snapshot
-     * @return
+     * @return table
      */
     private Hashtable<String, Hashtable<String, String>> getDataHashtable(DataSnapshot snapshot){
         Hashtable<String, Hashtable<String, String>> table = new Hashtable<String, Hashtable<String, String>>();
@@ -170,26 +170,26 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
         final float punctuation [] = new float[1]; // por necesitar ser constante, evadimos la regla si lo metemos dentro de un arreglo
         punctuation[0] = 0;
         databaseReference.child("App").child(nodeCollectionName).child(objectId).child("rating").child("votesList")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int count = 0;
-                        for (DataSnapshot row: snapshot.getChildren()) {
-                            punctuation[0] += Float.parseFloat(row.child("punctuation").getValue().toString());
-                            count ++;
-                        }
-                        if(count > 0){
-                            punctuation[0] /= snapshot.getChildrenCount(); // saca le promedio
-                        }
-                        databaseReference.child("App").child(nodeCollectionName).child(objectId).child("rating").child("punctuation").setValue(punctuation[0]);
-                        databaseReference.child("App").child(nodeCollectionName).child(objectId).child("punctuation").setValue(punctuation[0]);
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    int count = 0;
+                    for (DataSnapshot row: snapshot.getChildren()) {
+                        punctuation[0] += Float.parseFloat(row.child("punctuation").getValue().toString());
+                        count ++;
                     }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                    if(count > 0){
+                        punctuation[0] /= snapshot.getChildrenCount(); // saca le promedio
                     }
-                });
+                    databaseReference.child("App").child(nodeCollectionName).child(objectId).child("rating").child("punctuation").setValue(punctuation[0]);
+                    databaseReference.child("App").child(nodeCollectionName).child(objectId).child("punctuation").setValue(punctuation[0]);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
     }
 
 }
