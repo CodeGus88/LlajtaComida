@@ -23,7 +23,10 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.appcocha.llajtacomida.R;
+import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
 import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterPlatePrice;
+import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterPromotion;
+import com.appcocha.llajtacomida.presenter.restaurant.PromotionListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
@@ -56,7 +59,7 @@ import java.util.ArrayList;
  */
 public class RestaurantViewActivity extends AppCompatActivity implements View.OnClickListener,
         RestaurantInterface.ViewRestaurant, RestaurantInterface.ViewPlateList, ImageInterface.ViewImage,
-        RestaurantInterface.ViewRestaurantManager{
+        RestaurantInterface.ViewRestaurantManager, RestaurantInterface.ViewPromotionPlateList{
     public String id;
     public final int MAX_LINES = 2;
     private static final int TIME_ANIMATION = Integer.parseInt(StringValues.getPresentationTime());
@@ -72,6 +75,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ImageButton btnMenuEdit;
     private ImageButton btnMarkersView;
 //    private Button btnVisit;
+    private ListView promotionList;
     private ListView menuList;
     private TextView tvRating;
     // Favoritos
@@ -81,15 +85,20 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private int height, width;
     private ZoomInImageView ivPhoto;
     private TextView tvName, tvOwnerName, tvPhone, tvAddress, tvOriginAndDescription, tvReadMoreLessDescription;
-    private LinearLayout llOwnerName, llDescription;
+    private LinearLayout llOwnerName, llDescription, llPromotion;
     private ArrayAdapterPlatePrice arrayAdapterPlatePrice;
-    private ArrayList<Plate> plateList;
+    private ArrayAdapterPromotion arrayAdapterPromotions;
+    private ArrayList<Plate> menuPlateList;
+    private ArrayList<Plate> promotionPlateList;
+    private Promotion promotion;
+    private com.appcocha.llajtacomida.model.restaurant.menu.Menu menu; // para obtener los precios (sin promoción) en la promo
 
     // Presenters
-    private RestPlateListPresenter restPlateListPresenter;
     private RestaurantPresenter restaurantPresenter;
     private ImagePresenter imagePresenter;
     private RestaurantManagerPresenter restaurantManagerPresenter;
+    private RestPlateListPresenter restPlateListPresenter;
+    private PromotionListPresenter promotionListPresenter;
 
     // Fragments
     private RatingRecordFragment ratingRecordFragment;
@@ -114,7 +123,11 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         id = getIntent().getStringExtra("id");
         initComponents();
 //        loadImages();
-        plateList = new ArrayList<Plate>();
+        menuPlateList = new ArrayList<Plate>();
+        promotionPlateList = new ArrayList<Plate>();
+        promotion = new Promotion();
+        menu = new com.appcocha.llajtacomida.model.restaurant.menu.Menu();
+
        initPresenters();
        initRatingFragment();
     }
@@ -140,6 +153,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private void initPresenters() {
         restPlateListPresenter = new RestPlateListPresenter(this);
         restPlateListPresenter.filterPlateListInMenu(id);
+        promotionListPresenter = new PromotionListPresenter(this);
+        promotionListPresenter.filterPlateListInPromotion(id);
         restaurantPresenter = new RestaurantPresenter(this);
         restaurantPresenter.searchRestaurant(id);
         imagePresenter = new ImagePresenter(this);
@@ -157,7 +172,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         viewFlipper.startFlipping();
     }
 
-
     /**
      * Inicializa los componentes de la vista
      */
@@ -168,6 +182,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         tvPhone = (TextView) findViewById(R.id.tvPhone);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
         llDescription = (LinearLayout) findViewById(R.id.llDescription);
+        llPromotion = (LinearLayout) findViewById(R.id.llPromotion);
         tvOriginAndDescription = (TextView) findViewById(R.id.tvOriginAndDescription);
         tvReadMoreLessDescription = (TextView) findViewById(R.id.tvReadMoreDescription);
         llOwnerName = (LinearLayout) findViewById(R.id.llOwner);
@@ -177,13 +192,23 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnNext = (ImageButton) findViewById(R.id.btnNext);
         btnMenuEdit = (ImageButton) findViewById(R.id.btnMenuEdit);
         btnMarkersView = (ImageButton) findViewById(R.id.btnMarkersView);
-//        btnVisit = (Button) findViewById(R.id.btnVisit);
+        promotionList = (ListView) findViewById(R.id.promotionList);
+        promotionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
+//                PlateNavegation.showPlateView(RestaurantViewActivity.this, promotionPlateList.get(position));
+                AlertShowPromotion alertShowPromotion = new AlertShowPromotion(RestaurantViewActivity.this);
+                Plate plate = promotionPlateList.get(position);
+                alertShowPromotion.showPromotion(plate, promotion.getPromotionElement(plate.getId()), menu.getPrice(plate.getId()));
+            }
+        });
         menuList = (ListView) findViewById(R.id.menuList);
         menuList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Sound.playClick();
-                PlateNavegation.showPlateView(RestaurantViewActivity.this, plateList.get(position));
+                PlateNavegation.showPlateView(RestaurantViewActivity.this, menuPlateList.get(position));
             }
         });
         tvRating = (TextView) findViewById(R.id.tvRating);
@@ -198,14 +223,14 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         toast = new Toast(this);
         llDescription.setOnClickListener(this);
         tvOriginAndDescription.setMaxLines(MAX_LINES);
-    }
 
+    }
 
     /**
      * Inicializa los íconos
      * @param menu
      */
-    private void initIconMenu(Menu menu){
+    private void initIconMenuAndPromotion(Menu menu){
             iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
             iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
             iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
@@ -311,7 +336,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      * Pausa o reanuda la presentación de las imágenes del restaurante
      */
     private void pauseResume(){
-//        if(viewFlipper.isFlipping()){
         if(!Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)){
             viewFlipper.stopFlipping();
             ImageView imageView = new ImageView(this);
@@ -336,7 +360,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        initIconMenu(menu);
+        initIconMenuAndPromotion(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -397,14 +421,41 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     }
 
     /**
-     * Carga la lista de platos de si menu
+     * Carga la lista de platos en su promoción
+     * @param list
+     * @param  menu
+     * @param promotion
+     */
+    public void showPromotionPlateList(ArrayList<Plate> list, com.appcocha.llajtacomida.model.restaurant.menu.Menu menu, Promotion promotion) {
+        try {
+            if(list!=null && menu!=null && promotion!=null){
+                if(promotion.getActive() && promotion.getPromotionList().size()>0){
+                    llPromotion.setVisibility(View.VISIBLE);
+                    promotionPlateList.clear();
+                    promotionPlateList.addAll(list);
+                    this.promotion = promotion;
+                    this.menu = menu;
+                    arrayAdapterPromotions = new ArrayAdapterPromotion(this, R.layout.adapter_element_restaurant_promotion, list, menu, promotion);
+                    promotionList.setAdapter(arrayAdapterPromotions);
+                    ScreenSize.setListViewHeightBasedOnChildren(promotionList);
+                }else llPromotion.setVisibility(View.GONE);
+            }else llPromotion.setVisibility(View.GONE);
+
+        }catch (Exception e){
+            Log.e("Error: ", e.getMessage());
+        }
+    }
+
+
+    /**
+     * Carga la lista de platos de su menu
      * @param list
      */
     @Override
     public void showPlateList(ArrayList<Plate> list, ArrayList<String> menuPrice) {
        try {
-           plateList.clear();
-           plateList.addAll(list);
+           menuPlateList.clear();
+           menuPlateList.addAll(list);
            arrayAdapterPlatePrice = new ArrayAdapterPlatePrice(this, R.layout.adapter_plates_price_list, list, menuPrice);
            menuList.setAdapter(arrayAdapterPlatePrice);
            ScreenSize.setListViewHeightBasedOnChildren(menuList);

@@ -4,6 +4,7 @@ import com.appcocha.llajtacomida.model.restaurant.menu.Menu;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
+import com.appcocha.llajtacomida.model.restaurant.promotion.PromotionElement;
 
 import java.util.ArrayList;
 
@@ -215,6 +216,63 @@ public interface RestaurantInterface {
         void stopRealTimeDatabase();
     }
 
+
+
+    // Las siguientes interfaces
+    // Para la lista de platos de la promoción de un restaurante
+
+    /**
+     * Vista
+     */
+    interface ViewPromotionPlateList {
+
+        /**
+         * Muestra la lista de platos en el menú de un restaurante
+         * @param list
+         * @param promotion
+         */
+        void showPromotionPlateList(ArrayList<Plate> list, Menu menu, Promotion promotion);
+    }
+
+    /**
+     * Presentador
+     */
+    interface PresenterPromotionPlateList {
+
+        /**
+         * Determina mostrar la lista de platos
+         * @param list
+         */
+        void showPromotionPlateList(ArrayList<Plate> list, Menu menu, Promotion promotion);
+
+        /**
+         * Determina filtrar la lista de platos según el menu de un restaurante
+         * @param restaurantId
+         */
+        void filterPlateListInPromotion(String restaurantId);
+
+        /**
+         * Determina detener la BD
+         */
+        void stopRealtimeDatabse();
+    }
+
+    /**
+     * Modelo
+     */
+    interface ModelPromotionPlateList {
+
+        /**
+         * Filtra la lista de platos que contiene el menú de un restaurante de la BD
+         * @param restaurantId
+         */
+        void filterPlateListInPromotion(String restaurantId);
+
+        /**
+         * Detiene la base de datos
+         */
+        void stopRealTimeDatabase();
+    }
 
 
 

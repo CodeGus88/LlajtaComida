@@ -39,10 +39,9 @@
     <string name="menu_restaurant_icon">Menú</string>
     <string name="rest_public_of_icon">Restaurantes no publicados</string>
 
-    <!--        OFERTAS -->
+    <!--        PROMOTIONS -->
     <string name="promotions_restaurant_icon">Promociones</string>
-    <string name="switch_show_all_plates">Mostrar todos los platos</string>
-
+    <string name="switch_activate_promotion">Mostrar promoción</string>
 
     <!--    PLATES-->
     <string name="title_creat_plate">Crear plato</string>
@@ -318,11 +317,18 @@
     <string name="title_activity_set_all_location_map">Map</string>
 
     <!--    Promociones     -->
+    <string name="tv_promotion">!Promoción!</string>
     <string name="et_promotion_title">Título de la promoción</string>
     <string name="promotion">Promoción</string>
     <string name="promotion_title">Promoción de</string>
     <string name="promotion_description">Descripción de la promoción</string>
     <string name="incomplete_fields">Campos incompletos</string>
+    <string name="price_before">Antes:</string>
+    <string name="price_now">Ahora:</string>
+    <string name="show_plate">Mostrar plato</string>
+
+    <string name="added_element">Elemento agregado</string>
+
 
 
     <!--    buttons   -->

@@ -16,9 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class SetPromotionListModel implements RestaurantInterface.ModelSetPromotionList, ValueEventListener {
+public class PromotionListModel implements RestaurantInterface.ModelPromotionPlateList, ValueEventListener {
 
-    private RestaurantInterface.PresenterSetPromotionList presenterSetPromotionList;
+    private RestaurantInterface.PresenterPromotionPlateList presenterPromotionPlateList;
     private DatabaseReference databaseReference, databaseReferenceM, databaseReferenceP;
     private String restaurantId;
     private ArrayList<Plate> plateList;
@@ -26,8 +26,8 @@ public class SetPromotionListModel implements RestaurantInterface.ModelSetPromot
     private Promotion promotion;
     private byte processCounter;
 
-    public SetPromotionListModel(RestaurantInterface.PresenterSetPromotionList presenterSetPromotionList){
-        this.presenterSetPromotionList = presenterSetPromotionList;
+    public PromotionListModel(RestaurantInterface.PresenterPromotionPlateList presenterPromotionPlateList){
+        this.presenterPromotionPlateList = presenterPromotionPlateList;
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceM = FirebaseDatabase.getInstance().getReference();
         databaseReferenceP = FirebaseDatabase.getInstance().getReference();
@@ -35,7 +35,7 @@ public class SetPromotionListModel implements RestaurantInterface.ModelSetPromot
     }
 
     @Override
-    public void searchSetPromotionList(String restaurantId){
+    public void filterPlateListInPromotion(String restaurantId){
         processCounter = 0;
         this.restaurantId = restaurantId;
         databaseReference.child("App").child("plates").orderByChild("name").addValueEventListener(this);
@@ -46,12 +46,6 @@ public class SetPromotionListModel implements RestaurantInterface.ModelSetPromot
 
     }
 
-    @Override
-    public void savePromotionList(String restaurantId, Promotion promotion) {
-        // guardar en la base de datos
-        PromotionDB promotionDB = new PromotionDB(restaurantId);
-        promotionDB.savePromotion(promotion);
-    }
 
     @Override
     public void stopRealTimeDatabase() {
@@ -75,7 +69,7 @@ public class SetPromotionListModel implements RestaurantInterface.ModelSetPromot
         }
         processCounter++;
         if(processCounter >= 3){
-            presenterSetPromotionList.showSetPromotionList(plateList, menu, promotion);
+            presenterPromotionPlateList.showPromotionPlateList(plateList, menu, promotion);
         }
     }
 

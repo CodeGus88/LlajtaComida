@@ -1,9 +1,5 @@
 package com.appcocha.llajtacomida.model.restaurant.promotion;
 
-import com.google.firebase.database.Exclude;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class PromotionElement {
 
@@ -11,7 +7,10 @@ public class PromotionElement {
     private float price;
 
     public PromotionElement(){
-
+        plateId = "";
+        title = "";
+        description = "";
+        price = -1;
     }
 
     public PromotionElement(String plateId, String title, String description, float price) {

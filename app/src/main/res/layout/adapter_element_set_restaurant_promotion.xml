@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="1dp"
-    android:id="@+id/rlItem"
-    android:background="@color/colorPromotion">
+    android:layout_margin="5dp"
+    android:id="@+id/rlItem">
 
     <LinearLayout
         android:id="@+id/ll"
@@ -15,8 +14,8 @@
             android:id="@+id/cvPhoto"
             android:layout_width="80dp"
             android:layout_height="54dp"
-            app:cardCornerRadius="10dp"
-            android:layout_margin="2dp"
+            app:cardCornerRadius="5dp"
+            android:layout_margin="4dp"
             android:layout_alignParentLeft="true"
             android:visibility="visible">
             <ImageView
@@ -33,20 +32,17 @@
 <!--    android:layout_toLeftOf="@+id/cbSelectItem"-->
     <TextView
         android:id="@+id/tvTitleItem"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="@string/tv_undefined"
+        android:hint="@string/tv_undefined"
         android:textStyle="bold"
-        android:textSize="22sp"
+        android:textSize="15sp"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ll"
         android:layout_toLeftOf="@id/cvPrice"
-        android:layout_marginTop="1dp"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:gravity="center"/>
+        android:layout_marginTop="3dp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 
 <!--    android:layout_toLeftOf="@+id/cbSelectItem"-->
 
@@ -55,24 +51,26 @@
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/ll"
-        android:layout_marginLeft="2dp"
-        android:maxLines="3"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="4dp"
+        android:maxLines="2"
         android:textSize="13dp"
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:background="#AE636363"/>
+        android:background="#AE636363"
+        android:visibility="gone"/>
 
-<!--    <TextView-->
-<!--        android:id="@+id/tvPromotionDescription"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/tvTitleItem"-->
-<!--        android:maxLines="2"-->
-<!--        android:textSize="13dp"-->
-<!--        android:layout_toRightOf="@+id/ll"-->
-<!--        android:layout_toLeftOf="@id/cvPrice"-->
-<!--        android:paddingRight="1dp"/>-->
+    <TextView
+        android:id="@+id/tvPromotionDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitleItem"
+        android:maxLines="2"
+        android:textSize="13dp"
+        android:layout_toRightOf="@+id/ll"
+        android:layout_toLeftOf="@id/cvPrice"
+        android:paddingRight="1dp"/>
 
 
 

@@ -1,5 +1,9 @@
 package com.appcocha.llajtacomida.model.restaurant.menu;
 
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.appcocha.llajtacomida.presenter.tools.Validation;
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -76,5 +80,23 @@ public class Menu {
     public void setMenuList(ArrayList<String> menuList) {
         this.menuList.clear();
         this.menuList.addAll(menuList);
+    }
+
+    /**
+     * Devuelve el precio del elemento con id
+     * @param id
+     * @return price
+     */
+    @Exclude
+    public String getPrice(String id){
+        String price = "";
+        for(String s: menuList){
+            if(s.contains(id)){
+                if(Validation.getXWord(s, 2).equals(""))
+                    price = StringValues.getDefaultPrice();
+                else price = Validation.getXWord(s, 2);
+            }
+        }
+        return price;
     }
 }

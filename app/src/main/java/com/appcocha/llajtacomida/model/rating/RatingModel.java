@@ -126,7 +126,7 @@ public class RatingModel implements RatingInterface.ModelRating, ValueEventListe
                     userList.add(usr.getValue(User.class));
                 }
             }
-            // una ves  de que ya se tenga el reting y la lista de usuarios, mostramoss
+            // una ves  de que ya se tenga el reting y la lista de usuarios, mostramos
             presenterRating.showRating(rating, userList);
         }
     }

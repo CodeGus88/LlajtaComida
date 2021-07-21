@@ -280,6 +280,47 @@
                 </LinearLayout>
             </LinearLayout>
 
+<!--            Promotion -->
+
+            <LinearLayout
+                android:id="@+id/llPromotion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:layout_marginHorizontal="1dp"
+                android:visibility="visible">
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/panel_gray">
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"/>
+                    <TextView
+                        android:id="@+id/tvPromotion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/tv_promotion"
+                        style="@style/CodeFontContentTitle"/>
+
+                </RelativeLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"/>
+                <ListView
+                    android:id="@+id/promotionList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+<!--menu-->
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>

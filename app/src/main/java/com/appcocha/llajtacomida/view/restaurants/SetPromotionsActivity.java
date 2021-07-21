@@ -35,7 +35,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
 
     // Componentes
     private TextView tvTitle;
-    private Switch switchShowAll;
+    private Switch switchActivePromotion;
     private ListView lvPlates;
     private EditText etSearch;
     private MenuItem iconSave;
@@ -85,7 +85,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
      * Inicializa los componentes
      */
     private void initComponents(){
-        switchShowAll = (Switch) findViewById(R.id.switchShowAll);
+        switchActivePromotion = (Switch) findViewById(R.id.switchActivePromotion);
         etSearch = (EditText) findViewById(R.id.etSearch);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         lvPlates = (ListView) findViewById(R.id.lvPlates);
@@ -135,7 +135,6 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
         btnAlertCancel.setOnClickListener(this);
         btnAlertAdd.setOnClickListener(this);
     }
@@ -163,7 +162,10 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconSave:
-                setPromotionListPresenter.savePromotionList(restaurant.getId(), arrayAdapterSetPromotions.getPromotion()); // this
+                Promotion promotion = arrayAdapterSetPromotions.getPromotion();
+                promotion.setActive(switchActivePromotion.isChecked());
+                Toast.makeText(this, this.getString(R.string.menu_size) + " " + promotion.getPromotionList().size(), Toast.LENGTH_SHORT).show();
+                setPromotionListPresenter.savePromotionList(restaurant.getId(), promotion); // this
                 setPromotionListPresenter.stopRealTimeDatabase();
                 onBackPressed();
                 break;
@@ -177,8 +179,9 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
     public void showSetPromotionList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.model.restaurant.menu.Menu menu, Promotion promotion) {
         this.plateList.clear();
         this.plateList.addAll(plateList);
-        arrayAdapterSetPromotions = new ArrayAdapterSetPromotions(this, R.layout.adapter_element_restaurant_promotion, this.plateList, menu, promotion);
+        arrayAdapterSetPromotions = new ArrayAdapterSetPromotions(this, R.layout.adapter_element_set_restaurant_promotion, this.plateList, menu, promotion);
         lvPlates.setAdapter(arrayAdapterSetPromotions);
+        switchActivePromotion.setChecked(arrayAdapterSetPromotions.getPromotion().getActive());
     }
 
     /**
@@ -187,7 +190,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
     @Override
     public boolean onSupportNavigateUp() {
         setPromotionListPresenter.stopRealTimeDatabase();
-        onBackPressed(); // accion del boton atras del sistema operativo
+        onBackPressed(); // acción del botón atrás del sistema operativo
         return false;
     }
 
@@ -202,8 +205,11 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         Sound.playClick();
         if(v.getId() == R.id.btnAlertAdd){
             if(!etAlertTitle.equals("") && (!etAlertDescription.equals("") || !etAlertPrice.equals(""))){
-                arrayAdapterSetPromotions.addPrice(plateList.get(position).getId(), etAlertTitle.getText().toString(), etAlertDescription.getText().toString(), etAlertPrice.getText().toString());
-                alertDialog.dismiss();
+                if (arrayAdapterSetPromotions.addPromotion(plateList.get(position).getId(), etAlertTitle.getText().toString(), etAlertDescription.getText().toString(), etAlertPrice.getText().toString())){
+                    Toast.makeText(this, getString(R.string.added_element), Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                }else Toast.makeText(this, getString(R.string.incomplete_fields), Toast.LENGTH_SHORT).show();
+
             }else{
                 Toast.makeText(this, getString(R.string.incomplete_fields), Toast.LENGTH_SHORT).show();
             }

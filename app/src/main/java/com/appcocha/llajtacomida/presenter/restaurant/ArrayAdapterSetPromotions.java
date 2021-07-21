@@ -1,14 +1,17 @@
  package com.appcocha.llajtacomida.presenter.restaurant;
 
  import android.content.Context;
+ import android.graphics.Color;
  import android.graphics.Paint;
+ import android.graphics.drawable.ColorDrawable;
+ import android.graphics.drawable.Drawable;
  import android.view.LayoutInflater;
  import android.view.View;
  import android.view.ViewGroup;
  import android.widget.ArrayAdapter;
  import android.widget.ImageView;
+ import android.widget.RelativeLayout;
  import android.widget.TextView;
- import android.widget.Toast;
 
  import androidx.annotation.NonNull;
  import androidx.annotation.Nullable;
@@ -62,6 +65,7 @@
          if(view == null) {
              view = LayoutInflater.from(context).inflate(resource, null);
          }
+         RelativeLayout rlItem = (RelativeLayout) view.findViewById(R.id.rlItem);
          ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
          TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
          TextView tvPromotionDescription = (TextView) view.findViewById(R.id.tvPromotionDescription);
@@ -72,42 +76,38 @@
 
          Glide.with(context).load(plateList.get(position).getUrl()).into(ivPhotoItem);
          tvTitleItem.setText(plateList.get(position).getName());
-         if(existInList(plateList.get(position).getId(), promotion.getPromotionList())){
-             cvPrice.setVisibility(View.VISIBLE);
-             tvPromotionTitle.setText(getNewAtribute(plateList.get(position).getId(), "title"));
+         if(existInMenu(plateList.get(position).getId())) rlItem.setBackgroundColor(context.getResources().getColor(R.color.colorItem));
+         else rlItem.setBackgroundColor(Color.WHITE);
+
+         if(existInPromotion(plateList.get(position).getId())){
+             String newPrice = getNewAtribute(plateList.get(position).getId(), "price")
+                     .replace(".0", "").replace("-1", "");
+             String oldPrice = getOldPrice(plateList.get(position).getId());
+             if(!newPrice.isEmpty()){
+                 tvPlateNewPrice.setText(newPrice + " " + context.getString(R.string.type_currency));
+                 tvPlateNewPrice.setVisibility(View.VISIBLE);
+             }else tvPlateNewPrice.setVisibility(View.GONE);
+             if(!oldPrice.isEmpty()){
+                 tvPlateOldPrice.setText(oldPrice+ " " + context.getString(R.string.type_currency));
+                 tvPlateOldPrice.setVisibility(View.VISIBLE);
+                 if(!newPrice.isEmpty())
+                     tvPlateOldPrice.setPaintFlags(tvPlateOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+             }else tvPlateOldPrice.setVisibility(View.GONE);
              tvPromotionTitle.setVisibility(View.VISIBLE);
              tvPromotionDescription.setVisibility(View.VISIBLE);
-             float newPrice = Float.parseFloat(getNewAtribute(plateList.get(position).getId(), "price"));
-             String oldPrice = getOldPrice(plateList.get(position).getId());
-             if(newPrice >= 0){
-                 tvPlateNewPrice.setVisibility(View.VISIBLE);
-                 tvPlateNewPrice.setText((newPrice + " ").replace(".0", "") + context.getString(R.string.type_currency));
-                 if(!oldPrice.equals("") && !oldPrice.equals(null)){
-                     tvPlateOldPrice.setVisibility(View.VISIBLE);
-                     tvPlateOldPrice.setText(getOldPrice(plateList.get(position).getId())+" " + context.getString(R.string.type_currency));
-                 }else tvPlateOldPrice.setVisibility(View.GONE);
-             }else{
-                 tvPlateNewPrice.setVisibility(View.GONE);
-                 if(!oldPrice.equals("") && !oldPrice.equals(null)){
-                     tvPlateOldPrice.setVisibility(View.VISIBLE);
-                     tvPlateOldPrice.setText(getOldPrice(plateList.get(position).getId())+" "+context.getString(R.string.type_currency));
-                 }else tvPlateOldPrice.setVisibility(View.GONE);
-             }
-             if (!tvPlateNewPrice.getText().toString().isEmpty()) tvPlateOldPrice.setPaintFlags(tvPlateOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); // texto tachado
-//             else
+             tvPromotionTitle.setText(getNewAtribute(plateList.get(position).getId(), "title"));
              tvPromotionDescription.setText(getNewAtribute(plateList.get(position).getId(), "description"));
-         }else {
+         }else{
              tvPromotionTitle.setText("");
              tvPromotionDescription.setText("");
              tvPlateNewPrice.setText("");
              tvPlateOldPrice.setText("");
 
              tvPromotionTitle.setVisibility(View.GONE);
-             tvPromotionDescription.setVisibility(view.GONE);
-             cvPrice.setVisibility(View.GONE);
+             tvPromotionDescription.setVisibility(View.GONE);
+             tvPlateNewPrice.setVisibility(View.GONE);
+             tvPlateOldPrice.setVisibility(View.GONE);
          }
-         tvPlateNewPrice.setPaintFlags(tvPlateNewPrice.getPaintFlags() | Paint.ANTI_ALIAS_FLAG);
-         tvPlateNewPrice.setPaintFlags(tvPlateNewPrice.getPaintFlags() | Paint.LINEAR_TEXT_FLAG);
 
          return view;
      }
@@ -126,17 +126,35 @@
      }
 
      /**
+      * Verifica si un id se encuentra en la lista del menú
+      * @param id
+      * @return exist
+      */
+     public boolean existInMenu(String id){
+         boolean exist = false;
+         for(String menuItem: menu.getMenuList()){
+            if(menuItem.contains(id)){
+                exist = true;
+                break;
+            }
+        }
+         return exist;
+     }
+
+
+     /**
       * Agrega un precio y actualiza la lista
       * @param id
       * @param title
       * @param price
       */
-     public void addPrice(String id, String title, String description, String price){
+     public boolean addPromotion(String id, String title, String description, String price){
          if(!id.isEmpty() && !title.isEmpty() && !description.isEmpty()){
              if(price.equals("")) price = "-1";
              addPlate(new PromotionElement(id, title, description, Float.parseFloat(price)));
              notifyDataSetChanged();
-         }
+             return true;
+         }else return false;
      }
 
      /**
@@ -277,7 +295,6 @@
       */
      public Promotion getPromotion(){
          clearNonExistentPlates();
-         Toast.makeText(context, context.getString(R.string.menu_size) + " " + promotion.getPromotionList().size(), Toast.LENGTH_SHORT).show();
          return promotion;
      }
  }

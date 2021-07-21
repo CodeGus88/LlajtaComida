@@ -25,14 +25,13 @@ public class RandomColor {
         colorList.add(BitmapDescriptorFactory.HUE_ROSE);
         colorList.add(BitmapDescriptorFactory.HUE_VIOLET);
         colorList.add(BitmapDescriptorFactory.HUE_YELLOW);
-
         colorListCopy = new ArrayList<Float>();
         colorListCopy.addAll(getColorList());
     }
 
     /**
      * Obtiene lista de colores
-     * @return
+     * @return colorList
      */
     public ArrayList<Float> getColorList() {
         return colorList;
@@ -40,7 +39,7 @@ public class RandomColor {
 
     /**
      * Obtiene un color al azar
-     * @return
+     * @return colorCode
      */
     public float getRandonColor(){
         int indexColor = ThreadLocalRandom.current().nextInt(0, colorListCopy.size());

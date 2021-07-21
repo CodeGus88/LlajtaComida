@@ -3,4 +3,13 @@
     <color name="colorPrimary">#03A9F4</color>
     <color name="colorPrimaryDark">#03A9F4</color>
     <color name="colorAccent">#8ED6F6</color>
+
+<!--    Colores de los contenedores     -->
+    <color name="colorPanel">#A603A9F4</color>
+
+<!--    Color usado para el set de promoción, resalta los que sen encuentra en el menu-->
+    <color name="colorItem">#D0F1FF</color>
+
+<!--    Promotion      -->
+    <color name="colorPromotion">#F2FF7043</color>
 </resources>

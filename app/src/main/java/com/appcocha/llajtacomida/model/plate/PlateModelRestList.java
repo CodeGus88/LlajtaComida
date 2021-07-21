@@ -73,11 +73,7 @@ public class PlateModelRestList implements PlateInterface.ModelRestList,  ValueE
             if(menu != null){
                 for (String string: menu.getMenuList()){
                     if(string.contains(plateId)){
-//                        if(!Validation.getXWord(string, 2).isEmpty()){
-                            priceInRestaurantsList.put(r.getId(), Validation.getXWord(string, 2));
-//                        }else{
-//                            priceInRestaurantsList.put(r.getId(), "UNDEFINED");
-//                        }
+                        priceInRestaurantsList.put(r.getId(), Validation.getXWord(string, 2));
                         restaurantList.add(r);
                         break; // solo busca uno (el plato solo existe una ves en el menú del restaurante)
                     }

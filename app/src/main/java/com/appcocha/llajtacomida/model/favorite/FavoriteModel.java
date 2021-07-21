@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.appcocha.llajtacomida.interfaces.FavoriteInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -97,7 +98,8 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/"+nodeCollectionName)){
+//        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/"+nodeCollectionName)){
+        if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/"+nodeCollectionName)){
             favoriteObjectList.clear();
             for(DataSnapshot data : snapshot.getChildren()){
                 if(nodeCollectionName.equals("plates")){
@@ -111,12 +113,13 @@ public class FavoriteModel implements FavoriteInterface.ModelFavorite, ValueEven
                 }
             }
             presenterFavorite.showFavoriteList(favoriteObjectList);
-        }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users/"+userId+"/"+ favoritesNode)){
+//        }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users/"+userId+"/"+ favoritesNode)){
+        }else if(snapshot.getRef().toString().equals(StringValues.getDBURL()+"/App/users/"+userId+"/"+ favoritesNode)){
             favoriteList.clear();
             for(DataSnapshot data : snapshot.getChildren()){
                 favoriteList.add(data.getValue().toString());
             }
-        }else if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/users/"+userId+"/"+ favoritesNode +"/"+objectId)){
+        }else if(snapshot.getRef().toString().equals(StringValues.getDBURL()+"/App/users/"+userId+"/"+ favoritesNode +"/"+objectId)){
             if(snapshot.getValue() != null){
                 presenterFavorite.showFavoriteObjectState(true);
             }else{

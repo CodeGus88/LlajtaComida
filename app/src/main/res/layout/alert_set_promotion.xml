@@ -83,7 +83,6 @@
             android:textAlignment="center"
             tools:ignore="RtlCompat"
             android:focusable="true"
-            android:background="#ffffff"
             android:maxLines="1"
             android:inputType="number"/>
 

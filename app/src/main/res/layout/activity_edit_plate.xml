@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.plates.CreatePlateActivity"
     android:orientation="vertical"
-    android:background="#2196F3">
+    android:background="@color/colorPanel">
 
     <ScrollView
         android:layout_width="match_parent"

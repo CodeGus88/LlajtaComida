@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.model.restaurant.promotion;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -13,7 +15,7 @@ public class Promotion {
      */
     public Promotion(){
         this.id = UUID.randomUUID().toString();
-        this.active = true;
+        this.active = false;
         this.promotionList = new ArrayList<PromotionElement>();
     }
 
@@ -32,7 +34,7 @@ public class Promotion {
         this.id = id;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return active;
     }
 
@@ -49,16 +51,20 @@ public class Promotion {
         this.promotionList.addAll(promotionList);
     }
 
-//    /**
-//     * Genera un mapa de datos del objeto (para editar)
-//     * @return result
-//     */
-//    @Exclude
-//    public Map<String, Object> toMap(){
-//        HashMap<String, Object> result = new HashMap<>();
-//        result.put("id", id);
-//        result.put("active", active);
-//        result.put("promotionList",  promotionList);
-//        return result;
-//    }
+    /**
+     * Devuelve una promoción
+     * @param id
+     * @return promotionElement
+     */
+    @Exclude
+    public PromotionElement getPromotionElement(String id){
+        PromotionElement pe = new PromotionElement();
+        for (PromotionElement promotionElement: promotionList) {
+            if(promotionElement.getPlateId().equals(id)){
+                pe = promotionElement;
+                break;
+            }
+        }
+        return pe;
+    }
 }
