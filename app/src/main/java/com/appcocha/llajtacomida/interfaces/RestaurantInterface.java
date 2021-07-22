@@ -217,6 +217,50 @@ public interface RestaurantInterface {
     }
 
 
+    // Las siguientes interfaces sirven para mostrar los restaurantes que tienen ofertas
+    /**
+     * Vista
+     */
+    interface ViewRestaurantsWithPromotion{
+        /**
+         * Muestra la lista de restaurantes que tienen promoción
+         * @param restaurantList
+         */
+        void showRestaurantsWithPromotion(ArrayList<Restaurant> restaurantList);
+    }
+
+    interface PresenterRestaurantWithPromotion{
+
+        /**
+         * Determina mostrar la lista de restaurantes con promociones
+         * @param restaurantList
+         */
+        void showRestaurantWithPromotion(ArrayList<Restaurant> restaurantList);
+
+        /**
+         * Solicita filtrar los restaurantes con promociones
+         */
+        void filterRestaurantWithPromotion();
+
+        /**
+         * Solicita detener la base de datos
+         */
+        void stopRealTimeDatabase();
+    }
+
+    interface ModelResraurantWithPromotion{
+        /**
+         * Filtra los restaurantes con promociones
+         */
+        void filterRestaurantWithPromotion();
+
+        /**
+         * Detiene la base de datos
+         */
+        void stopRealTimeDatabase();
+    }
+
+
 
     // Las siguientes interfaces
     // Para la lista de platos de la promoción de un restaurante
@@ -232,6 +276,7 @@ public interface RestaurantInterface {
          * @param promotion
          */
         void showPromotionPlateList(ArrayList<Plate> list, Menu menu, Promotion promotion);
+
     }
 
     /**

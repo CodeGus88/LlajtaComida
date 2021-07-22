@@ -27,6 +27,7 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantPresenter;
+import com.appcocha.llajtacomida.presenter.restaurant.RestaurantsWithPromotionPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
 

@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.plates.PlateListFragment"
-    android:orientation="vertical"
-    android:background="@drawable/panel_list_white_gradient">
-
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_marginVertical="4dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/tv_title_rest_favorit_list"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textColor="#353535"-->
-<!--        android:gravity="center"-->
-<!--        android:fontFamily="serif"/>-->
-
-    <EditText
-        android:id="@+id/etSearch"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/edit_text"
-        android:paddingVertical="5dp"
-        android:paddingHorizontal="10dp"
-        android:drawableEnd="@drawable/icon_search_black"
-        android:inputType="textWebEditText"
-        android:hint="@string/et_search"
-        android:visibility="visible"
-        android:selectAllOnFocus="true" />
+        android:layout_height="match_parent"
+        tools:context=".view.plates.PlateListFragment"
+        android:orientation="vertical"
+        android:background="@drawable/panel_list_white_gradient">
 
-    <ListView
-        android:id="@+id/lvRestaurants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/panel_list_white_gradient"
-        android:layout_marginTop="1dp"/>
+        <!--    <TextView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_marginVertical="4dp"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:text="@string/tv_title_rest_favorit_list"-->
+        <!--        android:textSize="20sp"-->
+        <!--        android:textColor="#353535"-->
+        <!--        android:gravity="center"-->
+        <!--        android:fontFamily="serif"/>-->
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:drawableEnd="@drawable/icon_search_black"
+            android:inputType="textWebEditText"
+            android:hint="@string/et_search"
+            android:visibility="visible"
+            android:selectAllOnFocus="true" />
+
+        <ListView
+            android:id="@+id/lvRestaurants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel_list_white_gradient"
+            android:layout_marginTop="1dp"/>
+
+    </LinearLayout>

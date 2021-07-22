@@ -1,87 +1,77 @@
 package com.appcocha.llajtacomida.view.restaurants;
 
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+
 import androidx.appcompat.app.AlertDialog;
 
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.appcocha.llajtacomida.R;
-import com.appcocha.llajtacomida.model.plate.Plate;
-import com.appcocha.llajtacomida.model.restaurant.promotion.PromotionElement;
-import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
-import com.bumptech.glide.Glide;
+import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
+import com.appcocha.llajtacomida.model.restaurant.Restaurant;
+import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestaurant;
+import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
+import com.appcocha.llajtacomida.presenter.restaurant.RestaurantsWithPromotionPresenter;
+import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.Validation;
+import com.appcocha.llajtacomida.view.main.MainActivity;
 
-public class AlertShowPromotion implements View.OnClickListener {
+import java.util.ArrayList;
+
+
+public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, RestaurantInterface.ViewRestaurantsWithPromotion {
 
     private AlertDialog alertDialog;
-    private ImageView ivPlateImage;
-    private TextView tvPlateName, tvPromotionTitle, tvPromotionDescription, tvBeforePrice, tvNowPrice, tvOrigin, tvIngredients;
-    private Button btnClose, btnShowPlate;
-    private RestaurantViewActivity activity;
-    private Plate plate;
+    private MainActivity activity;
+    private ListView lvRestaurants;
+    private Button btnClose;
+    private ArrayAdapterRestaurant arrayAdapterRestaurant;
+    private ArrayList<Restaurant> restaurantList;
+    private RestaurantInterface.PresenterRestaurantWithPromotion presenterRestaurantWithPromotion;
 
-    protected AlertShowPromotion(RestaurantViewActivity activity){
+    public AlertShowRestaurantsWithPromotion(MainActivity activity){
         this.activity = activity;
-        View viewAlert = activity.getLayoutInflater().inflate(R.layout.alert_show_promotion, null);
-        ivPlateImage = (ImageView) viewAlert.findViewById(R.id.ivPlateImage);
-        tvPlateName = (TextView) viewAlert.findViewById(R.id.tvPlateName);
-        tvPromotionTitle = (TextView) viewAlert.findViewById(R.id.tvPromotionTitle);
-        tvPromotionDescription = (TextView) viewAlert.findViewById(R.id.tvPromotionDescription);
-        tvBeforePrice = (TextView) viewAlert.findViewById(R.id.tvBeforePrice);
-        tvNowPrice = (TextView) viewAlert.findViewById(R.id.tvNowPrice);
-        tvOrigin = (TextView) viewAlert.findViewById(R.id.tvOrigin);
-        tvIngredients = (TextView) viewAlert.findViewById(R.id.tvIngredients);
+        View viewAlert = activity.getLayoutInflater().inflate(R.layout.alert_show_restaurant_promotion_list, null);
+        lvRestaurants = (ListView) viewAlert.findViewById(R.id.lvRestaurants);
         btnClose = (Button) viewAlert.findViewById(R.id.btnClose);
-        btnShowPlate = (Button) viewAlert.findViewById(R.id.btnShowPlate);
 
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(viewAlert);
         alertDialog = builder.create();
         alertDialog.setView(viewAlert);
-
         btnClose.setOnClickListener(this);
-        btnShowPlate.setOnClickListener(this);
-
+        restaurantList = new ArrayList<Restaurant>();
+        // lv
+        presenterRestaurantWithPromotion = new RestaurantsWithPromotionPresenter(this);
+        presenterRestaurantWithPromotion.filterRestaurantWithPromotion();
+        lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Sound.playClick();
+                alertDialog.dismiss();
+                RestaurantNavegation.showRestaurantView(activity, restaurantList.get(position).getId());
+            }
+        });
+        alertDialog.show();
     }
 
-    protected void showPromotion(Plate plate, PromotionElement promotionElement, String oldPrice){
-        try {
-            this.plate = plate;
-            Glide.with(activity).load(plate.getUrl()).into(ivPlateImage);
-            tvPlateName.setText(plate.getName());
-            tvPromotionTitle.setText(promotionElement.getTitle());
-            tvPromotionDescription.setText(promotionElement.getDescription());
-
-            if(!oldPrice.equals("")) oldPrice += " " + activity.getString(R.string.type_currency);
-            else oldPrice = "-";
-            tvBeforePrice.setText(oldPrice);
-
-            String newPrice = String.valueOf(promotionElement.getPrice()).replace("-1", "").replace(".0", "");
-            if(!newPrice.equals("")) newPrice += " " + activity.getString(R.string.type_currency);
-            else newPrice = "-";
-            tvNowPrice.setText(newPrice);
-            tvOrigin.setText(plate.getOrigin());
-            tvIngredients.setText(plate.getIngredients());
-            alertDialog.show();
-        }catch (Exception e){
-            Log.e("Error: ", e.getMessage());
-        }
-
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnClose:
+                presenterRestaurantWithPromotion.stopRealTimeDatabase();
                 alertDialog.dismiss();
-                break;
-            case R.id.btnShowPlate:
-                alertDialog.dismiss();
-                PlateNavegation.showPlateView(activity, plate);
                 break;
         }
+    }
+
+    @Override
+    public void showRestaurantsWithPromotion(ArrayList<Restaurant> restaurantList){
+        restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+        this.restaurantList = restaurantList;
+        arrayAdapterRestaurant = new ArrayAdapterRestaurant(activity, R.layout.adapter_element_list, restaurantList);
+        lvRestaurants.setAdapter(arrayAdapterRestaurant);
     }
 }

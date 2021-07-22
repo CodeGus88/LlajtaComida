@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPanel"
-    android:padding="10dp"
+    android:background="@color/colorPromotion"
+    android:padding="5dp"
     android:orientation="vertical">
     <ScrollView
+        android:id="@+id/sv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="5dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +36,7 @@
                                android:id="@+id/ivPlateImage"
                                android:layout_width="300dp"
                                android:layout_height="200dp"
-                               app:srcCompat="@drawable/user_icon"
+                               app:srcCompat="@drawable/image_icon"
                                android:layout_gravity="center"/>
                        </androidx.cardview.widget.CardView>
                    </LinearLayout>
@@ -77,6 +79,9 @@
                         android:textColor="#ffffff"
                         android:textStyle="bold"
                         android:gravity="start"/>
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="8dp"/>
                     <TextView
                         style="@style/CodeFontContent"
                         android:id="@+id/tvPromotionDescription"
@@ -87,7 +92,9 @@
                         android:textIsSelectable="true"
                         android:justificationMode="inter_word"/>
                 </LinearLayout>
-
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="11dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -144,8 +151,30 @@
                 android:textColor="#ffffff"/>
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
+                android:layout_height="8dp"/>
 
+            <TextView
+                style="@style/CodeFontContent"
+                android:id="@+id/tvIngredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="@string/lorem_long"
+                android:textColor="#ffffff"
+                android:justificationMode="inter_word"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="11dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_origin_plate_view"
+                style="@style/CodeFontContentTitle"
+                android:textColor="#ffffff"/>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"/>
             <TextView
                 style="@style/CodeFontContent"
                 android:id="@+id/tvOrigin"
@@ -157,51 +186,35 @@
                 android:justificationMode="inter_word"/>
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="15dp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_origin_plate_view"
-                style="@style/CodeFontContentTitle"
-                android:textColor="#ffffff"/>
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
-            <TextView
-                style="@style/CodeFontContent"
-                android:id="@+id/tvIngredients"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:text="@string/lorem_long"
-                android:textColor="#ffffff"
-                android:justificationMode="inter_word"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="10dp">
-                <Button
-                    android:id="@+id/btnClose"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btn_close"
-                    android:layout_weight="1"
-                    android:textColor="#ffffff"
-                    android:background="@drawable/btn_cancel"
-                    android:layout_marginRight="2dp"/>
-                <Button
-                    android:id="@+id/btnShowPlate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/show_plate"
-                    android:layout_weight="1"
-                    android:textColor="#ffffff"
-                    android:background="@drawable/btn_information"
-                    android:layout_marginLeft="2dp"/>
-            </LinearLayout>
+                android:layout_height="80dp"/>
         </LinearLayout>
+
     </ScrollView>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="0dp"
+        android:padding="4dp"
+        android:layout_alignBottom="@+id/sv"
+        android:background="@color/colorPromotion">
+        <Button
+            android:id="@+id/btnClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_close"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:background="@drawable/btn_information"
+            android:layout_marginRight="2dp"/>
+        <Button
+            android:id="@+id/btnShowPlate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_plate"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:background="@drawable/btn_information"
+            android:layout_marginLeft="2dp"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -31,7 +31,11 @@ import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
 import com.appcocha.llajtacomida.presenter.user.UserRealTimePresenter;
+import com.appcocha.llajtacomida.view.restaurants.AlertShowPromotion;
+import com.appcocha.llajtacomida.view.restaurants.AlertShowRestaurantsWithPromotion;
+import com.appcocha.llajtacomida.view.restaurants.RestaurantViewActivity;
 import com.bumptech.glide.Glide;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -74,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private TextView tvRole;
     private TextView btnSignOut, btnOk;
     private Switch switchSound;
+
+    // Botones flotantes
+    private FloatingActionButton fabRestaurant;
 
     // Efectos de sonido
     private Sound sound;
@@ -140,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         switchSound = (Switch) viewAlert.findViewById(R.id.switchSound);
         btnSignOut = (TextView) viewAlert.findViewById(R.id.tvSignOut);
         btnOk = (TextView) viewAlert.findViewById(R.id.tvOk);
+        fabRestaurant = (FloatingActionButton) findViewById(R.id.fabRestaurant);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewAlert);
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         ivAvatar.setOnClickListener(this);
         btnSignOut.setOnClickListener(this);
         btnOk.setOnClickListener(this);
+        fabRestaurant.setOnClickListener(this);
     }
 
     @Override
@@ -270,6 +279,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                     Serializer.saveBooleanData(this, SOUND_STATE_NAME, false); //guarda el estado
                 }
                 break;
+            case R.id.fabRestaurant:
+//                AlertShowPromotion alertShowPromotion = new AlertShowPromotion(RestaurantViewActivity.this);
+                AlertShowRestaurantsWithPromotion alert = new AlertShowRestaurantsWithPromotion(MainActivity.this);
+                break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
         }
@@ -278,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     /**
      * Traduce los roles al idioma correspondiente (español)
      * @param role
-     * @return
+     * @return role
      */
     private String getTraslateRole(String role){
         if(role.equalsIgnoreCase("admin")){

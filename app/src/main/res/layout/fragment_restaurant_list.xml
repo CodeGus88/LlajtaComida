@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.plates.PlateListFragment"
-    android:orientation="vertical"
-    android:background="@drawable/panel_list_white_gradient">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-<!--        Este espacio sirve como piunto de referencia para abrir el menu popupmenu-->
-        <Space
-            android:id="@+id/spaceForPopPup"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_gravity="end"/>
-
-        <EditText
-            android:id="@+id/etSearch"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/edit_text"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="10dp"
-            android:drawableEnd="@drawable/icon_search_black"
-            android:inputType="textWebEditText"
-            android:hint="@string/et_search"
-            android:visibility="gone"
-            android:selectAllOnFocus="true"/>
+            android:layout_height="match_parent"
+            tools:context=".view.plates.PlateListFragment"
+            android:orientation="vertical"
+            android:background="@drawable/panel_list_white_gradient">
 
-        <ListView
-            android:id="@+id/lvRestaurants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/panel_list_white_gradient"
-            android:layout_marginTop="1dp"/>
+                <!--        Este espacio sirve como piunto de referencia para abrir el menu popupmenu-->
+                <Space
+                    android:id="@+id/spaceForPopPup"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="end"/>
 
-</LinearLayout>
+                <EditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/edit_text"
+                    android:paddingVertical="5dp"
+                    android:paddingHorizontal="10dp"
+                    android:drawableEnd="@drawable/icon_search_black"
+                    android:inputType="textWebEditText"
+                    android:hint="@string/et_search"
+                    android:visibility="gone"
+                    android:selectAllOnFocus="true"/>
+
+                <ListView
+                    android:id="@+id/lvRestaurants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/panel_list_white_gradient"
+                    android:layout_marginTop="1dp"/>
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>
+

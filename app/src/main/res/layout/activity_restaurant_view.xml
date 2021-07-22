@@ -276,9 +276,11 @@
                             android:textColor="#03A9F4"/>
                     </LinearLayout>
 
-
                 </LinearLayout>
             </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
 
 <!--            Promotion -->
 
@@ -289,14 +291,15 @@
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
                 android:layout_marginHorizontal="1dp"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:background="@drawable/panel_gray"
+                android:layout_marginBottom="10dp">
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/panel_gray">
+                    android:layout_height="wrap_content">
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="5dp"/>
@@ -308,7 +311,6 @@
                         android:layout_marginLeft="10dp"
                         android:text="@string/tv_promotion"
                         style="@style/CodeFontContentTitle"/>
-
                 </RelativeLayout>
                 <Space
                     android:layout_width="match_parent"
@@ -321,9 +323,6 @@
 
 
 <!--menu-->
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

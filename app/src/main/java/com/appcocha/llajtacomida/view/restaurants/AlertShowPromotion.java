@@ -1,6 +1,5 @@
 package com.appcocha.llajtacomida.view.restaurants;
 
-//import android.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog;
 
 import android.util.Log;
@@ -8,13 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.promotion.PromotionElement;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
-import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.bumptech.glide.Glide;
 
 public class AlertShowPromotion implements View.OnClickListener {
