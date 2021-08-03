@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import com.appcocha.llajtacomida.view.main.MainActivity;
 import com.appcocha.llajtacomida.view.users.LoginActivity;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 /**
  * Navegación del Main
@@ -18,6 +19,7 @@ public class MainNavigation {
         Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -28,6 +30,7 @@ public class MainNavigation {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
 }

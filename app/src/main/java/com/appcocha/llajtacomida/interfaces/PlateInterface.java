@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.interfaces;
 
+import android.content.Context;
+
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 
@@ -188,14 +190,16 @@ public interface PlateInterface {
          * @param plate
          * @param thumb_byte
          */
-        void store(Plate plate, final byte [] thumb_byte);
+        void store(Plate plate, final byte [] thumb_byte, Context context);
+//        void store(Plate plate, final byte [] thumb_byte);
 
         /**
          * Determinda actualizar un plato
          * @param plate
          * @param thumb_byte
          */
-        void update(Plate plate, final byte [] thumb_byte);
+//        void update(Plate plate, final byte [] thumb_byte);
+        void update(Plate plate, final byte [] thumb_byte, Context context);
     }
 
     interface ModelPlateManager{

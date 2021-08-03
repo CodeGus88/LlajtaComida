@@ -92,6 +92,7 @@
                  tvPlateOldPrice.setVisibility(View.VISIBLE);
                  if(!newPrice.isEmpty())
                      tvPlateOldPrice.setPaintFlags(tvPlateOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                 else tvPlateOldPrice.setPaintFlags(0);
              }else tvPlateOldPrice.setVisibility(View.GONE);
              tvPromotionTitle.setVisibility(View.VISIBLE);
              tvPromotionDescription.setVisibility(View.VISIBLE);

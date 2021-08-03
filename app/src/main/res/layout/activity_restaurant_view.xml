@@ -43,13 +43,14 @@
                         android:scaleY="1"
                         android:scaleX="1">
 
-                        <!--                Imagen con zoom-->
+                        <!--  Imagen con zoom -->
                         <com.zolad.zoominimageview.ZoomInImageView
                             android:id="@+id/ziivPhoto"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/img_photo"/>
+                            android:src="@mipmap/image_icon"/>
+<!--                        android:src="@mipmap/img_photo"-->
                     </androidx.cardview.widget.CardView>
                 </ViewFlipper>
 
@@ -143,7 +144,6 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:gravity="center"
-                android:hint="@string/tv_undefined"
                 style="@style/CodeFontContentTitle"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
@@ -273,7 +273,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="10dp"
                             android:text="@string/read_more"
-                            android:textColor="#03A9F4"/>
+                            android:textColor="@color/colorAccent"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -294,9 +294,7 @@
                 android:visibility="visible"
                 android:background="@drawable/panel_gray"
                 android:layout_marginBottom="10dp">
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

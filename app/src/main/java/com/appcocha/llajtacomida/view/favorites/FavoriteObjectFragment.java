@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,14 +91,19 @@ public class FavoriteObjectFragment extends Fragment implements FavoriteInterfac
     }
 
     @Override
-    public void successFul(boolean isSuccess) {
-        if(isSuccess){
-            if(isFavorite){
-                Toast.makeText(getContext(), messageAdd, Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getContext(), messageRemove, Toast.LENGTH_SHORT).show();
-            }
-        }else Toast.makeText(getContext(), getString(R.string.message_is_failed), Toast.LENGTH_SHORT).show();
+    public void successFul(boolean isSuccess){
+        try{
+            if(isSuccess){
+                if(isFavorite){
+                    Toast.makeText(getContext(), messageAdd, Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getContext(), messageRemove, Toast.LENGTH_SHORT).show();
+                }
+            }else Toast.makeText(getContext(), getString(R.string.message_is_failed), Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            // Si ya no se está en la vista correspondiente lanza exception (si la bd estaba desconectada y se conecta despúes)
+            Log.e("Error", e.getMessage());
+        }
     }
 
     public void stopRealtimeDatabase(){

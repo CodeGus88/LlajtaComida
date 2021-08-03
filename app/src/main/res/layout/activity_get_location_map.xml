@@ -65,7 +65,7 @@
                 android:id="@+id/spTypesOfMaps"
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:background="#B374CFF8"
+                android:background="@color/colorAccent"
                 android:textAlignment="textStart"/>
 
             <Button

@@ -91,4 +91,9 @@ public class HomeFragment extends Fragment implements UserInterface.ViewUser {
     public void showUserList(ArrayList<User> userList) {
         // not used
     }
+
+    @Override
+    public void isSuccess(boolean isSuccess) {
+        // es silencioso
+    }
 }

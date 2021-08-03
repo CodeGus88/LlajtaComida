@@ -121,7 +121,7 @@
                     android:background="@drawable/edit_text"
                     android:paddingHorizontal="4dp"
                     app:placeholderText="@string/tv_location"
-                    app:placeholderTextColor="#03A9F4">
+                    app:placeholderTextColor="@color/colorAccent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -248,7 +248,7 @@
                             android:background="@drawable/edit_text"
                             android:paddingHorizontal="4dp"
                             app:placeholderText="@string/tv_photo"
-                            app:placeholderTextColor="#03A9F4"
+                            app:placeholderTextColor="@color/colorAccent"
                             android:layout_marginBottom="10dp">
                             <androidx.cardview.widget.CardView
                                 app:cardCornerRadius="15dp"

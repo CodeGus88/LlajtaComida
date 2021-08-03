@@ -41,7 +41,8 @@ public class SetPromotionListPresenter implements RestaurantInterface.PresenterS
     }
 
     @Override
-    public void savePromotionList(String restaurantId, Promotion promotion){ // Context context,
+    public void savePromotionList(String restaurantId, Promotion promotion){
+        if(promotion.getPromotionList().size() == 0) promotion.setActive(false);
         modelSetPromotionList.savePromotionList(restaurantId, promotion);
     }
 

@@ -44,7 +44,7 @@ public class AlertShowPromotion implements View.OnClickListener {
 
         btnClose.setOnClickListener(this);
         btnShowPlate.setOnClickListener(this);
-
+        alertDialog.setCancelable(false);
     }
 
     protected void showPromotion(Plate plate, PromotionElement promotionElement, String oldPrice){

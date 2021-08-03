@@ -25,6 +25,7 @@ public class RestPublicOfModel implements RestaurantInterface.ModelRestPublicOf,
 
     @Override
     public void filterRestPublicOf(boolean isPublic) {
+//        Query query = databaseReference.child("App").child("restaurants").orderByChild("public").equalTo(isPublic).limitToFirst(1);
         Query query = databaseReference.child("App").child("restaurants").orderByChild("public").equalTo(isPublic);
         query.addValueEventListener(this);
     }

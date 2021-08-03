@@ -2,6 +2,7 @@ package com.appcocha.llajtacomida.model.plate;
 
 import androidx.annotation.NonNull;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +45,7 @@ public class PlateModel implements ValueEventListener, PlateInterface.ModelPlate
 
     @Override
     public void onDataChange(@NonNull DataSnapshot snapshot) {
-        if(snapshot.getRef().toString().equals("https://llajtacomida-f137b.firebaseio.com/App/plates")){
+        if(snapshot.getRef().toString().equals(StringValues.getDBURL() +"/App/plates")){
             ArrayList<Plate> plateList = new ArrayList<Plate>();
             for (DataSnapshot plate: snapshot.getChildren()) {
                 plateList.add(plate.getValue(Plate.class));

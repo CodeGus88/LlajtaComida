@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,8 +26,11 @@ import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestPublicOf;
 import com.appcocha.llajtacomida.presenter.restaurant.RestPublicOfPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.appcocha.llajtacomida.presenter.user.UserNavegation;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -37,11 +41,11 @@ import java.util.ArrayList;
 public class RestaurantPublicOfActivity extends AppCompatActivity implements RestaurantInterface.ViewRestPublicOf, View.OnClickListener, UserInterface.ViewUser {
 
     private static UserInterface.PresenterUser presenterUser;
+    private RestPublicOfPresenter restPublicOfPresenter;
 
     private ListView lvPublicOfRest;
     private ArrayAdapterRestPublicOf arrayAdapterRestPublicOf;
     private MenuItem iconSearch;
-    private RestPublicOfPresenter restPublicOfPresenter;
     private EditText etSearch;
     // user alert
     private static AlertDialog userAlertDialog;
@@ -57,6 +61,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     private RadioButton rbIsNone;
     private Button btnSave;
     private Button btnCancel;
+    private User userEdit; // usuario que se muestra en el alert para editar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +72,11 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initComponents();
-        restPublicOfPresenter = new RestPublicOfPresenter(this);
-        restPublicOfPresenter.filterRestPublicOf(false);
-        presenterUser = new UserPresenter(this);
+
+        if(!Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_RESTAURANT_PUBLIC_OF_LIST_)){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     /**
@@ -139,6 +146,12 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         btnCancel.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         tvEmail.setOnClickListener(this);
+
+        if(!Permission.getAuthorize(AuthUser.getUser(this).getRole(), Permission.SHOW_RESTAURANT_PUBLIC_OF_LIST_)){
+            onBackPressed();
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -150,13 +163,14 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     @Override
     public void onBackPressed() {
         Sound.playClick();
-        restPublicOfPresenter.stopRealTimeDatabase();
+//        restPublicOfPresenter.stopRealTimeDatabase();
         super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        restPublicOfPresenter.stopRealTimeDatabase();
+//        restPublicOfPresenter.stopRealTimeDatabase();
         onBackPressed();
         return super.onSupportNavigateUp();
     }
@@ -196,11 +210,17 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
         Sound.playClick();
         switch (v.getId()){
             case R.id.btnSave:
-                User user = new User(tvId.getText().toString());
-                user.setFulName(tvFulName.getText().toString());
-                user.setEmail(tvEmail.getText().toString());
-                user.setRole(changeUserRole());
-                presenterUser.storeUser(user);
+                if(userEdit != null){
+//                    User user = new User(tvId.getText().toString());
+//                    user.setFulName(tvFulName.getText().toString());
+//                    user.setEmail(tvEmail.getText().toString());
+//                    user.setRole(changeUserRole());
+                    userEdit.setRole(changeUserRole());
+                    if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.UPDATE_USER)){
+                        presenterUser.storeUser(userEdit);
+                    }else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.btnCancel:
                 userAlertDialog.dismiss();
@@ -216,7 +236,11 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
      * @param userId
      */
     public static void loadAuthor(String userId){
-        presenterUser.findUser(userId);
+        try{
+            presenterUser.findUser(userId);
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
     /**
@@ -246,6 +270,7 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     @Override
     public void showUser(User user) {
         try{
+            this.userEdit = user;
             Glide.with(this).load(user.getAvatarUrl()).into(ivAvatar);
             tvId.setText(user.getId());
             tvFulName.setText(user.getFulName());
@@ -272,5 +297,35 @@ public class RestaurantPublicOfActivity extends AppCompatActivity implements Res
     @Override
     public void showUserList(ArrayList<User> userList) {
         // no se usa en este caso
+    }
+
+    @Override
+    public void isSuccess(boolean isSuccess) {
+        if(isSuccess){
+            Toast.makeText(this, getString(R.string.message_processed_correct), Toast.LENGTH_SHORT).show();
+            userAlertDialog.dismiss();
+        }else Toast.makeText(this, getString(R.string.message_error), Toast.LENGTH_SHORT).show();
+    }
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Permission.getAuthorize(AuthUser.getUser(this).getRole(), Permission.SHOW_RESTAURANT_PUBLIC_OF_LIST_)){
+            presenterUser = new UserPresenter(this);
+            restPublicOfPresenter = new RestPublicOfPresenter(this);
+            restPublicOfPresenter.filterRestPublicOf(false);
+        }
+
+        Log.d("cicleLive", "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        restPublicOfPresenter.stopRealTimeDatabase();
+        presenterUser.stopRealtimeDatabase();
+        Log.d("cicleLive", "onPause");
     }
 }

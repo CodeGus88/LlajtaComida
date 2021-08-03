@@ -16,6 +16,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' } // agregado para las animaciones de cambio de actividades (https://github.com/AtifSayings/Animatoo)
     }
 }
 

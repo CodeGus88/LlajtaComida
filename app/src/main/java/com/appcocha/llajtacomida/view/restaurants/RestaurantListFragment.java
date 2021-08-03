@@ -27,9 +27,9 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterRestaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantPresenter;
-import com.appcocha.llajtacomida.presenter.restaurant.RestaurantsWithPromotionPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 
 import java.util.ArrayList;
 
@@ -56,7 +56,6 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,8 +64,8 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         view = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
         // Inflate the layout for this fragment
         initComponents();
-        restaurantPresenter = new RestaurantPresenter(this);
-        restaurantPresenter.loadRestaurantList();
+//        restaurantPresenter = new RestaurantPresenter(this);
+//        restaurantPresenter.loadRestaurantList();
         return view;
     }
 
@@ -86,9 +85,13 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
         iconRestPublicOf = (MenuItem) menu.findItem(R.id.iconListPublicOf);
         try{
-            if(AuthUser.getUser().getRole().equals("admin")) iconRestPublicOf.setVisible(true);
+//            if(AuthUser.getUser().getRole().equals("admin")) iconRestPublicOf.setVisible(true);
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.PUBLISH_ON_OF_RESTAURANT))
+                iconRestPublicOf.setVisible(true);
             else iconRestPublicOf.setVisible(false);
-            if(AuthUser.getUser().getRole().equals("admin") || AuthUser.getUser().getRole().equals("collaborator")) iconAdd.setVisible(true);
+//            if(AuthUser.getUser().getRole().equals("admin") || AuthUser.getUser().getRole().equals("collaborator")) iconAdd.setVisible(true);
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.ADD_RESTAURANT))
+                iconAdd.setVisible(true);
             else iconAdd.setVisible(false);
         }catch (Exception e){
             Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
@@ -131,16 +134,16 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSearch:
-                    if(etSearch.getVisibility() == View.GONE){
-                        etSearch.setVisibility(View.VISIBLE);
-                        etSearch.setText(null);
-                        etSearch.setFocusable(true);
-                        etSearch.requestFocus();
-                    }else{
-                        etSearch.setVisibility(View.GONE);
-                        // Para que vuelga a cargar la lista (0 es cualquier numero)
-                        arrayAdapterRestaurant.filter("", 0);
-                    }
+                if(etSearch.getVisibility() == View.GONE){
+                    etSearch.setVisibility(View.VISIBLE);
+                    etSearch.setText(null);
+                    etSearch.setFocusable(true);
+                    etSearch.requestFocus();
+                }else{
+                    etSearch.setVisibility(View.GONE);
+                    // Para que vuelga a cargar la lista (0 es cualquier numero)
+                    if(arrayAdapterRestaurant != null) arrayAdapterRestaurant.filter("", 0);
+                }
                 break;
             case R.id.iconAdd:
                 RestaurantNavegation.showCreatedRestaurantView(getContext());
@@ -168,16 +171,13 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
             this.restaurantList.addAll(restaurantList);
             arrayAdapterRestaurant = new ArrayAdapterRestaurant(getContext(), R.layout.adapter_element_list, this.restaurantList);
             lvRestaurants.setAdapter(arrayAdapterRestaurant);
+            if(!etSearch.getText().toString().isEmpty() && etSearch.getVisibility() == View.VISIBLE)
+                arrayAdapterRestaurant.filter(etSearch.getText().toString(), etSearch.getText().toString().length()-2);
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        restaurantPresenter.stopRealtimeDatabse();
-    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -192,4 +192,26 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
                 return false;
         }
     }
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(restaurantPresenter == null){
+            restaurantPresenter = new RestaurantPresenter(this);
+//            if(Permissions.getAuthorize(AuthUser.getUser().getRole(), Permissions.SHOW_RESTAURANT_LIST))
+            if(Permission.getAuthorize(AuthUser.getUser(getContext()).getRole(), Permission.SHOW_RESTAURANT_LIST))
+                restaurantPresenter.loadRestaurantList();
+            else Toast.makeText(getContext(), getContext().getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+        }
+        Log.d("cicleLive", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        restaurantPresenter.stopRealtimeDatabse();
+    }
+
 }

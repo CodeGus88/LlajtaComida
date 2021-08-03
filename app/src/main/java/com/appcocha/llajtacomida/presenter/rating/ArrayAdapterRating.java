@@ -21,8 +21,8 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.rating.RatingModel;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.bumptech.glide.Glide;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -80,13 +80,21 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
             rbUserVote.setRating(Float.parseFloat(row.get("punctuation")));
             tvDate.setText(row.get("date"));
             tvExperience.setText(row.get("experience"));
-            if (user.getId().equals(FirebaseAuth.getInstance().getUid()) || AuthUser.getUser().getRole().equals("admin")) { // Solo si es el autor u el administrador
+//            if (user.getId().equals(FirebaseAuth.getInstance().getUid()) || AuthUser.getUser().getRole().equals("admin")) { // Solo si es el autor u el administrador
+            boolean permission = false;
+            if(nodeCollectionName.equals("plates"))
+                permission = Permission.getAuthorize(AuthUser.user.getRole(), Permission.DELETE_VALORATE_PLATE, AuthUser.getUser().getId().equals(user.getId()));
+            else if(nodeCollectionName.equals("restaurants"))
+                permission = Permission.getAuthorize(AuthUser.user.getRole(), Permission.DELETE_VALORATE_RESTAURANT, AuthUser.getUser().getId().equals(user.getId()));
+            if (permission){ // Solo si es el autor u el administrador
                 btnDelete.setVisibility(View.VISIBLE);
+                final boolean finalPermission = permission; // requiere que la variable no se cambiada final
                 btnDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-//                        deleteVote();
-                        deleteVote(row.get("user_id"));
+                    public void onClick(View v){
+                        if(finalPermission) // requiere que la variable no se cambiada
+                            deleteVote(row.get("user_id"));
+                        else Toast.makeText(context, context.getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

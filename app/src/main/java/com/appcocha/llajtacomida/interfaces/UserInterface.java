@@ -26,6 +26,12 @@ public interface UserInterface {
          * @param userList
          */
         void showUserList(ArrayList<User> userList);
+
+        /**
+         * Muestra el mensaje de la conclusión del proceso
+         * @param isSuccess
+         */
+        void isSuccess(boolean isSuccess);
     }
 
     /**
@@ -66,6 +72,12 @@ public interface UserInterface {
          * Determina cargar la lista de usuarios
          */
         void loadUserList();
+
+        /**
+         * Muestra el mensaje de la conclusión del proceso
+         * @param isSuccess
+         */
+        void isSuccess(boolean isSuccess);
     }
 
 

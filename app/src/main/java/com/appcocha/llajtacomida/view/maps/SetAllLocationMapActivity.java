@@ -29,6 +29,7 @@ import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.tools.RandomColor;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -76,7 +77,7 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         requestPermission = false;
         if (getIntent().hasExtra("restaurantList")) {
             restaurantList = (ArrayList<Restaurant>) getIntent().getSerializableExtra("restaurantList");
-        } else {
+        }else {
             restaurantList = new ArrayList<Restaurant>();
         }
         if (getIntent().hasExtra("plate")) {
@@ -133,7 +134,7 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
         tvPlateName.setText(plate.getName());
         tvRestaurantsFound.setText(restaurantList.size() + " " + getString(R.string.tv_restaurants_found) );
         Glide.with(this).load(plate.getUrl()).into(ivPlateImage);
-        spTypesOfMaps.setSelection(1);
+//        spTypesOfMaps.setSelection(0);
         btnBack.setOnClickListener(this);
         llData.setOnClickListener(this);
     }
@@ -262,5 +263,11 @@ public class SetAllLocationMapActivity extends FragmentActivity implements OnMap
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 }

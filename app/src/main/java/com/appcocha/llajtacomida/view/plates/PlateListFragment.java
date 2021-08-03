@@ -30,6 +30,7 @@ import com.appcocha.llajtacomida.presenter.plate.PlatePresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateList;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 
 import java.util.ArrayList;
 
@@ -80,8 +81,8 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         setHasOptionsMenu(true); // para el funcionamiento de los iconos
         view = inflater.inflate(R.layout.fragment_plate_list, container, false);
         initComponents();
-        platePresenter = new PlatePresenter(this);
-        platePresenter.loadPlatesList();
+//        platePresenter = new PlatePresenter(this);
+//        platePresenter.loadPlatesList();
         return view;
     }
 
@@ -138,7 +139,7 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
     private void initIconsMenu(Menu menu) {
         iconReorder = (MenuItem) menu.findItem(R.id.iconReorder);
         iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
-        for(int i = 0; i < menu.size(); i++){ // Ocultamos todo
+        for(int i = 0; i < menu.size(); i++){ // Ocultar todo
             menu.getItem(i).setVisible(false);
         }
         iconReorder.setVisible(true);
@@ -146,36 +147,38 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
         iconAdd = (MenuItem) menu.findItem(R.id.iconAdd);
 
         try{
-            if(AuthUser.user.getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
+//            if(AuthUser.user.getRole().equalsIgnoreCase("admin")){ // solo si es admin se mostrara el icon ode usario
+//            if(Permissions.getAuthorize(AuthUser.getUser().getRole(), Permissions.ADD_PLATE)){ // solo si es admin se mostrara el icon ode usario
+            if(Permission.getAuthorize(AuthUser.getUser(getContext()).getRole(), Permission.ADD_PLATE)){ // solo si es admin se mostrara el icon ode usario
                 iconAdd.setVisible(true);
             }else{
                 iconAdd.setVisible(false);
             }
         }catch (Exception e){
             Toast.makeText(getContext(), "Could not connect", Toast.LENGTH_SHORT).show();
-            Log.e("Error", "-------------------------------------------------> " + e.getMessage());
+            Log.e("Error Could not connect", "-------------------------------------------------> " + e.getMessage());
         }
     }
 
     /**
      * Este método es el oyente de las acciones de los íconos
      * @param item
-     * @return
+     * @return onOptionsItemSelected
      */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.iconSearch:
-                if(etSearch.getVisibility() == View.GONE){
-                    etSearch.setVisibility(View.VISIBLE);
-                    etSearch.setText(null);
-                    etSearch.setFocusable(true);
-                    etSearch.requestFocus();
-                }else{
-                    etSearch.setVisibility(View.GONE);
-                    // Para que vuelga a cargar la lista (0 es cualquier numero)
-                    arrayAdapterPlate.filter("", 0);
-                }
+                    if (etSearch.getVisibility() == View.GONE && plateList != null) {
+                        etSearch.setVisibility(View.VISIBLE);
+                        etSearch.setText(null);
+                        etSearch.setFocusable(true);
+                        etSearch.requestFocus();
+                    } else {
+                        etSearch.setVisibility(View.GONE);
+                        // Para que vuelga a cargar la lista (0 es cualquier numero)
+                        if(arrayAdapterPlate != null) arrayAdapterPlate.filter("", 0);
+                    }
                 break;
             case R.id.iconAdd:
                 PlateNavegation.showCreatedPlateView(getContext());
@@ -202,9 +205,13 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             this.plateList = plateList;
             arrayAdapterPlate = new ArrayAdapterPlate(getContext(), R.layout.adapter_element_list, this.plateList);
             lvPlates.setAdapter(arrayAdapterPlate);
-            if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){ // Servira para la validacion de no repetir platos con el mis nonombre
+//            if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){ // Servira para la validación de no repetir platos con el mis nonombre
+            if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.ADD_PLATE)
+                    || Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.UPDATE_PLATE)){ // Servira para la validación de no repetir platos con el mis nonombre
                 PlateList pl = new PlateList(plateList);
             }
+            if(!etSearch.getText().toString().isEmpty() && etSearch.getVisibility() == View.VISIBLE)
+                arrayAdapterPlate.filter(etSearch.getText().toString(), etSearch.getText().toString().length()-2);
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -222,5 +229,28 @@ public class PlateListFragment extends Fragment implements PlateInterface.ViewPl
             default:
                 return false;
         }
+    }
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        if(platePresenter == null){
+            platePresenter = new PlatePresenter(this);
+            if(AuthUser.user != null){
+                if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_PLATE_LIST)) platePresenter.loadPlatesList();
+                    //        if(Permissions.getAuthorize(AuthUser.getUser(getContext()).getRole(), Permissions.SHOW_PLATE_LIST)) platePresenter.loadPlatesList();
+                else Toast.makeText(getContext(), getContext().getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            }
+        }
+        Log.d("cicleLive", "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        platePresenter.stopRealtimeDatabase();
+        Log.d("cicleLive", "onPause");
     }
 }

@@ -111,7 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="54dp"
             android:orientation="vertical"
-            android:background="#4CAF50"
+            android:background="@color/price"
             android:gravity="center">
             <TextView
                 android:id="@+id/tvPlateOldPrice"

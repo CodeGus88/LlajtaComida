@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPromotion"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/weekly_food_guide_title"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/subtitle_food_guide"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:layout_marginBottom="2dp"/>
+
+        <ListView
+            android:id="@+id/lvRestaurants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel_list_white_gradient"
+            android:layout_below="@+id/tvTitle"
+            android:backgroundTint="@color/colorPromotion"
+            android:layout_marginBottom="51dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="@string/btn_ok"
+        android:layout_alignBottom="@+id/ll"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_information"
+        android:textColor="#ffffff"/>
+
+</RelativeLayout>

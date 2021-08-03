@@ -1,6 +1,8 @@
 package com.appcocha.llajtacomida.presenter.user;
 
 import android.util.Log;
+import android.widget.Toast;
+
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.model.user.UserModel;
@@ -65,5 +67,10 @@ public class UserPresenter implements UserInterface.PresenterUser {
     @Override
     public void loadUserList() {
         modelUser.loadUserList();
+    }
+
+    @Override
+    public void isSuccess(boolean isSuccess) {
+        viewUser.isSuccess(isSuccess);
     }
 }

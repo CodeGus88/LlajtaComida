@@ -75,7 +75,11 @@ dependencies {
     // boton flotante
     implementation 'com.getbase:floatingactionbutton:1.10.1'
 
+    // agregado para las animaciones de cambio de actividades (https://github.com/AtifSayings/Animatoo)
+    implementation 'com.github.mohammadatif:Animatoo:master'
 
+    // para convertir objetos a json
+    compile 'com.google.code.gson:gson:2.3.1'
 }
 
 

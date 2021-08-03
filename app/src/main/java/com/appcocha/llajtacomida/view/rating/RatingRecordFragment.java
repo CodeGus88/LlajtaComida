@@ -22,6 +22,7 @@ import com.appcocha.llajtacomida.presenter.rating.RatingPresenter;
 import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
     // Data
     private String objectId;
     private String nodeCollectionName;
+    private boolean valoratePermision;
 
     // Presentador
     private RatingPresenter ratingPresenter;
@@ -64,10 +66,12 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
         objectId = this.getArguments().getString("objectId");
         nodeCollectionName = this.getArguments().getString("nodeCollectionName");
         initComponents();
-
-        // iniciar presentador
-        ratingPresenter = new RatingPresenter(this,  nodeCollectionName, objectId);
-        ratingPresenter.loadRating();
+        valoratePermision = false;
+        if(nodeCollectionName.equals("plates")){
+            valoratePermision = Permission.getAuthorize(AuthUser.user.getRole(), Permission.VALORATE_PLATE);
+        }else if(nodeCollectionName.equals("restaurants")){
+            valoratePermision = Permission.getAuthorize(AuthUser.user.getRole(), Permission.VALORATE_RESTAURANT);
+        }
         return view;
     }
 
@@ -116,10 +120,12 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
                 alertDialog.dismiss();
                 break;
             case R.id.btnSave:
-                ratingPresenter.saveVote(rbStars.getRating(), etExperience.getText().toString());
-                Toast.makeText(getContext(), getString(R.string.message_establish), Toast.LENGTH_SHORT).show();
-                alertDialog.dismiss();
-                etExperience.setText(null);
+                if(valoratePermision){
+                    ratingPresenter.saveVote(rbStars.getRating(), etExperience.getText().toString());
+                    Toast.makeText(getContext(), getString(R.string.message_establish), Toast.LENGTH_SHORT).show();
+                    alertDialog.dismiss();
+                    etExperience.setText(null);
+                }else Toast.makeText(getContext(), getContext().getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(getContext(), getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
@@ -144,12 +150,15 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
      * permisos de los iconos
      */
     private void loadVoterPermission(){
-        if((AuthUser.getUser().getRole().equals("admin")
-                || AuthUser.getUser().getRole().equals("collaborator")
-                || AuthUser.getUser().getRole().equals("voter"))
-                && rbStars.isEnabled()){
+//        if((AuthUser.getUser().getRole().equals("admin")
+//                || AuthUser.getUser().getRole().equals("collaborator")
+//                || AuthUser.getUser().getRole().equals("voter"))
+//                && rbStars.isEnabled()){
+//            rbStars.setVisibility(View.VISIBLE);
+//        }else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
+        if(valoratePermision && rbStars.isEnabled())
             rbStars.setVisibility(View.VISIBLE);
-        }else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
+        else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
     }
 
     /**
@@ -180,5 +189,24 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
      */
     public void stopRealtimeDatabase(){
         ratingPresenter.stopRealtimeDatabase();
+    }
+
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // iniciar presentador
+        ratingPresenter = new RatingPresenter(this,  nodeCollectionName, objectId);
+        ratingPresenter.loadRating();
+        Log.d("cicleLive", "RatingRecord onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ratingPresenter.stopRealtimeDatabase();
+        Log.d("cicleLive", "RatingRecord onPause");
     }
 }

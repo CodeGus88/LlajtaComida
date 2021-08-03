@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,13 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import androidx.appcompat.widget.SearchView;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -53,6 +56,7 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
     private String title;
     private String message;
 //    SupportMapFragment supportMapFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +159,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         Geocoder geocoder = new Geocoder(this);
         List<Address> addresses = null;
         try {
-            addresses = geocoder.getFromLocationName("Cochabamba: "+query, 1);
+//            addresses = geocoder.getFromLocationName("Cochabamba: "+query, 1);
+            addresses = geocoder.getFromLocationName(StringValues.getCityReference() +": "+query, 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,7 +210,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
             }
         }else if (!restaurant.getAddress().isEmpty()){
             try {
-                List<Address> addresses = geocoder.getFromLocationName("Cochabamba: "+restaurant.getAddress(), 1);
+//                List<Address> addresses = geocoder.getFromLocationName("Cochabamba: "+restaurant.getAddress(), 1);
+                List<Address> addresses = geocoder.getFromLocationName(StringValues.getCityReference()+": "+restaurant.getAddress(), 1);
                 if(addresses.size() > 0){
                     latLng = new LatLng(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
                     zoom = 15.5F;
@@ -221,7 +227,8 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
         }
         if(latLng == null){
             zoom = 13.5F;
-            title = "Cochabamba";
+//            title = "Cochabamba";
+            title = StringValues.getCityReference();
             latLng = new LatLng(-17.3937469,-66.156974); // https://www.google.com/maps/@-17.3937469,-66.156974,20.03z
         }
         marker = mMap.addMarker(new MarkerOptions()
@@ -270,5 +277,28 @@ public class GetLocationMapActivity extends FragmentActivity implements OnMapRea
 
     @Override
     public void onMarkerDragEnd(Marker marker) {
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("restaurant", restaurant);
+        outState.putString("verb", verb);
+        outState.putString("uri", uri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        restaurant = (Restaurant) savedInstanceState.getSerializable("restaurant");
+        verb = savedInstanceState.getString("verb");
+        uri = savedInstanceState.getString("uri");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 }

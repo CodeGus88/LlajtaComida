@@ -8,6 +8,8 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.view.maps.GetLocationMapActivity;
 import com.appcocha.llajtacomida.view.maps.SetAllLocationMapActivity;
 import com.appcocha.llajtacomida.view.maps.SetLocationMapActivity;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+
 import java.util.ArrayList;
 
 /**
@@ -28,6 +30,7 @@ public class MapNavegation {
         intent.putExtra("verb", verb);
         intent.putExtra("uri", uri);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -40,6 +43,7 @@ public class MapNavegation {
         Intent intent = new Intent(context, SetLocationMapActivity.class);
         intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -54,6 +58,7 @@ public class MapNavegation {
         intent.putExtra("restaurantList", restaurantList);
         intent.putExtra("plate", plate);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
 }

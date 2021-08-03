@@ -33,7 +33,7 @@ public class Restaurant extends ObjectParent implements Serializable {
     }
 
     /***
-     * El contructor o gredado del padre
+     * El contructor
      * @param id
      * @param isPublic
      */
@@ -43,7 +43,7 @@ public class Restaurant extends ObjectParent implements Serializable {
     }
 
     /***
-     * El contructor no ses heredados del padre
+     * El contructor no heredado del padre
      * Puede servir para el administrador,
      * para que cuando el agregue restaurantes penga la posibilidad de publicarlos al mismo tiempo
      * @param isPublic

@@ -27,6 +27,8 @@ import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterRestaurantPlatePric
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
@@ -99,6 +101,7 @@ import java.util.Hashtable;
     private Toast toast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plate_view);
         // edit title toolbar
@@ -114,13 +117,18 @@ import java.util.Hashtable;
         height = (int) (ScreenSize.getWidth(display)*0.6666667);
         width = ScreenSize.getWidth(display);
 
-        id = getIntent().getStringExtra("id");
+        if(getIntent().hasExtra("id")) id = getIntent().getStringExtra("id");
 
         initComponents();
-        initPresenters();
+//        initPresenters();
 
         // Agregar fragmento fragment
         initFragments();
+//        if(!Permissions.getAuthorize(AuthUser.user.getRole(), Permissions.SHOW_PLATE)){
+        if(!Permission.getAuthorize(AuthUser.getUser(this).getRole(), Permission.SHOW_PLATE)){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
      /**
@@ -145,8 +153,6 @@ import java.util.Hashtable;
       */
     private void initPresenters(){
         // iniciando presentadores
-//        restListPresenter = new PlateRestListPresenter(this);
-//        restListPresenter.filterRestaurantListWithPlate(id);
         platePresenter = new PlatePresenter(this);
         platePresenter.searchPlate(id);
         imagePresenter = new ImagePresenter(this);
@@ -159,12 +165,13 @@ import java.util.Hashtable;
     }
 
     /**
-     * Captura de accion del boton atras <- de la barra superior
+     * Captura de acción del botón atrás <- de la barra superior
      */
     @Override
     public boolean onSupportNavigateUp() {
-        stopRealtimeDatabse();
-        onBackPressed(); // accion del boton atras del sistema operativo
+//        stopRealtimeDatabse();
+        onBackPressed(); // acción del boton atrás del sistema operativo
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
         return false;
     }
 
@@ -240,12 +247,15 @@ import java.util.Hashtable;
         Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconEdit:
-                PlateNavegation.showEditPlateView(this, plate);
+                if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.UPDATE_PLATE))
+                    PlateNavegation.showEditPlateView(this, plate);
                 break;
             case R.id.iconDelete:
+                if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.DELETE_PLATE))
                 delete();
                 break;
             case R.id.iconGalery:
+                if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.SHOW_PLATE_GALERY))
                 PlateNavegation.showGalery(this, id,  plate.getName());
         }
         return super.onOptionsItemSelected(item);
@@ -267,7 +277,7 @@ import java.util.Hashtable;
                 GaleryDatabase galeryDatabase = new GaleryDatabase(PlateViewActivity.this, "plates", plate.getId());
                 galeryDatabase.deleteAllData(); // es un metodo estatico
                 plateManagerPresenter.delete(plate.getId());
-                stopRealtimeDatabse();
+//                stopRealtimeDatabse();
                 onBackPressed();
             }
         });
@@ -287,15 +297,15 @@ import java.util.Hashtable;
         iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
         iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
         iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
-        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
-            iconGalery.setVisible(true);
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_PLATE_GALERY))
+                iconGalery.setVisible(true);
+        else iconGalery.setVisible(false);
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.DELETE_PLATE))
             iconDelete.setVisible(true);
+        else iconDelete.setVisible(false);
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_PLATE))
             iconEdit.setVisible(true);
-        }else{
-            iconGalery.setVisible(false);
-            iconDelete.setVisible(false);
-            iconEdit.setVisible(false);
-        }
+        else iconEdit.setVisible(false);
     }
 
     @Override
@@ -381,7 +391,6 @@ import java.util.Hashtable;
     @Override
     public void showRestList(ArrayList<Restaurant> list, Hashtable priceInRestaurantsList) {
         try {
-            restaurantList.clear();
             restaurantList = list;
             arrayAdapterRestaurantPlatePrice = new ArrayAdapterRestaurantPlatePrice(this, R.layout.adapter_restaurant_plate_price_list, list, priceInRestaurantsList, plate.getName());
             lvRestaurants.setAdapter(arrayAdapterRestaurantPlatePrice);
@@ -389,7 +398,7 @@ import java.util.Hashtable;
             tvRestaurantsFound.setText("("+restaurantList.size() + " " +getString(R.string.tv_restaurants_found)+")");
         }catch (Exception e){
             Toast.makeText(this, "Error:", Toast.LENGTH_SHORT).show();
-            Log.e("Error", e.getMessage());
+            Log.e("Error: ", e.getMessage());
         }
     }
 
@@ -461,7 +470,7 @@ import java.util.Hashtable;
      /**
       * Detiene la BD
       */
-    private void stopRealtimeDatabse(){
+    private void stopRealtimeDatabase(){
         platePresenter.stopRealtimeDatabase();
         restListPresenter.stopRealtimeDatabase();
         imagePresenter.stopRealtimeDatabase();
@@ -480,4 +489,42 @@ import java.util.Hashtable;
     public void report(ArrayList<Integer> errors) {
         // no se utiliza para este caso
     }
-}
+
+     @Override
+     protected void onSaveInstanceState(@NonNull Bundle outState) {
+         super.onSaveInstanceState(outState);
+         outState.putString("id", id);
+     }
+
+     @Override
+     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+         super.onRestoreInstanceState(savedInstanceState);
+         id = savedInstanceState.getString("id");
+     }
+
+     @Override
+     public void onBackPressed() {
+         try {
+             super.onBackPressed();
+             Animatoo.animateFade(this); //Animación al cambiar de actividad
+         }catch (Exception e){
+             Log.e("Error: ", e.getMessage());
+         }
+     }
+
+     // Ciclos de vida para el reinicio de los presentadores
+
+     @Override
+     protected void onResume() {
+         super.onResume();
+         initPresenters();
+         Log.d("cicleLive", "onResume");
+     }
+
+     @Override
+     protected void onPause() {
+         super.onPause();
+         stopRealtimeDatabase();
+         Log.d("cicleLive", "onPause");
+     }
+ }

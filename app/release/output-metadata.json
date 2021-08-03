@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.appcocha.llajtacomida",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,9 @@ import com.appcocha.llajtacomida.presenter.plate.PlateManagerPresenter;
 import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputLayout;
 import com.theartofdev.edmodo.cropper.CropImage;
 import java.io.ByteArrayOutputStream;
@@ -77,8 +81,9 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.btnStore:
                 try {
-                    storePlate();
-                } catch (InterruptedException e) {
+                    if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.ADD_PLATE)) storePlate();
+                    else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
+                }catch (InterruptedException e){
                     e.printStackTrace();
                 }
                 break;
@@ -102,7 +107,8 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
         plate.setName(name);
         plate.setIngredients(ingredients);
         plate.setOrigin(origin);
-        presenterPlateManager.store(plate, thumb_byte);
+//        presenterPlateManager.store(plate, thumb_byte);
+        presenterPlateManager.store(plate, thumb_byte, this);
     }
 
     @Override
@@ -189,21 +195,22 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void isSuccess(boolean isSuccess) {
         Sound.playSuccess();
-        if(isSuccess){
-            Toast.makeText(this, getString(R.string.message_store_complete), Toast.LENGTH_SHORT).show();
-            progressDialog.dismiss();
-            onBackPressed();
-        }else{
-            progressDialog.dismiss();
-            Toast.makeText(this, getString(R.string.message_store_incomplete), Toast.LENGTH_SHORT).show();
-        }
+            if(isSuccess){
+                Toast.makeText(this, getString(R.string.message_store_complete), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+                onBackPressed();
+            }else{
+                progressDialog.dismiss();
+                Toast.makeText(this, getString(R.string.message_store_incomplete), Toast.LENGTH_SHORT).show();
+            }
     }
 
     @Override
     public void report(ArrayList<Integer> errors) {
         Sound.playError();
         progressDialog.dismiss();
-        Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
+        if(!errors.contains(R.string.message_error_disconnected))
+            Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         textInputLayoutName.setError(null);
         textInputLayoutOrigin.setError(null);
         textInputLayoutIngredients.setError(null);
@@ -214,6 +221,22 @@ public class CreatePlateActivity extends AppCompatActivity implements View.OnCli
             if (R.string.message_description_required == error) textInputLayoutOrigin.setError(getString(error));
             if (R.string.message_ingredients_required == error) textInputLayoutIngredients.setError(getString(error));
             if (R.string.message_image_required == error) textInputLayoutImage.setError(getString(error));
+            if(R.string.message_error_disconnected == error){
+                progressDialog.dismiss();
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        try{
+            super.onBackPressed();
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+        }catch (Exception e){ // falla cuando vuelve a estar conectado
+            Log.e("Error", e.getMessage());
+        }
+
     }
 }

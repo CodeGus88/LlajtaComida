@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +21,8 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.restaurant.RestaurantGestorDB;
 import com.appcocha.llajtacomida.presenter.map.MapNavegation;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantPublicOfActivity;
 import com.bumptech.glide.Glide;
 
@@ -94,7 +97,9 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant>{
                 public void onClick(View v) {
                     Sound.playClick();
                     restaurantList.get(position).setPublic(true);
-                    publishRestaurant(restaurantList.get(position));
+                    if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.PUBLISH_ON_OF_RESTAURANT))
+                        publishRestaurant(restaurantList.get(position));
+                    else Toast.makeText(context, context.getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 }
             });
             btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -180,8 +185,9 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant>{
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Sound.playClick();
-                        byte [] img = null;
-                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
+//                        byte [] img = null;
+//                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, null);
+                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant);
                         restaurantDatabase.upDate();
                     }
                 })
@@ -203,8 +209,9 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant>{
                 .setPositiveButton(R.string.btn_continue, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Sound.playThrow();
-                        byte [] img = null;
-                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, img);
+//                        byte [] img = null;
+//                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant, null);
+                        RestaurantGestorDB restaurantDatabase = new RestaurantGestorDB(context, restaurant);
                         restaurantDatabase.delete();
                     }
                 })

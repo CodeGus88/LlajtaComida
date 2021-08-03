@@ -30,6 +30,8 @@ import com.appcocha.llajtacomida.presenter.restaurant.PromotionListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.ImageInterface;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
@@ -48,7 +50,6 @@ import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
 import com.appcocha.llajtacomida.view.favorites.FavoriteObjectFragment;
 import com.appcocha.llajtacomida.view.rating.RatingRecordFragment;
-import com.google.firebase.auth.FirebaseAuth;
 import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.text.DecimalFormat;
@@ -67,7 +68,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     //iconos
     private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPromotionRestaurant, iconPublish;
-
     private Restaurant restaurant;
     // components
     private ImageButton btnNext;
@@ -120,7 +120,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         height = (int) (ScreenSize.getWidth(display)*0.6666667);
         width = ScreenSize.getWidth(display);
 
-        id = getIntent().getStringExtra("id");
+        if(getIntent().hasExtra("id")) id = getIntent().getStringExtra("id");
         initComponents();
 //        loadImages();
         menuPlateList = new ArrayList<Plate>();
@@ -128,8 +128,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         promotion = new Promotion();
         menu = new com.appcocha.llajtacomida.model.restaurant.menu.Menu();
 
-       initPresenters();
+//       initPresenters();
        initRatingFragment();
+//        if(!Permissions.getAuthorize(AuthUser.user.getRole(), Permissions.SHOW_RESTAURANT)){
+        if(!Permission.getAuthorize(AuthUser.getUser(this).getRole(), Permission.SHOW_RESTAURANT)){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     /**
@@ -226,66 +231,85 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
 
     }
 
+
     /**
-     * Inicializa los íconos
-     * @param menu
+     * Muestra los íconos según los permisos
      */
-    private void initIconMenuAndPromotion(Menu menu){
-            iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
-            iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
-            iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
-            iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
-            iconPromotionRestaurant = (MenuItem) menu.findItem(R.id.iconPromotionsRestaurant);
-            iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
-            changeIcon();
-        if(AuthUser.getUser().getRole().equals("admin") || restaurant.getAuthor().equals(FirebaseAuth.getInstance().getUid())){
-            iconEdit.setVisible(true);
-            iconDelete.setVisible(true);
-            iconGalery.setVisible(true);
-            iconMenuRestaurant.setVisible(true);
-            iconPromotionRestaurant.setVisible(true);
-        }else{
-            iconEdit.setVisible(false);
-            iconDelete.setVisible(false);
-            iconGalery.setVisible(false);
-            iconMenuRestaurant.setVisible(false);
-            iconPromotionRestaurant.setVisible(false);
-        }
-        if(AuthUser.getUser().getRole().equals("admin")) iconPublish.setVisible(true);
-        else iconPublish.setVisible(false);
-        try {
-            if(restaurant.isPublic()) iconPublish.setTitle(getString(R.string.icon_public_of));
-            else  iconPublish.setTitle(getString(R.string.icon_public_on));
-        }catch (Exception e){
-            Log.e("Error", e.getMessage());
+    private void loadVisivilityIcons(){
+        if(iconEdit != null && iconDelete != null && iconGalery != null
+                && iconMenuRestaurant != null && iconPromotionRestaurant != null
+                && iconPublish !=  null){
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_RESTAURANT,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor())))
+                iconEdit.setVisible(true);
+            else iconEdit.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.DELETE_RESTAURANT,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor())))
+                iconDelete.setVisible(true);
+            else iconDelete.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_RESTAURANT_GALERY,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor())))
+                iconGalery.setVisible(true);
+            else iconGalery.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_SET_RESTAURANT_MENU,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor())))
+                iconMenuRestaurant.setVisible(true);
+            else iconMenuRestaurant.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_SET_RESTAURANT_PROMOTION,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor())))
+                iconPromotionRestaurant.setVisible(true);
+            else iconPromotionRestaurant.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.PUBLISH_ON_OF_RESTAURANT,
+                    AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
+                iconPublish.setVisible(true);
+                if(restaurant.isPublic()){
+                    iconPublish.setIcon(R.drawable.icon_public);
+                    iconPublish.setTitle(getString(R.string.icon_public_of));
+                }else{
+                    iconPublish.setIcon(R.drawable.icon_public_off);
+                    iconPublish.setTitle(getString(R.string.icon_public_on));
+                }
+            }else iconPublish.setVisible(false);
         }
     }
 
-    /**
-     * Sirve para alternar el ícono de publicar o dejar de publicar
-     */
-    private void changeIcon() {
-        if(restaurant.isPublic()){
-            iconPublish.setIcon(R.drawable.icon_public);
-        }else{
-            iconPublish.setIcon(R.drawable.icon_public_off);
-        }
-    }
+//    /**
+//     * Sirve para alternar el ícono de publicar o dejar de publicar
+//     */
+//    private void changeIcon() {
+//        if(restaurant != null)
+//            if(restaurant.isPublic()){
+//                iconPublish.setIcon(R.drawable.icon_public);
+//            }else{
+//                iconPublish.setIcon(R.drawable.icon_public_off);
+//            }
+//        else Toast.makeText(this, "Loading..." + restaurant, Toast.LENGTH_SHORT).show();
+//    }
 
     /**
      * Captura de acción del boton atras <- de la barra superior
      */
     @Override
     public boolean onSupportNavigateUp() {
-        stopRealtimeDatabase();
+//        stopRealtimeDatabase();
         this.onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-        stopRealtimeDatabase();
-        super.onBackPressed();
+//        stopRealtimeDatabase();
+        try {
+            super.onBackPressed();
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+        }catch (Exception e){
+            Log.e("Error: ", e.getMessage());
+        }
     }
 
     @Override
@@ -360,7 +384,14 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        initIconMenuAndPromotion(menu);
+        iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
+        iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
+        iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
+        iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
+        iconPromotionRestaurant = (MenuItem) menu.findItem(R.id.iconPromotionsRestaurant);
+        iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
+        if(restaurant != null) // Si le ganó el presentador recarga los ícnos
+        loadVisivilityIcons();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -408,7 +439,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 galeryDatabase.deleteAllData(); // es un metodo estatico
                 Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
                 restaurantManagerPresenter.delete(restaurant.getId());
-                stopRealtimeDatabase();
+//                stopRealtimeDatabase();
                 onBackPressed();
             }
         });
@@ -465,31 +496,34 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void showRestaurant(Restaurant restaurant) {
+    public void showRestaurant(Restaurant restaurant){
         try{
             this.restaurant = restaurant;
-            if(!restaurant.getOwnerName().isEmpty()){
-                llOwnerName.setVisibility(View.VISIBLE);
-                tvOwnerName.setText(restaurant.getOwnerName());
-            }else llOwnerName.setVisibility(View.GONE);
-            tvName.setText(restaurant.getName());
-            tvPhone.setText(restaurant.getPhone()
-                    .replace(",", " - ")
-                    .replace(".", " - ")
-                    .replace("-", " - ")
-                    .replace(";", " - ")
-                    .replace(":", " - "));
-            tvAddress.setText(restaurant.getAddress());
-            tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
-            Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
-            DecimalFormat decimalFormat = new DecimalFormat("0.00");
-            tvRating.setText(String.valueOf(decimalFormat.format(restaurant.getPunctuation())));
-            getSupportActionBar().setSubtitle(restaurant.getName());  // subtitulo del toolbar
-            changeIcon();
-            if(restaurant.isPublic()) iconPublish.setTitle(getString(R.string.icon_public_of));
-            else  iconPublish.setTitle(getString(R.string.icon_public_on));
+            if(this.restaurant != null){
+                if(this.restaurant.isPublic()){
+                    if(!restaurant.getOwnerName().isEmpty()){
+                        llOwnerName.setVisibility(View.VISIBLE);
+                        tvOwnerName.setText(restaurant.getOwnerName());
+                    }else llOwnerName.setVisibility(View.GONE);
+                    tvName.setText(restaurant.getName());
+                    tvPhone.setText(restaurant.getPhone()
+                            .replace(",", " - ")
+                            .replace(".", " - ")
+                            .replace("-", " - ")
+                            .replace(";", " - ")
+                            .replace(":", " - "));
+                    tvAddress.setText(restaurant.getAddress());
+                    tvOriginAndDescription.setText(restaurant.getOriginAndDescription());
+                    Glide.with(RestaurantViewActivity.this).load(restaurant.getUrl()).into(ivPhoto);
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                    tvRating.setText(String.valueOf(decimalFormat.format(restaurant.getPunctuation())));
+                    getSupportActionBar().setSubtitle(restaurant.getName());  // subtitulo del toolbar
+                    loadVisivilityIcons(); // Actualiza la visivilidad de los íconos
+                }else onBackPressed();
+            }else onBackPressed();
         }catch(Exception e){
             Log.e("Error: " , e.getMessage());
+            onBackPressed();
         }
     }
 
@@ -554,5 +588,34 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     @Override
     public void report(ArrayList<Integer> errors) {
         // No se utiliza para esta vista
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("id", id);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        id = savedInstanceState.getString("id");
+    }
+
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initPresenters();
+        Log.d("cicleLive", "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopRealtimeDatabase();
+        Log.d("cicleLive", "onPause");
     }
 }

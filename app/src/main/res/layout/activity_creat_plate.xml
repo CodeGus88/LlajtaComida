@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.plates.CreatePlateActivity"
     android:orientation="vertical"
-    android:background="@color/colorPanel">
+    android:background="@color/colorAccent">
 <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -118,7 +118,7 @@
                         android:background="@drawable/edit_text"
                         android:paddingHorizontal="4dp"
                         app:placeholderText="@string/tv_photo"
-                        app:placeholderTextColor="#03A9F4"
+                        app:placeholderTextColor="@color/colorAccent"
                         app:hintEnabled="true"
                         android:layout_marginBottom="10dp">
                         <androidx.cardview.widget.CardView
@@ -135,7 +135,7 @@
                                     android:id="@+id/ivPhoto"
                                     android:layout_width="match_parent"
                                     android:layout_height="200dp"
-                                    android:background="#B98EABC3"
+                                    android:background="@color/colorAccent"
                                     app:srcCompat="@mipmap/image_icon"
                                     android:layout_gravity="center"
                                     android:scaleType="fitXY" />

@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.presenter.restaurant;
 
+import android.content.Context;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
@@ -36,7 +38,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
     }
 
     @Override
-    public void store(Restaurant restaurant, byte[] thumb_byte) {
+    public void store(Restaurant restaurant, byte[] thumb_byte, Context context) {
         restaurant.setName(Validation.correctText(restaurant.getName()));
         restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
@@ -45,8 +47,14 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
                 && !restaurant.getAddress().isEmpty() && !restaurant.getOriginAndDescription().isEmpty()
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())
                 && thumb_byte != null){
+
             Sound.playLoad();
             modelRestaurantManager.store(restaurant, thumb_byte);
+            if(!Validation.isConeccted(context)){
+                ArrayList<Integer> errors = new ArrayList<Integer>();
+                errors.add(R.string.message_error_disconnected);
+                viewRestaurantManager.report(errors);
+            }
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
             if(restaurant.getName().isEmpty()) errors.add(R.string.message_name_required);
@@ -62,7 +70,7 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
     }
 
     @Override
-    public void update(Restaurant restaurant, final byte [] thumb_byte) {
+    public void update(Restaurant restaurant, final byte [] thumb_byte, Context context) {
         restaurant.setName(Validation.correctText(restaurant.getName()));
         restaurant.setOwnerName(Validation.correctText(restaurant.getOwnerName()));
         if(!restaurant.getName().isEmpty()
@@ -72,6 +80,11 @@ public class RestaurantManagerPresenter implements RestaurantInterface.Presenter
                 && (!restaurant.getLatitude().isEmpty() && !restaurant.getLongitude().isEmpty())){
             Sound.playLoad();
             modelRestaurantManager.update(restaurant, thumb_byte);
+            if(!Validation.isConeccted(context)){
+                ArrayList<Integer> errors = new ArrayList<Integer>();
+                errors.add(R.string.message_error_disconnected);
+                viewRestaurantManager.report(errors);
+            }
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
             if(restaurant.getName().isEmpty()) errors.add(R.string.message_name_required);

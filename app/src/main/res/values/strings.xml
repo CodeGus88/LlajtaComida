@@ -189,6 +189,7 @@
     <string name="message_searching">Buscando</string>
     <string name="message_reference_not_found">No se encontró la referencia</string>
     <string name="message_error">Algo salió mal...</string>
+    <string name="message_error_disconnected">¡Sin conexión!\nSe intentará reparar el proceso cuando vuelva la conexión</string>
     <string name="message_check_the_fileds">Revisa los campos...</string>
     <string name="message_remove">Quitar...</string>
     <string name="message_clossing">Cerrando...</string>
@@ -330,7 +331,18 @@
 
     <string name="added_element">Elemento agregado</string>
 
+    <!--    week days   -->
+    <string name="weekly_food_guide_title">“Cochabamba: un día para comer y el otro también”</string>
+    <string name="subtitle_food_guide">Guía gastronómica semanal</string>
+    <string name="day_monday">Lunes</string>
+    <string name="day_tuesday">Martes</string>
+    <string name="day_wednesday">Miércoles</string>
+    <string name="day_thursday">Jueves</string>
+    <string name="day_friday">Viernes</string>
+    <string name="day_saturday">Sábado</string>
+    <string name="day_sunday">Domingo</string>
 
+    <string name="message_not_found">El nombre del plato no concuerda con ninguno en los registros actuales, intente después</string>
 
     <!--    buttons   -->
     <string name="btn_yes">Si</string>
@@ -340,19 +352,22 @@
     <string name="id">ID:</string>
     <string name="switch_sound">Sonido</string>
 
-    // Prices
+<!--    // Prices-->
     <string name="default_price">10</string>
     <string name="type_currency">Bs</string>
 
 
-    // Read more - less
+<!--    // Read more - less-->
     <string name="read_more">Leer más...</string>
     <string name="read_less">Leer menos...</string>
 
-    // Order by
+<!--    // Order by-->
     <string name="order_by_name">Ordenar por nombre</string>
     <string name="order_by_punctuation">Ordenar por puntuación</string>
     <string name="already_by_name">¡Ya está ordenado por nombre!</string>
     <string name="already_by_punctuation">¡Ya está ordenado por puntuación!</string>
+
+    // does_not_have_the_permission
+    <string name="does_not_have_the_permission">No tiene el permiso</string>
 
 </resources>

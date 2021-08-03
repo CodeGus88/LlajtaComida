@@ -48,7 +48,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/img_photo"/>
+                            android:src="@mipmap/image_icon"/>
+<!--                        android:src="@mipmap/img_photo"-->
                     </androidx.cardview.widget.CardView>
                 </ViewFlipper>
 
@@ -141,7 +142,6 @@
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tv_name_plate_view"
                 android:textSize="20dp"
                 android:gravity="center"
                 style="@style/CodeFontContentTitle"
@@ -178,16 +178,16 @@
                         android:id="@+id/tvIngredients"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/lorem_short"
                         android:justificationMode="inter_word"
-                        style="@style/CodeFontContent"/>
+                        style="@style/CodeFontContent"
+                        android:hint="@string/tv_undefined"/>
                     <TextView
                         android:id="@+id/tvReadMoreLessIngredients"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="10dp"
                         android:text="@string/read_more"
-                        android:textColor="#03A9F4"/>
+                        android:textColor="@color/colorAccent"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -227,14 +227,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:justificationMode="inter_word"
-                        android:text="@string/lorem_long" />
+                        android:hint="@string/tv_undefined"/>
                     <TextView
                         android:id="@+id/tvReadMoreLessOriginDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="10dp"
                         android:text="@string/read_more"
-                        android:textColor="#03A9F4"/>
+                        android:textColor="@color/colorAccent"/>
                 </LinearLayout>
 
             </LinearLayout>

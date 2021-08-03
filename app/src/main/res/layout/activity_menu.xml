@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.restaurants.SetMenuActivity"
     android:orientation="vertical"
-    android:background="#A603A9F4">
+    android:background="@color/colorPanel">
 
        <TextView
            android:id="@+id/tvTitle"

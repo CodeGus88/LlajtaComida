@@ -123,7 +123,7 @@
                     android:background="@drawable/edit_text"
                     android:paddingHorizontal="4dp"
                     app:placeholderText="@string/tv_location"
-                    app:placeholderTextColor="#03A9F4">
+                    app:placeholderTextColor="@color/colorAccent">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -278,7 +278,7 @@
                             android:id="@+id/ivPhoto"
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
-                            android:background="#B98EABC3"
+                            android:background="@color/colorAccent"
                             android:layout_gravity="center"
                             android:scaleType="fitXY"/>
                     </androidx.cardview.widget.CardView>

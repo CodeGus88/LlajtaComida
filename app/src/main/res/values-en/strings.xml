@@ -51,7 +51,7 @@
     <string name="et_plate_origin">Origin and history</string>
     <string name="btn_photo_plate">Load an image for the dish</string>
 
-    <string name="et_search">Buscar...</string>
+    <string name="et_search">Search...</string>
     <!--  RESTAURANTS  -->
     <!--    <string name="search_restaurants">Find restaurants...</string>-->
     <string name="title_creat_restaurant">Create restaurant</string>
@@ -189,6 +189,7 @@
     <string name="message_searching">Searching</string>
     <string name="message_reference_not_found">Reference not found</string>
     <string name="message_error">Something went wrong...</string>
+    <string name="message_error_disconnected">Without connection!\nAn attempt will be made to repair the process when the connection returns</string>
     <string name="message_check_the_fileds">Check the fields...</string>
     <string name="message_remove">Remove...</string>
     <string name="message_clossing">Closing...</string>
@@ -329,6 +330,19 @@
 
     <string name="added_element">Added element</string>
 
+    <!--    week days   -->
+    <string name="weekly_food_guide_title">"Cochabamba: one day to eat and the other too"</string>
+    <string name="subtitle_food_guide">Weekly gastronomic guide</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuestay</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+    <string name="day_sunday">Sunday</string>
+
+    <string name="message_not_found">Dish name does not match any in the database, please try later</string>
+
     <!--    buttons   -->
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
@@ -337,19 +351,22 @@
     <string name="id">ID:</string>
     <string name="switch_sound">Sound</string>
 
-    // Prices
+<!--    // Prices-->
     <string name="default_price">10</string>
-    <string name="type_currency">Bo</string>
+    <string name="type_currency">BOB</string>
 
 
-    // Read more - less
+<!--    // Read more - less-->
     <string name="read_more">Leer más...</string>
     <string name="read_less">Leer menos...</string>
 
-    // Order by
+<!--    // Order by-->
     <string name="order_by_name">Order by name</string>
     <string name="order_by_punctuation">Order by punctuation</string>
     <string name="already_by_name">It is already ordered by name!</string>
     <string name="already_by_punctuation">It is already ordered by punctuation!</string>
+
+    // does_not_have_the_permission
+    <string name="does_not_have_the_permission">Does not have the permission</string>
 
 </resources>

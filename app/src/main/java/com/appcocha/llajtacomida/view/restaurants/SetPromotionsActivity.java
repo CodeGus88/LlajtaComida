@@ -28,6 +28,9 @@ import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterSetPromotions;
 import com.appcocha.llajtacomida.presenter.restaurant.SetPromotionListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.ArrayList;
 
@@ -47,7 +50,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
     private Button btnAlertCancel, btnAlertAdd;
     private int position;
     // Permisos
-    private boolean isAdministrator, isAuthor;
+//    private boolean isAdministrator, isAuthor;
     private ArrayAdapterSetPromotions arrayAdapterSetPromotions;
 
     // presentador
@@ -61,8 +64,8 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         plateList = new ArrayList<Plate>();
         // Premisos
-        isAdministrator = true;
-        isAuthor = true;
+//        isAdministrator = true;
+//        isAuthor = true;
 
         Intent intent = getIntent();
         if(intent.hasExtra("restaurant")){
@@ -76,9 +79,12 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         initComponents();
         tvTitle.setText(getString(R.string.promotion_title) + " " + restaurant.getName());
 
-        // Inicializar el presentador
-        setPromotionListPresenter = new SetPromotionListPresenter(this);
-        setPromotionListPresenter.searchSetPromotionList(restaurant.getId());
+        if(!Permission.getAuthorize(AuthUser.user.getRole()
+                , Permission.SHOW_SET_RESTAURANT_PROMOTION
+                , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     /**
@@ -151,10 +157,15 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
      * @param menu
      */
     private void initIconMenu(Menu menu){
-        if(isAdministrator || isAuthor){
+//        if(isAdministrator || isAuthor){
+        if(Permission.getAuthorize(AuthUser.user.getRole()
+            , Permission.WRITE_RESTAURANT_PROMOTION
+            , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
             iconSave = (MenuItem)  menu.findItem(R.id.iconSave);
             iconSave.setVisible(true);
         }
+
+//        }
     }
 
     @Override
@@ -162,13 +173,17 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconSave:
-                Promotion promotion = arrayAdapterSetPromotions.getPromotion();
-                promotion.setActive(switchActivePromotion.isChecked());
-                Toast.makeText(this, this.getString(R.string.menu_size) + " " + promotion.getPromotionList().size(), Toast.LENGTH_SHORT).show();
-                setPromotionListPresenter.savePromotionList(restaurant.getId(), promotion); // this
-                setPromotionListPresenter.stopRealTimeDatabase();
-                onBackPressed();
-                break;
+                if(Permission.getAuthorize(AuthUser.user.getRole()
+                        , Permission.WRITE_RESTAURANT_PROMOTION
+                        , AuthUser.getUser().getId().equals(restaurant.getAuthor()))) {
+                    Promotion promotion = arrayAdapterSetPromotions.getPromotion();
+                    promotion.setActive(switchActivePromotion.isChecked());
+                    Toast.makeText(this, this.getString(R.string.menu_size) + " " + promotion.getPromotionList().size(), Toast.LENGTH_SHORT).show();
+                    setPromotionListPresenter.savePromotionList(restaurant.getId(), promotion); // this
+                    //                setPromotionListPresenter.stopRealTimeDatabase();
+                    onBackPressed();
+                }else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
+                    break;
             default:
                 Log.d("Null", getString(R.string.message_invalid_option));
         }
@@ -189,15 +204,16 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
      */
     @Override
     public boolean onSupportNavigateUp() {
-        setPromotionListPresenter.stopRealTimeDatabase();
+//        setPromotionListPresenter.stopRealTimeDatabase();
         onBackPressed(); // acción del botón atrás del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-        setPromotionListPresenter.stopRealTimeDatabase();
+//        setPromotionListPresenter.stopRealTimeDatabase();
         super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 
     @Override
@@ -217,5 +233,27 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         }else if(v.getId() == R.id.btnAlertCancel){
             alertDialog.dismiss();
         }
+    }
+
+
+
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Inicializar el presentador
+        // Inicializar el presentador
+        setPromotionListPresenter = new SetPromotionListPresenter(this);
+        setPromotionListPresenter.searchSetPromotionList(restaurant.getId());
+        Log.d("cicleLive", "SetPromotion onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setPromotionListPresenter.stopRealTimeDatabase();
+        Log.d("cicleLive", "SetPromotion onPause");
     }
 }

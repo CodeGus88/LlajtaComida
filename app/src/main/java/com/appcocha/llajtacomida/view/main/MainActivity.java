@@ -25,15 +25,17 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.main.MainNavigation;
+import com.appcocha.llajtacomida.presenter.main.PersistenceChange;
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
 import com.appcocha.llajtacomida.presenter.user.UserRealTimePresenter;
-import com.appcocha.llajtacomida.view.restaurants.AlertShowPromotion;
+import com.appcocha.llajtacomida.view.weekdays.AlertShowWeekDays;
 import com.appcocha.llajtacomida.view.restaurants.AlertShowRestaurantsWithPromotion;
-import com.appcocha.llajtacomida.view.restaurants.RestaurantViewActivity;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.auth.api.Auth;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     // Botones flotantes
     private FloatingActionButton fabRestaurant;
+    private FloatingActionButton fabWeekDays;
 
     // Efectos de sonido
     private Sound sound;
@@ -89,6 +92,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        android:theme="@style/AppTheme.NoActionBar"
+        PersistenceChange persistenceChange = new PersistenceChange(true); // habilita la persistencia de datos de firebase (sin conexión)
+        setTheme(R.style.AppTheme_NoActionBar); // Reemplaza el splashScreen (pantalla de arranque)
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         getPregressDialog(getString(R.string.title_alert_init_title), getString(R.string.title_alert_init_message));
@@ -148,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         btnSignOut = (TextView) viewAlert.findViewById(R.id.tvSignOut);
         btnOk = (TextView) viewAlert.findViewById(R.id.tvOk);
         fabRestaurant = (FloatingActionButton) findViewById(R.id.fabRestaurant);
+        fabWeekDays = (FloatingActionButton) findViewById(R.id.fabWeekDays);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(viewAlert);
@@ -160,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         btnSignOut.setOnClickListener(this);
         btnOk.setOnClickListener(this);
         fabRestaurant.setOnClickListener(this);
+        fabWeekDays.setOnClickListener(this);
     }
 
     @Override
@@ -186,7 +194,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(getBaseContext(), getString(R.string.message_error), Toast.LENGTH_SHORT).show();
     }
-    // Para guardar la sesion
+
+    // Para guardar la sesión
     @Override
     protected void onStart() {
         super.onStart();
@@ -280,8 +289,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
                 break;
             case R.id.fabRestaurant:
-//                AlertShowPromotion alertShowPromotion = new AlertShowPromotion(RestaurantViewActivity.this);
                 AlertShowRestaurantsWithPromotion alert = new AlertShowRestaurantsWithPromotion(MainActivity.this);
+                break;
+            case R.id.fabWeekDays:
+                AlertShowWeekDays alertShowWeekDays = new AlertShowWeekDays(MainActivity.this);
                 break;
             default:
                 Toast.makeText(this, getString(R.string.message_invalid_option), Toast.LENGTH_SHORT).show();
@@ -358,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         this.user.setRole(user.getRole()); // Mantiene el rol, y no vuelve a darle uno por defecto
                     }
                 }
-            } catch (Exception e) { // Si no existe el usuario no habrá rol que leer, debe cerrarse la sesión
+            }catch(Exception e) { // Si no existe el usuario no habrá rol que leer, debe cerrarse la sesión
                 Log.e("Error", e.getMessage());
                 signOut();
                 stopRealtimeDatabase();
@@ -377,17 +388,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     @Override
+    public void isSuccess(boolean isSuccess) {
+        // noo se usa
+    }
+
+    @Override
     public void showUserRT(User user) {
         authUser = null;
-        authUser = new AuthUser(user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
-        if(user.getRole().equalsIgnoreCase("admin")) navigationView.getMenu().findItem(R.id.nav_users).setVisible(true);
+//        authUser = new AuthUser(user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
+        authUser = new AuthUser(this, user); // Sirve para identificar al usuario en la lista de comentarios por ejemplo
+        if(Permission.getAuthorize(user.getRole(), Permission.SHOW_USER_LIST))
+            navigationView.getMenu().findItem(R.id.nav_users).setVisible(true);
         else navigationView.getMenu().findItem(R.id.nav_users).setVisible(false);
 
         if(rol.equalsIgnoreCase(user.getRole())){
-            if(!user.getRole().equals("admin") //user.getRole().equals("none") ||
-                    && !user.getRole().equals("collaborator")
-                    && !user.getRole().equals("reader")
-                    && !user.getRole().equals("voter")) {
+            if(!Permission.getAuthorize(user.getRole(), Permission.ACCES_TO_APP)){ // Si no puede acceder a la aplicación
                 Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
                 try {
                     signOut();
@@ -424,7 +439,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         userRealTimePresenter.stopRealtimeDatabase();
     }
 
-    public void sss(View view){
-        Toast.makeText(this, "Lona...............", Toast.LENGTH_SHORT).show();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 }

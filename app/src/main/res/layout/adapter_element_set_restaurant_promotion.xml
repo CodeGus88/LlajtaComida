@@ -58,7 +58,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:background="#AE636363"
+        android:background="#E9E53935"
         android:visibility="gone"/>
 
     <TextView
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="54dp"
             android:orientation="vertical"
-            android:background="#4CAF50"
+            android:background="@color/price"
             android:gravity="center">
             <TextView
                 android:id="@+id/tvPlateOldPrice"
@@ -119,7 +119,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:textColor="#FFFDE8"
+                android:textColor="#FFFFFF"
                 android:textAlignment="center"
                 android:visibility="gone"/>
             <TextView

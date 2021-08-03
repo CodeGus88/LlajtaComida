@@ -164,4 +164,14 @@ public class Sound implements Serializable {
             mediaPlayerDrop.start();
         }
     }
+
+    /**
+     * Si el sonido está asctivado
+     * reproduce sonido GPS
+     */
+    public static void playGPS(){
+        if(volume > 0){
+            mediaPlayerGPS.start();
+        }
+    }
 }

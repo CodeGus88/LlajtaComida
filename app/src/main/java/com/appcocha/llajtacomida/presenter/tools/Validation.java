@@ -1,11 +1,50 @@
 package com.appcocha.llajtacomida.presenter.tools;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.IntentSender;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.database.DatabaseErrorHandler;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.UserHandle;
 import android.util.Log;
+import android.view.Display;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.plate.PlateList;
+import com.appcocha.llajtacomida.view.main.MainActivity;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -265,9 +304,6 @@ public class Validation {
                     float priceJ;
                     if (!stringPriceJ.equals("")) priceJ = Float.parseFloat(stringPriceJ);
                     else priceJ = Float.parseFloat(StringValues.getDefaultPrice());
-
-//                    Log.d("prueba", "i ->" + priceI);
-//                    Log.d("prueba", "j ->" + priceI);
                     if (priceI > priceJ){
                         Restaurant aux = restaurantList.get(i);
                         restaurantList.set(i, restaurantList.get(j));
@@ -280,6 +316,19 @@ public class Validation {
             Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
         }
         return restaurantList;
+    }
+
+    /**
+     * Verifica la conexión a internet
+     * @param context
+     * @return isConnected
+     */
+    public static boolean isConeccted(Context context){
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetWork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetWork != null;
+        if(isConnected) isConnected &= activeNetWork.isConnectedOrConnecting();
+        return isConnected;
     }
 
 }

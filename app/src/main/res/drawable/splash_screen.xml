@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Sirve para la pantalla de arranque-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/colorPrimary"/>
+    <item>
+        <bitmap
+            android:src="@mipmap/splash_screen_text"
+            android:gravity="center"/>
+    </item>
+
+</layer-list>

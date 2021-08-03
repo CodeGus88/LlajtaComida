@@ -30,6 +30,7 @@ import com.appcocha.llajtacomida.presenter.plate.PlateNavegation;
 import com.appcocha.llajtacomida.presenter.restaurant.RestaurantNavegation;
 import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.ByteArrayOutputStream;
@@ -49,7 +50,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
     private static String parentId;
 
     // Para saber si se trata de la galería de platos o restaurantes
-    private String objectName; // Puede ser "plate" o "restaurant"
+//    private String objectName; // Puede ser "plate" o "restaurant"
     private ArrayAdapterImagesGalery arrayAdapterImagesGalery;
 
     // Comprimir foto
@@ -71,18 +72,21 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
         setContentView(R.layout.activity_images_galery);
 
         // Recojer datos de entrada
-        nodeCollectionName = getIntent().getStringExtra("nodeCollectionName");
-        parentName = getIntent().getStringExtra("parentName");
-        parentId = getIntent().getStringExtra("parentId");
+        if(getIntent().hasExtra("nodeCollectionName")) nodeCollectionName = getIntent().getStringExtra("nodeCollectionName");
+        if(getIntent().hasExtra("parentName")) parentName = getIntent().getStringExtra("parentName");
+        if(getIntent().hasExtra("parentId")) parentId = getIntent().getStringExtra("parentId");
         getSupportActionBar().setTitle(parentName);
         getSupportActionBar().setSubtitle(getString(R.string.sub_title_images));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         isAnAdministrator = true;
 
         initComponents();
-        // inicializar presentador
-        presenterImage = new ImagePresenter(this);
-        presenterImage.searchImages(nodeCollectionName, parentId);
+//        if(nodeCollectionName.equals("plates")){
+//            if(!Permissions.getAuthorize(AuthUser.user.getRole(), Permissions.SHOW_PLATE_GALERY)){
+//                Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+//                onBackPressed();
+//            }
+//        }
     }
 
     /**
@@ -98,6 +102,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
      * Inicializa ls componentes
      */
     private void initComponents(){
+
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         gvGalery= (GridView) findViewById(R.id.gvImages);
         tvTitle.setText(getString(R.string.images_title)+ " " + parentName);
@@ -220,11 +225,63 @@ public class ImagesActivity extends AppCompatActivity implements ImageInterface.
             arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(ImagesActivity.this, imagesList, x, y);
             gvGalery.setAdapter(arrayAdapterImagesGalery);
         }catch (Exception e){
-            Log.e("Error", e.getMessage());
+            Log.e("Error: ", e.getMessage());
         }
         if(imagesList.isEmpty()){
             arrayAdapterImagesGalery = new ArrayAdapterImagesGalery(ImagesActivity.this, imagesList, x, y);
             gvGalery.setAdapter(arrayAdapterImagesGalery);
         }
+    }
+
+    /**
+     * Los dos metodos sobreescritos que se vena continuación, recuperan los datos de la actividad
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("nodeCollectionName", nodeCollectionName);
+        outState.putString("parentName", parentName);
+        outState.putString("parentId", parentId);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        nodeCollectionName = savedInstanceState.getString("nodeCollectionName");
+        parentName = savedInstanceState.getString("parentName");
+        parentId = savedInstanceState.getString("parentId");
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            super.onBackPressed();
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+        }catch (Exception e){
+            Log.e("Error:", e.getMessage());
+        }
+    }
+
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Inicializar el presentador
+        // inicializar presentador
+        presenterImage = new ImagePresenter(this);
+        presenterImage.searchImages(nodeCollectionName, parentId);
+        Log.d("cicleLive", "SetPromotion onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        presenterImage.stopRealtimeDatabase();
+        Log.d("cicleLive", "SetPromotion onPause");
     }
 }

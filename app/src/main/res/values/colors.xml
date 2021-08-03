@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<resources>-->
+<!--    <color name="colorPrimary">#03A9F4</color>-->
+<!--    <color name="colorPrimaryDark">#03A9F4</color>-->
+<!--    <color name="colorAccent">#8ED6F6</color>-->
+
+<!--&lt;!&ndash;    Colores de los contenedores     &ndash;&gt;-->
+<!--    <color name="colorPanel">#A603A9F4</color>-->
+
+<!--&lt;!&ndash;    Color usado para el set de promoción, resalta los que sen encuentra en el menu&ndash;&gt;-->
+<!--    <color name="colorItem">#D0F1FF</color>-->
+
+<!--&lt;!&ndash;    Promotion      &ndash;&gt;-->
+<!--    <color name="colorPromotion">#F2FF7043</color>-->
+<!--</resources>-->
+
+
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#03A9F4</color>
-    <color name="colorAccent">#8ED6F6</color>
+<color name="colorPrimary">#F4511E</color>
+<color name="colorPrimaryDark">#FB8C00</color>
+<color name="colorAccent">#FFB300</color>
 
 <!--    Colores de los contenedores     -->
-    <color name="colorPanel">#A603A9F4</color>
+<color name="colorPanel">#FB8C00</color>
 
 <!--    Color usado para el set de promoción, resalta los que sen encuentra en el menu-->
-    <color name="colorItem">#D0F1FF</color>
+<color name="colorItem">#77C0CA33</color>
+<color name="price">#7CB342</color>
 
 <!--    Promotion      -->
-    <color name="colorPromotion">#F2FF7043</color>
+<color name="colorPromotion">#C0CA33</color>
 </resources>

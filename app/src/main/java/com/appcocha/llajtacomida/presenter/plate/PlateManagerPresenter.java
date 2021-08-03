@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.presenter.plate;
 
+import android.content.Context;
+
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
@@ -25,25 +27,22 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
         modelPlateManager = new PlateManagerModel(this);
     }
 
-    @Override
-    public void isSuccess(boolean isSuccess) {
-        viewPlateManager.isSuccess(isSuccess);
-    }
 
+//    public void store(Plate plate, byte[] thumb_byte) {
     @Override
-    public void delete(String plateId) {
-        modelPlateManager.delete(plateId);
-    }
-
-    @Override
-    public void store(Plate plate, byte[] thumb_byte) {
+    public void store(Plate plate, byte[] thumb_byte, Context context) {
         plate.setName(Validation.correctText(plate.getName()));
         if(!Validation.existPlateName(plate.getName()) &&
-            !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
-            !plate.getIngredients().isEmpty() && thumb_byte != null
+                !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
+                !plate.getIngredients().isEmpty() && thumb_byte != null
         ){
             Sound.playLoad();
             modelPlateManager.store(plate, thumb_byte);
+            if(!Validation.isConeccted(context)){
+                ArrayList<Integer> errors = new ArrayList<Integer>();
+                errors.add(R.string.message_error_disconnected);
+                viewPlateManager.report(errors);
+            }
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
             if (!plate.getName().isEmpty()) if(Validation.existPlateName(plate.getName())) errors.add(R.string.message_record_already_exists);
@@ -56,13 +55,29 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
     }
 
     @Override
-    public void update(Plate plate, final byte [] thumb_byte) {
+    public void isSuccess(boolean isSuccess) {
+        viewPlateManager.isSuccess(isSuccess);
+    }
+
+    @Override
+    public void delete(String plateId) {
+        modelPlateManager.delete(plateId);
+    }
+
+    //    public void update(Plate plate, final byte [] thumb_byte) {
+    @Override
+    public void update(Plate plate, final byte [] thumb_byte, Context context) {
         plate.setName(Validation.correctText(plate.getName()));
         if(!Validation.existPlateNameExcludePlateId(plate.getId(), plate.getName()) &&
                 !plate.getName().isEmpty() && !plate.getOrigin().isEmpty() &&
                 !plate.getIngredients().isEmpty()){
             Sound.playLoad();
             modelPlateManager.update(plate, thumb_byte);
+            if(!Validation.isConeccted(context)){
+                ArrayList<Integer> errors = new ArrayList<Integer>();
+                errors.add(R.string.message_error_disconnected);
+                viewPlateManager.report(errors);
+            }
         }else{
             ArrayList<Integer> errors = new ArrayList<Integer>();
             if (!plate.getName().isEmpty()) if(Validation.existPlateNameExcludePlateId(plate.getId(), plate.getName())) errors.add(R.string.message_record_already_exists);
@@ -71,6 +86,5 @@ public class PlateManagerPresenter implements PlateInterface.PresenterPlateManag
             if(plate.getIngredients().isEmpty()) errors.add(R.string.message_ingredients_required);
             viewPlateManager.report(errors);
         }
-
     }
 }

@@ -29,6 +29,7 @@ import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.tools.RandomColor;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -138,7 +139,7 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                 .replace(";", " - ")
                 .replace(":", " - "));
         Glide.with(this).load(restaurant.getUrl()).into(ivRestaurantImage);
-        spTypesOfMaps.setSelection(1);
+//        spTypesOfMaps.setSelection(0);
         btnBack.setOnClickListener(this);
         llData.setOnClickListener(this);
     }
@@ -264,5 +265,23 @@ public class SetLocationMapActivity extends FragmentActivity implements OnMapRea
                 }else cvImage.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("restaurant", restaurant);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        restaurant = (Restaurant) savedInstanceState.getSerializable("restaurant");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 }

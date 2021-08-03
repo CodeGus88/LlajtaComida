@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,8 @@ import com.appcocha.llajtacomida.presenter.tools.ScreenSize;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -70,7 +73,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     private AlertDialog.Builder builder;
 
     // Presentadores
-    private RestaurantManagerPresenter restaurantManagerPresenter;
+    private RestaurantInterface.PresenterRestaurantManager restaurantManagerPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +144,8 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         btnSelectPhoto.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
         btnStore.setOnClickListener(this);
-        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
+//        if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.PUBLISH_ON_OF_RESTAURANT)){
             cbPublic.setVisibility(View.VISIBLE);
             cbPublic.setChecked(true);
         }else{
@@ -198,12 +202,13 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
                 onBackPressed();
                 break;
             case R.id.btnStore:
-                if(AuthUser.getUser().getRole().equalsIgnoreCase("admin")){
-                    storeRestaurant();
-                }else{
-                    builder.show();
-                }
-//                Toast.makeText(this, "Store", Toast.LENGTH_SHORT).show();
+                if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.ADD_RESTAURANT))
+                    if(AuthUser.getUser().getRole().equalsIgnoreCase(Permission.ADMIN)){
+                        storeRestaurant();
+                    }else{
+                        builder.show();
+                    }
+                else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(this, "Invalid option", Toast.LENGTH_SHORT).show();
@@ -217,7 +222,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     private void storeRestaurant(){
         progressDialog.show();
         whriteRestaurant();
-        restaurantManagerPresenter.store(restaurant, thumb_byte);
+        restaurantManagerPresenter.store(restaurant, thumb_byte, this);
     }
 
     /**
@@ -296,7 +301,7 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
     @Override
     public boolean onSupportNavigateUp() {
         Sound.playClick();
-        onBackPressed(); // accion del boton atras del sistema operativo
+        onBackPressed();
         return false;
     }
 
@@ -310,6 +315,10 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         }else{
             progressDialog.dismiss();
             Toast.makeText(this, getString(R.string.message_store_incomplete), Toast.LENGTH_SHORT).show();
+            if(!Validation.isConeccted(this)){
+                Toast.makeText(this, getString(R.string.message_error_disconnected), Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
         }
     }
 
@@ -324,7 +333,8 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
         tilLatLon.setError(null);
         tilDescription.setError(null);
         tilImage.setError(null);
-        Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
+        if(!errors.contains(R.string.message_error_disconnected))
+            Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         for(int error : errors){
             if(error == R.string.message_name_required) tilName.setError(getString(error));
             if(error == R.string.message_owner_name_invalid) tilOwnerName.setError(getString(error));
@@ -334,6 +344,21 @@ public class CreateRestaurantActivity extends AppCompatActivity implements View.
             if(error == R.string.message_coordinates_required) tilLatLon.setError(getString(error));
             if(error == R.string.message_description_required) tilDescription.setError(getString(error));
             if(error == R.string.message_image_required) tilImage.setError(getString(error));
+            if(R.string.message_error_disconnected == error){
+                progressDialog.dismiss();
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        try{
+            super.onBackPressed();
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+        }catch (Exception e){ // falla cuando vuelve a estar conectado
+            Log.e("Error", e.getMessage());
         }
     }
 }

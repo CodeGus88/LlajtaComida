@@ -12,7 +12,7 @@
             android:id="@+id/llfontTitle"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="@mipmap/font_title_home"
+            android:background="@mipmap/font_title_home_dark"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="150dp"
             android:orientation="vertical"

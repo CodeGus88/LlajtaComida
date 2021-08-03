@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,9 @@ import android.widget.Toast;
 
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.PlateInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
@@ -119,7 +123,6 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         Sound.playClick();
         switch (view.getId()){
             case R.id.btnSelectPhoto:
-//                imageSelect();
                 PlateNavegation.showCropImage(this);
                 break;
             case R.id.btnResetPhoto:
@@ -127,7 +130,8 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
                 Glide.with(this).load(plate.getUrl()).into(ivPhoto);
                 break;
             case R.id.btnUpdate:
-                updatePlate();
+                if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_PLATE)) updatePlate();
+                else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnCancel:
                 onBackPressed();
@@ -174,11 +178,13 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
         String name = etName.getText().toString();
         String ingredients = etIngredients.getText().toString();
         String origin = etOrigin.getText().toString();
+//        progressDialog.show();
         progressDialog.show();
         plate.setName(name);
         plate.setIngredients(ingredients);
         plate.setOrigin(origin);
-        plateGestorPresenter.update(plate, thumb_byte);
+//        plateGestorPresenter.update(plate, thumb_byte);
+        plateGestorPresenter.update(plate, thumb_byte, this);
     }
 
     /**
@@ -208,7 +214,8 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
     public void report(ArrayList<Integer> errors) {
         Sound.playError();
         progressDialog.dismiss();
-        Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
+        if(!errors.contains(R.string.message_error_disconnected))
+            Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         textInputLayoutName.setError(null);
         textInputLayoutOrigin.setError(null);
         textInputLayoutIngredients.setError(null);
@@ -217,6 +224,21 @@ public class EditPlateActivity extends AppCompatActivity implements View.OnClick
             if (R.string.message_name_required == error) textInputLayoutName.setError(getString(error));
             if (R.string.message_ingredients_required == error) textInputLayoutIngredients.setError(getString(error));
             if (R.string.message_description_required == error) textInputLayoutOrigin.setError(getString(error));
+            if(R.string.message_error_disconnected == error){
+                progressDialog.dismiss();
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed(){
+        try{
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+            super.onBackPressed();
+        }catch (Exception e){ // falla cuando vuelve a estar conectado
+            Log.e("Error", e.getMessage());
         }
     }
 }

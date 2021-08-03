@@ -1,12 +1,24 @@
 <resources>
     <!-- Base application theme. -->
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--&lt;!&ndash;        <item name="colorPrimary">#2196F3</item>&ndash;&gt;-->
+<!--        <item name="colorPrimaryDark">#CB03A9F4</item>-->
+<!--        <item name="colorPrimary">#CB03A9F4</item>-->
+<!--        <item name="colorAccent">#CB03A9F4</item>-->
+<!--&lt;!&ndash;        <item name="android:windowTranslucentNavigation">true</item>&ndash;&gt;-->
+<!--        <item name="android:navigationBarColor">#143F51B5</item>-->
+
+<!--    </style>-->
+
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">#2196F3</item>-->
-        <item name="colorPrimaryDark">#CB03A9F4</item>
-        <item name="colorPrimary">#CB03A9F4</item>
-        <item name="colorAccent">#CB03A9F4</item>
-<!--        <item name="android:windowTranslucentNavigation">true</item>-->
+        <!--        <item name="colorPrimary">#2196F3</item>-->
+        <item name="colorPrimaryDark">#F4511E</item>
+        <item name="colorPrimary">#F65623</item>
+        <item name="colorAccent">#FFB300</item>
+        <!--        <item name="android:windowTranslucentNavigation">true</item>-->
         <item name="android:navigationBarColor">#143F51B5</item>
 
     </style>
@@ -19,5 +31,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+<!--    Splash  (pantalla de arranque del programa) -->
+    <style name="splashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+    </style>
 
 </resources>

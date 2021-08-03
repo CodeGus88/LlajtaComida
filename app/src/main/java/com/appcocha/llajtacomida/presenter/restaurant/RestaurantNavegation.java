@@ -14,6 +14,7 @@ import com.appcocha.llajtacomida.view.restaurants.RestaurantPublicOfActivity;
 import com.appcocha.llajtacomida.view.restaurants.RestaurantViewActivity;
 import com.appcocha.llajtacomida.view.restaurants.SetMenuActivity;
 import com.appcocha.llajtacomida.view.restaurants.SetPromotionsActivity;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -29,6 +30,7 @@ public class RestaurantNavegation {
     public static void showCreatedRestaurantView(Context context){
         Intent intent = new Intent(context, CreateRestaurantActivity.class);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -42,6 +44,7 @@ public class RestaurantNavegation {
         intent.putExtra("uri", uri);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // 0Quitamos el mapa de la pila de actividades
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -55,6 +58,7 @@ public class RestaurantNavegation {
             .setRequestedSize(1023, 700)
             .setAspectRatio(3, 2)
             .start(context);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -66,6 +70,7 @@ public class RestaurantNavegation {
         Intent intent = new Intent(context, RestaurantViewActivity.class);
         intent.putExtra("id", restaurantId);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -78,6 +83,7 @@ public class RestaurantNavegation {
         intent.putExtra("id", restaurant.getId());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Quitamos el mapa de la pila de actividades
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -90,6 +96,7 @@ public class RestaurantNavegation {
         intent.putExtra("restaurant", restaurant);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Quitamos el mapa de la pila de actividades
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -104,6 +111,7 @@ public class RestaurantNavegation {
         intent.putExtra("uri", uri);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Quitamos el mapa de la pila de actividades
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -118,6 +126,7 @@ public class RestaurantNavegation {
         intent.putExtra("parentName", parentName); // El nombre de l restaurante
         intent.putExtra("parentId", parentId);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -129,6 +138,7 @@ public class RestaurantNavegation {
         Intent intent = new Intent(context, SetMenuActivity.class);
         intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -140,6 +150,7 @@ public class RestaurantNavegation {
         Intent intent = new Intent(context, SetPromotionsActivity.class);
         intent.putExtra("restaurant", restaurant);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -149,5 +160,6 @@ public class RestaurantNavegation {
     public static void showRestPublicOf(Context context){
         Intent intent = new Intent(context, RestaurantPublicOfActivity.class);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 }

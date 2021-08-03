@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 
 import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,12 +47,19 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
         try{
             if(!user.getId().equals("")){
                 this.user = user;
-                databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap());
+                databaseReference.child("App").child("users").child(this.user.getId()).updateChildren(this.user.toMap()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        presenterUser.isSuccess(task.isSuccessful());
+                    }
+                });
             }else{
                 Log.e("Error", "Not found user id");
+                presenterUser.isSuccess(false);
             }
         }catch(Exception e){
             Log.e("Error", e.getMessage());
+            presenterUser.isSuccess(false);
         }
     }
 
@@ -87,5 +96,4 @@ public class UserModel implements UserInterface.ModelUser, ValueEventListener {
     public void onCancelled(@NonNull DatabaseError error) {
         Log.e("Error", "--------------------------------------------------------> "+error.getMessage());
     }
-
 }

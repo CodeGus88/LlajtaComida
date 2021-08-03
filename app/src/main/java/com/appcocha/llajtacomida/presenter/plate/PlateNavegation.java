@@ -11,6 +11,7 @@ import com.appcocha.llajtacomida.view.images.ImagesActivity;
 import com.appcocha.llajtacomida.view.plates.CreatePlateActivity;
 import com.appcocha.llajtacomida.view.plates.EditPlateActivity;
 import com.appcocha.llajtacomida.view.plates.PlateViewActivity;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -26,6 +27,7 @@ public class PlateNavegation {
     public static void showCreatedPlateView(Context context) {
         Intent intent = new Intent(context, CreatePlateActivity.class);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -37,6 +39,7 @@ public class PlateNavegation {
         Intent intent = new Intent(context, EditPlateActivity.class);
         intent.putExtra("plate", plate);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -48,6 +51,7 @@ public class PlateNavegation {
         Intent intent = new Intent(context, PlateViewActivity.class);
         intent.putExtra("id", plate.getId());
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -61,6 +65,7 @@ public class PlateNavegation {
                 .setRequestedSize(1023, 700)
                 .setAspectRatio(3, 2)
                 .start(context);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
 
     /**
@@ -75,5 +80,7 @@ public class PlateNavegation {
         intent.putExtra("parentName", parentName); // El nombre el plato
         intent.putExtra("parentId", parentId);
         context.startActivity(intent);
+        Animatoo.animateFade(context); //Animación al cambiar de actividad
     }
+
 }

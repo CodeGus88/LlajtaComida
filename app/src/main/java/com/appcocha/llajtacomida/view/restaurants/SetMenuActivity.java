@@ -26,6 +26,9 @@ import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterSetMenu;
 import com.appcocha.llajtacomida.presenter.restaurant.SetMenuListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 
 import java.util.ArrayList;
 
@@ -47,7 +50,7 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
     private Button btnAlertCancel, btnAlertAdd;
     private int position;
     // Permisos
-    private boolean isAdministrator, isAuthor;
+//    private boolean isAdministrator, isAuthor;
     private ArrayAdapterSetMenu arrayAdapterSetMenu;
 
     // presentador
@@ -61,8 +64,8 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         plateList = new ArrayList<Plate>();
         // Premisos
-        isAdministrator = true;
-        isAuthor = true;
+//        isAdministrator = true;
+//        isAuthor = true;
 
         Intent intent = getIntent();
         if(intent.hasExtra("restaurant")){
@@ -76,9 +79,12 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         initComponents();
         tvTitle.setText(getString(R.string.menu_title) + " " + restaurant.getName());
 
-        // Inicializar el presentador
-        setMenuListPresenter = new SetMenuListPresenter(this);
-        setMenuListPresenter.searchSetMenuList(restaurant.getId());
+        if(!Permission.getAuthorize(AuthUser.user.getRole()
+                , Permission.SHOW_SET_RESTAURANT_MENU
+                , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     /**
@@ -149,10 +155,12 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
      * @param menu
      */
     private void initIconMenu(Menu menu){
-        if(isAdministrator || isAuthor){
-            iconSave = (MenuItem)  menu.findItem(R.id.iconSave);
-            iconSave.setVisible(true);
-        }
+            if(Permission.getAuthorize(AuthUser.user.getRole()
+                , Permission.WRITE_RESTAURANT_MENU
+                , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
+                iconSave = (MenuItem)  menu.findItem(R.id.iconSave);
+                iconSave.setVisible(true);
+            }
     }
 
     @Override
@@ -160,9 +168,12 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         Sound.playClick();
         switch (item.getItemId()){
             case R.id.iconSave:
-                setMenuListPresenter.saveMenuList(restaurant.getId(), arrayAdapterSetMenu.getMenu()); // this
-                setMenuListPresenter.stopRealTimeDatabase();
-                onBackPressed();
+                if(Permission.getAuthorize(AuthUser.user.getRole()
+                        , Permission.WRITE_RESTAURANT_MENU
+                        , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
+                    setMenuListPresenter.saveMenuList(restaurant.getId(), arrayAdapterSetMenu.getMenu()); // this
+                    onBackPressed();
+                }else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Log.d("Null", getString(R.string.message_invalid_option));
@@ -183,15 +194,16 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
      */
     @Override
     public boolean onSupportNavigateUp() {
-        setMenuListPresenter.stopRealTimeDatabase();
+//        setMenuListPresenter.stopRealTimeDatabase();
         onBackPressed(); // accion del boton atras del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-        setMenuListPresenter.stopRealTimeDatabase();
+//        setMenuListPresenter.stopRealTimeDatabase();
         super.onBackPressed();
+        Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
 
     @Override
@@ -203,5 +215,24 @@ public class SetMenuActivity extends AppCompatActivity implements RestaurantInte
         }else if(v.getId() == R.id.btnAlertCancel){
             alertDialog.dismiss();
         }
+    }
+
+
+    // Ciclos de vida para el reinicio de los presentadores
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Inicializar el presentador
+        setMenuListPresenter = new SetMenuListPresenter(this);
+        setMenuListPresenter.searchSetMenuList(restaurant.getId());
+        Log.d("cicleLive", "SetMenu onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        setMenuListPresenter.stopRealTimeDatabase();
+        Log.d("cicleLive", "SetMenu onPause");
     }
 }

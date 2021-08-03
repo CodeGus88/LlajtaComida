@@ -36,4 +36,13 @@ public class StringValues {
     public static String getPresentationTime(){
         return "3000"; // milisegundos
     }
+
+    /**
+     * Establece el lugar de referencias, (especificación en el mapa del get)
+     * @return country
+     */
+    public static String getCityReference(){
+        return "Cochabamba";
+    }
+
 }

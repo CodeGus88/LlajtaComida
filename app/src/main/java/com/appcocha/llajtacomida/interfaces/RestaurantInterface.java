@@ -1,5 +1,7 @@
 package com.appcocha.llajtacomida.interfaces;
 
+import android.content.Context;
+
 import com.appcocha.llajtacomida.model.restaurant.menu.Menu;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
@@ -488,14 +490,14 @@ public interface RestaurantInterface {
          * @param restaurant
          * @param thumb_byte
          */
-        void store(Restaurant restaurant, final byte [] thumb_byte);
+        void store(Restaurant restaurant, final byte [] thumb_byte, Context context);
 
         /**
          * Determina actualizar un restaurante en la BD
          * @param restaurant
          * @param thumb_byte
          */
-        void update(Restaurant restaurant, final byte [] thumb_byte);
+        void update(Restaurant restaurant, final byte [] thumb_byte, Context context);
     }
 
     /**

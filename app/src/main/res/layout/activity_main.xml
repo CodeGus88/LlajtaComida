@@ -32,22 +32,26 @@
         android:id="@+id/famMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/drawer_layout"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        app:fab_addButtonColorNormal="@color/colorPromotion">
-<!--        app:fab_addButtonColorPressed="@color/colorPromotion"-->
+        app:fab_addButtonColorNormal="@color/colorPromotion"
+        android:layout_marginBottom="-8dp"
+        app:fab_colorPressed="@color/colorPrimary">
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabRestaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_offers"
-            app:fab_colorNormal="@color/colorPromotion"/>
-
-<!--        <com.getbase.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/fabPlate"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:fab_colorNormal="@color/colorPromotion"/>-->
+            android:src="@mipmap/loudspeaker"
+            app:fab_colorNormal="@color/colorPromotion"
+            app:fab_colorPressed="@color/colorPrimary"/>
+<!--        app:fab_size="mini"-->
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabWeekDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/colorPromotion"
+            android:src="@mipmap/calendar"
+            app:fab_colorPressed="@color/colorPrimary"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

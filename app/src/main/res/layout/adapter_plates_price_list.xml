@@ -41,8 +41,8 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:textColor="#FFFDE8"
-            android:background="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:background="@color/price"
             android:textAlignment="center"/>
     </androidx.cardview.widget.CardView>
 

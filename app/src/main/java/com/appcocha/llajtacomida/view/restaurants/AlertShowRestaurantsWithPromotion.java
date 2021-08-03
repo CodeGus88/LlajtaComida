@@ -1,9 +1,11 @@
 package com.appcocha.llajtacomida.view.restaurants;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -24,6 +26,7 @@ public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, 
 
     private AlertDialog alertDialog;
     private MainActivity activity;
+    private TextView tvRestaurantCount;
     private ListView lvRestaurants;
     private Button btnClose;
     private ArrayAdapterRestaurant arrayAdapterRestaurant;
@@ -33,6 +36,7 @@ public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, 
     public AlertShowRestaurantsWithPromotion(MainActivity activity){
         this.activity = activity;
         View viewAlert = activity.getLayoutInflater().inflate(R.layout.alert_show_restaurant_promotion_list, null);
+        tvRestaurantCount = (TextView) viewAlert.findViewById(R.id.tvRestaurantCount);
         lvRestaurants = (ListView) viewAlert.findViewById(R.id.lvRestaurants);
         btnClose = (Button) viewAlert.findViewById(R.id.btnClose);
 
@@ -42,7 +46,7 @@ public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, 
         alertDialog.setView(viewAlert);
         btnClose.setOnClickListener(this);
         restaurantList = new ArrayList<Restaurant>();
-        // lv
+
         presenterRestaurantWithPromotion = new RestaurantsWithPromotionPresenter(this);
         presenterRestaurantWithPromotion.filterRestaurantWithPromotion();
         lvRestaurants.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,9 +57,14 @@ public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, 
                 RestaurantNavegation.showRestaurantView(activity, restaurantList.get(position).getId());
             }
         });
+        alertDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                presenterRestaurantWithPromotion.stopRealTimeDatabase();
+            }
+        });
         alertDialog.show();
     }
-
 
     @Override
     public void onClick(View v) {
@@ -70,6 +79,7 @@ public class AlertShowRestaurantsWithPromotion implements View.OnClickListener, 
     @Override
     public void showRestaurantsWithPromotion(ArrayList<Restaurant> restaurantList){
         restaurantList = Validation.getRestaurantsOrderByPunctuation(restaurantList);
+        tvRestaurantCount.setText("("+restaurantList.size()+" "+activity.getString(R.string.tv_restaurants_found)+")");
         this.restaurantList = restaurantList;
         arrayAdapterRestaurant = new ArrayAdapterRestaurant(activity, R.layout.adapter_element_list, restaurantList);
         lvRestaurants.setAdapter(arrayAdapterRestaurant);

@@ -5,6 +5,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -14,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +28,8 @@ import com.appcocha.llajtacomida.interfaces.UserInterface;
 import com.appcocha.llajtacomida.model.user.User;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.user.ArrayAdapterUser;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.appcocha.llajtacomida.presenter.user.UserNavegation;
 import com.appcocha.llajtacomida.presenter.user.UserPresenter;
 import com.bumptech.glide.Glide;
@@ -54,6 +61,8 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
     private Button btnSave;
     private Button btnCancel;
 
+    private MenuItem iconSearch;
+
     // Adaptador
     private ArrayAdapterUser arrayAdapterUser;
     private ArrayList<User> userList;
@@ -72,10 +81,11 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
                              Bundle savedInstanceState) {
         Sound.playClick();
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true); // para el funcionamiento de los iconos
         view = inflater.inflate(R.layout.fragment_user_list, container, false);
         userList = new ArrayList<User>();
-        userPresenter = new UserPresenter(this);
-        userPresenter.loadUserList();
+//        userPresenter = new UserPresenter(this);
+//        userPresenter.loadUserList();
 
         initComponents();
         return view;
@@ -168,9 +178,18 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
             this.userList = userList;
             arrayAdapterUser = new ArrayAdapterUser(getContext(), R.layout.adapter_user_list, userList);
             lvUserList.setAdapter(arrayAdapterUser);
+            if(!etSearch.getText().toString().isEmpty() && etSearch.getVisibility() == View.VISIBLE)
+                arrayAdapterUser.filter(etSearch.getText().toString(), etSearch.getText().toString().length()-1);
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void isSuccess(boolean isSuccess) {
+        if(isSuccess)
+            Toast.makeText(getContext(), getContext().getString(R.string.message_processed_correct), Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getContext(), getContext().getString(R.string.message_error), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -181,9 +200,11 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
                 alertDialog.dismiss();
                 break;
             case R.id.btnSave:
-                changeUser();
-                userPresenter.storeUser(user);
-                alertDialog.dismiss();
+                if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_USER_ROL)){
+                    changeUser();
+                    userPresenter.storeUser(user);
+                    alertDialog.dismiss();
+                }else Toast.makeText(getContext(), getContext().getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tvEmail:
                 UserNavegation.openMail(getContext(), tvEmail.getText().toString());
@@ -228,9 +249,60 @@ public class UserListFragment extends Fragment implements UserInterface.ViewUser
         }
     }
 
+
+    /**
+     * Inicializa los íconos del del toolbar
+     * @param menu
+     * @param inflater
+     */
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.main, menu);
+        iconSearch = (MenuItem) menu.findItem(R.id.iconSearch);
+        iconSearch.setVisible(true);
+    }
+
+    /**
+     * Este método es el oyente de las acciones de los íconos
+     * @param item
+     * @return onOptionsItemSelected
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.iconSearch:
+                if (etSearch.getVisibility() == View.GONE && userList != null) {
+                    etSearch.setVisibility(View.VISIBLE);
+                    etSearch.setText(null);
+                    etSearch.setFocusable(true);
+                    etSearch.requestFocus();
+                }else {
+                    etSearch.setVisibility(View.GONE);
+                    // Para que vuelga a cargar la lista (0 es cualquier numero)
+//                    if(arrayAdapterPlate != null) arrayAdapterPlate.filter("", 0);
+                    if(arrayAdapterUser != null) arrayAdapterUser.filter("", 0);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    // Ciclos de vida para el reinicio de los presentadores\
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userPresenter = new UserPresenter(this);
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_USER_LIST)) userPresenter.loadUserList();
+        else Toast.makeText(getContext(), getContext().getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+        Log.d("cicleLive", "onResume");
+    }
+
     @Override
     public void onPause() {
-        super.onPause();
         userPresenter.stopRealtimeDatabase();
+        super.onPause();
     }
 }

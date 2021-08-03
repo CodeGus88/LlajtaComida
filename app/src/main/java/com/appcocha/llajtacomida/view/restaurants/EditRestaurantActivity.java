@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,9 @@ import android.widget.Toast;
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.Validation;
+import com.appcocha.llajtacomida.presenter.user.AuthUser;
+import com.appcocha.llajtacomida.presenter.user.Permission;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
 import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
@@ -78,6 +82,11 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         whriteForm();
 
         restaurantManagerPresenter = new RestaurantManagerPresenter(this);
+        if(! Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_RESTAURANT,
+                restaurant.getAuthor().equals(AuthUser.getUser().getId()))){
+            Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
+            onBackPressed();
+        }
     }
 
     /**
@@ -204,7 +213,10 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
                 Glide.with(this).load(restaurant.getUrl()).into(ivPhoto);
                 break;
             case R.id.btnUpdate:
-                updateRestaurant();
+                if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_RESTAURANT,
+                        restaurant.getAuthor().equals(AuthUser.getUser().getId())))
+                    updateRestaurant();
+                else Toast.makeText(this, getString(R.string.does_not_have_the_permission), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnCancel:
                 onBackPressed();
@@ -219,7 +231,7 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
     private void updateRestaurant(){
         whriteRestaurant();
         progressDialog.show();
-        restaurantManagerPresenter.update(restaurant, thumb_byte);
+        restaurantManagerPresenter.update(restaurant, thumb_byte, this);
     }
 
     /**
@@ -274,6 +286,10 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         }else{
             progressDialog.dismiss();
             Toast.makeText(this, getString(R.string.message_update_incomplete), Toast.LENGTH_SHORT).show();
+            if(!Validation.isConeccted(this)){
+                Toast.makeText(this, getString(R.string.message_error_disconnected), Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
         }
     }
 
@@ -287,7 +303,8 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
         tilAddress.setError(null);
         tilLatLon.setError(null);
         tilDescription.setError(null);
-        Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
+        if(!errors.contains(R.string.message_error_disconnected))
+            Toast.makeText(this, getString(R.string.message_check_the_fileds), Toast.LENGTH_SHORT).show();
         for(int error : errors){
             if(error == R.string.message_name_required) tilName.setError(getString(error));
             if(error == R.string.message_owner_name_invalid) tilOwnerName.setError(getString(error));
@@ -296,6 +313,21 @@ public class EditRestaurantActivity extends AppCompatActivity implements View.On
             if(error == R.string.message_address_required) tilAddress.setError(getString(error));
             if(error == R.string.message_coordinates_required) tilLatLon.setError(getString(error));
             if(error == R.string.message_description_required) tilDescription.setError(getString(error));
+            if(R.string.message_error_disconnected == error){
+                progressDialog.dismiss();
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                onBackPressed();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        try{
+            super.onBackPressed();
+            Animatoo.animateFade(this); //Animación al cambiar de actividad
+        }catch (Exception e){ // falla cuando vuelve a estar conectado
+            Log.e("Error", e.getMessage());
         }
     }
 }
