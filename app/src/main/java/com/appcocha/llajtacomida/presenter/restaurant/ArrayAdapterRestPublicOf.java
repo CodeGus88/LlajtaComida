@@ -71,7 +71,7 @@ public class ArrayAdapterRestPublicOf  extends ArrayAdapter<Restaurant>{
 
             // Botones
             Button btnPublish = (Button) view.findViewById(R.id.btnPublish);
-            Button btnDelete = (Button) view.findViewById(R.id.btnDelete);
+            Button btnDelete = (Button) view.findViewById(R.id.btnAlertDelete);
             Button btnEdit = (Button) view.findViewById(R.id.btnEdit);
             Button btnAuthor = (Button) view.findViewById(R.id.btnAuthor);
             // Cargar...

@@ -54,6 +54,7 @@ import com.zolad.zoominimageview.ZoomInImageView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Vista, muestra un restaurante
@@ -65,9 +66,9 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     public final int MAX_LINES = 2;
     private static final int TIME_ANIMATION = Integer.parseInt(StringValues.getPresentationTime());
     private final String IMAGES_ANIMATION_FILE = "IMAGES_ANIMATION_FILE";
-
+    private boolean sharePresed = false; // Bandera para saber cuando se abrió el diálogo para compartir (evita que reanude los presentadores en onResume)
     //iconos
-    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPromotionRestaurant, iconPublish;
+    private MenuItem iconEdit, iconDelete, iconGalery, iconMenuRestaurant, iconPromotionRestaurant, iconPublish,  iconShare;
     private Restaurant restaurant;
     // components
     private ImageButton btnNext;
@@ -89,6 +90,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private ArrayAdapterPlatePrice arrayAdapterPlatePrice;
     private ArrayAdapterPromotion arrayAdapterPromotions;
     private ArrayList<Plate> menuPlateList;
+    private ArrayList<String> menuPrice;
     private ArrayList<Plate> promotionPlateList;
     private Promotion promotion;
     private com.appcocha.llajtacomida.model.restaurant.menu.Menu menu; // para obtener los precios (sin promoción) en la promo
@@ -124,13 +126,12 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         initComponents();
 //        loadImages();
         menuPlateList = new ArrayList<Plate>();
+        menuPrice = new ArrayList<String>();
         promotionPlateList = new ArrayList<Plate>();
         promotion = new Promotion();
         menu = new com.appcocha.llajtacomida.model.restaurant.menu.Menu();
 
-//       initPresenters();
        initRatingFragment();
-//        if(!Permissions.getAuthorize(AuthUser.user.getRole(), Permissions.SHOW_RESTAURANT)){
         if(!Permission.getAuthorize(AuthUser.getUser(this).getRole(), Permission.SHOW_RESTAURANT)){
             Toast.makeText(this, getString(R.string.access_denied_message), Toast.LENGTH_SHORT).show();
             onBackPressed();
@@ -156,25 +157,27 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
      *Inicializa los presentadores
      */
     private void initPresenters() {
-        restPlateListPresenter = new RestPlateListPresenter(this);
-        restPlateListPresenter.filterPlateListInMenu(id);
-        promotionListPresenter = new PromotionListPresenter(this);
-        promotionListPresenter.filterPlateListInPromotion(id);
-        restaurantPresenter = new RestaurantPresenter(this);
-        restaurantPresenter.searchRestaurant(id);
-        imagePresenter = new ImagePresenter(this);
-        final String NODE_COLECTION = "restaurants";
-        imagePresenter.searchImages(NODE_COLECTION, id);
-        restaurantManagerPresenter = new RestaurantManagerPresenter(this);
+            restPlateListPresenter = new RestPlateListPresenter(this);
+            restPlateListPresenter.filterPlateListInMenu(id);
+            promotionListPresenter = new PromotionListPresenter(this);
+            promotionListPresenter.filterPlateListInPromotion(id);
+            restaurantPresenter = new RestaurantPresenter(this);
+            restaurantPresenter.searchRestaurant(id);
+            imagePresenter = new ImagePresenter(this);
+            final String NODE_COLECTION = "restaurants";
+            imagePresenter.searchImages(NODE_COLECTION, id);
+            restaurantManagerPresenter = new RestaurantManagerPresenter(this);
     }
 
     /**
      * Inicializa la animación automática
      */
-    private void initAnimation(){
-        viewFlipper.setDisplayedChild(0);
-        viewFlipper.setFlipInterval(TIME_ANIMATION);
-        viewFlipper.startFlipping();
+    private void initAnimation(int item){
+        if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE) && viewFlipper.getChildCount()>1 && !viewFlipper.isFlipping()){
+            viewFlipper.setDisplayedChild(item);
+            viewFlipper.setFlipInterval(TIME_ANIMATION);
+            viewFlipper.startFlipping();
+        }
     }
 
     /**
@@ -222,13 +225,11 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         btnNext.setOnClickListener(this);
         btnMenuEdit.setOnClickListener(this);
         btnMarkersView.setOnClickListener(this);
-//        btnVisit.setOnClickListener(this);
         viewFlipper = (ViewFlipper) findViewById(R.id.vfCarrucel);
         tvName.setOnClickListener(this);
         toast = new Toast(this);
         llDescription.setOnClickListener(this);
         tvOriginAndDescription.setMaxLines(MAX_LINES);
-
     }
 
 
@@ -238,7 +239,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private void loadVisivilityIcons(){
         if(iconEdit != null && iconDelete != null && iconGalery != null
                 && iconMenuRestaurant != null && iconPromotionRestaurant != null
-                && iconPublish !=  null){
+                && iconPublish !=  null && iconShare != null){
             if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_RESTAURANT,
                     AuthUser.getUser().getId().equals(restaurant.getAuthor())))
                 iconEdit.setVisible(true);
@@ -275,35 +276,24 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                     iconPublish.setTitle(getString(R.string.icon_public_on));
                 }
             }else iconPublish.setVisible(false);
+
+            if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_PLATE))
+                iconShare.setVisible(true);
+            else iconShare.setVisible(false);
         }
     }
-
-//    /**
-//     * Sirve para alternar el ícono de publicar o dejar de publicar
-//     */
-//    private void changeIcon() {
-//        if(restaurant != null)
-//            if(restaurant.isPublic()){
-//                iconPublish.setIcon(R.drawable.icon_public);
-//            }else{
-//                iconPublish.setIcon(R.drawable.icon_public_off);
-//            }
-//        else Toast.makeText(this, "Loading..." + restaurant, Toast.LENGTH_SHORT).show();
-//    }
 
     /**
      * Captura de acción del boton atras <- de la barra superior
      */
     @Override
     public boolean onSupportNavigateUp() {
-//        stopRealtimeDatabase();
-        this.onBackPressed(); // accion del boton atras del sistema operativo
+        this.onBackPressed(); // acción del boton atrás del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-//        stopRealtimeDatabase();
         try {
             super.onBackPressed();
             Animatoo.animateFade(this); //Animación al cambiar de actividad
@@ -332,7 +322,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.btnMenuEdit:
                 RestaurantNavegation.showMenu(this, restaurant);
                 break;
-//            case R.id.btnVisit:
             case R.id.btnMarkersView:
                 MapNavegation.showSetLocationMapActivity(this, restaurant);
                 break;
@@ -390,6 +379,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         iconMenuRestaurant = (MenuItem) menu.findItem(R.id.iconMenuRestaurant);
         iconPromotionRestaurant = (MenuItem) menu.findItem(R.id.iconPromotionsRestaurant);
         iconPublish = (MenuItem) menu.findItem(R.id.iconPublish);
+        iconShare = (MenuItem) menu.findItem(R.id.iconShare);
         if(restaurant != null) // Si le ganó el presentador recarga los ícnos
         loadVisivilityIcons();
         return super.onCreateOptionsMenu(menu);
@@ -417,8 +407,13 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
             case R.id.iconPublish:
                 restaurantPresenter.update(this, restaurant); // publica o despublica
                 break;
+            case R.id.iconShare:
+                RestaurantNavegation.showShare(this, restaurant, "", menuPlateList, menuPrice);
+                sharePresed = true;
+                break;
             default:
                 Log.e("null", "Invalid option");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -439,7 +434,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                 galeryDatabase.deleteAllData(); // es un metodo estatico
                 Toast.makeText(RestaurantViewActivity.this, getString(R.string.message_deleting), Toast.LENGTH_SHORT).show();
                 restaurantManagerPresenter.delete(restaurant.getId());
-//                stopRealtimeDatabase();
                 onBackPressed();
             }
         });
@@ -477,7 +471,6 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         }
     }
 
-
     /**
      * Carga la lista de platos de su menu
      * @param list
@@ -485,6 +478,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     @Override
     public void showPlateList(ArrayList<Plate> list, ArrayList<String> menuPrice) {
        try {
+           this.menuPrice = menuPrice;
            menuPlateList.clear();
            menuPlateList.addAll(list);
            arrayAdapterPlatePrice = new ArrayAdapterPlatePrice(this, R.layout.adapter_plates_price_list, list, menuPrice);
@@ -537,10 +531,8 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
         try {
             if(viewFlipper != null){
                 viewFlipper.clearAnimation();
-                viewFlipper.clearAnimation();
-                for(int i = 1; i < viewFlipper.getChildCount(); i ++){
-                    viewFlipper.removeViewAt(i);
-                }
+                while(viewFlipper.getChildCount()>1)
+                    viewFlipper.removeViewAt(1);
                 viewFlipper.stopFlipping();
             }
             for (Image image:imagesList) {
@@ -557,11 +549,17 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
                             new ViewGroup.LayoutParams((int) (width * 0.984), (int) (height * 0.984))
                     );
                     viewFlipper.addView(cv);
-                    if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)) initAnimation();
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());
                 }
             }
+            // Verifica estado de presentación (activado o desactivado)
+            int randomItem = 0;
+            if(viewFlipper.getChildCount() > 1){
+                Random random = new Random();
+                randomItem = random.nextInt((viewFlipper.getChildCount()-1) + 0) + 0;
+            }
+            initAnimation(randomItem);
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -573,7 +571,7 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     private void stopRealtimeDatabase(){
         restPlateListPresenter.stopRealtimeDatabse();
         imagePresenter.stopRealtimeDatabase();
-        restaurantPresenter.stopRealtimeDatabse();
+        restaurantPresenter.stopRealtimeDatabase();
         ratingRecordFragment.stopRealtimeDatabase();
         favoriteObjectFragment.stopRealtimeDatabase();
     }
@@ -608,8 +606,23 @@ public class RestaurantViewActivity extends AppCompatActivity implements View.On
     @Override
     protected void onResume() {
         super.onResume();
-        initPresenters();
+        if(!sharePresed || !isInitAllPresenters()) initPresenters();
+        else sharePresed = false;
         Log.d("cicleLive", "onResume");
+    }
+
+    /**
+     * Verifica si todos los presentadores están inicializados
+     * @return isAllInit
+     */
+    private boolean isInitAllPresenters(){
+        boolean isAllInit = true;
+        isAllInit &= restPlateListPresenter != null;
+        isAllInit &= promotionListPresenter != null;
+        isAllInit &= restaurantPresenter != null;
+        isAllInit &= imagePresenter != null;
+        isAllInit &= restaurantManagerPresenter != null;
+        return isAllInit;
     }
 
     @Override

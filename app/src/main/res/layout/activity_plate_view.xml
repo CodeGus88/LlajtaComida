@@ -18,11 +18,11 @@
             android:orientation="vertical">
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="8dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="0dp">
                 <ViewFlipper
                     android:id="@+id/vfCarrucel"
                     android:layout_width="match_parent"

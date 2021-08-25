@@ -3,8 +3,6 @@
  import android.content.Context;
  import android.graphics.Color;
  import android.graphics.Paint;
- import android.graphics.drawable.ColorDrawable;
- import android.graphics.drawable.Drawable;
  import android.view.LayoutInflater;
  import android.view.View;
  import android.view.ViewGroup;
@@ -15,7 +13,6 @@
 
  import androidx.annotation.NonNull;
  import androidx.annotation.Nullable;
- import androidx.cardview.widget.CardView;
 
  import com.appcocha.llajtacomida.R;
  import com.appcocha.llajtacomida.model.plate.Plate;
@@ -34,25 +31,25 @@
 
      private final Context context;
      private final int resource;
-     private ArrayList<Plate> plateList;
-     private ArrayList<Plate> plateListCopy;
+     private final ArrayList<Plate> plateList;
+     private final ArrayList<Plate> plateListCopy;
      private final Menu menu;
      private final Promotion promotion;
 
      /**
       * Constructor, inicializa context, resource, platesList, menu
-      * @param context
-      * @param resource
-      * @param platesList
-      * @param menu
-      * @param promotion
+      * @param context contexto
+      * @param resource código de recurso xml
+      * @param platesList lista de platos
+      * @param menu menú de platos
+      * @param promotion prooción de platos del restaurante
       */
      public ArrayAdapterSetPromotions(@NonNull Context context, int resource, ArrayList<Plate> platesList, final Menu menu, Promotion promotion) {
          super(context, resource, platesList);
          this.context = context;
          this.resource = resource;
          this.plateList = platesList;
-         this.plateListCopy = new ArrayList<Plate>();
+         this.plateListCopy = new ArrayList<>();
          this.plateListCopy.addAll(platesList);
          this.menu = menu;
          this.promotion = promotion;
@@ -68,9 +65,8 @@
          RelativeLayout rlItem = (RelativeLayout) view.findViewById(R.id.rlItem);
          ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
          TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-         TextView tvPromotionDescription = (TextView) view.findViewById(R.id.tvPromotionDescription);
+         TextView tvPromotionDescription = (TextView) view.findViewById(R.id.tvDescription);
          TextView tvPromotionTitle = (TextView) view.findViewById(R.id.tvPromotionTitle);
-         CardView cvPrice = (CardView) view.findViewById(R.id.cvPrice);
          TextView tvPlateNewPrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
          TextView tvPlateOldPrice = (TextView) view.findViewById(R.id.tvPlateOldPrice);
 
@@ -79,16 +75,16 @@
          if(existInMenu(plateList.get(position).getId())) rlItem.setBackgroundColor(context.getResources().getColor(R.color.colorItem));
          else rlItem.setBackgroundColor(Color.WHITE);
 
-         if(existInPromotion(plateList.get(position).getId())){
-             String newPrice = getNewAtribute(plateList.get(position).getId(), "price")
+         if(promotion.existInList(plateList.get(position).getId())){
+             String newPrice = String.valueOf(promotion.getPromotionElement(plateList.get(position).getId()).getPrice())
                      .replace(".0", "").replace("-1", "");
              String oldPrice = getOldPrice(plateList.get(position).getId());
              if(!newPrice.isEmpty()){
-                 tvPlateNewPrice.setText(newPrice + " " + context.getString(R.string.type_currency));
+                 tvPlateNewPrice.setText(newPrice.replace("_", ", ") + " " + context.getString(R.string.type_currency));
                  tvPlateNewPrice.setVisibility(View.VISIBLE);
              }else tvPlateNewPrice.setVisibility(View.GONE);
-             if(!oldPrice.isEmpty()){
-                 tvPlateOldPrice.setText(oldPrice+ " " + context.getString(R.string.type_currency));
+             if(!oldPrice.isEmpty() && promotion.getPromotionElement(plateList.get(position).getId()).isShowOldPrice()){
+                 tvPlateOldPrice.setText(oldPrice.replace("_", ", ")+ " " + context.getString(R.string.type_currency));
                  tvPlateOldPrice.setVisibility(View.VISIBLE);
                  if(!newPrice.isEmpty())
                      tvPlateOldPrice.setPaintFlags(tvPlateOldPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -96,8 +92,8 @@
              }else tvPlateOldPrice.setVisibility(View.GONE);
              tvPromotionTitle.setVisibility(View.VISIBLE);
              tvPromotionDescription.setVisibility(View.VISIBLE);
-             tvPromotionTitle.setText(getNewAtribute(plateList.get(position).getId(), "title"));
-             tvPromotionDescription.setText(getNewAtribute(plateList.get(position).getId(), "description"));
+             tvPromotionTitle.setText(promotion.getPromotionElement(plateList.get(position).getId()).getTitle());
+             tvPromotionDescription.setText(promotion.getPromotionElement(plateList.get(position).getId()).getDescription());
          }else{
              tvPromotionTitle.setText("");
              tvPromotionDescription.setText("");
@@ -109,21 +105,7 @@
              tvPlateNewPrice.setVisibility(View.GONE);
              tvPlateOldPrice.setVisibility(View.GONE);
          }
-
          return view;
-     }
-
-     /**
-      * Verifica si un id se encuentra en la lista de promociones
-      * @param id
-      * @return exist
-      */
-     public boolean existInPromotion(String id){
-         if(existInList(id, promotion.getPromotionList())){
-             return true;
-         }else{
-             return false;
-         }
      }
 
      /**
@@ -149,36 +131,18 @@
       * @param title
       * @param price
       */
-     public boolean addPromotion(String id, String title, String description, String price){
-         if(!id.isEmpty() && !title.isEmpty() && !description.isEmpty()){
+     public boolean addPromotion(String id, String title, String description, String price, boolean showOldPrice){
+         if(!Validation.isEmpty(id) && !Validation.isEmpty(title) && !Validation.isEmpty(description)){
              if(price.equals("")) price = "-1";
-             addPlate(new PromotionElement(id, title, description, Float.parseFloat(price)));
+             addPlate(new PromotionElement(id, Validation.correctText(title), description, Float.parseFloat(price), showOldPrice));
              notifyDataSetChanged();
              return true;
          }else return false;
      }
 
      /**
-      * Devuelde el la descripción de la promoción
-      * @param id
-      * @return description
-      */
-     private String getNewAtribute(String id, String atribute){
-         String data = "";
-         for (PromotionElement promotionElement: promotion.getPromotionList()) {
-             if(promotionElement.getPlateId().equals(id)){
-                 if (atribute.equalsIgnoreCase("title")) data = promotionElement.getTitle();
-                 else if (atribute.equalsIgnoreCase("description")) data = promotionElement.getDescription();
-                 else if(atribute.equalsIgnoreCase("price")) data = String.valueOf(promotionElement.getPrice());
-                 break;
-             }
-         }
-         return data;
-     }
-
-     /**
       * Devuelde el precio en el menú
-      * @param id
+      * @param id, identificador del plato
       * @return price
       */
      private String getOldPrice(String id){
@@ -227,42 +191,24 @@
      }
 
      /**
-      * Para saber si el elemento existe en la promoción
-      * @param id  del plato
-      * @param lista lista de ids en la promoción
-      * @return exist
-      */
-     private boolean existInList(String id, ArrayList<PromotionElement> lista){
-         boolean exist = false;
-         for (int i = 0; i < lista.size(); i++) {
-             if(Validation.getXWord(lista.get(i).getPlateId(), 1).equals(id)){
-                 exist = true;
-                 break;
-             }
-         }
-         return exist;
-     }
-
-     /**
       * Agrega un plato en la lista de la promoción
-      * @param promotionElement
+      * @param promotionElement  elemento promoción de la lista Promoción
       */
      private void addPlate(PromotionElement promotionElement){
-         if(!existInList(promotionElement.getPlateId(), promotion.getPromotionList())){
+         if(!promotion.existInList(promotionElement.getPlateId())){
              promotion.getPromotionList().add(promotionElement);
+         }else{
+             promotion.removePromotionElement(promotionElement.getPlateId());
+             promotion.addPromotionElement(promotionElement);
          }
      }
 
      /**
       * Elimina el plato de la lista del restaurante
-      * @param plateId
+      * @param plateId id del plato
       */
      public void removePlate(String plateId){
-         for(int i = 0; i < promotion.getPromotionList().size(); i ++){
-             if(promotion.getPromotionList().get(i).getPlateId().equals(plateId)){
-                 promotion.getPromotionList().remove(i);
-             }
-         }
+         promotion.removePromotionElement(plateId);
          notifyDataSetChanged();
      }
 
@@ -270,7 +216,7 @@
       * Elimina del menú los platos que no existen
       */
      private void clearNonExistentPlates(){
-         ArrayList<String> platesListIdExistents = new ArrayList<String>();
+         ArrayList<String> platesListIdExistents = new ArrayList<>();
          for(int i = 0; i< plateListCopy.size(); i++){
              platesListIdExistents.add(plateListCopy.get(i).getId());
          }
@@ -279,7 +225,7 @@
              String idPlateInMenu = Validation.getXWord(menu.getMenuList().get(i), 1);
              if(!platesListIdExistents.contains(idPlateInMenu)){ // Ojo genera un error posiblemente cuando el internet está lento
                  for(int j = 0; i< menu.getMenuList().size(); i++){
-                     if(menu.getMenuList().get(j) == idPlateInMenu){
+                     if(menu.getMenuList().get(j).equals(idPlateInMenu)){
                          menu.getMenuList().remove(j);
                          break;
                      }

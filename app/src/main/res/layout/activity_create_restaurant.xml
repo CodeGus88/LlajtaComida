@@ -88,8 +88,6 @@
                         app:counterMaxLength="36"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-
-
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>

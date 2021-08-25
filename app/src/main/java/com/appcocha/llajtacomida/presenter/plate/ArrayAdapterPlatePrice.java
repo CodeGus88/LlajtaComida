@@ -64,7 +64,7 @@ public class ArrayAdapterPlatePrice extends ArrayAdapter<Plate> {
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
+        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvDescription);
         TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
         DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
         tvRating.setText(String.valueOf(decimalFormat.format(plateList.get(position).getPunctuation())));
@@ -75,8 +75,9 @@ public class ArrayAdapterPlatePrice extends ArrayAdapter<Plate> {
 
         if(!text.equals("")) {
             String price = Validation.getXWord(text,2);
+//            presentación de formato de precios
             if(!price.equals("")){
-                tvPlatePrice.setText(price + " " + context.getString(R.string.type_currency));
+                tvPlatePrice.setText(Validation.getFormatPrice(price, context.getString(R.string.type_currency)));
             }else{
                 tvPlatePrice.setText(context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
             }

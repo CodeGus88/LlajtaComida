@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.promotion.PromotionElement;
@@ -16,11 +15,11 @@ import com.bumptech.glide.Glide;
 
 public class AlertShowPromotion implements View.OnClickListener {
 
-    private AlertDialog alertDialog;
-    private ImageView ivPlateImage;
-    private TextView tvPlateName, tvPromotionTitle, tvPromotionDescription, tvBeforePrice, tvNowPrice, tvOrigin, tvIngredients;
-    private Button btnClose, btnShowPlate;
-    private RestaurantViewActivity activity;
+    private final AlertDialog alertDialog;
+    private final ImageView ivPlateImage;
+    private final TextView tvPlateName,tvPromotionTitle, tvPromotionDescription, tvBeforePrice, tvNowPrice, tvOrigin, tvIngredients;
+    private final Button btnClose, btnShowPlate;
+    private final RestaurantViewActivity activity;
     private Plate plate;
 
     protected AlertShowPromotion(RestaurantViewActivity activity){
@@ -29,7 +28,7 @@ public class AlertShowPromotion implements View.OnClickListener {
         ivPlateImage = (ImageView) viewAlert.findViewById(R.id.ivPlateImage);
         tvPlateName = (TextView) viewAlert.findViewById(R.id.tvPlateName);
         tvPromotionTitle = (TextView) viewAlert.findViewById(R.id.tvPromotionTitle);
-        tvPromotionDescription = (TextView) viewAlert.findViewById(R.id.tvPromotionDescription);
+        tvPromotionDescription = (TextView) viewAlert.findViewById(R.id.tvDescription);
         tvBeforePrice = (TextView) viewAlert.findViewById(R.id.tvBeforePrice);
         tvNowPrice = (TextView) viewAlert.findViewById(R.id.tvNowPrice);
         tvOrigin = (TextView) viewAlert.findViewById(R.id.tvOrigin);
@@ -55,11 +54,15 @@ public class AlertShowPromotion implements View.OnClickListener {
             tvPromotionTitle.setText(promotionElement.getTitle());
             tvPromotionDescription.setText(promotionElement.getDescription());
 
-            if(!oldPrice.equals("")) oldPrice += " " + activity.getString(R.string.type_currency);
+            if(!oldPrice.equals("") && promotionElement.isShowOldPrice())
+                oldPrice = (oldPrice.replace("_", " " +activity.getString(R.string.type_currency) + ", ")) + " " + activity.getString(R.string.type_currency);
             else oldPrice = "-";
             tvBeforePrice.setText(oldPrice);
 
-            String newPrice = String.valueOf(promotionElement.getPrice()).replace("-1", "").replace(".0", "");
+            String newPrice = String.valueOf(promotionElement.getPrice())
+                    .replace("-1", "")
+                    .replace(".0", "")
+                    .replace("_", activity.getString(R.string.type_currency)+", ");
             if(!newPrice.equals("")) newPrice += " " + activity.getString(R.string.type_currency);
             else newPrice = "-";
             tvNowPrice.setText(newPrice);

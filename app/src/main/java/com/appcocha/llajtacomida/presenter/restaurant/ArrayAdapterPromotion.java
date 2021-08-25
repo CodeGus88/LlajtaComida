@@ -74,13 +74,14 @@
          String newPrice = getNewAtribute(plateList.get(position).getId(), "price")
                  .replace(".0", "")
                  .replace("-1", "");
-         if(!getOldPrice(plateList.get(position).getId()).equals("")){
+         if(!getOldPrice(plateList.get(position).getId()).equals("")
+                 && promotion.getPromotionElement(plateList.get(position).getId()).isShowOldPrice()){
              tvPlateOldPrice.setVisibility(View.VISIBLE);
-             tvPlateOldPrice.setText(getOldPrice(plateList.get(position).getId()) +" "+ context.getString(R.string.type_currency));
+             tvPlateOldPrice.setText(getOldPrice(plateList.get(position).getId()).replace("_",", ") +" "+ context.getString(R.string.type_currency));
          }else tvPlateOldPrice.setVisibility(View.GONE);
          if (!newPrice.equals("")){
              tvPlateNewPrice.setVisibility(View.VISIBLE);
-             tvPlateNewPrice.setText(newPrice + " " + context.getString(R.string.type_currency));
+             tvPlateNewPrice.setText(newPrice.replace("_", ", ") + " " + context.getString(R.string.type_currency));
          } else tvPlateNewPrice.setVisibility(View.GONE);
 
          if(!newPrice.equals("")
@@ -93,7 +94,7 @@
 
 
      /**
-      * Devuelde el la descripción de la promoción
+      * Devuelve el la un atributo de la promoción
       * @param id
       * @return description
       */

@@ -89,7 +89,8 @@
                 android:textSize="12dp"
                 android:hint="@string/tv_text_lorem"
                 android:textColor="#fff"
-                android:justificationMode="inter_word"/>
+                android:justificationMode="inter_word"
+                android:textIsSelectable="true"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

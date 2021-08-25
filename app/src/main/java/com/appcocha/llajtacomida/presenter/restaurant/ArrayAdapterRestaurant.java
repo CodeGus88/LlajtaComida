@@ -64,7 +64,7 @@ public class ArrayAdapterRestaurant extends ArrayAdapter<Restaurant> {
         try {
             ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
             TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
+            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvDescription);
             TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
             DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
             tvRating.setText(String.valueOf(decimalFormat.format(restaurantList.get(position).getPunctuation())));

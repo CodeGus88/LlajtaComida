@@ -18,12 +18,12 @@
             android:orientation="vertical">
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"/>
+                android:layout_height="8dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:gravity="center">
                 <ViewFlipper
                     android:id="@+id/vfCarrucel"
@@ -265,8 +265,8 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/tv_undefined"
                             style="@style/CodeFontContent"
-                            android:justificationMode="inter_word">
-                        </TextView>
+                            android:justificationMode="inter_word"
+                            android:autoLink="web"/>
                         <TextView
                             android:id="@+id/tvReadMoreDescription"
                             android:layout_width="match_parent"

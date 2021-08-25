@@ -38,6 +38,7 @@
     <string name="save_icon">Guardar</string>
     <string name="menu_restaurant_icon">Menú</string>
     <string name="rest_public_of_icon">Restaurantes no publicados</string>
+    <string name="share_icon">Compartir</string>
 
     <!--        PROMOTIONS -->
     <string name="promotions_restaurant_icon">Promociones</string>
@@ -73,6 +74,7 @@
     <!--  menu  -->
     <string name="tv_title_menu">Menú del restaurante</string>
     <string name="tv_rest_with_plate_title">Restaurantes con</string>
+    <string name="tv_rest_with_this_plate">Restaurantes con este plato</string>
     <string name="tv_restaurants_found">encontrados</string>
     <string name="tv_rest_with_title">Restaurantes con:</string>
     <!-- promotions -->
@@ -316,6 +318,14 @@
     <string name="menu_title">Menú de</string>
     <string name="not_found">No se encontró la información necesaria</string>
     <string name="title_activity_set_all_location_map">Map</string>
+    <string name="tv_example_for_price">Formato de precio: Se puede agregar más de un precio, separando con un espacio (moneda boliviana).
+        \n- Ejemplo sin precio: [ ] Bs (Se tomará un precio por defecto de la aplicación)
+        \n- Ejemplo con un precio: [10] Bs
+        \n- Ejemplo con más de un precio: [10 50 120] Bs
+        \n Tomar en cuneta que el primer precio ingresado, será el precio que el programa tomará en cuenta para las comparaciones entre restaurantes.
+    </string>
+    <string name="message_wrong_number_format">¡Formato de números incorrecto!</string>
+    <string name="message_content_too_long">¡Contenido demasiado extenso!</string>
 
     <!--    Promociones     -->
     <string name="tv_promotion">!Promoción!</string>
@@ -353,6 +363,9 @@
     <string name="switch_sound">Sonido</string>
 
 <!--    // Prices-->
+    <string name="price_title">Precio(s)</string>
+    <string name="promotion_price">Precio de promoción</string>
+    <string name="check_show_old_price">Mostrar precio en menú</string>
     <string name="default_price">10</string>
     <string name="type_currency">Bs</string>
 

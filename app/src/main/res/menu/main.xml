@@ -80,6 +80,12 @@
         app:showAsAction="ifRoom"
         android:visible="false"/>
 
+    <item
+        android:id="@+id/iconShare"
+        android:title="@string/share_icon"
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
+
 
 </menu>
 

@@ -27,6 +27,7 @@ import com.appcocha.llajtacomida.presenter.plate.ArrayAdapterRestaurantPlatePric
 import com.appcocha.llajtacomida.presenter.tools.Serializer;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
 import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.bumptech.glide.Glide;
@@ -51,6 +52,7 @@ import com.zolad.zoominimageview.ZoomInImageView;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
  /**
   * Vista, Esta clase es la vista de la sección ver plato
@@ -63,8 +65,9 @@ import java.util.Hashtable;
     private TextView tvName, tvIngredients, tvOrigin, tvTitleRestaurants, tvRestaurantsFound, tvReadMoreLessIngredients, tvReadMoreLessOriginDescription;
     private LinearLayout llIngredients, llOriginDescription;
 
-    public static String id;
-    private MenuItem iconEdit, iconDelete, iconGalery;
+     private boolean sharePresed = false; // Bandera para saber cuando se abrió el diálogo para compartir (evita que reanude los presentadores en onResume)
+     public static String id;
+     private MenuItem iconEdit, iconDelete, iconGalery, iconShare;
 
     private Plate plate;
 
@@ -84,6 +87,7 @@ import java.util.Hashtable;
     private ArrayAdapterRestaurantPlatePrice arrayAdapterRestaurantPlatePrice;
     private ListView lvRestaurants;
     private ArrayList<Restaurant> restaurantList;
+    private Hashtable priceInRestaurantsList;
     private TextView tvRating;
     private ImageButton btnMarkersViewIcon, btnMarquersViewMap;
 
@@ -168,7 +172,7 @@ import java.util.Hashtable;
      * Captura de acción del botón atrás <- de la barra superior
      */
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp(){
 //        stopRealtimeDatabse();
         onBackPressed(); // acción del boton atrás del sistema operativo
         Animatoo.animateFade(this); //Animación al cambiar de actividad
@@ -229,10 +233,12 @@ import java.util.Hashtable;
      /**
       * Iniciliza la presentación de las imágenes
       */
-    private void initAnimation(){
-        viewFlipper.setDisplayedChild(0);
-        viewFlipper.setFlipInterval(TIME_ANIMATION);
-        viewFlipper.startFlipping();
+    private void initAnimation(int item){
+        if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE) && viewFlipper.getChildCount()>1 && !viewFlipper.isFlipping()){
+            viewFlipper.setDisplayedChild(item);
+            viewFlipper.setFlipInterval(TIME_ANIMATION);
+            viewFlipper.startFlipping();
+        }
     }
 
     @Override
@@ -257,6 +263,11 @@ import java.util.Hashtable;
             case R.id.iconGalery:
                 if(Permission.getAuthorize(AuthUser.getUser().getRole(), Permission.SHOW_PLATE_GALERY))
                 PlateNavegation.showGalery(this, id,  plate.getName());
+                break;
+            case R.id.iconShare:
+                PlateNavegation.showShare(this, plate, "", restaurantList,priceInRestaurantsList);
+                sharePresed = true;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -297,8 +308,9 @@ import java.util.Hashtable;
         iconEdit = (MenuItem) menu.findItem(R.id.iconEdit);
         iconDelete = (MenuItem) menu.findItem(R.id.iconDelete);
         iconGalery = (MenuItem) menu.findItem(R.id.iconGalery);
+        iconShare = (MenuItem) menu.findItem(R.id.iconShare);
         if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_PLATE_GALERY))
-                iconGalery.setVisible(true);
+            iconGalery.setVisible(true);
         else iconGalery.setVisible(false);
         if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.DELETE_PLATE))
             iconDelete.setVisible(true);
@@ -306,6 +318,10 @@ import java.util.Hashtable;
         if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.UPDATE_PLATE))
             iconEdit.setVisible(true);
         else iconEdit.setVisible(false);
+        if(Permission.getAuthorize(AuthUser.user.getRole(), Permission.SHOW_PLATE))
+            iconShare.setVisible(true);
+        else iconShare.setVisible(false);
+
     }
 
     @Override
@@ -392,6 +408,7 @@ import java.util.Hashtable;
     public void showRestList(ArrayList<Restaurant> list, Hashtable priceInRestaurantsList) {
         try {
             restaurantList = list;
+            this.priceInRestaurantsList = priceInRestaurantsList;
             arrayAdapterRestaurantPlatePrice = new ArrayAdapterRestaurantPlatePrice(this, R.layout.adapter_restaurant_plate_price_list, list, priceInRestaurantsList, plate.getName());
             lvRestaurants.setAdapter(arrayAdapterRestaurantPlatePrice);
             ScreenSize.setListViewHeightBasedOnChildren(lvRestaurants);
@@ -437,10 +454,9 @@ import java.util.Hashtable;
         try { // Por si la actividad no está visible
             if(viewFlipper != null){
                 viewFlipper.clearAnimation();
-                viewFlipper.clearAnimation();
-                for(int i = 1; i < viewFlipper.getChildCount(); i ++){
-                    viewFlipper.removeViewAt(i);
-                }
+//                viewFlipper.clearAnimation();
+                while(viewFlipper.getChildCount()>1)
+                    viewFlipper.removeViewAt(1);
                 viewFlipper.stopFlipping();
             }
             for (Image image:imagesList) {
@@ -457,11 +473,17 @@ import java.util.Hashtable;
                             new ViewGroup.LayoutParams((int) (width*0.984), (int) (height*0.984))
                     );
                     viewFlipper.addView(cv);
-                    if(Serializer.readBooleanData(this, IMAGES_ANIMATION_FILE)) initAnimation();
                 }catch (Exception e){
                     Log.e("Error:", e.getMessage() );
                 }
             }
+            // Verifica estado de presentación (activado o desactivado)
+            int randomItem = 0;
+            if(viewFlipper.getChildCount() > 1){
+                Random random = new Random();
+                randomItem = random.nextInt((viewFlipper.getChildCount()-1) + 0) + 0;
+            }
+            initAnimation(randomItem);
         }catch (Exception e){
             Log.e("Error", e.getMessage());
         }
@@ -513,12 +535,25 @@ import java.util.Hashtable;
      }
 
      // Ciclos de vida para el reinicio de los presentadores
-
      @Override
      protected void onResume() {
          super.onResume();
-         initPresenters();
+         if(!sharePresed || !isInitAllPresenters()) initPresenters();
+         else sharePresed = false;
          Log.d("cicleLive", "onResume");
+     }
+
+     /**
+      * Verifica si todos los presentadores están inicializados
+      * @return isAllInit
+      */
+     private boolean isInitAllPresenters(){
+         boolean isAllInit = true;
+         isAllInit &= platePresenter != null;
+         isAllInit &= imagePresenter != null;
+         isAllInit &= plateManagerPresenter != null;
+         isAllInit &= restListPresenter != null;
+         return isAllInit;
      }
 
      @Override

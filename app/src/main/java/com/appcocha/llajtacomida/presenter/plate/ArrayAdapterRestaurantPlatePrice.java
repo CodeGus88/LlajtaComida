@@ -74,7 +74,7 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
         try {
             ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
             TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
+            TextView tvResumeItem = (TextView) view.findViewById(R.id.tvDescription);
             TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
             TextView tvRating = (TextView) view.findViewById(R.id.tvRating);
             DecimalFormat decimalFormat = new DecimalFormat("0.0"); // para que tenga solo un decimal
@@ -83,7 +83,9 @@ public class ArrayAdapterRestaurantPlatePrice extends ArrayAdapter<Restaurant> {
             tvTitleItem.setText(restaurantList.get(position).getName());
             tvResumeItem.setText(restaurantList.get(position).getAddress() + " "+restaurantList.get(position).getOriginAndDescription().replace("\n", " "));
             if(!priceInRestaurantsList.get(restaurantList.get(position).getId()).isEmpty()){
-                tvPlatePrice.setText(plateName + ": " + priceInRestaurantsList.get(restaurantList.get(position).getId()) + " " + context.getString(R.string.type_currency));
+//                tvPlatePrice.setText(plateName + ": " + priceInRestaurantsList.get(restaurantList.get(position).getId()) + " " + context.getString(R.string.type_currency));
+                tvPlatePrice.setText(plateName + ": " +
+                        Validation.getFormatPrice(priceInRestaurantsList.get(restaurantList.get(position).getId()), context.getString(R.string.type_currency)));
             }else{
 //                tvPlatePrice.setText(plateName + ": " + context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
                 tvPlatePrice.setText(plateName + ": " + StringValues.getDefaultPrice() + " " + context.getString(R.string.type_currency));

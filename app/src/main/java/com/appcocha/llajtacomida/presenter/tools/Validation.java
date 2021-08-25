@@ -1,50 +1,13 @@
 package com.appcocha.llajtacomida.presenter.tools;
 
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.IntentSender;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.UserHandle;
 import android.util.Log;
-import android.view.Display;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.appcocha.llajtacomida.R;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.presenter.plate.PlateList;
-import com.appcocha.llajtacomida.view.main.MainActivity;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -88,6 +51,90 @@ public class Validation {
             }
         }
         return resultText;
+    }
+
+
+    /**
+     * Verifica los espacios y caracteres que no sea números
+     * @param text, números
+     * @return request
+     */
+    public static int validateNumbers(String text){
+        for(int i = 0; i< text.length(); i++){
+//            Log.d("myxaa", text.charAt(i)+" ----> "+ (int) text.charAt(i));
+            if(text.length()>20){
+                return R.string.message_content_too_long;
+            }else if(( (int) text.charAt(i) < 48 || (int) text.charAt(i)>57) && (int) text.charAt(i) != 32){
+                return R.string.message_wrong_number_format;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Elimina: "0", ",", "." como primieros dígitos de número considerando que todos los caracteres con números (0-9) o searadores
+     * @param data
+     * @param separator
+     * @return data
+     */
+    public static String correctNumbers(String data, String separator){
+        // Salvar posibles precios ceros válidos
+        // Recuperar 0 válido del principio y del final
+        if(data.length() >= 2){ // salvar el primer cero con *
+            char[]chars = data.toCharArray();
+            if(chars[0] == '0' && chars[1] == separator.charAt(0)){
+                chars[0] = '*';
+            }
+            data = String.valueOf(chars);
+        }
+        if(data.length() >=2) { // salvar el últmo cero con *
+            char[]chars = data.toCharArray();
+            if(chars[chars.length-2] == separator.charAt(0) && chars[chars.length-1] == '0'){
+                chars[chars.length-1] = '*';
+            }
+            data = String.valueOf(chars);
+        }
+
+        if(data.contains(separator+separator)){
+            data = data.replace(separator+separator, separator+"*"+separator);
+            return correctNumbers(data, separator);
+        }
+        if (data.length()>1)
+//            if(!( (int) data.charAt(0) >= 49 && (int) data.charAt(0)<=57)){
+            if(data.charAt(0) == '0'){
+                data = data.substring(1, data.length());
+                return correctNumbers(data, separator);
+            }
+
+            if(data.contains(separator+"0") || data.contains(separator+".") || data.contains(separator+",")
+                    || data.contains(separator+separator)){
+                data = data.replace(separator+"0", separator)
+                        .replace(separator+".", separator)
+                        .replace(separator+",", separator);
+                return correctNumbers(data, separator);
+            }else{
+                data = data.replace("*", "0");
+                return data;
+            }
+    }
+
+    /**
+     * Presentación de precios en menus
+     * @param data
+     * @param typeOfCurrency
+     */
+    public static String getFormatPrice(String data, String typeOfCurrency){
+        for(int i = data.length() - 1; i>=0; i--){
+            if(data.charAt(i) == '_'){
+                char[] chars = data.toCharArray();
+                chars[i] = 'y';
+                data = String.valueOf(chars);
+                break;
+            }
+        }
+        return data.replace("_", " "+typeOfCurrency+" | ")
+                .replace("y", " " + typeOfCurrency+" | ")
+                + " " + typeOfCurrency;
     }
 
     /**
@@ -164,11 +211,10 @@ public class Validation {
         return firstName;
     }
 
-
     /**
      * Obtiene la palabra x del texto
      * @param fulText, x
-     * @return x word
+     * @return xWord
      */
     public static String getXWord(String fulText, int x){
         fulText = correctText(fulText);
@@ -190,7 +236,7 @@ public class Validation {
     /**
      * Valida si es un registro es un nuevo registro
      * @param name
-     * @return
+     * @return exist
      */
     public static boolean existPlateName(String name){
         boolean exist = false;
@@ -206,7 +252,7 @@ public class Validation {
     /**
      * Valida si es la edición de un registro
      * @param name
-     * @return
+     * @return exist
      */
     public static boolean existPlateNameExcludePlateId(String plateId, String name){
         boolean exist = false;
@@ -221,8 +267,8 @@ public class Validation {
 
     /**
      * Verifica que el el nombre no tenga caracteres que no correspondan
-     * @param name
-     * @return
+     * @param name supuesto nombre de persona
+     * @return isName
      */
     public static boolean isPersonName(String name){
         boolean isName = false;
@@ -281,7 +327,6 @@ public class Validation {
         return plateList;
     }
 
-
     /**
      * Ordenar la lista de restaurantes según su precio
      * @param restaurantList
@@ -292,15 +337,13 @@ public class Validation {
         try {
             Hashtable<String, String> hastable = priceInRestaurantsList;
             for (int i = 0; i < restaurantList.size(); i++) {
-
                 for (int j = i+1; j < restaurantList.size(); j++) {
-
-                    String stringPriceI = hastable.get(restaurantList.get(i).getId());
+                    String stringPriceI = Validation.getXWord(hastable.get(restaurantList.get(i).getId()).replace("_", " "), 1);
                     float priceI = 0;
-                    if (!stringPriceI.equals("")) priceI = Float.parseFloat(stringPriceI.toString());
+                    if (!stringPriceI.equals("")) priceI = Float.parseFloat(stringPriceI);
                     else priceI = Float.parseFloat(StringValues.getDefaultPrice());
 
-                    String stringPriceJ = hastable.get(restaurantList.get(j).getId());
+                    String stringPriceJ = Validation.getXWord(hastable.get(restaurantList.get(j).getId()).replace("_", " "), 1);
                     float priceJ;
                     if (!stringPriceJ.equals("")) priceJ = Float.parseFloat(stringPriceJ);
                     else priceJ = Float.parseFloat(StringValues.getDefaultPrice());
@@ -311,7 +354,6 @@ public class Validation {
                     }
                 }
             }
-
         }catch (Exception e){
             Log.e("Error: ", "------------------------------------------------> "+e.getMessage());
         }

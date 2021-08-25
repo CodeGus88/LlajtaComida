@@ -58,17 +58,17 @@
 
     <TextView
         android:id="@+id/tvExperience"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:layout_below="@+id/cvAvatar"
-        android:padding="4dp"
+        android:padding="2dp"
         android:textSize="11dp"
         android:hint="@string/tv_text_lorem"
         android:maxLines="2" />
 
     <ImageButton
-        android:id="@+id/btnDelete"
+        android:id="@+id/btnAlertDelete"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:padding="2dp"

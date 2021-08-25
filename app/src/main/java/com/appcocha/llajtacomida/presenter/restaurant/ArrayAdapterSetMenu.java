@@ -1,6 +1,7 @@
  package com.appcocha.llajtacomida.presenter.restaurant;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -63,7 +63,7 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         }
         ImageView ivPhotoItem = (ImageView) view.findViewById(R.id.ivPhotoItem);
         TextView tvTitleItem = (TextView) view.findViewById(R.id.tvTitleItem);
-        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvPromotionDescription);
+        TextView tvResumeItem = (TextView) view.findViewById(R.id.tvDescription);
         CardView cvPrice = (CardView) view.findViewById(R.id.cvPrice);
         TextView tvPlatePrice = (TextView) view.findViewById(R.id.tvPlateNewPrice);
 
@@ -73,28 +73,26 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
         if(existInList(plateList.get(position).getId(), menu.getMenuList())) cvPrice.setVisibility(View.VISIBLE);
         else cvPrice.setVisibility(View.GONE);
         String price = Validation.getXWord(getText(plateList.get(position).getId() ), 2 );
-        if(!price.equals("")) tvPlatePrice.setText(price + " " + context.getString(R.string.type_currency));
+        if(!price.equals("")) tvPlatePrice.setText(price.replace("_", ", ") + " " + context.getString(R.string.type_currency));
         else tvPlatePrice.setText(context.getString(R.string.default_price) + " " + context.getString(R.string.type_currency));
         return view;
     }
 
-    public boolean existInMenu(String id){
-        if(existInList(id, menu.getMenuList())){
-            return true;
-        }else{
-            return false;
-        }
-    }
+    /**
+     * Agrega precio
+     * @param id
+     * @param price
+     */
     public void addPrice(String id, String price){
-        String addPrice = id + " " + price;
-        addPlate(addPrice);
+        String idWithPrice = id + " " + price;
+        addPlate(idWithPrice);
         notifyDataSetChanged();
     }
 
     /**
      * optiene el texto que contiene el id
      * @param id
-     * @return
+     * @return text
      */
     private String getText(String id){
         String text = "";
@@ -143,41 +141,41 @@ public class ArrayAdapterSetMenu extends ArrayAdapter<Plate>  { //implements Com
     /**
      * Para saber si el elemento existe en el menu
      * @param id  del plato
-     * @param lista lista de ids en el menu
-     * @return
+     * @param list lista de ids en el menu
+     * @return exist
      */
-    private boolean existInList(String id, ArrayList<String> lista){
-        boolean exist = false;
-        for (int i = 0; i < lista.size(); i++) {
-            if(Validation.getXWord(lista.get(i), 1).equals(id)){
-                exist = true;
-                break;
-            }
-        }
-        return exist;
+    private boolean existInList(String id, ArrayList<String> list){
+        for (String data : list)
+            if(Validation.getXWord(data, 1).equals(id))
+                return true;
+        return false;
     }
 
     /**
      * Agrega un plato en la lista del menú
-     * @param plateId
+     * @param plateWithPrice
      */
-    private void addPlate(String plateId){
-        if(!existInList(plateId, menu.getMenuList())){
-            menu.getMenuList().add(plateId);
+    private void addPlate(String plateWithPrice){
+        if(!existInList(Validation.getXWord(plateWithPrice, 1), menu.getMenuList())){
+            menu.getMenuList().add(plateWithPrice);
+        }else{ // si ya existe en la lista
+            removePlate(Validation.getXWord(plateWithPrice, 1), false);
+            menu.getMenuList().add(plateWithPrice);
         }
+        notifyDataSetChanged();
     }
 
     /**
-     * Elimina el plato de la lista del restaurante
+     * Elimina el plato de la lista del restaurante (tambien duplicados)
      * @param plateId
      */
-    public void removePlate(String plateId){
-        for(int i = 0; i < menu.getMenuList().size(); i ++){
-            if(Validation.getXWord(menu.getMenuList().get(i), 1).equals(plateId)){
-                menu.getMenuList().remove(i);
-            }
+    public void removePlate(String plateId, boolean update){
+        int i = 0;
+        while(i<menu.getMenuList().size()){
+            if(Validation.getXWord(menu.getMenuList().get(i), 1).equals(plateId)) menu.getMenuList().remove(i);
+            else i++;
         }
-        notifyDataSetChanged();
+        if(update) notifyDataSetChanged();
     }
 
     /**

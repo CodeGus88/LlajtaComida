@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/activity_restaurant_view.xml" value="0.264" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/adapter_element_users_rating_list.xml" value="0.14375" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/adapter_plates_price_list.xml" value="0.264" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/adapter_user_list.xml" value="0.14375" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/alert_price.xml" value="0.2" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/alert_set_promotion.xml" value="0.1" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/alert_user_data.xml" value="0.13949275362318841" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/alert_user_options.xml" value="0.129981884057971" />
+        <entry key="..\:/Users/soyyo/AndroidStudioProjects/LlajtaComida/app/src/main/res/layout/alert_user_vote_view.xml" value="0.16666666666666666" />
+      </map>
+    </option>
+  </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="D:/LLajtaDoc/prueba de nueva documentacion" />
+    <option name="OUTPUT_DIRECTORY" value="D:/Llajta Doc X" />
     <option name="LOCALE" value="es" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">

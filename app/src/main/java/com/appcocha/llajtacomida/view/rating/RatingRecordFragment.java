@@ -150,12 +150,6 @@ public class RatingRecordFragment extends Fragment implements View.OnClickListen
      * permisos de los iconos
      */
     private void loadVoterPermission(){
-//        if((AuthUser.getUser().getRole().equals("admin")
-//                || AuthUser.getUser().getRole().equals("collaborator")
-//                || AuthUser.getUser().getRole().equals("voter"))
-//                && rbStars.isEnabled()){
-//            rbStars.setVisibility(View.VISIBLE);
-//        }else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);
         if(valoratePermision && rbStars.isEnabled())
             rbStars.setVisibility(View.VISIBLE);
         else if(rbStars.getVisibility() != View.GONE) rbStars.setVisibility(View.GONE);

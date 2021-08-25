@@ -51,7 +51,7 @@ public class RestaurantPresenter implements RestaurantInterface.PresenterRestaur
     }
 
     @Override
-    public void stopRealtimeDatabse() {
+    public void stopRealtimeDatabase() {
         modelRestaurant.stopRealtimeDatabse();
     }
 

@@ -14,7 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,9 +27,11 @@ import com.appcocha.llajtacomida.interfaces.RestaurantInterface;
 import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
 import com.appcocha.llajtacomida.model.restaurant.promotion.Promotion;
+import com.appcocha.llajtacomida.model.restaurant.promotion.PromotionElement;
 import com.appcocha.llajtacomida.presenter.restaurant.ArrayAdapterSetPromotions;
 import com.appcocha.llajtacomida.presenter.restaurant.SetPromotionListPresenter;
 import com.appcocha.llajtacomida.presenter.tools.Sound;
+import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.appcocha.llajtacomida.presenter.user.AuthUser;
 import com.appcocha.llajtacomida.presenter.user.Permission;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
@@ -44,10 +48,13 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
     private MenuItem iconSave;
     private Restaurant restaurant;
     private ArrayList<Plate> plateList;
+    private Promotion promotion;
     private AlertDialog alertDialog;
     private TextView tvAlertTitlePrice;
     private EditText etAlertTitle, etAlertDescription, etAlertPrice;
+    private CheckBox cbAlertShowOldPrice;
     private Button btnAlertCancel, btnAlertAdd;
+    private ImageButton btnDelete;
     private int position;
     // Permisos
 //    private boolean isAdministrator, isAuthor;
@@ -63,6 +70,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         // Configuración del boton atrás
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         plateList = new ArrayList<Plate>();
+        promotion = new Promotion();
         // Premisos
 //        isAdministrator = true;
 //        isAuthor = true;
@@ -103,25 +111,30 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         etAlertTitle = (EditText) viewAlert.findViewById(R.id.etAlertTitle);
         etAlertDescription = (EditText) viewAlert.findViewById(R.id.etAlertDescription);
         etAlertPrice = (EditText) viewAlert.findViewById(R.id.etAlertPrice);
+        cbAlertShowOldPrice = (CheckBox) viewAlert.findViewById(R.id.cbAlertShowOldPrice);
         btnAlertCancel = (Button) viewAlert.findViewById(R.id.btnAlertCancel);
         btnAlertAdd = (Button) viewAlert.findViewById(R.id.btnAlertAdd);
-
+        btnDelete = (ImageButton) viewAlert.findViewById(R.id.btnAlertDelete);
         alertDialog = builder.create();
         lvPlates.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Sound.playClick();
                 SetPromotionsActivity.this.position = position;
-                if(!arrayAdapterSetPromotions.existInPromotion(plateList.get(position).getId())){
-                    alertDialog.show();
-                    tvAlertTitlePrice.setText(plateList.get(position).getName());
+                // pruebas
+                alertDialog.show();
+                PromotionElement promElem = promotion.getPromotionElement(plateList.get(position).getId());
+                tvAlertTitlePrice.setText(plateList.get(position).getName());
+                if(promElem != null){
+                    etAlertTitle.setText(promElem.getTitle());
+                    etAlertDescription.setText(promElem.getDescription());
+                    etAlertPrice.setText(String.valueOf(promElem.getPrice())
+                            .replace(".0", "")
+                            .replace("-1", ""));
+                    cbAlertShowOldPrice.setChecked(promElem.isShowOldPrice());
+                    btnDelete.setVisibility(View.VISIBLE);
                 }else{
-                    arrayAdapterSetPromotions.removePlate(plateList.get(position).getId());
-                    try {
-                        Sound.playThrow();
-                    }catch (Exception e){
-                        Log.e("Error: ", e.getMessage());
-                    }
+                    btnDelete.setVisibility(View.GONE);
                 }
             }
         });
@@ -143,6 +156,7 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         });
         btnAlertCancel.setOnClickListener(this);
         btnAlertAdd.setOnClickListener(this);
+        btnDelete.setOnClickListener(this);
     }
 
     @Override
@@ -157,15 +171,12 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
      * @param menu
      */
     private void initIconMenu(Menu menu){
-//        if(isAdministrator || isAuthor){
         if(Permission.getAuthorize(AuthUser.user.getRole()
             , Permission.WRITE_RESTAURANT_PROMOTION
             , AuthUser.getUser().getId().equals(restaurant.getAuthor()))){
             iconSave = (MenuItem)  menu.findItem(R.id.iconSave);
             iconSave.setVisible(true);
         }
-
-//        }
     }
 
     @Override
@@ -194,6 +205,8 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
     public void showSetPromotionList(ArrayList<Plate> plateList, com.appcocha.llajtacomida.model.restaurant.menu.Menu menu, Promotion promotion) {
         this.plateList.clear();
         this.plateList.addAll(plateList);
+        this.promotion = promotion;
+
         arrayAdapterSetPromotions = new ArrayAdapterSetPromotions(this, R.layout.adapter_element_set_restaurant_promotion, this.plateList, menu, promotion);
         lvPlates.setAdapter(arrayAdapterSetPromotions);
         switchActivePromotion.setChecked(arrayAdapterSetPromotions.getPromotion().getActive());
@@ -204,14 +217,12 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
      */
     @Override
     public boolean onSupportNavigateUp() {
-//        setPromotionListPresenter.stopRealTimeDatabase();
         onBackPressed(); // acción del botón atrás del sistema operativo
         return false;
     }
 
     @Override
     public void onBackPressed() {
-//        setPromotionListPresenter.stopRealTimeDatabase();
         super.onBackPressed();
         Animatoo.animateFade(this); //Animación al cambiar de actividad
     }
@@ -221,22 +232,29 @@ public class SetPromotionsActivity extends AppCompatActivity implements Restaura
         Sound.playClick();
         if(v.getId() == R.id.btnAlertAdd){
             if(!etAlertTitle.equals("") && (!etAlertDescription.equals("") || !etAlertPrice.equals(""))){
-                if (arrayAdapterSetPromotions.addPromotion(plateList.get(position).getId(), etAlertTitle.getText().toString(), etAlertDescription.getText().toString(), etAlertPrice.getText().toString())){
+                String price = Validation.correctNumbers(Validation.correctText(etAlertPrice.getText().toString()), " ");
+                if (arrayAdapterSetPromotions.addPromotion(plateList.get(position).getId(), etAlertTitle.getText().toString()
+                        , etAlertDescription.getText().toString(), price, cbAlertShowOldPrice.isChecked())){
                     Toast.makeText(this, getString(R.string.added_element), Toast.LENGTH_SHORT).show();
                     alertDialog.dismiss();
                 }else Toast.makeText(this, getString(R.string.incomplete_fields), Toast.LENGTH_SHORT).show();
-
             }else{
                 Toast.makeText(this, getString(R.string.incomplete_fields), Toast.LENGTH_SHORT).show();
             }
 
         }else if(v.getId() == R.id.btnAlertCancel){
             alertDialog.dismiss();
+        }else if(v.getId() == R.id.btnAlertDelete){
+            try {
+                arrayAdapterSetPromotions.removePlate(plateList.get(position).getId());
+                Toast.makeText(this, getString(R.string.message_remove), Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
+                Sound.playThrow();
+            }catch (Exception e){
+                Log.e("Error: ", e.getMessage());
+            }
         }
     }
-
-
-
 
     // Ciclos de vida para el reinicio de los presentadores
 

@@ -67,7 +67,7 @@ public class ArrayAdapterRating extends ArrayAdapter<Object> {
         final RatingBar rbUserVote = (RatingBar) view.findViewById(R.id.rvUserVote);
         final TextView tvDate = (TextView) view.findViewById(R.id.tvDate);
         final TextView tvExperience = (TextView) view.findViewById(R.id.tvExperience);
-        final ImageButton btnDelete = (ImageButton) view.findViewById(R.id.btnDelete);
+        final ImageButton btnDelete = (ImageButton) view.findViewById(R.id.btnAlertDelete);
         final Hashtable<String, String> row = (Hashtable<String, String>)votesList.get(position);
 
         try {

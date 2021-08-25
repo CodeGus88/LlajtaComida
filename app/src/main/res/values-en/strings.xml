@@ -38,6 +38,7 @@
     <string name="save_icon">Save</string>
     <string name="menu_restaurant_icon">Menu</string>
     <string name="rest_public_of_icon">Unpublished restaurants</string>
+    <string name="share_icon">Share</string>
 
     <!--        OFERTAS -->
     <string name="promotions_restaurant_icon">Promotions</string>
@@ -73,6 +74,7 @@
     <!--  menu  -->
     <string name="tv_title_menu">Restaurant menu</string>
     <string name="tv_rest_with_plate_title">Restaurants with</string>
+    <string name="tv_rest_with_this_plate">Restaurants with this dish</string>
     <string name="tv_restaurants_found">found</string>
     <string name="tv_rest_with_title">Restaurants with:</string>
     <!-- promotions -->
@@ -315,6 +317,14 @@
     <string name="menu_title">Menu for</string>
     <string name="not_found">Required information not found</string>
     <string name="title_activity_set_all_location_map">Map</string>
+    <string name = "tv_example_for_price">Price format: You can add more than one price, separating with a space (Bolivian currency).
+        \n- Example without price: [ ] BOB (A default price will be taken from the application)
+        \n- Example with one price: [10] BOB
+        \n- Example with more of one price: [10 50 120] BOB
+        \nTake into account that the first entered price, it will be the price that the program will take into account for comparisons between restaurants.
+    </string>
+    <string name="message_wrong_number_format">Wrong number format!</string>
+    <string name="message_content_too_long">Content too long!</string>
 
     <!--    Promociones     -->
     <string name="tv_promotion">Promotion!</string>
@@ -352,6 +362,9 @@
     <string name="switch_sound">Sound</string>
 
 <!--    // Prices-->
+    <string name="price_title">Price(s)</string>
+    <string name="promotion_price">Promotion price</string>
+    <string name="check_show_old_price">Show price on menu</string>
     <string name="default_price">10</string>
     <string name="type_currency">BOB</string>
 

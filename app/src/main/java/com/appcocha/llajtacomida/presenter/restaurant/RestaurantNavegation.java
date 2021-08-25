@@ -2,11 +2,15 @@ package com.appcocha.llajtacomida.presenter.restaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.appcocha.llajtacomida.R;
+import com.appcocha.llajtacomida.model.plate.Plate;
 import com.appcocha.llajtacomida.model.restaurant.Restaurant;
+import com.appcocha.llajtacomida.presenter.tools.StringValues;
+import com.appcocha.llajtacomida.presenter.tools.Validation;
 import com.appcocha.llajtacomida.view.images.ImagesActivity;
 import com.appcocha.llajtacomida.view.restaurants.CreateRestaurantActivity;
 import com.appcocha.llajtacomida.view.restaurants.EditRestaurantActivity;
@@ -17,6 +21,8 @@ import com.appcocha.llajtacomida.view.restaurants.SetPromotionsActivity;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.ArrayList;
 
 /**
  * Navegación de restaurante
@@ -59,6 +65,51 @@ public class RestaurantNavegation {
             .setAspectRatio(3, 2)
             .start(context);
         Animatoo.animateFade(context); //Animación al cambiar de actividad
+    }
+
+
+    /**
+     * Comparte el contenido en las redes sociales
+     * @param context
+     * @param restaurant
+     * @param other
+     */
+    public static void showShare(Context context, Restaurant restaurant, String other, ArrayList<Plate> plateList, ArrayList<String> menuPrice){
+        try{
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String menu = context.getString(R.string.menu).toUpperCase()+"\n";
+            for(Plate plate: plateList){
+                String price = "";
+                for(String data: menuPrice)
+                    if(data.contains(plate.getId())){
+                        price = Validation.getXWord(data, 2);
+                        break;
+                    }
+                if(price.isEmpty()) price = StringValues.getDefaultPrice() + " " + context.getString(R.string.type_currency);
+                else price += " " + context.getString(R.string.type_currency);
+                menu += "\n - "+plate.getName() + " *" + price.replace("_", "|")+"*";
+            }
+            String content =
+                    "http://maps.google.com/maps?daddr="+restaurant.getLatitude()+","+restaurant.getLongitude()+"&amp;ll="
+                            //                "\n\n"+restaurant.getUrl()
+                            +"\n\n*"+restaurant.getName().toUpperCase()+"*"
+                            +"\n\n"+context.getString(R.string.tv_phone).toUpperCase()+" "+(restaurant.getPhone())
+                            .replace(",", " - ")
+                            .replace(".", " - ")
+                            .replace("-", " - ")
+                            .replace(";", " - ")
+                            .replace(":", " - ")
+                            +"\n\n"+context.getString(R.string.tv_address).toUpperCase()+" "+restaurant.getAddress()
+                            +"\n\n" + menu
+                            +"\n\n"+context.getString(R.string.tv_origin_desc).toUpperCase()
+                            +"\n\n"+restaurant.getOriginAndDescription();
+            if(!other.isEmpty()) content += "\n\n"+other;
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+            context.startActivity(Intent.createChooser(intent, "Share"));
+        }catch (Exception e){
+            Log.e("Error", e.getMessage());
+        }
     }
 
     /**

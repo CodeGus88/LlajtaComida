@@ -65,7 +65,7 @@ public interface RestaurantInterface {
         /**
          * Determina detener la BD
          */
-        void stopRealtimeDatabse();
+        void stopRealtimeDatabase();
     }
 
     /**

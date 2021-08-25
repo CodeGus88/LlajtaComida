@@ -58,13 +58,53 @@ public class Promotion {
      */
     @Exclude
     public PromotionElement getPromotionElement(String id){
-        PromotionElement pe = new PromotionElement();
+        PromotionElement promEl = null;
         for (PromotionElement promotionElement: promotionList) {
             if(promotionElement.getPlateId().equals(id)){
-                pe = promotionElement;
+                promEl = promotionElement;
                 break;
             }
         }
-        return pe;
+        return promEl;
+    }
+
+
+    /**
+     * Agrega una promoción
+     * @param promotionElement
+     */
+    @Exclude
+    public void addPromotionElement(PromotionElement promotionElement){
+        promotionList.add(promotionElement);
+    }
+
+    /**
+     * Elimina una promoción
+     * @param plateId
+     */
+    @Exclude
+    public void removePromotionElement(String plateId){
+        for(int i = 0; i<promotionList.size(); i++){
+            if(promotionList.get(i).getPlateId().equals(plateId)){
+                promotionList.remove(i);
+            }
+        }
+    }
+
+    /**
+     * Verifica si un elemento promoción existe en la lista
+     * @param plateId
+     * @return
+     */
+    @Exclude
+    public boolean existInList(String plateId){
+        boolean exist = false;
+        for (int i = 0; i < promotionList.size(); i++) {
+            if(plateId.equals(promotionList.get(i).getPlateId())){
+                exist = true;
+                break;
+            }
+        }
+        return exist;
     }
 }

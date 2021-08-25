@@ -4,6 +4,7 @@ package com.appcocha.llajtacomida.model.restaurant.promotion;
 public class PromotionElement {
 
     private String plateId, title, description;
+    private boolean showOldPrice;
     private float price;
 
     public PromotionElement(){
@@ -11,13 +12,15 @@ public class PromotionElement {
         title = "";
         description = "";
         price = -1;
+        showOldPrice = false;
     }
 
-    public PromotionElement(String plateId, String title, String description, float price) {
+    public PromotionElement(String plateId, String title, String description, float price, boolean showOldPrice) {
         this.plateId = plateId;
         this.title = title;
         this.price = price;
         this.description = description;
+        this.showOldPrice = showOldPrice;
     }
 
     public void setPlateId(String plateId) {
@@ -50,6 +53,14 @@ public class PromotionElement {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isShowOldPrice() {
+        return showOldPrice;
+    }
+
+    public void setShowOldPrice(boolean showOldPrice) {
+        this.showOldPrice = showOldPrice;
     }
 
 //    /**

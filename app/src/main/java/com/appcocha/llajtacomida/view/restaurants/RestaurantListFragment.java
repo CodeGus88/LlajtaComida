@@ -211,7 +211,7 @@ public class RestaurantListFragment extends Fragment implements RestaurantInterf
     @Override
     public void onPause() {
         super.onPause();
-        restaurantPresenter.stopRealtimeDatabse();
+        restaurantPresenter.stopRealtimeDatabase();
     }
 
 }
